@@ -1,0 +1,6 @@
+.cloud/
+.storage/
+secrets.yaml
+tts
+home-assistant.log
+home-assistant_v2.db

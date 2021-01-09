@@ -1,0 +1,43 @@
+- id: "1609962176382"
+  alias: Cast automatically
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: media_player.living_room_tv
+      from: "off"
+  condition: []
+  action:
+    - service: script.cast_to_living_room_tv
+      data: {}
+  mode: single
+- id: "1609973083306"
+  alias: Zone Notification
+  description: "Notify if Gaby leaves home"
+  use_blueprint:
+    path: homeassistant/notify_leaving_zone.yaml
+    input:
+      person_entity: person.gaby
+      zone_entity: zone.home
+      notify_device: 10e24cdea3aaf31ef94c59725b643354
+- id: "1610050834159"
+  alias: Turn on Charles blanket
+  description:
+    Turn on Charles' blanket if it's less than 5C outside and Charles is
+    home
+  trigger:
+    - platform: time
+      at: "23:00:00"
+  condition:
+    - condition: zone
+      entity_id: person.charles_baynham
+      zone: zone.home
+    - condition: numeric_state
+      entity_id: weather.home
+      attribute: temperature
+      below: "5"
+  action:
+    - domain: switch
+      entity_id: switch.charles_blanket
+      device_id: 114e22d1af178828cb508da883b67dd4
+      type: turn_on
+  mode: single

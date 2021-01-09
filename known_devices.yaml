@@ -1,0 +1,83 @@
+GabyPhone:
+  name: Gaby's Honor
+  mac: 24:6F:8C:0B:6A:02
+  icon: mdi:face-woman
+  picture:
+  track: true
+
+CharlesPhone:
+  name: Charles' Honor
+  mac: F8:C3:9E:30:DC:E8
+  icon: mdi:face
+  picture:
+  track: true
+
+b4_7c_9c_df_a4_a5:
+  name: b4_7c_9c_df_a4_a5
+  mac: B4:7C:9C:DF:A4:A5
+  icon:
+  picture:
+  track: false
+
+dc_a6_32_aa_30_0e:
+  name: dc_a6_32_aa_30_0e
+  mac: DC:A6:32:AA:30:0E
+  icon:
+  picture:
+  track: false
+
+b0_4e_26_48_87_a9:
+  name: b0_4e_26_48_87_a9
+  mac: B0:4E:26:48:87:A9
+  icon:
+  picture:
+  track: false
+
+00_17_88_63_1d_f6:
+  name: 00_17_88_63_1d_f6
+  mac: 00:17:88:63:1D:F6
+  icon:
+  picture:
+  track: false
+
+6c_56_97_84_a0_3e:
+  name: 6c_56_97_84_a0_3e
+  mac: 6C:56:97:84:A0:3E
+  icon:
+  picture:
+  track: false
+
+6c_40_08_b0_f4_d0:
+  name: 6c_40_08_b0_f4_d0
+  mac: 6C:40:08:B0:F4:D0
+  icon:
+  picture:
+  track: false
+
+30_fd_38_79_93_35:
+  name: 30_fd_38_79_93_35
+  mac: 30:FD:38:79:93:35
+  icon:
+  picture:
+  track: false
+
+ec_e5_12_00_fe_11:
+  name: ec_e5_12_00_fe_11
+  mac: EC:E5:12:00:FE:11
+  icon:
+  picture:
+  track: false
+
+2c_26_17_56_e7_f2:
+  name: 2c_26_17_56_e7_f2
+  mac: 2C:26:17:56:E7:F2
+  icon:
+  picture:
+  track: false
+
+30_95_e3_1b_d1_31:
+  name: 30_95_e3_1b_d1_31
+  mac: 30:95:E3:1B:D1:31
+  icon:
+  picture:
+  track: false
