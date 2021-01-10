@@ -12,7 +12,7 @@
   mode: single
 - id: "1609973083306"
   alias: Zone Notification
-  description: "Notify if Gaby leaves home"
+  description: Notify if Gaby leaves home
   use_blueprint:
     path: homeassistant/notify_leaving_zone.yaml
     input:
@@ -29,7 +29,7 @@
       at: "23:00:00"
   condition:
     - condition: zone
-      entity_id: person.charles_baynham
+      entity_id: person.charles
       zone: zone.home
     - condition: numeric_state
       entity_id: weather.home

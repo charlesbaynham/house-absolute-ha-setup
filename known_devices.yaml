@@ -1,12 +1,12 @@
 GabyPhone:
-  name: Gaby's Honor
+  name: Gaby's Honor ARP
   mac: 24:6F:8C:0B:6A:02
   icon: mdi:face-woman
   picture:
   track: true
 
 CharlesPhone:
-  name: Charles' Honor
+  name: Charles' Honor ARP
   mac: F8:C3:9E:30:DC:E8
   icon: mdi:face
   picture:
@@ -78,6 +78,27 @@ ec_e5_12_00_fe_11:
 30_95_e3_1b_d1_31:
   name: 30_95_e3_1b_d1_31
   mac: 30:95:E3:1B:D1:31
+  icon:
+  picture:
+  track: false
+
+7c_2e_bd_3f_7a_b0:
+  name: 7c_2e_bd_3f_7a_b0
+  mac: 7C:2E:BD:3F:7A:B0
+  icon:
+  picture:
+  track: false
+
+bc_17_b8_73_6e_32:
+  name: bc_17_b8_73_6e_32
+  mac: BC:17:B8:73:6E:32
+  icon:
+  picture:
+  track: false
+
+78_11_dc_7e_0f_39:
+  name: 78_11_dc_7e_0f_39
+  mac: 78:11:DC:7E:0F:39
   icon:
   picture:
   track: false

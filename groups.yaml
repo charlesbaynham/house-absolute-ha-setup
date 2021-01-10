@@ -1,0 +1,6 @@
+# Is anyone at home?
+any_home:
+  name: Anyone home
+  entities:
+    - person.charles
+    - person.gaby
