@@ -1,6 +1,7 @@
 {
   cd /config
   cp secret_files/id_rsa ~/.ssh/.
+  cp secret_files/id_rsa.pub ~/.ssh/.
 
   git add .
   git commit -am "Automatic commit"
