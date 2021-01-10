@@ -108,3 +108,10 @@ fatal: Could not read from remote repository.
 
 Please make sure you have the correct access rights
 and the repository exists.
+[master 8024fdf] Automatic commit
+ 1 file changed, 21 insertions(+)
+git@gitlab.com: Permission denied (publickey,keyboard-interactive).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
