@@ -46,7 +46,7 @@
     if changes have occured
   trigger:
   - platform: time_pattern
-    minutes: /2
+    minutes: /1
   condition: []
   action:
   - service: shell_command.backup_config
