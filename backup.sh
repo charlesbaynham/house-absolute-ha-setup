@@ -2,6 +2,7 @@
   cd /config
   cp secret_files/id_rsa ~/.ssh/.
   cp secret_files/id_rsa.pub ~/.ssh/.
+  cat ~/.ssh/id_rsa.pub
   ls ~/.ssh
 
   git add .
