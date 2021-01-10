@@ -1,6 +1,5 @@
 # CFAB-created file, to hold all defined services
-- platform: template
-  sensors:
-    sensor name:
-      friendly_name: "sensor friendly name"
-      value_template: {{ sensor value template }}
+
+shell_command:
+  # Backup config to gitlab
+  backup_config: /config/backup.sh

@@ -26,6 +26,3 @@ device_tracker:
     new_device_defaults:
       track_new_devices: false
 
-shell_command:
-  # Backup config to gitlab
-  backup_config: /config/backup.sh
