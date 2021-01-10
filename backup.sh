@@ -7,5 +7,5 @@
 
   git add .
   git commit -am "Automatic commit"
-  git push
+  GIT_SSH_COMMAND="ssh -i secret_files/id_rsa" git push
 } 2>&1 | tee -a /config/backup_out.log
