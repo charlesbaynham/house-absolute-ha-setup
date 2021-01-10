@@ -1,0 +1,2 @@
+# Backup config to gitlab
+backup_config: /config/backup.sh

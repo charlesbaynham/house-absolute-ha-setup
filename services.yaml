@@ -1,5 +1,0 @@
-# CFAB-created file, to hold all defined services
-
-shell_command:
-  # Backup config to gitlab
-  backup_config: /config/backup.sh
