@@ -10,6 +10,8 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 
+!include services.yaml
+
 # Use Lets Encrypt SSL certificates for HTTPS
 http:
   ssl_certificate: /ssl/fullchain.pem
