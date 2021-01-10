@@ -10,7 +10,9 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 
-!include services.yaml
+# Backup config to gitlab
+shell_command:
+  backup_config: /config/backup.sh
 
 # Use Lets Encrypt SSL certificates for HTTPS
 http:
@@ -27,4 +29,3 @@ device_tracker:
     interval_seconds: 20
     new_device_defaults:
       track_new_devices: false
-
