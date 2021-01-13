@@ -42,10 +42,18 @@
     entity_id: light.sitting_room
     domain: light
   action:
-  - domain: switch
-    entity_id: switch.charles_blanket
+  - type: turn_off
     device_id: 114e22d1af178828cb508da883b67dd4
-    type: turn_on
+    entity_id: switch.charles_blanket
+    domain: switch
+  - service: notify.notify
+    data:
+      message: Turning on blanket
+  - delay: '1'
+  - type: turn_on
+    device_id: 114e22d1af178828cb508da883b67dd4
+    entity_id: switch.charles_blanket
+    domain: switch
   mode: single
 - id: gitlab_backup
   alias: Back up config to gitlab
