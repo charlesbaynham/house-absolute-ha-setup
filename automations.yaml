@@ -28,6 +28,8 @@
     at: '23:00:00'
   - platform: time
     at: 00:00:00
+  - platform: time
+    at: '22:00'
   condition:
   - condition: zone
     entity_id: person.charles
