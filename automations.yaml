@@ -1,16 +1,16 @@
-- id: '1609962176382'
+- id: "1609962176382"
   alias: Cast automatically
-  description: ''
+  description: ""
   trigger:
-  - platform: state
-    entity_id: media_player.living_room_tv
-    from: 'off'
+    - platform: state
+      entity_id: media_player.living_room_tv
+      from: "off"
   condition: []
   action:
-  - service: script.cast_to_living_room_tv
-    data: {}
+    - service: script.cast_to_living_room_tv
+      data: {}
   mode: single
-- id: '1609973083306'
+- id: "1609973083306"
   alias: Zone Notification
   description: Notify if Gaby leaves home
   use_blueprint:
@@ -19,53 +19,95 @@
       person_entity: person.gaby
       zone_entity: zone.home
       notify_device: 10e24cdea3aaf31ef94c59725b643354
-- id: '1610050834159'
+- id: "1610050834159"
   alias: Turn on Charles blanket
-  description: Turn on Charles' blanket if it's less than 5C outside and Charles is
+  description:
+    Turn on Charles' blanket if it's less than 5C outside and Charles is
     home and the living room lights are on
   trigger:
-  - platform: time
-    at: '23:00:00'
-  - platform: time
-    at: 00:00:00
-  - platform: time
-    at: '22:00'
+    - platform: time
+      at: "22:00:00"
+    - platform: time
+      at: "23:00:00"
+    - platform: time
+      at: "00:00:00"
   condition:
-  - condition: zone
-    entity_id: person.charles
-    zone: zone.home
-  - condition: numeric_state
-    entity_id: weather.home
-    attribute: temperature
-    below: '5'
-  - condition: device
-    type: is_on
-    device_id: b71f880d440cbffae42fb3b433b12d67
-    entity_id: light.sitting_room
-    domain: light
+    - condition: zone
+      entity_id: person.charles
+      zone: zone.home
+    - condition: numeric_state
+      entity_id: weather.home
+      attribute: temperature
+      below: "5"
+    - condition: device
+      type: is_on
+      device_id: b71f880d440cbffae42fb3b433b12d67
+      entity_id: light.sitting_room
+      domain: light
   action:
-  - type: turn_off
-    device_id: 114e22d1af178828cb508da883b67dd4
-    entity_id: switch.charles_blanket
-    domain: switch
-  - service: notify.notify
-    data:
-      message: Turning on blanket
-  - delay: '1'
-  - type: turn_on
-    device_id: 114e22d1af178828cb508da883b67dd4
-    entity_id: switch.charles_blanket
-    domain: switch
+    - type: turn_off
+      device_id: 114e22d1af178828cb508da883b67dd4
+      entity_id: switch.charles_blanket
+      domain: switch
+    - service: notify.notify
+      data:
+        message: Turning on blanket
+    - delay: "1"
+    - type: turn_on
+      device_id: 114e22d1af178828cb508da883b67dd4
+      entity_id: switch.charles_blanket
+      domain: switch
   mode: single
+
+- id: "78687612387216"
+  alias: Turn on Gaby blanket
+  description: Turn on Gaby's blanket if it's less than 5C outside and Gaby is
+    home and the living room lights are on
+  trigger:
+    - platform: time
+      at: "22:00:00"
+    - platform: time
+      at: "23:00:00"
+    - platform: time
+      at: "00:00:00"
+  condition:
+    - condition: zone
+      entity_id: person.gaby
+      zone: zone.home
+    - condition: numeric_state
+      entity_id: weather.home
+      attribute: temperature
+      below: "7"
+    - condition: device
+      type: is_on
+      device_id: b71f880d440cbffae42fb3b433b12d67
+      entity_id: light.sitting_room
+      domain: light
+  action:
+    - type: turn_off
+      device_id: 114e22d1af178828cb508da883b67dd4
+      entity_id: switch.charles_blanket
+      domain: switch
+    - service: notify.notify
+      data:
+        message: Turning on blanket
+    - delay: "1"
+    - type: turn_on
+      device_id: 114e22d1af178828cb508da883b67dd4
+      entity_id: switch.charles_blanket
+      domain: switch
+  mode: single
+
 - id: gitlab_backup
   alias: Back up config to gitlab
-  description: Commits and pushes the /config directory to gitlab every 15 minutes,
+  description:
+    Commits and pushes the /config directory to gitlab every 15 minutes,
     if changes have occured
   trigger:
-  - platform: time_pattern
-    minutes: /15
+    - platform: time_pattern
+      minutes: /15
   condition: []
   action:
-  - service: shell_command.backup_config
-    data: {}
+    - service: shell_command.backup_config
+      data: {}
   mode: single
