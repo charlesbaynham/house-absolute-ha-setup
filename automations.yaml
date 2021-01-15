@@ -107,3 +107,25 @@
   - service: shell_command.backup_config
     data: {}
   mode: single
+- id: '1610737920275'
+  alias: Turn on living room lights when we come home
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: group.any_home
+    to: home
+  condition:
+  - condition: sun
+    after: sunset
+  action:
+  - domain: light
+    entity_id: light.sitting_room
+    device_id: b71f880d440cbffae42fb3b433b12d67
+    type: turn_on
+    brightness_pct: 100
+  - domain: light
+    entity_id: light.sitting_room_lamp
+    device_id: d8067c7712895dfc0b70252968cd31c0
+    type: turn_on
+    brightness_pct: 100
+  mode: single
