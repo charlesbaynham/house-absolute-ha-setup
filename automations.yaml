@@ -50,7 +50,7 @@
     domain: switch
   - service: notify.notify
     data:
-      message: Turning on blanket
+      message: Turning on Charles blanket
   - delay: '1'
   - type: turn_on
     device_id: 114e22d1af178828cb508da883b67dd4
