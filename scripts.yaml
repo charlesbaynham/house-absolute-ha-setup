@@ -2,7 +2,7 @@ cast_to_living_room_tv:
   alias: Cast to living room TV
   sequence:
   - data:
-      dashboard_path: lovelace_tv
+      dashboard_path: lovelace_tvsasdsad
       entity_id: media_player.living_room_tv
       view_path: default_view
     service: cast.show_lovelace_view
