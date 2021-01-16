@@ -157,3 +157,21 @@
     device_id: e82af499967b17e762f057ca3ce3fbda
     type: turn_off
   mode: single
+- id: '1610797719356'
+  alias: Gaby awake!
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: device_tracker.gabyphone
+    to: home
+  condition:
+  - condition: time
+    before: '16:00:00'
+    weekday:
+    - sat
+    - sun
+  action:
+  - service: notify.mobile_app_charles_honor
+    data:
+      message: Gaby is awake!
+  mode: single
