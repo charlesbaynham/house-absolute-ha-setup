@@ -1,0 +1,34 @@
+- id: '1610905780566'
+  name: Bedroom lights off
+  entities:
+    light.bedroom_1:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - random
+      friendly_name: Bedroom 1
+      supported_features: 63
+      state: 'off'
+    light.bedroom_2:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - random
+      friendly_name: Bedroom 2
+      supported_features: 63
+      state: 'off'
+    light.bedroom_3:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - random
+      friendly_name: Bedroom 3
+      supported_features: 63
+      state: 'off'
+    light.lamp:
+      friendly_name: Lamp
+      supported_features: 41
+      state: 'off'
