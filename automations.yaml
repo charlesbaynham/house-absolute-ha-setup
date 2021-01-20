@@ -65,15 +65,11 @@
     and the living room lights are on
   trigger:
   - platform: time
-    at: '23:00:00'
+    at: '22:50:00'
   condition:
   - condition: zone
     entity_id: person.gaby
     zone: zone.home
-  - condition: numeric_state
-    entity_id: weather.home
-    attribute: temperature
-    below: '12'
   - condition: device
     type: is_on
     device_id: b71f880d440cbffae42fb3b433b12d67
