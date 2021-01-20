@@ -136,22 +136,7 @@
     from: home
   condition: []
   action:
-  - domain: light
-    entity_id: light.bedroom_1
-    device_id: dd890daa3ebbfd665d479bf87ec6dee0
-    type: turn_off
-  - domain: light
-    entity_id: light.bedroom_2
-    device_id: f0e106d5a778c54f28a6ef34acb1123b
-    type: turn_off
-  - domain: light
-    entity_id: light.bedroom_3
-    device_id: 4e12c50c59c2b70bf71dcff28ecd0e75
-    type: turn_off
-  - domain: light
-    entity_id: light.lamp
-    device_id: e82af499967b17e762f057ca3ce3fbda
-    type: turn_off
+  - scene: scene.all_lights_off
   mode: single
 - id: '1610797719356'
   alias: Gaby awake!

@@ -32,3 +32,53 @@
       friendly_name: Lamp
       supported_features: 41
       state: 'off'
+- id: '1611172588915'
+  name: All lights off
+  entities:
+    light.bedroom_1:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - random
+      friendly_name: Bedroom 1
+      supported_features: 63
+      state: unavailable
+    light.bedroom_2:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - random
+      friendly_name: Bedroom 2
+      supported_features: 63
+      state: unavailable
+    light.bedroom_3:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - random
+      friendly_name: Bedroom 3
+      supported_features: 63
+      state: unavailable
+    light.kitchen:
+      friendly_name: Kitchen
+      supported_features: 41
+      state: 'off'
+    light.sitting_room:
+      friendly_name: Sitting room
+      supported_features: 41
+      state: 'off'
+    light.sitting_room_lamp:
+      friendly_name: Sitting room lamp
+      supported_features: 41
+      state: 'off'
+    light.office_lamp:
+      friendly_name: Office lamp
+      supported_features: 41
+      state: unavailable
+    light.office:
+      friendly_name: Office
+      supported_features: 41
+      state: 'off'
