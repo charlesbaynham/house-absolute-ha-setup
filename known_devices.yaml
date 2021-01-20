@@ -124,9 +124,9 @@ c8_2b_96_6b_a7_dd:
   picture:
   track: false
 
-cc_48_3a_6e_db_9b:
-  name: cc_48_3a_6e_db_9b
+work_laptop:
+  name: Charles work laptop
   mac: CC:48:3A:6E:DB:9B
   icon:
   picture:
-  track: false
+  track: true

@@ -184,3 +184,22 @@
   action:
   - scene: scene.bedroom_lights_off
   mode: single
+- id: '1611169147035'
+  alias: Turn off office lights
+  description: Turn off office if Charles work laptop disconnects
+  trigger:
+  - platform: state
+    entity_id: device_tracker.work_laptop
+    from: home
+    for: 00:02:00
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 38d17eafa75f488b469e20456380401e
+    entity_id: light.office
+    domain: light
+  - type: turn_off
+    device_id: 31ad1ae771c656caacded7bcba3b6433
+    entity_id: light.office_lamp
+    domain: light
+  mode: single
