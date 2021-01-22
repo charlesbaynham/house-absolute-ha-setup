@@ -190,7 +190,7 @@
   trigger:
   - platform: state
     entity_id: device_tracker.work_laptop
-    to: Home
+    to: home
   condition: []
   action:
   - type: turn_on
