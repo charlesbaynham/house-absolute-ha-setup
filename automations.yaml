@@ -184,3 +184,21 @@
     entity_id: light.office_lamp
     domain: light
   mode: single
+- id: '1611306669717'
+  alias: Turn on office lights
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: device_tracker.work_laptop
+    to: Home
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 38d17eafa75f488b469e20456380401e
+    entity_id: light.office
+    domain: light
+  - type: turn_on
+    device_id: 31ad1ae771c656caacded7bcba3b6433
+    entity_id: light.office_lamp
+    domain: light
+  mode: single
