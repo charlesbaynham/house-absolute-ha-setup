@@ -130,3 +130,10 @@ work_laptop:
   icon:
   picture:
   track: true
+
+fc_e9_98_0a_b6_cb:
+  name: fc_e9_98_0a_b6_cb
+  mac: FC:E9:98:0A:B6:CB
+  icon:
+  picture:
+  track: false
