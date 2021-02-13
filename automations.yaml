@@ -49,7 +49,7 @@
     is home
   trigger:
   - platform: time_pattern
-    minutes: '0'
+    minutes: '10'
   condition:
   - condition: zone
     entity_id: person.charles
