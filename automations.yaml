@@ -150,24 +150,6 @@
   action:
   - scene: scene.all_lights_off
   mode: single
-- id: '1610797719356'
-  alias: Gaby awake!
-  description: ''
-  trigger:
-  - platform: state
-    entity_id: device_tracker.gabyphone
-    to: home
-  condition:
-  - condition: time
-    before: '16:00:00'
-    weekday:
-    - sat
-    - sun
-  action:
-  - service: notify.mobile_app_charles_honor
-    data:
-      message: Gaby is awake!
-  mode: single
 - id: '1610905746123'
   alias: Turn off bedroom light by living room switch
   description: ''
