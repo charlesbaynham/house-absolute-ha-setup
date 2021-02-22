@@ -30,10 +30,6 @@
   - condition: zone
     entity_id: person.charles
     zone: zone.home
-  - condition: numeric_state
-    entity_id: weather.home
-    attribute: temperature
-    below: '15'
   action:
   - type: turn_on
     device_id: 114e22d1af178828cb508da883b67dd4
