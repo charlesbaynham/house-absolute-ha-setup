@@ -35,13 +35,22 @@
     attribute: temperature
     below: '17'
   action:
-  - type: turn_on
+  - type: turn_off
     device_id: 114e22d1af178828cb508da883b67dd4
     entity_id: switch.charles_blanket
     domain: switch
   - service: notify.notify
     data:
       message: Turning on Charles blanket
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+  - type: turn_on
+    device_id: 114e22d1af178828cb508da883b67dd4
+    entity_id: switch.charles_blanket
+    domain: switch
   mode: single
 - id: '1610050834000'
   alias: Keep Charles Blanket on
@@ -49,7 +58,7 @@
     is home
   trigger:
   - platform: time_pattern
-    minutes: '10'
+    minutes: '55'
   condition:
   - condition: zone
     entity_id: person.charles
@@ -69,7 +78,11 @@
     device_id: 114e22d1af178828cb508da883b67dd4
     entity_id: switch.charles_blanket
     domain: switch
-  - delay: '1'
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
   - type: turn_on
     device_id: 114e22d1af178828cb508da883b67dd4
     entity_id: switch.charles_blanket
@@ -99,7 +112,11 @@
   - service: notify.notify
     data:
       message: Turning on Gaby's blanket
-  - delay: '1'
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
   - type: turn_on
     device_id: 7539a411a797e3075906413520bf08a5
     entity_id: switch.056530622cf432f3ad51
