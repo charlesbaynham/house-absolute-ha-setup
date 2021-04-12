@@ -17,8 +17,8 @@
     path: homeassistant/notify_leaving_zone.yaml
     input:
       person_entity: person.gaby
-      zone_entity: zone.home
       notify_device: 10e24cdea3aaf31ef94c59725b643354
+      zone_entity: zone.home
 - id: '1610050834159'
   alias: Turn on Charles blanket
   description: Turn on Charles' blanket if it's less than 5C outside and Charles is
@@ -58,21 +58,22 @@
     is home
   trigger:
   - platform: time_pattern
-    minutes: '55'
+    minutes: '11'
   condition:
   - condition: zone
     entity_id: person.charles
     zone: zone.home
   - condition: device
     type: is_on
-    device_id: b71f880d440cbffae42fb3b433b12d67
-    entity_id: light.sitting_room
-    domain: light
-  - condition: device
-    type: is_on
     device_id: 114e22d1af178828cb508da883b67dd4
     entity_id: switch.charles_blanket
     domain: switch
+  - condition: or
+    conditions:
+    - condition: time
+      after: '22:00'
+    - condition: time
+      before: 02:00
   action:
   - type: turn_off
     device_id: 114e22d1af178828cb508da883b67dd4
