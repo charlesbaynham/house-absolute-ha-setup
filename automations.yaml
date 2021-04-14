@@ -218,3 +218,16 @@
     entity_id: light.office_lamp
     domain: light
   mode: single
+- id: '1618440612170'
+  alias: New Automation
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: person.gaby
+    to: home
+  condition: []
+  action:
+  - service: notify.mobile_app_charles_honor
+    data:
+      message: test
+  mode: single
