@@ -228,5 +228,47 @@
   action:
   - service: notify.mobile_app_charles_honor
     data:
-      message: test
+      message: Gaby is home
   mode: single
+- id: '1625175063754'
+  alias: Flash office lights
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: 38d17eafa75f488b469e20456380401e
+    entity_id: light.office
+    domain: light
+  condition: []
+  action:
+  - type: flash
+    device_id: 38d17eafa75f488b469e20456380401e
+    entity_id: light.office
+    domain: light
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 1
+      milliseconds: 0
+  - type: flash
+    device_id: 38d17eafa75f488b469e20456380401e
+    entity_id: light.office
+    domain: light
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 1
+      milliseconds: 0
+  - type: flash
+    device_id: 38d17eafa75f488b469e20456380401e
+    entity_id: light.office
+    domain: light
+  mode: single
+- id: '1625175510726'
+  alias: Home Assistant Restart Notification
+  description: ''
+  use_blueprint:
+    path: gregoryduckworth/restart_notification.yaml
+    input:
+      notification_message: Home Assistant has succesfully restarted!
+      notify_device: 10e24cdea3aaf31ef94c59725b643354
