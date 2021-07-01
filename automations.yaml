@@ -234,11 +234,9 @@
   alias: Flash office lights
   description: ''
   trigger:
-  - platform: device
-    type: turned_on
-    device_id: 38d17eafa75f488b469e20456380401e
+  - platform: state
     entity_id: light.office
-    domain: light
+    to: 'on'
   condition: []
   action:
   - type: flash
