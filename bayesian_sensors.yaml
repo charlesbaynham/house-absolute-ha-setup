@@ -1,0 +1,30 @@
+- platform: bayesian
+  prior: 0.5
+  name: 'Gaby Sleeping Bayesian'
+  probability_threshold: 0.85
+  observations:
+      - entity_id: 'person.gaby'
+        prob_given_true: 0.5
+        prob_given_false: 0.99
+        platform: 'state'
+        to_state: 'home'
+      - entity_id: 'light.bedroom_1'
+        prob_given_true: 0.01
+        prob_given_false: 0.5
+        platform: 'state'
+        to_state: 'on'
+      - entity_id: 'sensor.gaby_honor_sleep_confidence'
+        prob_given_true: 0.8
+        prob_given_false: 0.4
+        platform: 'state'
+        to_state: 'Ready'
+      - entity_id: 'variable.last_motion'
+        prob_given_true: 0.9
+        prob_given_false: 0.3
+        platform: 'state'
+        to_state: 'Bathroom Motion'
+      - entity_id: 'binary_sensor.brad_phone_pluggedin'
+        prob_given_true: 0.95
+        prob_given_false: 0.5
+        platform: 'state'
+        to_state: 'on'
