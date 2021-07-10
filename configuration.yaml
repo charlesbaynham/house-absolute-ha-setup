@@ -47,7 +47,6 @@ recorder:
       - sensor.charles_honor_audio_mode
       - sensor.charles_honor_battery_health
       - sensor.charles_honor_battery_level
-      - sensor.charles_honor_battery_state
       - sensor.charles_honor_battery_temperature
       - sensor.charles_honor_bluetooth_connection
       - sensor.charles_honor_charger_type
@@ -93,7 +92,6 @@ recorder:
       - sensor.gaby_honor_audio_mode
       - sensor.gaby_honor_battery_health
       - sensor.gaby_honor_battery_level
-      - sensor.gaby_honor_battery_state
       - sensor.gaby_honor_battery_temperature
       - sensor.gaby_honor_bluetooth_connection
       - sensor.gaby_honor_charger_type
