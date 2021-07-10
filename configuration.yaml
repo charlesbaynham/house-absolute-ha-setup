@@ -13,7 +13,6 @@ recorder:
       - binary_sensor.charles_honor_doze_mode
       - binary_sensor.charles_honor_headphones
       - binary_sensor.charles_honor_interactive
-      - binary_sensor.charles_honor_is_charging
       - binary_sensor.charles_honor_keyguard_locked
       - binary_sensor.charles_honor_keyguard_secure
       - binary_sensor.charles_honor_mic_muted
@@ -30,7 +29,6 @@ recorder:
       - binary_sensor.gaby_honor_doze_mode
       - binary_sensor.gaby_honor_headphones
       - binary_sensor.gaby_honor_interactive
-      - binary_sensor.gaby_honor_is_charging
       - binary_sensor.gaby_honor_keyguard_locked
       - binary_sensor.gaby_honor_keyguard_secure
       - binary_sensor.gaby_honor_mic_muted
@@ -161,3 +159,5 @@ device_tracker:
     interval_seconds: 20
     new_device_defaults:
       track_new_devices: false
+
+binary_sensor: !include bayesian_sensors.yaml
