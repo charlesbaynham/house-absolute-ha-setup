@@ -270,3 +270,12 @@
     input:
       notification_message: Home Assistant has succesfully restarted!
       notify_device: 10e24cdea3aaf31ef94c59725b643354
+- id: '1629639543789'
+  alias: Temporary location wales
+  description: ''
+  use_blueprint:
+    path: homeassistant/notify_leaving_zone.yaml
+    input:
+      person_entity: person.gaby
+      zone_entity: zone.south_wales
+      notify_device: 10e24cdea3aaf31ef94c59725b643354
