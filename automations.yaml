@@ -231,36 +231,20 @@
       message: Gaby is home
   mode: single
 - id: '1625175063754'
-  alias: Flash office lights
+  alias: 'Copy office lights to lamp '
   description: ''
   trigger:
   - platform: state
     entity_id: light.office
     to: 'on'
+    from: unavailable
   condition: []
   action:
-  - type: flash
-    device_id: 38d17eafa75f488b469e20456380401e
-    entity_id: light.office
+  - type: turn_on
+    device_id: 31ad1ae771c656caacded7bcba3b6433
+    entity_id: light.office_lamp
     domain: light
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 1
-      milliseconds: 0
-  - type: flash
-    device_id: 38d17eafa75f488b469e20456380401e
-    entity_id: light.office
-    domain: light
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 1
-      milliseconds: 0
-  - type: flash
-    device_id: 38d17eafa75f488b469e20456380401e
-    entity_id: light.office
-    domain: light
+    brightness_pct: 100
   mode: single
 - id: '1625175510726'
   alias: Home Assistant Restart Notification
@@ -270,3 +254,18 @@
     input:
       notification_message: Home Assistant has succesfully restarted!
       notify_device: 10e24cdea3aaf31ef94c59725b643354
+- id: '1632086778926'
+  alias: 'Copy office lights to lamp  (off) '
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: light.office
+    from: 'on'
+    to: unavailable
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 31ad1ae771c656caacded7bcba3b6433
+    entity_id: light.office_lamp
+    domain: light
+  mode: single
