@@ -4,6 +4,6 @@ cast_to_living_room_tv:
   - data:
       dashboard_path: lovelace-tv
       entity_id: media_player.living_room_tv
-      view_path: default_view
+      view_path: '0'
     service: cast.show_lovelace_view
   mode: single

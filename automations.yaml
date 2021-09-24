@@ -7,7 +7,10 @@
     from: unavailable
     to: 'off'
     for: 00:01:00
-  condition: []
+  condition:
+  - condition: state
+    entity_id: person.gaby
+    state: not_home
   action:
   - service: script.cast_to_living_room_tv
     data: {}
