@@ -14,6 +14,13 @@
   action:
   - service: script.cast_to_living_room_tv
     data: {}
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 30
+      milliseconds: 0
+  - service: script.cast_to_living_room_tv
+    data: {}
   mode: single
 - id: '1609973083306'
   alias: Zone Notification
