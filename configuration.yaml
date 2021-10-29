@@ -1,6 +1,10 @@
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
+discovery:
+  enable:
+    - homekit
+
 recorder:
   purge_keep_days: 30
   commit_interval: 60
