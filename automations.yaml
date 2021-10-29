@@ -312,3 +312,18 @@
     entity_id: light.lamp
     domain: light
   mode: single
+- id: '1635532170556'
+  alias: Reset at 4am
+  description: Reset the heating and turn off the lights at 4am
+  trigger:
+  - platform: time
+    at: 04:00:00
+  condition: []
+  action:
+  - device_id: 32b1896caaf2ef09416ece31de5874a1
+    domain: climate
+    entity_id: climate.house_absolute
+    type: set_hvac_mode
+    hvac_mode: auto
+  - scene: scene.all_lights_off
+  mode: single
