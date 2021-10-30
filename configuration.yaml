@@ -10,6 +10,8 @@ recorder:
   commit_interval: 60
   exclude:
     entities:
+      - automation.back_up_config_to_gitlab
+      - automation.back_up_config_to_gitlab_2
       - binary_sensor.charles_honor_app_inactive
       - binary_sensor.charles_honor_bluetooth_state
       - binary_sensor.charles_honor_device_locked
