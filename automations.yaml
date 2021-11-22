@@ -102,20 +102,14 @@
   mode: single
 - id: '78687612387216'
   alias: Turn on Gaby blanket
-  description: Turn on Gaby's blanket if it's less than 5C outside and Gaby is home
-    and the living room lights are on
+  description: Turn on Gaby's blanket at 10pm
   trigger:
   - platform: time
-    at: '22:00:00'
+    at: '22:00'
   condition:
   - condition: zone
     entity_id: person.gaby
     zone: zone.home
-  - condition: device
-    type: is_on
-    device_id: b71f880d440cbffae42fb3b433b12d67
-    entity_id: light.sitting_room
-    domain: light
   action:
   - type: turn_off
     device_id: 7539a411a797e3075906413520bf08a5
