@@ -42,9 +42,6 @@
   - condition: zone
     entity_id: person.charles
     zone: zone.home
-  - condition: numeric_state
-    entity_id: climate.house_absolute
-    below: '22.1'
   action:
   - type: turn_off
     device_id: 114e22d1af178828cb508da883b67dd4
