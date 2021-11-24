@@ -45,13 +45,18 @@
       platform: "state"
       to_state: "home"
     - entity_id: "light.bedroom_1"
-      prob_given_true: 0.01
+      prob_given_true: 0.1
       prob_given_false: 0.2
       platform: "state"
       to_state: "on"
+    - entity_id: "light.bedroom1"
+      platform: "state" 
+      to_state: "off"
+      prob_given_false: 0.15
+      prob_given_true: 0.8
     - entity_id: "sensor.charles_honor_sleep_confidence"
       prob_given_true: 0.70
-      prob_given_false: 0.05
+      prob_given_false: 0.2
       platform: "numeric_state"
       above: 80
     - entity_id: "sensor.sun"
