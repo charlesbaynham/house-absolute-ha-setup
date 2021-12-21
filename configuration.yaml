@@ -1,9 +1,9 @@
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
-discovery:
-  enable:
-    - homekit
+pyscript:
+  allow_all_imports: false
+  hass_is_global: false
 
 recorder:
   purge_keep_days: 30
