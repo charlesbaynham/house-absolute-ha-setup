@@ -170,19 +170,6 @@
   action:
   - scene: scene.all_lights_off
   mode: single
-- id: '1610905746123'
-  alias: Turn off bedroom light by living room switch
-  description: ''
-  trigger:
-  - device_id: 7ce5bd5292e6ad30ed19c6a1e37fb7ca
-    domain: hue
-    platform: device
-    type: remote_button_long_release
-    subtype: dim_down
-  condition: []
-  action:
-  - scene: scene.bedroom_lights_off
-  mode: single
 - id: '1611169147035'
   alias: Turn off office lights
   description: Turn off office if Charles work laptop disconnects
