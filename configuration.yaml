@@ -2,7 +2,7 @@
 default_config:
 
 pyscript:
-  allow_all_imports: false
+  allow_all_imports: true
   hass_is_global: false
 
 recorder:

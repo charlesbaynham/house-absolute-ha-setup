@@ -1,8 +1,39 @@
-2021-12-21 15:35:54 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration pyscript which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
-2021-12-21 15:35:54 WARNING (SyncWorker_1) [homeassistant.loader] We found a custom integration hacs which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
-2021-12-21 17:32:01 WARNING (SyncWorker_5) [homeassistant.components.rpi_power.binary_sensor] Under-voltage was detected. Consider getting a uninterruptible power supply for your Raspberry Pi.
-2021-12-21 18:34:50 WARNING (Thread-8) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Heartbeat timeout, resetting connection
-2021-12-21 18:35:20 ERROR (Thread-8) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Failed to connect to service ServiceInfo(type='host', data=('192.168.1.246', 8009)), retrying in 5.0s
-2021-12-21 20:48:26 ERROR (Thread-7) [homeassistant.components.cast.media_player] Failed to cast media . Please make sure the URL is: Reachable from the cast device and either a publicly resolvable hostname or an IP address
-2021-12-21 21:53:00 WARNING (MainThread) [homeassistant.components.http.ban] Login attempt or request with invalid authentication from 192.168.1.1 (192.168.1.1). (Python/3.9 aiohttp/3.8.1)
-2021-12-21 21:54:51 ERROR (MainThread) [homeassistant.components.hassio.handler] Timeout on /homeassistant/restart request
+2021-12-21 21:55:03 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration hacs which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2021-12-21 21:55:03 WARNING (SyncWorker_1) [homeassistant.loader] We found a custom integration pyscript which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2021-12-21 21:57:33 WARNING (MainThread) [custom_components.pyscript.file.test_pyscript.hello_world] hello world: got action hello id world
+2021-12-21 22:00:00 WARNING (MainThread) [homeassistant.helpers.service] Unable to find referenced entities switch.056530622cf432f3ad51
+2021-12-21 22:00:02 WARNING (MainThread) [homeassistant.helpers.service] Unable to find referenced entities switch.056530622cf432f3ad51
+2021-12-21 22:06:55 WARNING (MainThread) [homeassistant.components.http.ban] Login attempt or request with invalid authentication from 192.168.1.1 (192.168.1.1). (Python/3.9 aiohttp/3.8.1)
+2021-12-21 22:08:16 ERROR (MainThread) [custom_components.pyscript.jupyter_kernel] No connections to session jupyter_0; shutting down
+2021-12-21 22:24:33 ERROR (MainThread) [homeassistant] Error doing job: Task exception was never retrieved
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/components/device_tracker/legacy.py", line 352, in async_device_tracker_scan
+    found_devices = await scanner.async_scan_devices()
+  File "/usr/src/homeassistant/homeassistant/components/device_tracker/legacy.py", line 826, in async_scan_devices
+    return await self.hass.async_add_executor_job(self.scan_devices)
+  File "/usr/local/lib/python3.9/concurrent/futures/thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/usr/src/homeassistant/homeassistant/components/luci/device_tracker.py", line 63, in scan_devices
+    self._update_info()
+  File "/usr/src/homeassistant/homeassistant/components/luci/device_tracker.py", line 91, in _update_info
+    result = self.router.get_all_connected_devices(only_reachable=True)
+  File "/usr/local/lib/python3.9/site-packages/openwrt_luci_rpc/__init__.py", line 42, in get_all_connected_devices
+    return self.router.get_all_connected_devices(
+  File "/usr/local/lib/python3.9/site-packages/openwrt_luci_rpc/openwrt_luci_rpc.py", line 173, in get_all_connected_devices
+    device_entry = utilities.normalise_keys(device_entry)
+  File "/usr/local/lib/python3.9/site-packages/openwrt_luci_rpc/utilities.py", line 15, in normalise_keys
+    {k.replace(".", "_").replace(" ", "_"): v for k, v in result.items()}  # noqa: E501
+AttributeError: 'int' object has no attribute 'items'
+2021-12-22 02:08:12 WARNING (Thread-8) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Heartbeat timeout, resetting connection
+2021-12-22 02:08:42 ERROR (Thread-8) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Failed to connect to service ServiceInfo(type='mdns', data='Chromecast-1ec642dc45e1b4d5d23de1fab634b028._googlecast._tcp.local.'), retrying in 5.0s
+2021-12-22 02:16:09 WARNING (MainThread) [homeassistant.components.http.security_filter] Filtered a potential harmful request to: /cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh
+2021-12-22 10:00:12 WARNING (SyncWorker_4) [homeassistant.components.rpi_power.binary_sensor] Under-voltage was detected. Consider getting a uninterruptible power supply for your Raspberry Pi.
+2021-12-22 11:20:53 ERROR (MainThread) [custom_components.pyscript.jupyter_kernel] No connections to session jupyter_1; shutting down
+2021-12-22 11:22:01 ERROR (MainThread) [custom_components.pyscript.jupyter_kernel] No connections to session jupyter_2; shutting down
+2021-12-22 11:22:55 ERROR (MainThread) [custom_components.pyscript.jupyter_kernel] No connections to session jupyter_3; shutting down
+2021-12-22 11:33:22 ERROR (MainThread) [custom_components.pyscript.jupyter_kernel] No connections to session jupyter_4; shutting down
+2021-12-22 11:47:36 ERROR (MainThread) [custom_components.pyscript.jupyter_kernel] No connections to session jupyter_5; shutting down
+2021-12-22 11:55:22 ERROR (MainThread) [custom_components.pyscript.jupyter_kernel] No connections to session jupyter_7; shutting down
+2021-12-22 11:56:11 ERROR (MainThread) [custom_components.pyscript.jupyter_kernel] No connections to session jupyter_8; shutting down
+2021-12-22 12:11:08 WARNING (MainThread) [custom_components.pyscript.jupyter_10] this text will be displayed
+2021-12-22 12:35:37 ERROR (MainThread) [homeassistant.components.hassio.handler] Timeout on /homeassistant/restart request
