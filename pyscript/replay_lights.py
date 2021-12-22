@@ -1,11 +1,11 @@
 
 import asyncio
 
-log.error("Delaying light monitors by 5s")
+log.info("Delaying light monitors by 5s")
 
 await asyncio.sleep(5)
 
-log.error("Setting up light replay monitors")
+log.info("Setting up light replay monitors")
 
 # Get all the replay sensors
 replay_sensors = [f for f in state.names() if 'replay' in f]
@@ -19,12 +19,12 @@ for sensor in replay_sensors:
     log.debug(f"{sensor} => {light_name}")
     try:
         light = state.get(light_name)
-    except NameError:
+    except Nameinfo:
         log.warning(f"{sensor} => {light_name} mapping not found")
         continue
     replay_sensors_to_light[sensor] = light_name
 
-log.error(f"replay_sensors_to_light: {replay_sensors_to_light}")
+log.info(f"replay_sensors_to_light: {replay_sensors_to_light}")
 
 # For each replay sensor + light combo, build a function which copies
 # the state of the replay sensor to its light but only if away mode is active.
@@ -32,12 +32,13 @@ log.error(f"replay_sensors_to_light: {replay_sensors_to_light}")
 for sensor_name, light_name in replay_sensors_to_light.items():
     @state_active("input_boolean.away_mode_active == 'on'")
     @state_trigger(sensor_name)
+    @state_trigger("input_boolean.away_mode_active")
     def trigger_replay_func(
         sensor_name=sensor_name,  # I hate closures
         light_name=light_name, 
         **kwargs
     ):
-        log.error(f"trigger_replay_func for {sensor_name} called with kwargs={kwargs}")
+        log.info(f"trigger_replay_func for {sensor_name} called with kwargs={kwargs}")
 
         if int(state.get(sensor_name)) > 0:
             service.call("light", "turn_on", entity_id=light_name)
@@ -46,4 +47,4 @@ for sensor_name, light_name in replay_sensors_to_light.items():
 
     globals()["trigger_replay_" + light_name] = trigger_replay_func
 
-log.error(f"globals() = {globals()}")
+log.info(f"globals() = {globals()}")

@@ -318,3 +318,37 @@
     hvac_mode: auto
   - scene: scene.all_lights_off
   mode: single
+- id: '1640185443869'
+  alias: Turn on away mode after a day
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: group.any_home
+    to: away
+    for:
+      hours: 24
+      minutes: 0
+      seconds: 0
+  condition: []
+  action:
+  - service: input_boolean.turn_on
+    target:
+      entity_id: input_boolean.away_mode_active
+  mode: single
+- id: '1640185488128'
+  alias: Turn off away mode when we come home
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: group.any_home
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 0
+    to: home
+  condition: []
+  action:
+  - service: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.away_mode_active
+  mode: single
