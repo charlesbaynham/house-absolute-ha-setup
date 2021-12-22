@@ -1,9 +1,9 @@
 
 import asyncio
 
-log.info("Delaying light monitors by 5s")
+log.info("Delaying light monitors by 30s")
 
-await asyncio.sleep(5)
+await asyncio.sleep(30)
 
 log.info("Setting up light replay monitors")
 
