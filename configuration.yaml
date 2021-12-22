@@ -49,3 +49,8 @@ input_number:
     min: 10
     max: 2400000
     step: 1
+    # 1 week in seconds:
+    initial: 604800
+input_boolean:
+  away_mode_active:
+    name: Lights in away mode

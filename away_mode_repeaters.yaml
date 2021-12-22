@@ -11,7 +11,7 @@
   state: "on"
   type: count
   start: >
-    {{ as_timestamp(now()) - states('input_number.away_mode_lookback_duration') }}
+    {{ as_timestamp(now()) - float(states('input_number.away_mode_lookback_duration')) }}
   duration: 00:00:30
 
 - platform: history_stats
@@ -20,7 +20,7 @@
   state: "on"
   type: count
   start: >
-    {{ as_timestamp(now()) - states('input_number.away_mode_lookback_duration') }}
+    {{ as_timestamp(now()) - float(states('input_number.away_mode_lookback_duration')) }}
   duration: 00:00:30
 
 - platform: history_stats
@@ -29,7 +29,7 @@
   state: "on"
   type: count
   start: >
-    {{ as_timestamp(now()) - states('input_number.away_mode_lookback_duration') }}
+    {{ as_timestamp(now()) - float(states('input_number.away_mode_lookback_duration')) }}
   duration: 00:00:30
 
 - platform: history_stats
@@ -38,7 +38,7 @@
   state: "on"
   type: count
   start: >
-    {{ as_timestamp(now()) - states('input_number.away_mode_lookback_duration') }}
+    {{ as_timestamp(now()) - float(states('input_number.away_mode_lookback_duration')) }}
   duration: 00:00:30
 
 - platform: history_stats
@@ -47,14 +47,14 @@
   state: "on"
   type: count
   start: >
-    {{ as_timestamp(now()) - states('input_number.away_mode_lookback_duration') }}
+    {{ as_timestamp(now()) - float(states('input_number.away_mode_lookback_duration')) }}
   duration: 00:00:30
 
-- platform: history_stats
-  name: "replay_light.office"
-  entity_id: light.office
-  state: "on"
-  type: count
-  start: >
-    {{ as_timestamp(now()) - states('input_number.away_mode_lookback_duration') }}
-  duration: 00:00:30
+# - platform: history_stats
+#   name: "replay_light.office"
+#   entity_id: light.office
+#   state: "on"
+#   type: count
+#   start: >
+#     {{ as_timestamp(now()) - float(states('input_number.away_mode_lookback_duration')) }}
+#   duration: 00:00:30
