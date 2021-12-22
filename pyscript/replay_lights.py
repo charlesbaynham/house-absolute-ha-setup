@@ -1,4 +1,11 @@
-log.info("Setting up light replay monitors")
+
+
+# log.warning("Delaying light monitors by 5s")
+
+# @time_trigger("once(now + 5s)")
+# def func_factory(**kwargs):
+
+log.warning("Setting up light replay monitors")
 
 # Get all the replay sensors
 replay_sensors = [f for f in state.names() if 'replay' in f]
@@ -17,7 +24,7 @@ for sensor in replay_sensors:
         continue
     replay_sensors_to_light[sensor] = light_name
 
-log.info(f"replay_sensors_to_light: {replay_sensors_to_light}")
+log.warning(f"replay_sensors_to_light: {replay_sensors_to_light}")
 
 # For each replay sensor + light combo, build a function which copies
 # the state of the replay sensor to its light but only if away mode is active.
@@ -26,7 +33,7 @@ for sensor_name, light_name in replay_sensors_to_light.items():
     @state_active("input_boolean.away_mode_active == 'on'")
     @state_trigger(sensor_name)
     def trigger_replay_func(**kwargs):
-        log.debug(f"trigger_replay_func for {sensor_name} called with kwargs={kwargs}")
+        log.warning(f"trigger_replay_func for {sensor_name} called with kwargs={kwargs}")
 
         if int(state.get(sensor_name)) > 0:
             service.call("light", "turn_on", entity_id=light_name)
@@ -34,3 +41,5 @@ for sensor_name, light_name in replay_sensors_to_light.items():
             service.call("light", "turn_off", entity_id=light_name)
 
     globals()["trigger_replay_" + light_name] = trigger_replay_func
+
+log.warning(f"globals() = {globals()}")
