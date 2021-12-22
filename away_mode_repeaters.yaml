@@ -1,0 +1,58 @@
+##########
+# Sensors
+##########
+# Replay Sensor - Make a new one for each light to monitor
+# All sensors will have naming convention "sensor.replay_xxxxx"
+- platform: history_stats
+  name: "replay_light_lamp"
+  entity_id: light.lamp
+  state: "on"
+  type: count
+  start: >
+    {{ as_timestamp(now()) - (7*86400) }}
+  duration: 00:00:30
+
+- platform: history_stats
+  name: "replay_light_lamp"
+  entity_id: light.sitting_room
+  state: "on"
+  type: count
+  start: >
+    {{ as_timestamp(now()) - (7*86400) }}
+  duration: 00:00:30
+
+- platform: history_stats
+  name: "replay_light.bedroom_1"
+  entity_id: light.bedroom_1
+  state: "on"
+  type: count
+  start: >
+    {{ as_timestamp(now()) - (7*86400) }}
+  duration: 00:00:30
+
+- platform: history_stats
+  name: "replay_light_lamp"
+  entity_id: light.bedroom_2
+  state: "on"
+  type: count
+  start: >
+    {{ as_timestamp(now()) - (7*86400) }}
+  duration: 00:00:30
+
+- platform: history_stats
+  name: "replay_light_lamp"
+  entity_id: light.bedroom_3
+  state: "on"
+  type: count
+  start: >
+    {{ as_timestamp(now()) - (7*86400) }}
+  duration: 00:00:30
+
+- platform: history_stats
+  name: "replay_light_lamp"
+  entity_id: light.office
+  state: "on"
+  type: count
+  start: >
+    {{ as_timestamp(now()) - (7*86400) }}
+  duration: 00:00:30
