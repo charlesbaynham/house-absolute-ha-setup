@@ -4,6 +4,11 @@ default_config:
 pyscript:
   allow_all_imports: true
   hass_is_global: false
+  logger:
+  default: info
+  logs:
+    homeassistant.components.yamaha: critical
+    custom_components.my_integration: critical
 
 recorder:
   purge_keep_days: 30
