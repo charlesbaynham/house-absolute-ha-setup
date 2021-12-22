@@ -1,15 +1,17 @@
 ##########
 # Sensors
 ##########
+
 # Replay Sensor - Make a new one for each light to monitor
 # All sensors will have naming convention "sensor.replay_xxxxx"
+
 - platform: history_stats
   name: "replay_light.lamp"
   entity_id: light.lamp
   state: "on"
   type: count
   start: >
-    {{ as_timestamp(now()) - (7*86400) }}
+    {{ as_timestamp(now()) - states('input_number.away_mode_lookback_duration') }}
   duration: 00:00:30
 
 - platform: history_stats
@@ -18,7 +20,7 @@
   state: "on"
   type: count
   start: >
-    {{ as_timestamp(now()) - (7*86400) }}
+    {{ as_timestamp(now()) - states('input_number.away_mode_lookback_duration') }}
   duration: 00:00:30
 
 - platform: history_stats
@@ -27,7 +29,7 @@
   state: "on"
   type: count
   start: >
-    {{ as_timestamp(now()) - (7*86400) }}
+    {{ as_timestamp(now()) - states('input_number.away_mode_lookback_duration') }}
   duration: 00:00:30
 
 - platform: history_stats
@@ -36,7 +38,7 @@
   state: "on"
   type: count
   start: >
-    {{ as_timestamp(now()) - (7*86400) }}
+    {{ as_timestamp(now()) - states('input_number.away_mode_lookback_duration') }}
   duration: 00:00:30
 
 - platform: history_stats
@@ -45,7 +47,7 @@
   state: "on"
   type: count
   start: >
-    {{ as_timestamp(now()) - (7*86400) }}
+    {{ as_timestamp(now()) - states('input_number.away_mode_lookback_duration') }}
   duration: 00:00:30
 
 - platform: history_stats
@@ -54,5 +56,5 @@
   state: "on"
   type: count
   start: >
-    {{ as_timestamp(now()) - (7*86400) }}
+    {{ as_timestamp(now()) - states('input_number.away_mode_lookback_duration') }}
   duration: 00:00:30

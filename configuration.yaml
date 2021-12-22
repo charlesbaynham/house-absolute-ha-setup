@@ -42,3 +42,10 @@ device_tracker:
 
 binary_sensor: !include bayesian_sensors.yaml
 sensor: !include away_mode_repeaters.yaml
+
+input_number:
+  away_mode_lookback_duration:
+    name: Lookback duration for away mode
+    min: 10
+    max: 2400000
+    step: 1
