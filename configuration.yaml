@@ -46,7 +46,7 @@ template:
   - binary_sensor:
       - name: Charles phone untouched
         state: "{{ states('binary_sensor.charles_honor_device_locked') }}"
-        delay_on: 0:02:00
+        delay_on: 0:15:00
         attributes:
           time_locked: >
             {% if states('binary_sensor.charles_honor_device_locked') == 'on' %}
