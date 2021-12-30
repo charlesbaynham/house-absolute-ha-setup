@@ -43,20 +43,11 @@ device_tracker:
 binary_sensor: !include bayesian_sensors.yaml
 sensor: !include away_mode_repeaters.yaml
 template:
-  - sensor:
+  - binary_sensor:
       - name: Charles phone untouched
-        state: >
-          {% set phone_lock_state = states('binary_sensor.charles_honor_device_locked') %}
-          {% set time_since_changed = as_timestamp(now()) - 
-            as_timestamp(
-              states.binary_sensor.charles_honor_device_locked.last_changed
-            )
-          %}
-          {% if phone_lock_state == 'on' and time_since_changed > 900 %}
-            on
-          {% else %}
-            off
-          {% endif %}
+        state: {{ states('binary_sensor.charles_honor_device_locked') } }
+        delay_on: 0:15:00
+
   - sensor:
       - name: Gaby phone untouched
         state: >
