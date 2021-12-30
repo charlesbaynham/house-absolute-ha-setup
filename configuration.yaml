@@ -6,7 +6,7 @@ pyscript:
   hass_is_global: false
 
 recorder:
-  purge_keep_days: 30
+  purge_keep_days: 120
   commit_interval: 60
   exclude:
     entities: !include excluded_sensors.yaml

@@ -3,7 +3,6 @@
   - automation.back_up_config_to_gitlab_2
   - binary_sensor.charles_honor_app_inactive
   - binary_sensor.charles_honor_bluetooth_state
-  - binary_sensor.charles_honor_device_locked
   - binary_sensor.charles_honor_device_secure
   - binary_sensor.charles_honor_doze_mode
   - binary_sensor.charles_honor_headphones
@@ -19,7 +18,6 @@
   - binary_sensor.charles_honor_wifi_state
   - binary_sensor.gaby_honor_app_inactive
   - binary_sensor.gaby_honor_bluetooth_state
-  - binary_sensor.gaby_honor_device_locked
   - binary_sensor.gaby_honor_device_secure
   - binary_sensor.gaby_honor_doze_mode
   - binary_sensor.gaby_honor_headphones
