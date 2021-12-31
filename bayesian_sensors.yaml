@@ -23,7 +23,6 @@
       prob_given_false: 0.10
       platform: "numeric_state"
       above: 80
-
     - entity_id: "sensor.sun"
       prob_given_true: 0.7
       prob_given_false: 0.3
