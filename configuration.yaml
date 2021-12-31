@@ -72,17 +72,17 @@ template:
             {% else %}0{% endif %}
 
   - sensor:
-    - name: Gaby sleep state
-      state: >
-        {% set state = states('binary_sensor.gaby_sleeping_bayesian') %}
-        {% set since = relative_time(states.binary_sensor.gaby_sleeping_bayesian.last_changed) %}
-        {# Without this, the sensor will not update: #}
-        {% set bump = now() %}
-        {% if 'on' == state %}
-          Asleep {{since}}
-        {% elif 'off' == state %}
-          Awake {{since}}
-        {% endif %}
+      - name: Gaby sleep state
+        state: >
+          {% set state = states('binary_sensor.gaby_sleeping_bayesian') %}
+          {% set since = relative_time(states.binary_sensor.gaby_sleeping_bayesian.last_changed) %}
+          {# Without this, the sensor will not update: #}
+          {% set bump = now() %}
+          {% if 'on' == state %}
+            Asleep {{since}}
+          {% elif 'off' == state %}
+            Awake {{since}}
+          {% endif %}
 
 input_number:
   away_mode_lookback_duration:
@@ -95,3 +95,10 @@ input_number:
 input_boolean:
   away_mode_active:
     name: Lights in away mode
+
+# Link an iframe to the tasmoda admin supervisor addon
+panel_iframe:
+  tasmoadmin:
+    title: TasmoAdmin
+    icon: mdi:lightbulb-on
+    url: https://houseabsolute.duckdns.org:9541
