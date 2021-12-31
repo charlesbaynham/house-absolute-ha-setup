@@ -23,11 +23,7 @@
       prob_given_false: 0.10
       platform: "numeric_state"
       above: 80
-    - entity_id: "sensor.gaby_honor_battery_state"
-      prob_given_true: 0.05
-      prob_given_false: 0.7
-      platform: "state"
-      to_state: "discharging"
+
     - entity_id: "sensor.sun"
       prob_given_true: 0.7
       prob_given_false: 0.3
