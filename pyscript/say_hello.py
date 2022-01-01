@@ -3,9 +3,10 @@ import asyncio
 
 log.debug("Registering 'Say Hello' automation")
 
+DELAY_S = 5 * 60
 
-@state_trigger("person.charles")
-@state_trigger("person.gaby")
+@state_trigger("person.charles=='home'", state_hold=DELAY_S)
+@state_trigger("person.gaby=='home'", state_hold=DELAY_S)
 def say_hello( 
     **kwargs
 ):
@@ -18,8 +19,6 @@ def say_hello(
 
     log.debug(f"Saying hello to {person}")
 
-    if int(state.get(sensor_name)) > 0:
-        service.call("light", "turn_on", entity_id=light_name)
-    else:
-        service.call("light", "turn_off", entity_id=light_name)
-
+    message = f"Hello {person}, welcome home"
+    service.call("tts", "google_translate_say", entity_id="media_player.living_room_speaker", message=message)
+    # service.call("notify", "mobile_app_charles_honor", message=message)
