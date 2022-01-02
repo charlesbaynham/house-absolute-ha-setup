@@ -19,34 +19,35 @@
       to_state: "on"
     - entity_id: "light.bedroom_1"
       prob_given_true: 0.95
-      prob_given_false: 0.45  # because there's also the possibility of it being
-                              # "unavailable" which is more likely during the day
+      prob_given_false:
+        0.45 # because there's also the possibility of it being
+        # "unavailable" which is more likely during the day
       platform: "state"
       to_state: "off"
     - prob_given_true: 0.9
       prob_given_false: 0.4
       platform: "template"
       value_template: >
-          {% set locked_state = states.binary_sensor.gaby_honor_device_locked %}
-          {% set bump = now() %}
-          {{
-            locked_state and locked_state.state == 'on' and (
-              as_timestamp(now())
-              - as_timestamp(locked_state.last_changed)
-            ) > 900
-          }}
+        {% set locked_state = states.binary_sensor.gaby_honor_device_locked %}
+        {% set bump = now() %}
+        {{
+          locked_state and locked_state.state == 'on' and (
+            as_timestamp(now())
+            - as_timestamp(locked_state.last_changed)
+          ) > 900
+        }}
     - prob_given_true: 0.1
       prob_given_false: 0.6
       platform: "template"
       value_template: >
-          {% set locked_state = states.binary_sensor.gaby_honor_device_locked %}
-          {% set bump = now() %}
-          {{
-            not (locked_state and locked_state.state == 'on' and (
-              as_timestamp(now())
-              - as_timestamp(locked_state.last_changed)
-            ) > 900)
-          }}
+        {% set locked_state = states.binary_sensor.gaby_honor_device_locked %}
+        {% set bump = now() %}
+        {{
+          not (locked_state and locked_state.state == 'on' and (
+            as_timestamp(now())
+            - as_timestamp(locked_state.last_changed)
+          ) > 900)
+        }}
     - entity_id: "sensor.gaby_honor_sleep_confidence"
       prob_given_true: 0.90
       prob_given_false: 0.10
@@ -82,10 +83,28 @@
       platform: "state"
       to_state: "on"
     - entity_id: "light.bedroom1"
-      platform: "state" 
+      platform: "state"
       to_state: "off"
       prob_given_false: 0.15
       prob_given_true: 0.8
+    - platform: "template"
+      value_template: >
+        {{
+          states('media_player.living_room_tv') == 'playing'
+            or
+          states('media_player.living_room_tv') == 'paused'
+        }}
+      prob_given_true: 0.03
+      prob_given_false: 0.2
+    - platform: "template"
+      value_template: >
+        {{
+          states('media_player.living_room_tv') != 'playing'
+            and
+          states('media_player.living_room_tv') != 'paused'
+        }}
+      prob_given_true: 0.97
+      prob_given_false: 0.8
     - entity_id: "sensor.charles_honor_sleep_confidence"
       prob_given_true: 0.70
       prob_given_false: 0.2
@@ -100,23 +119,23 @@
       prob_given_false: 0.4
       platform: "template"
       value_template: >
-          {% set locked_state = states.binary_sensor.charles_honor_device_locked %}
-          {% set bump = now() %}
-          {{
-            locked_state and locked_state.state == 'on' and (
-              as_timestamp(now())
-              - as_timestamp(locked_state.last_changed)
-            ) > 900
-          }}
+        {% set locked_state = states.binary_sensor.charles_honor_device_locked %}
+        {% set bump = now() %}
+        {{
+          locked_state and locked_state.state == 'on' and (
+            as_timestamp(now())
+            - as_timestamp(locked_state.last_changed)
+          ) > 900
+        }}
     - prob_given_true: 0.1
       prob_given_false: 0.6
       platform: "template"
       value_template: >
-          {% set locked_state = states.binary_sensor.charles_honor_device_locked %}
-          {% set bump = now() %}
-          {{
-            not (locked_state and locked_state.state == 'on' and (
-              as_timestamp(now())
-              - as_timestamp(locked_state.last_changed)
-            ) > 900)
-          }}
+        {% set locked_state = states.binary_sensor.charles_honor_device_locked %}
+        {% set bump = now() %}
+        {{
+          not (locked_state and locked_state.state == 'on' and (
+            as_timestamp(now())
+            - as_timestamp(locked_state.last_changed)
+          ) > 900)
+        }}
