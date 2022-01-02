@@ -28,6 +28,7 @@
       platform: "template"
       value_template: >
           {% set locked_state = states.binary_sensor.gaby_honor_device_locked %}
+          {% set bump = now() %}
           {{
             locked_state and locked_state.state == 'on' and (
               as_timestamp(now())
@@ -39,6 +40,7 @@
       platform: "template"
       value_template: >
           {% set locked_state = states.binary_sensor.gaby_honor_device_locked %}
+          {% set bump = now() %}
           {{
             not (locked_state and locked_state.state == 'on' and (
               as_timestamp(now())
@@ -99,6 +101,7 @@
       platform: "template"
       value_template: >
           {% set locked_state = states.binary_sensor.charles_honor_device_locked %}
+          {% set bump = now() %}
           {{
             locked_state and locked_state.state == 'on' and (
               as_timestamp(now())
@@ -110,6 +113,7 @@
       platform: "template"
       value_template: >
           {% set locked_state = states.binary_sensor.charles_honor_device_locked %}
+          {% set bump = now() %}
           {{
             not (locked_state and locked_state.state == 'on' and (
               as_timestamp(now())
