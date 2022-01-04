@@ -61,11 +61,11 @@
       platform: "numeric_state"
       below: 20
     - platform: template
-      value_template: {{ today_at("10:00") < now() and now() < today_at("22:00") }}
+      value_template: '{{ today_at("10:00") < now() and now() < today_at("22:00") }}'
       prob_given_true: 0.1
       prob_given_false: 0.8
     - platform: template
-      value_template: {{ not (today_at("10:00") < now() and now() < today_at("22:00")) }}
+      value_template: '{{ not (today_at("10:00") < now() and now() < today_at("22:00")) }}'
       prob_given_true: 0.9
       prob_given_false: 0.2
 
@@ -80,11 +80,11 @@
       platform: "state"
       to_state: "home"
     - platform: template
-      value_template: {{ today_at("10:00") < now() and now() < today_at("22:00") }}
+      value_template: '{{ today_at("10:00") < now() and now() < today_at("22:00") }}'
       prob_given_true: 0.03
       prob_given_false: 0.9
     - platform: template
-      value_template: {{ not (today_at("10:00") < now() and now() < today_at("22:00")) }}
+      value_template: '{{ not (today_at("10:00") < now() and now() < today_at("22:00")) }}'
       prob_given_true: 0.97
       prob_given_false: 0.1
     - prob_given_true: 0.05
@@ -122,11 +122,6 @@
       prob_given_false: 0.2
       platform: "numeric_state"
       above: 80
-    - entity_id: "sensor.sun"
-      prob_given_true: 0.8
-      prob_given_false: 0.3
-      platform: "state"
-      to_state: "below_horizon"
     - prob_given_true: 0.9
       prob_given_false: 0.4
       platform: "template"

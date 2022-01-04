@@ -338,3 +338,24 @@
     target:
       entity_id: input_boolean.away_mode_active
   mode: single
+- id: '1641310525501'
+  alias: Announce end of dishwasher cycle
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.dishwasher_state
+    from: running
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 0
+  condition: []
+  action:
+  - service: tts.google_translate_say
+    data:
+      entity_id: media_player.living_room_speaker
+      message: The dishwasher has finished
+  - service: notify.notify
+    data:
+      message: The dishwasher has finished
+  mode: single
