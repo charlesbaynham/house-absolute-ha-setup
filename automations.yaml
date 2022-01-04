@@ -4,7 +4,6 @@
   trigger:
   - platform: state
     entity_id: media_player.living_room_tv
-    from: unavailable
     to: 'off'
     for: 00:01:00
   condition:
