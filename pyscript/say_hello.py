@@ -5,8 +5,7 @@ log.debug("Registering 'Say Hello' automation")
 
 DELAY_S = 5 * 60
 
-@state_trigger("person.charles=='home'", state_hold=DELAY_S)
-@state_trigger("person.gaby=='home'", state_hold=DELAY_S)
+@state_trigger("group.any_home=='home'", state_hold=DELAY_S)
 def say_hello( 
     **kwargs
 ):
