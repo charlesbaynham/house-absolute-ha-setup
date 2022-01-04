@@ -55,6 +55,28 @@ template:
           {% elif 'off' == state %}
             Awake {{since}}
           {% endif %}
+  - sensor:
+      - name: Dishwasher state
+        state: >
+          {% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %}
+          {% if dishwasher_power > 10 %}
+          running
+          {% elif dishwasher_power > 1 %}
+          standby
+          {% else %}
+          off
+          {% endif %}
+        icon: >
+          {% set dishwasher_state = states('sensor.dishwasher_state') %}
+          {% if dishwasher_state == "off" %}
+          mdi:dishwasher-off
+          {% elif dishwasher_state == "standby" %}
+          mdi:dishwasher-alert
+          {% elif dishwasher_state == "running" %}
+          mdi:dishwasher
+          {% else %}
+          mdi:alert-circle
+          {% endif %}
 
 input_number:
   away_mode_lookback_duration:
