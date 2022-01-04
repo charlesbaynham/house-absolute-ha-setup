@@ -58,6 +58,7 @@ template:
   - sensor:
       - name: Time since last vacuum
         state: >
+          {% set bump = now() %}
           {% if is_state('vacuum.noonoo', 'docked') %}
           {{ relative_time(as_datetime(states('sensor.noonoo_last_clean_end'))) }}
           {% else %}
