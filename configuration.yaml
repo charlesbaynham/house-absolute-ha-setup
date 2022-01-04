@@ -56,6 +56,14 @@ template:
             Awake {{since}}
           {% endif %}
   - sensor:
+      - name: Time since last vacuum
+        state: >
+          {% if is_state('vacuum.noonoo', 'docked') %}
+          {{ relative_time(as_datetime(states('sensor.noonoo_last_clean_end'))) }}
+          {% else %}
+          {{ states('vacuum.noonoo') }}
+          {% endif %}
+  - sensor:
       - name: Dishwasher state
         state: >
           {% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %}
