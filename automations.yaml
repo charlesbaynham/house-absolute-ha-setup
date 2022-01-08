@@ -6,10 +6,7 @@
     entity_id: media_player.living_room_tv
     to: 'off'
     for: 00:01:00
-  condition:
-  - condition: state
-    entity_id: person.gaby
-    state: not_home
+  condition: []
   action:
   - service: script.cast_to_living_room_tv
     data: {}
@@ -343,11 +340,11 @@
   trigger:
   - platform: state
     entity_id: sensor.dishwasher_state
-    from: running
     for:
       hours: 0
       minutes: 0
       seconds: 0
+    to: 'off'
   condition: []
   action:
   - service: tts.google_translate_say
