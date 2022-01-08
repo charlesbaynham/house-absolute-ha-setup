@@ -42,50 +42,7 @@ device_tracker:
 
 binary_sensor: !include bayesian_sensors.yaml
 sensor: !include away_mode_repeaters.yaml
-template:
-  - sensor:
-      - name: Gaby sleep state
-        state: >
-          {% set state = states('binary_sensor.gaby_sleeping_bayesian') %}
-          {% set since = relative_time(states.binary_sensor.gaby_sleeping_bayesian.last_changed) %}
-          {# Without this, the sensor will not update: #}
-          {% set bump = now() %}
-          {% if 'on' == state %}
-            Asleep {{since}}
-          {% elif 'off' == state %}
-            Awake {{since}}
-          {% endif %}
-  - sensor:
-      - name: Time since last vacuum
-        state: >
-          {% set bump = now() %}
-          {% if is_state('vacuum.noonoo', 'docked') %}
-          {{ relative_time(as_datetime(states('sensor.noonoo_last_clean_end'))) }}
-          {% else %}
-          {{ states('vacuum.noonoo') }}
-          {% endif %}
-  - sensor:
-      - name: Dishwasher state
-        state: >
-          {% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %}
-          {% if dishwasher_power > 10 %}
-          running
-          {% elif dishwasher_power > 1 %}
-          standby
-          {% else %}
-          off
-          {% endif %}
-        icon: >
-          {% set dishwasher_state = states('sensor.dishwasher_state') %}
-          {% if dishwasher_state == "off" %}
-          mdi:dishwasher-off
-          {% elif dishwasher_state == "standby" %}
-          mdi:dishwasher-alert
-          {% elif dishwasher_state == "running" %}
-          mdi:dishwasher
-          {% else %}
-          mdi:alert-circle
-          {% endif %}
+template: !include template_sensors.yaml
 
 input_number:
   away_mode_lookback_duration:
@@ -98,10 +55,3 @@ input_number:
 input_boolean:
   away_mode_active:
     name: Lights in away mode
-
-# Link an iframe to the tasmoda admin supervisor addon
-panel_iframe:
-  tasmoadmin:
-    title: TasmoAdmin
-    icon: mdi:lightbulb-on
-    url: https://houseabsolute.duckdns.org:9541
