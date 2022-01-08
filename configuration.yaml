@@ -40,6 +40,16 @@ device_tracker:
     new_device_defaults:
       track_new_devices: false
 
+# Flux to vary light colour temperature throughout the day
+switch:
+  - platform: flux
+    lights:
+      - light.bedroom_1
+      - light.bedroom_2
+      - light.bedroom_3
+      - light.lamp
+      - light.office_lamp
+
 binary_sensor: !include bayesian_sensors.yaml
 sensor: !include away_mode_repeaters.yaml
 template: !include template_sensors.yaml
