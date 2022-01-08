@@ -49,7 +49,11 @@ switch:
       - light.bedroom_3
       - light.lamp
       - light.office_lamp
-
+      - light.sitting_room
+      - light.sitting_room_lamp
+    name: Use flux
+    start_time: "7:00"
+    stop_time: "22:30"
 binary_sensor: !include bayesian_sensors.yaml
 sensor: !include away_mode_repeaters.yaml
 template: !include template_sensors.yaml
