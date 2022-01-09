@@ -1,8 +1,16 @@
-2022-01-09 13:24:25 WARNING (SyncWorker_1) [homeassistant.loader] We found a custom integration pyscript which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
-2022-01-09 13:24:25 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration hacs which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
-2022-01-09 13:24:27 WARNING (Recorder) [homeassistant.components.recorder.util] The system could not validate that the sqlite3 database at //config/home-assistant_v2.db was shutdown cleanly
-2022-01-09 13:24:28 WARNING (Recorder) [homeassistant.components.recorder.util] Ended unfinished session (id=107 from 2022-01-09 12:56:56.780094)
-2022-01-09 13:24:45 WARNING (MainThread) [homeassistant.setup] Setup of automation is taking over 10 seconds.
-2022-01-09 13:25:32 WARNING (MainThread) [homeassistant.bootstrap] Waiting on integrations to complete setup: pyscript
-2022-01-09 13:28:48 ERROR (MainThread) [frontend.js.latest.202112290] :0:0 ResizeObserver loop completed with undelivered notifications.
-2022-01-09 13:42:19 ERROR (MainThread) [homeassistant.components.hassio.handler] Client error on /homeassistant/restart request Server disconnected
+2022-01-09 13:42:31 WARNING (SyncWorker_1) [homeassistant.loader] We found a custom integration hacs which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2022-01-09 13:42:31 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration pyscript which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2022-01-09 13:42:48 WARNING (MainThread) [homeassistant.setup] Setup of automation is taking over 10 seconds.
+2022-01-09 13:43:35 WARNING (MainThread) [homeassistant.bootstrap] Waiting on integrations to complete setup: pyscript
+2022-01-09 13:45:08 ERROR (MainThread) [homeassistant.core] Error executing service: <ServiceCall frontend.reload_themes (c:3f4584aeefb33fbf4a520f78b9b02fc6)>
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/core.py", line 1511, in catch_exceptions
+    await coro_or_task
+  File "/usr/src/homeassistant/homeassistant/core.py", line 1530, in _execute_service
+    await handler.job.target(service_call)
+  File "/usr/src/homeassistant/homeassistant/helpers/service.py", line 733, in admin_handler
+    await result
+  File "/usr/src/homeassistant/homeassistant/components/frontend/__init__.py", line 475, in reload_themes
+    new_themes = config[DOMAIN].get(CONF_THEMES, {})
+KeyError: 'frontend'
+2022-01-09 13:52:45 ERROR (MainThread) [homeassistant.components.hassio.handler] Timeout on /homeassistant/restart request
