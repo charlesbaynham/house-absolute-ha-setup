@@ -69,3 +69,7 @@ input_number:
 input_boolean:
   away_mode_active:
     name: Lights in away mode
+
+google:
+  client_id: !secret google_client_id
+  client_secret: !secret google_client_secret
