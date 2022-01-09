@@ -1,53 +1,57 @@
 - sensor:
-  - name: Gaby sleep probability
-    state: >
-      {{ (100 * state_attr('binary_sensor.gaby_sleeping_bayesian', 'probability')|float)|int }}%
-    icon: mdi:sleep
+    - name: Gaby sleep probability
+      state: >
+        {{ (100 * state_attr('binary_sensor.gaby_sleeping_bayesian', 'probability')|float)|int }}%
+      icon: mdi:sleep
+      state_class: measurement
 - sensor:
-  - name: Charles sleep probability
-    state: >
-      {{ (100 * state_attr('binary_sensor.charles_sleeping_bayesian', 'probability')|float)|int }}%
-    icon: mdi:sleep
+    - name: Charles sleep probability
+      state: >
+        {{ (100 * state_attr('binary_sensor.charles_sleeping_bayesian', 'probability')|float)|int }}%
+      icon: mdi:sleep
+      state_class: measurement
 - sensor:
-  - name: Gaby sleep state
-    state: >
-      {% set state = states('binary_sensor.gaby_sleeping_bayesian') %}
-      {% set since = relative_time(states.binary_sensor.gaby_sleeping_bayesian.last_changed) %}
-      {# Without this, the sensor will not update: #}
-      {% set bump = now() %}
-      {% if 'on' == state %}
-        Asleep {{since}}
-      {% elif 'off' == state %}
-        Awake {{since}}
-      {% endif %}
+    - name: Gaby sleep state
+      state: >
+        {% set sensor = 'binary_sensor.gaby_sleeping_bayesian' %}
+        {% set since = relative_time(states.binary_sensor.gaby_sleeping_bayesian.last_changed) %}
+        {# Without this, the sensor will not update: #}
+        {% set bump = now() %}
+        {% if is_state(sensor, 'on') %}
+          Asleep {{since}}
+        {% elif is_state(sensor, 'off') %}
+          Awake {{since}}
+        {% else %}
+          Error
+        {% endif %}
 - sensor:
-  - name: Time since last vacuum
-    state: >
-      {% set bump = now() %}
-      {% if is_state('vacuum.noonoo', 'docked') %}
-      {{ relative_time(as_datetime(states('sensor.noonoo_last_clean_end'))) }}
-      {% else %}
-      {{ states('vacuum.noonoo') }}
-      {% endif %}
+    - name: Time since last vacuum
+      state: >
+        {% set bump = now() %}
+        {% if is_state('vacuum.noonoo', 'docked') %}
+        {{ relative_time(as_datetime(states('sensor.noonoo_last_clean_end'))) }}
+        {% else %}
+        {{ states('vacuum.noonoo') }}
+        {% endif %}
 - sensor:
-  - name: Dishwasher state
-    state: >
-      {% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %}
-      {% if dishwasher_power > 10 %}
-      running
-      {% elif dishwasher_power > 1 %}
-      standby
-      {% else %}
-      off
-      {% endif %}
-    icon: >
-      {% set dishwasher_state = states('sensor.dishwasher_state') %}
-      {% if dishwasher_state == "off" %}
-      mdi:dishwasher-off
-      {% elif dishwasher_state == "standby" %}
-      mdi:dishwasher-alert
-      {% elif dishwasher_state == "running" %}
-      mdi:dishwasher
-      {% else %}
-      mdi:alert-circle
-      {% endif %}
+    - name: Dishwasher state
+      state: >
+        {% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %}
+        {% if dishwasher_power > 10 %}
+        running
+        {% elif dishwasher_power > 1 %}
+        standby
+        {% else %}
+        off
+        {% endif %}
+      icon: >
+        {% set dishwasher_state = states('sensor.dishwasher_state') %}
+        {% if dishwasher_state == "off" %}
+        mdi:dishwasher-off
+        {% elif dishwasher_state == "standby" %}
+        mdi:dishwasher-alert
+        {% elif dishwasher_state == "running" %}
+        mdi:dishwasher
+        {% else %}
+        mdi:alert-circle
+        {% endif %}
