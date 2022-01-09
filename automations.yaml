@@ -360,12 +360,23 @@
   description: Run the vacuum cleaner if it hasn't run in 24 hours and we're away
     from home
   trigger:
-  - platform: webhook
-    webhook_id: testtrigger
-  condition: []
+  - platform: template
+    value_template: "{{ \n  now() - timedelta(hours = 24)\n  >\n  as_datetime(states('sensor.noonoo_last_clean_end'))\n\
+      and\n  is_state('vacuum.noonoo', 'docked')\n}}"
+  condition:
+  - condition: state
+    entity_id: group.any_home
+    state: away
+    for:
+      hours: 0
+      minutes: 30
+      seconds: 0
   action:
-  - service: notify.persistent_notification
+  - service: notify.notify
     data:
-      message: Hello word
-      title: Yaaa
+      message: Launching Noonoo
+  - device_id: ff72e33712aea3043f148cb5cdc99614
+    domain: vacuum
+    entity_id: vacuum.noonoo
+    type: clean
   mode: single
