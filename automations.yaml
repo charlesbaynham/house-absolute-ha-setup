@@ -366,11 +366,11 @@
   condition:
   - condition: state
     entity_id: group.any_home
-    state: away
     for:
       hours: 0
       minutes: 30
       seconds: 0
+    state: not_home
   action:
   - service: notify.notify
     data:
