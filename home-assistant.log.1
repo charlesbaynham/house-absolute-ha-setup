@@ -1,39 +1,8 @@
-2022-01-09 12:56:55 WARNING (SyncWorker_1) [homeassistant.loader] We found a custom integration hacs which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
-2022-01-09 12:56:55 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration pyscript which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
-2022-01-09 12:57:02 WARNING (SyncWorker_0) [homeassistant.components.rpi_power.binary_sensor] Under-voltage was detected. Consider getting a uninterruptible power supply for your Raspberry Pi.
-2022-01-09 12:58:04 WARNING (SyncWorker_4) [homeassistant.components.rpi_power.binary_sensor] Under-voltage was detected. Consider getting a uninterruptible power supply for your Raspberry Pi.
-2022-01-09 13:00:04 WARNING (SyncWorker_3) [homeassistant.components.rpi_power.binary_sensor] Under-voltage was detected. Consider getting a uninterruptible power supply for your Raspberry Pi.
-2022-01-09 13:01:04 WARNING (SyncWorker_0) [homeassistant.components.rpi_power.binary_sensor] Under-voltage was detected. Consider getting a uninterruptible power supply for your Raspberry Pi.
-2022-01-09 13:01:55 ERROR (MainThread) [aiohttp.server] Unhandled exception
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.9/asyncio/base_events.py", line 1183, in _sendfile_fallback
-    read = await self.run_in_executor(None, file.readinto, view)
-asyncio.exceptions.CancelledError
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.9/site-packages/aiohttp/web_protocol.py", line 514, in start
-    resp, reset = await task
-  File "/usr/local/lib/python3.9/site-packages/aiohttp/web_protocol.py", line 460, in _handle_request
-    reset = await self.finish_response(request, resp, start_time)
-  File "/usr/local/lib/python3.9/site-packages/aiohttp/web_protocol.py", line 613, in finish_response
-    await prepare_meth(request)
-  File "/usr/local/lib/python3.9/site-packages/aiohttp/web_fileresponse.py", line 286, in prepare
-    return await self._sendfile(request, fobj, offset, count)
-  File "/usr/local/lib/python3.9/site-packages/aiohttp/web_fileresponse.py", line 99, in _sendfile
-    await loop.sendfile(transport, fobj, offset, count)
-  File "/usr/local/lib/python3.9/asyncio/base_events.py", line 1162, in sendfile
-    return await self._sendfile_fallback(transport, file,
-  File "/usr/local/lib/python3.9/asyncio/base_events.py", line 1192, in _sendfile_fallback
-    await proto.restore()
-  File "/usr/local/lib/python3.9/asyncio/base_events.py", line 263, in restore
-    self._transport.resume_reading()
-  File "/usr/local/lib/python3.9/asyncio/sslproto.py", line 343, in resume_reading
-    self._ssl_protocol._transport.resume_reading()
-AttributeError: 'NoneType' object has no attribute 'resume_reading'
-2022-01-09 13:09:04 WARNING (SyncWorker_3) [homeassistant.components.rpi_power.binary_sensor] Under-voltage was detected. Consider getting a uninterruptible power supply for your Raspberry Pi.
-2022-01-09 13:17:04 WARNING (SyncWorker_2) [homeassistant.components.rpi_power.binary_sensor] Under-voltage was detected. Consider getting a uninterruptible power supply for your Raspberry Pi.
-2022-01-09 13:19:04 WARNING (SyncWorker_3) [homeassistant.components.rpi_power.binary_sensor] Under-voltage was detected. Consider getting a uninterruptible power supply for your Raspberry Pi.
-2022-01-09 13:21:04 WARNING (SyncWorker_5) [homeassistant.components.rpi_power.binary_sensor] Under-voltage was detected. Consider getting a uninterruptible power supply for your Raspberry Pi.
-2022-01-09 13:21:24 ERROR (MainThread) [frontend.js.latest.202112290] :0:0 ResizeObserver loop completed with undelivered notifications.
+2022-01-09 13:24:25 WARNING (SyncWorker_1) [homeassistant.loader] We found a custom integration pyscript which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2022-01-09 13:24:25 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration hacs which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2022-01-09 13:24:27 WARNING (Recorder) [homeassistant.components.recorder.util] The system could not validate that the sqlite3 database at //config/home-assistant_v2.db was shutdown cleanly
+2022-01-09 13:24:28 WARNING (Recorder) [homeassistant.components.recorder.util] Ended unfinished session (id=107 from 2022-01-09 12:56:56.780094)
+2022-01-09 13:24:45 WARNING (MainThread) [homeassistant.setup] Setup of automation is taking over 10 seconds.
+2022-01-09 13:25:32 WARNING (MainThread) [homeassistant.bootstrap] Waiting on integrations to complete setup: pyscript
+2022-01-09 13:28:48 ERROR (MainThread) [frontend.js.latest.202112290] :0:0 ResizeObserver loop completed with undelivered notifications.
+2022-01-09 13:42:19 ERROR (MainThread) [homeassistant.components.hassio.handler] Client error on /homeassistant/restart request Server disconnected
