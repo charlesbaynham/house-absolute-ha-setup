@@ -60,14 +60,56 @@
       prob_given_true: 0.10
       platform: "numeric_state"
       below: 20
+
+    # weekday times:
     - platform: template
-      value_template: '{{ today_at("10:00") < now() and now() < today_at("22:00") }}'
+      value_template: >
+        {{
+          now().weekday() < 6
+          and
+          today_at("10:00") < now()
+          and
+          now() < today_at("22:00")
+        }}
       prob_given_true: 0.1
       prob_given_false: 0.8
     - platform: template
-      value_template: '{{ not (today_at("10:00") < now() and now() < today_at("22:00")) }}'
+      value_template: >
+        {{
+          now().weekday() < 6
+          and not (
+            today_at("10:00") < now()
+            and
+            now() < today_at("22:00")
+          )
+        }}
       prob_given_true: 0.9
       prob_given_false: 0.2
+
+    # On weekends, move back by an hour and be less sure
+    - platform: template
+      value_template: >
+        {{
+          now().weekday() >= 6
+          and
+          today_at("11:00") < now()
+          and
+          now() < today_at("23:00")
+        }}
+      prob_given_true: 0.2
+      prob_given_false: 0.7
+    - platform: template
+      value_template: >
+        {{
+          now().weekday() >= 6
+          and not (
+            today_at("11:00") < now()
+            and
+            now() < today_at("23:00")
+          )
+        }}
+      prob_given_true: 0.8
+      prob_given_false: 0.3
 
 - platform: bayesian
   prior: 0.33
