@@ -96,3 +96,9 @@ counter:
   charles_trips_to_work_today:
     initial: 0
     step: 1
+  gaby_trips_via_wimbledon_today:
+    initial: 0
+    step: 1
+  charles_trips_via_wimbledon_today:
+    initial: 0
+    step: 1
