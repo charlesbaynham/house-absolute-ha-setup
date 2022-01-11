@@ -1,4 +1,5 @@
 *.log
+.google.token
 .cloud/
 .storage/
 secrets.yaml
