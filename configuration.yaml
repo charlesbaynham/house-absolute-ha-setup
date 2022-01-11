@@ -59,7 +59,7 @@ switch:
     start_time: "7:30"
     stop_time: "23:00"
 binary_sensor: !include bayesian_sensors.yaml
-sensor: !include away_mode_repeaters.yaml
+sensor: !include_dir_merge_list sensors
 template: !include template_sensors.yaml
 
 input_number:
