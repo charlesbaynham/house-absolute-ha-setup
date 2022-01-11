@@ -78,3 +78,12 @@ google:
   client_id: !secret google_client_id
   client_secret: !secret google_client_secret
   calendar_access: read_only
+
+# Work tracking counters (see automations):
+counter:
+  gaby_trips_to_work_today:
+    initial: 0
+    step: 1
+  charles_trips_to_work_today:
+    initial: 0
+    step: 1

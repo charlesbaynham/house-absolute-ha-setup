@@ -380,3 +380,31 @@
     entity_id: vacuum.noonoo
     type: clean
   mode: single
+- id: '1641890479079'
+  alias: Increment gaby work counter
+  description: ''
+  trigger:
+  - platform: zone
+    entity_id: person.gaby
+    zone: zone.harris_westminster
+    event: enter
+  condition: []
+  action:
+  - service: counter.increment
+    target:
+      entity_id: counter.gaby_trips_to_work_today
+  mode: single
+- id: '1641890601494'
+  alias: Increment charles work counter
+  description: ''
+  trigger:
+  - platform: zone
+    entity_id: person.charles
+    zone: zone.imperial
+    event: enter
+  condition: []
+  action:
+  - service: counter.increment
+    target:
+      entity_id: counter.charles_trips_to_work_today
+  mode: single
