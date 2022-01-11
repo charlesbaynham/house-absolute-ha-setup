@@ -102,3 +102,9 @@ counter:
   charles_trips_via_wimbledon_today:
     initial: 0
     step: 1
+  gaby_number_saved_train_journeys:
+    initial: 0
+    step: 1
+  charles_number_saved_train_journeys:
+    initial: 0
+    step: 1

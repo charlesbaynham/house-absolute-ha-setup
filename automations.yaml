@@ -452,3 +452,55 @@
       - counter.charles_trips_via_wimbledon_today
       - counter.gaby_trips_via_wimbledon_today
   mode: single
+- id: 'charlescredit'
+  alias: Credit Charles for cycling to work
+  description: ''
+  trigger:
+  - platform: zone
+    entity_id: person.charles
+    zone: zone.home
+    event: enter
+  condition:
+  - condition: numeric_state
+    entity_id: counter.charles_trips_to_work_today
+    above: '0'
+  - condition: numeric_state
+    entity_id: counter.charles_trips_via_wimbledon_today
+    below: '2'
+  action:
+  - service: counter.increment
+    target:
+      entity_id: counter.charles_number_saved_train_journeys
+  - condition: numeric_state
+    entity_id: counter.charles_trips_via_wimbledon_today
+    below: '1'
+  - service: counter.increment
+    target:
+      entity_id: counter.charles_number_saved_train_journeys
+  mode: single
+- id: 'gabycredit'
+  alias: Credit Gaby for cycling to work
+  description: ''
+  trigger:
+  - platform: zone
+    entity_id: person.gaby
+    zone: zone.home
+    event: enter
+  condition:
+  - condition: numeric_state
+    entity_id: counter.gaby_trips_to_work_today
+    above: '0'
+  - condition: numeric_state
+    entity_id: counter.gaby_trips_via_wimbledon_today
+    below: '2'
+  action:
+  - service: counter.increment
+    target:
+      entity_id: counter.gaby_number_saved_train_journeys
+  - condition: numeric_state
+    entity_id: counter.gaby_trips_via_wimbledon_today
+    below: '1'
+  - service: counter.increment
+    target:
+      entity_id: counter.gaby_number_saved_train_journeys
+  mode: single
