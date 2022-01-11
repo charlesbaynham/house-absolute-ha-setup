@@ -44,6 +44,7 @@ device_tracker:
       track_new_devices: false
 
 # Flux to vary light colour temperature throughout the day
+# With dimming:
 switch:
   - platform: flux
     lights:
@@ -52,12 +53,20 @@ switch:
       - light.bedroom_3
       - light.lamp
       - light.office_lamp
-      - light.sitting_room
-      - light.sitting_room_lamp
-      - light.kitchen
     name: Use flux
     start_time: "7:30"
     stop_time: "23:00"
+  # No dimming:
+  - platform: flux
+    lights:
+      - light.sitting_room
+      - light.sitting_room_lamp
+      - light.kitchen
+    name: Use flux (no dimming)
+    disable_brightness_adjust: true
+    start_time: "7:30"
+    stop_time: "23:00"
+
 binary_sensor: !include bayesian_sensors.yaml
 sensor: !include_dir_merge_list sensors
 template: !include template_sensors.yaml
