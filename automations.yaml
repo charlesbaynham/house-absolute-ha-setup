@@ -5,7 +5,10 @@
   - platform: state
     entity_id: media_player.living_room_tv
     to: 'off'
-    for: 00:01:00
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 15
   condition: []
   action:
   - service: script.cast_to_living_room_tv
@@ -452,7 +455,7 @@
       - counter.charles_trips_via_wimbledon_today
       - counter.gaby_trips_via_wimbledon_today
   mode: single
-- id: 'charlescredit'
+- id: charlescredit
   alias: Credit Charles for cycling to work
   description: ''
   trigger:
@@ -478,7 +481,7 @@
     target:
       entity_id: counter.charles_number_saved_train_journeys
   mode: single
-- id: 'gabycredit'
+- id: gabycredit
   alias: Credit Gaby for cycling to work
   description: ''
   trigger:
