@@ -507,3 +507,38 @@
     target:
       entity_id: counter.gaby_number_saved_train_journeys
   mode: single
+- id: '1642345578220'
+  alias: 'HOT WATER: turn on'
+  description: Turn on the hot water if exception requested
+  trigger:
+  - platform: time
+    at: 05:00
+  condition:
+  - condition: state
+    entity_id: input_boolean.hot_water_tomorrow
+    state: 'on'
+  action:
+  - device_id: 955aee6533313aeabf60185aba5d2f56
+    domain: water_heater
+    entity_id: water_heater.hot_water
+    type: turn_on
+  mode: single
+- id: '1642345641070'
+  alias: 'HOT WATER: turn off'
+  description: Turn off the hot water if exception requested
+  trigger:
+  - platform: time
+    at: 09:00
+  condition:
+  - condition: state
+    entity_id: input_boolean.hot_water_tomorrow
+    state: 'on'
+  action:
+  - device_id: 955aee6533313aeabf60185aba5d2f56
+    domain: water_heater
+    entity_id: water_heater.hot_water
+    type: turn_off
+  - service: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.hot_water_tomorrow
+  mode: single

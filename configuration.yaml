@@ -82,6 +82,8 @@ input_number:
 input_boolean:
   away_mode_active:
     name: Lights in away mode
+  hot_water_tomorrow:
+    name: Request hot water tomorrow
 
 google:
   client_id: !secret google_client_id
