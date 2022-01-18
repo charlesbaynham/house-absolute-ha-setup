@@ -357,6 +357,11 @@
   - service: notify.notify
     data:
       message: The dishwasher has finished
+  - delay:
+      hours: 0
+      minutes: 30
+      seconds: 0
+      milliseconds: 0
   mode: single
 - id: '1641726635601'
   alias: Run the vacuum cleaner
