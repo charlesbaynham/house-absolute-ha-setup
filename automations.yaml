@@ -544,3 +544,21 @@
     target:
       entity_id: input_boolean.hot_water_tomorrow
   mode: single
+- id: '1642499646405'
+  alias: Notify if someone at home
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.kitchen_motion_sensor_motion
+    to: 'on'
+  condition: []
+  action:
+  - service: notify.mobile_app_charles_honor
+    data:
+      message: Someone is at home
+  - delay:
+      hours: 1
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  mode: single
