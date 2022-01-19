@@ -558,7 +558,10 @@
   - platform: state
     entity_id: binary_sensor.kitchen_motion_sensor_motion
     to: 'on'
-  condition: []
+  condition:
+  - condition: state
+    entity_id: group.any_home
+    state: not_home
   action:
   - service: notify.mobile_app_charles_honor
     data:
