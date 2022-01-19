@@ -529,7 +529,7 @@
     target:
       entity_id: water_heater.hot_water
     data:
-      operation_mode: Heat
+      operation_mode: heat
   mode: single
 - id: '1642345641070'
   alias: 'HOT WATER: turn off'
@@ -542,10 +542,11 @@
     entity_id: input_boolean.hot_water_tomorrow
     state: 'on'
   action:
-  - device_id: 955aee6533313aeabf60185aba5d2f56
-    domain: water_heater
-    entity_id: water_heater.hot_water
-    type: turn_off
+  - service: water_heater.set_operation_mode
+    target:
+      entity_id: water_heater.hot_water
+    data:
+      operation_mode: auto
   - service: input_boolean.turn_off
     target:
       entity_id: input_boolean.hot_water_tomorrow
