@@ -35,7 +35,7 @@
   description: Turn on Charles' blanket
   trigger:
   - platform: time
-    at: '22:00'
+    at: '21:00'
   condition:
   - condition: zone
     entity_id: person.charles
