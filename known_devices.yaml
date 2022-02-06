@@ -6,8 +6,8 @@ GabyPhone:
   track: true
 
 CharlesPhone:
-  name: Charles' Honor ARP
-  mac: F8:C3:9E:30:DC:E8
+  name: Charles' Pixel ARP
+  mac: dc:e5:5b:28:25:8b
   icon: mdi:face
   picture:
   track: true
@@ -187,12 +187,6 @@ ec_9b_f3_a9_0e_89:
   picture:
   track: false
 
-18_55_e3_3b_5a_1c:
-  name: 18_55_e3_3b_5a_1c
-  mac: 18:55:E3:3B:5A:1C
-  icon:
-  picture:
-  track: false
 
 1a_53_a5_66_e6_0c:
   name: 1a_53_a5_66_e6_0c
@@ -281,13 +275,6 @@ bc_98_df_41_06_aa:
 62_b3_fa_3d_b0_22:
   name: 62_b3_fa_3d_b0_22
   mac: 62:B3:FA:3D:B0:22
-  icon:
-  picture:
-  track: false
-
-dc_e5_5b_28_25_8b:
-  name: dc_e5_5b_28_25_8b
-  mac: DC:E5:5B:28:25:8B
   icon:
   picture:
   track: false
