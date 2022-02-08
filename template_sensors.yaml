@@ -55,3 +55,9 @@
         {% else %}
         mdi:alert-circle
         {% endif %}
+        
+        
+- sensor:
+    - name: Train saved Charles
+      state: >
+        £{{ (states('counter.charles_number_saved_train_journeys')|float)* 12.5/2}}
