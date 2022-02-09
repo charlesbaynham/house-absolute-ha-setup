@@ -587,6 +587,8 @@
     - condition: state
       entity_id: person.gaby
       state: home
+  - condition: template
+    value_template: '{{trigger.from_state.state != trigger.to_state.state}}'
   action:
   - service: tts.google_translate_say
     data:
