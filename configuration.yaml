@@ -57,15 +57,15 @@ switch:
     start_time: "7:30"
     stop_time: "23:00"
   # No dimming:
-  - platform: flux
-    lights:
-      - light.sitting_room
-      - light.sitting_room_lamp
-      - light.kitchen
-    name: Use flux (no dimming)
-    disable_brightness_adjust: true
-    start_time: "7:30"
-    stop_time: "23:00"
+  #- platform: flux
+   # lights:
+   #   - light.sitting_room
+     # - light.sitting_room_lamp
+     # - light.kitchen
+   # name: Use flux (no dimming)
+  #  disable_brightness_adjust: true
+   # start_time: "7:30"
+   # stop_time: "23:00"
 
 binary_sensor: !include bayesian_sensors.yaml
 sensor: !include_dir_merge_list sensors
@@ -117,13 +117,20 @@ google_assistant:
   report_state: true
   exposed_domains:
     - switch
+    - climate
+    - vacuum
     - light
-  # entity_config:
-  #   light.kitchen:
-  #     name: CUSTOM_NAME_FOR_GOOGLE_ASSISTANT
-  #     aliases:
-  #       - BRIGHT_LIGHTS
-  #       - ENTRY_LIGHTS
-  #   light.living_room:
-  #     expose: false
-  #     room: LIVING_ROOM
+  entity_config:
+    light.lamp:
+      name: Bedroom lamp
+    switch.use_flux:
+      name: Flux
+    
+    # light.kitchen:
+    #   name: CUSTOM_NAME_FOR_GOOGLE_ASSISTANT
+    #   aliases:
+    #     - BRIGHT_LIGHTS
+    #     - ENTRY_LIGHTS
+    # light.living_room:
+    #   expose: false
+    #   room: LIVING_ROOM
