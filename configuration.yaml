@@ -125,6 +125,8 @@ google_assistant:
       name: Bedroom lamp
     switch.use_flux:
       name: Flux
+    input_boolean.hot_water_tomorrow:
+      name: Hot water tomorrow
     
     # light.kitchen:
     #   name: CUSTOM_NAME_FOR_GOOGLE_ASSISTANT
