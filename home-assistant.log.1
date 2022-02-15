@@ -1,117 +1,29 @@
-2022-02-12 14:44:28 WARNING (SyncWorker_1) [homeassistant.loader] We found a custom integration pyscript which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
-2022-02-12 14:44:28 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration hacs which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
-2022-02-12 14:44:30 WARNING (Recorder) [homeassistant.components.recorder.util] The system could not validate that the sqlite3 database at //config/home-assistant_v2.db was shutdown cleanly
-2022-02-12 14:44:32 WARNING (Recorder) [homeassistant.components.recorder.util] Ended unfinished session (id=124 from 2022-02-12 13:36:21.753512)
-2022-02-12 14:44:49 WARNING (MainThread) [homeassistant.setup] Setup of automation is taking over 10 seconds.
-2022-02-12 14:45:13 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-02-12 14:45:13 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-02-12 14:45:13 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-02-12 14:45:13 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-02-12 14:45:13 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-02-12 14:45:13 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-02-12 14:45:13 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-02-12 14:45:13 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-02-12 14:45:13 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-02-12 14:45:13 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-02-12 14:45:13 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-02-12 14:45:35 WARNING (MainThread) [homeassistant.bootstrap] Waiting on integrations to complete setup: pyscript
-2022-02-12 14:45:43 ERROR (MainThread) [homeassistant.components.automation.home_assistant_restart_notification] Home Assistant Restart Notification: Error executing script. Error for device at pos 1: Unable to resolve webhook ID from the device ID
-2022-02-12 14:45:43 ERROR (MainThread) [homeassistant.components.automation.home_assistant_restart_notification] Error while executing automation automation.home_assistant_restart_notification: Unable to resolve webhook ID from the device ID
-2022-02-12 14:48:12 ERROR (MainThread) [homeassistant.components.automation.new_automation_2] Location ping: Error executing script. Service not found for call_service at pos 1: Unable to find service notify.mobile_app_charles_honor
-2022-02-12 14:48:12 ERROR (MainThread) [homeassistant.components.automation.new_automation_2] Error while executing automation automation.new_automation_2: Unable to find service notify.mobile_app_charles_honor
-2022-02-12 15:16:02 ERROR (MainThread) [aiohttp.server] Error handling request
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.9/site-packages/aiohttp/web_protocol.py", line 334, in data_received
-    messages, upgraded, tail = self._request_parser.feed_data(data)
-  File "aiohttp/_http_parser.pyx", line 551, in aiohttp._http_parser.HttpParser.feed_data
-aiohttp.http_exceptions.BadHttpMessage: 400, message='Pause on PRI/Upgrade'
-2022-02-12 15:42:20 WARNING (Thread-6) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Heartbeat timeout, resetting connection
-2022-02-12 15:42:50 ERROR (Thread-6) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Failed to connect to service ServiceInfo(type='mdns', data='Chromecast-1ec642dc45e1b4d5d23de1fab634b028._googlecast._tcp.local.'), retrying in 5.0s
-2022-02-12 19:23:04 WARNING (MainThread) [homeassistant.components.http.security_filter] Filtered a request with a potential harmful query string: /remote/fgt_lang?lang=/../../../..//////////dev/cmdb/sslvpn_websession
-2022-02-12 22:12:28 WARNING (Thread-6) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Heartbeat timeout, resetting connection
-2022-02-12 22:12:36 ERROR (Thread-6) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Failed to connect to service ServiceInfo(type='mdns', data='Chromecast-1ec642dc45e1b4d5d23de1fab634b028._googlecast._tcp.local.'), retrying in 5.0s
-2022-02-12 23:54:09 WARNING (Thread-6) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Heartbeat timeout, resetting connection
-2022-02-12 23:54:42 ERROR (Thread-6) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Failed to connect to service ServiceInfo(type='host', data=('192.168.1.246', 8009)), retrying in 5.0s
-2022-02-13 01:42:35 ERROR (MainThread) [aiohttp.server] Error handling request
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.9/site-packages/aiohttp/web_protocol.py", line 334, in data_received
-    messages, upgraded, tail = self._request_parser.feed_data(data)
-  File "aiohttp/_http_parser.pyx", line 551, in aiohttp._http_parser.HttpParser.feed_data
-aiohttp.http_exceptions.BadHttpMessage: 400, message='Pause on PRI/Upgrade'
-2022-02-13 03:05:40 ERROR (MainThread) [homeassistant.components.xiaomi_miio] Timeout fetching Noonoo data
-2022-02-13 04:08:05 WARNING (Thread-7) [pychromecast.socket_client] [Living Room speaker 2(192.168.1.235):8009] Heartbeat timeout, resetting connection
-2022-02-13 04:08:12 ERROR (Thread-7) [pychromecast.socket_client] [Living Room speaker 2(192.168.1.235):8009] Failed to connect to service ServiceInfo(type='host', data=('192.168.1.235', 8009)), retrying in 5.0s
-2022-02-13 06:20:47 ERROR (MainThread) [homeassistant.components.automation.new_automation_2] Location ping: Error executing script. Service not found for call_service at pos 1: Unable to find service notify.mobile_app_charles_honor
-2022-02-13 06:20:47 ERROR (MainThread) [homeassistant.components.automation.new_automation_2] Error while executing automation automation.new_automation_2: Unable to find service notify.mobile_app_charles_honor
-2022-02-13 08:17:16 WARNING (MainThread) [homeassistant.components.http.security_filter] Filtered a potential harmful request to: /cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh
-2022-02-13 10:18:49 ERROR (MainThread) [homeassistant.components.websocket_api.http.connection] [548162115760] Client unable to keep up with pending messages. Stayed over 512 for 5 seconds
-2022-02-13 10:20:47 ERROR (MainThread) [homeassistant.components.websocket_api.http.connection] [548162115760] Client unable to keep up with pending messages. Stayed over 512 for 5 seconds
-2022-02-13 11:11:54 WARNING (MainThread) [homeassistant.components.http.security_filter] Filtered a request with a potential harmful query string: ///remote/fgt_lang?lang=/../../../..//////////dev/
-2022-02-13 18:18:07 ERROR (MainThread) [homeassistant.components.hassio.handler] /ingress/validate_session return code 401
-2022-02-13 18:18:07 ERROR (MainThread) [homeassistant.components.hassio] Failed to to call /ingress/validate_session - 
-2022-02-13 18:18:07 ERROR (MainThread) [homeassistant.components.hassio.handler] /ingress/validate_session return code 401
-2022-02-13 18:18:07 ERROR (MainThread) [homeassistant.components.hassio] Failed to to call /ingress/validate_session - 
-2022-02-13 19:05:37 WARNING (Thread-6) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Heartbeat timeout, resetting connection
-2022-02-13 19:06:07 ERROR (Thread-6) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Failed to connect to service ServiceInfo(type='mdns', data='Chromecast-1ec642dc45e1b4d5d23de1fab634b028._googlecast._tcp.local.'), retrying in 5.0s
-2022-02-13 20:41:17 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
-2022-02-13 20:49:47 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
-2022-02-13 20:49:47 WARNING (MainThread) [homeassistant.components.automation.announce_end_of_dishwasher_cycle] Announce end of dishwasher cycle: Already running
-2022-02-13 20:51:08 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
-2022-02-13 20:52:30 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
-2022-02-13 20:52:30 WARNING (MainThread) [homeassistant.components.automation.announce_end_of_dishwasher_cycle] Announce end of dishwasher cycle: Already running
-2022-02-13 22:23:07 WARNING (MainThread) [homeassistant.components.automation.announce_end_of_dishwasher_cycle] Announce end of dishwasher cycle: Already running
-2022-02-13 22:59:44 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
-2022-02-13 23:01:34 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
-2022-02-13 23:03:10 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
-2022-02-13 23:15:08 WARNING (Thread-6) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Heartbeat timeout, resetting connection
-2022-02-13 23:15:26 ERROR (Thread-6) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Failed to connect to service ServiceInfo(type='mdns', data='Chromecast-1ec642dc45e1b4d5d23de1fab634b028._googlecast._tcp.local.'), retrying in 5.0s
-2022-02-14 02:24:12 WARNING (Thread-7) [pychromecast.socket_client] [Living Room speaker 2(192.168.1.235):8009] Heartbeat timeout, resetting connection
-2022-02-14 02:24:27 ERROR (Thread-7) [pychromecast.socket_client] [Living Room speaker 2(192.168.1.235):8009] Failed to connect to service ServiceInfo(type='host', data=('192.168.1.235', 8009)), retrying in 5.0s
-2022-02-14 03:05:53 ERROR (MainThread) [homeassistant.components.xiaomi_miio] Timeout fetching Noonoo data
-2022-02-14 03:36:52 WARNING (MainThread) [homeassistant.components.http.security_filter] Filtered a potential harmful request to: /cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh
-2022-02-14 04:30:18 WARNING (SyncWorker_2) [homeassistant.components.rpi_power.binary_sensor] Under-voltage was detected. Consider getting a uninterruptible power supply for your Raspberry Pi.
-2022-02-14 04:33:27 ERROR (MainThread) [aiohttp.server] Error handling request
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.9/site-packages/aiohttp/web_protocol.py", line 334, in data_received
-    messages, upgraded, tail = self._request_parser.feed_data(data)
-  File "aiohttp/_http_parser.pyx", line 551, in aiohttp._http_parser.HttpParser.feed_data
-aiohttp.http_exceptions.BadHttpMessage: 400, message='Pause on PRI/Upgrade'
-2022-02-14 05:50:20 ERROR (MainThread) [aiohttp.server] Error handling request
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.9/site-packages/aiohttp/web_protocol.py", line 334, in data_received
-    messages, upgraded, tail = self._request_parser.feed_data(data)
-  File "aiohttp/_http_parser.pyx", line 551, in aiohttp._http_parser.HttpParser.feed_data
-aiohttp.http_exceptions.BadHttpMessage: 400, message='Pause on PRI/Upgrade'
-2022-02-14 07:16:36 ERROR (MainThread) [aiohttp.server] Error handling request
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.9/site-packages/aiohttp/web_protocol.py", line 334, in data_received
-    messages, upgraded, tail = self._request_parser.feed_data(data)
-  File "aiohttp/_http_parser.pyx", line 551, in aiohttp._http_parser.HttpParser.feed_data
-aiohttp.http_exceptions.BadHttpMessage: 400, message='Pause on PRI/Upgrade'
-2022-02-14 10:19:03 ERROR (MainThread) [homeassistant.components.websocket_api.http.connection] [548067579216] Client unable to keep up with pending messages. Stayed over 512 for 5 seconds
-2022-02-14 11:30:44 WARNING (MainThread) [homeassistant.helpers.entity] Updating state for sensor.gaby_blanket_energy_current (<class 'homeassistant.components.tasmota.sensor.TasmotaSensor'>) took 0.518 seconds. Please create a bug report at https://github.com/home-assistant/core/issues?q=is%3Aopen+is%3Aissue+label%3A%22integration%3A+tasmota%22
-2022-02-14 14:49:52 WARNING (Thread-6) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Heartbeat timeout, resetting connection
-2022-02-14 14:50:22 ERROR (Thread-6) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Failed to connect to service ServiceInfo(type='mdns', data='Chromecast-1ec642dc45e1b4d5d23de1fab634b028._googlecast._tcp.local.'), retrying in 5.0s
-2022-02-14 14:56:51 ERROR (MainThread) [homeassistant.components.websocket_api.http.connection] [548298998688] Client unable to keep up with pending messages. Stayed over 512 for 5 seconds
-2022-02-14 15:12:10 ERROR (SyncWorker_0) [homeassistant.util.logging] Exception in _handle_signal_show_view when dispatching 'cast_show_view': (<pychromecast.controllers.homeassistant.HomeAssistantController object at 0x7f9b57b580>, 'media_player.living_room_tv', '0', 'lovelace-tv')
-Traceback (most recent call last):
-  File "/usr/src/homeassistant/homeassistant/components/cast/media_player.py", line 763, in _handle_signal_show_view
-    self._hass_cast_controller.show_lovelace_view(view_path, url_path)
-  File "/usr/local/lib/python3.9/site-packages/pychromecast/controllers/homeassistant.py", line 118, in show_lovelace_view
-    self._send_connected_message(
-  File "/usr/local/lib/python3.9/site-packages/pychromecast/controllers/homeassistant.py", line 129, in _send_connected_message
-    self._connect_hass(
-  File "/usr/local/lib/python3.9/site-packages/pychromecast/controllers/homeassistant.py", line 102, in _connect_hass
-    raise PyChromecastError()
-pychromecast.error.PyChromecastError
-
-2022-02-14 23:01:21 WARNING (Thread-6) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Heartbeat timeout, resetting connection
-2022-02-14 23:01:51 ERROR (Thread-6) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Failed to connect to service ServiceInfo(type='mdns', data='Chromecast-1ec642dc45e1b4d5d23de1fab634b028._googlecast._tcp.local.'), retrying in 5.0s
-2022-02-14 23:42:49 WARNING (MainThread) [homeassistant.components.http.security_filter] Filtered a potential harmful request to: /cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh
-2022-02-15 03:05:55 ERROR (MainThread) [homeassistant.components.xiaomi_miio] Timeout fetching Noonoo data
-2022-02-15 03:19:58 ERROR (MainThread) [aiohttp.server] Error handling request
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.9/site-packages/aiohttp/web_protocol.py", line 334, in data_received
-    messages, upgraded, tail = self._request_parser.feed_data(data)
-  File "aiohttp/_http_parser.pyx", line 551, in aiohttp._http_parser.HttpParser.feed_data
-aiohttp.http_exceptions.BadHttpMessage: 400, message='Pause on PRI/Upgrade'
+2022-02-15 08:21:52 WARNING (SyncWorker_1) [homeassistant.loader] We found a custom integration hacs which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2022-02-15 08:21:52 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration pyscript which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2022-02-15 08:21:54 WARNING (Recorder) [homeassistant.components.recorder.util] The system could not validate that the sqlite3 database at //config/home-assistant_v2.db was shutdown cleanly
+2022-02-15 08:22:01 WARNING (Recorder) [homeassistant.components.recorder.util] Ended unfinished session (id=125 from 2022-02-12 14:44:30.693159)
+2022-02-15 08:22:19 WARNING (MainThread) [homeassistant.setup] Setup of automation is taking over 10 seconds.
+2022-02-15 08:22:42 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-02-15 08:22:42 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-02-15 08:22:42 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-02-15 08:22:42 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-02-15 08:22:42 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-02-15 08:22:42 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-02-15 08:22:42 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-02-15 08:22:42 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-02-15 08:22:42 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-02-15 08:22:42 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-02-15 08:22:42 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-02-15 08:23:05 WARNING (MainThread) [homeassistant.bootstrap] Waiting on integrations to complete setup: pyscript
+2022-02-15 08:23:11 ERROR (MainThread) [homeassistant.components.automation.home_assistant_restart_notification] Home Assistant Restart Notification: Error executing script. Error for device at pos 1: Unable to resolve webhook ID from the device ID
+2022-02-15 08:23:11 ERROR (MainThread) [homeassistant.components.automation.home_assistant_restart_notification] Error while executing automation automation.home_assistant_restart_notification: Unable to resolve webhook ID from the device ID
+2022-02-15 08:55:41 ERROR (MainThread) [homeassistant.components.websocket_api.http.connection] [547146422736] Client unable to keep up with pending messages. Stayed over 512 for 5 seconds
+2022-02-15 12:12:01 ERROR (Thread-10) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Failed to connect to service ServiceInfo(type='mdns', data='Chromecast-1ec642dc45e1b4d5d23de1fab634b028._googlecast._tcp.local.'), retrying in 5.0s
+2022-02-15 14:09:20 WARNING (MainThread) [homeassistant.helpers.entity] Update of sensor.replay_light_lamp is taking over 10 seconds
+2022-02-15 14:09:20 WARNING (MainThread) [homeassistant.helpers.entity] Update of sensor.replay_light_sitting_room is taking over 10 seconds
+2022-02-15 14:09:20 WARNING (MainThread) [homeassistant.helpers.entity] Update of sensor.replay_light_bedroom_1 is taking over 10 seconds
+2022-02-15 14:09:20 WARNING (MainThread) [homeassistant.helpers.entity] Update of sensor.replay_light_bedroom_2 is taking over 10 seconds
+2022-02-15 14:09:20 WARNING (MainThread) [homeassistant.helpers.entity] Update of sensor.replay_light_bedroom_3 is taking over 10 seconds
+2022-02-15 14:09:20 WARNING (MainThread) [homeassistant.helpers.entity] Update of sensor.replay_light_office is taking over 10 seconds
+2022-02-15 14:15:30 ERROR (MainThread) [homeassistant.components.hassio.handler] Client error on /core/update request Server disconnected
+2022-02-15 14:15:30 ERROR (MainThread) [homeassistant.components.hassio] Failed to to call /core/update - 
