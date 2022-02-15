@@ -127,6 +127,7 @@ google_assistant:
       name: Flux
     input_boolean.hot_water_tomorrow:
       name: Hot water tomorrow
+    water_heater.hot_water: {}
     
     # light.kitchen:
     #   name: CUSTOM_NAME_FOR_GOOGLE_ASSISTANT
