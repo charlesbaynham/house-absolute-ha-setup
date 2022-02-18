@@ -45,9 +45,6 @@
     device_id: 114e22d1af178828cb508da883b67dd4
     entity_id: switch.charles_blanket
     domain: switch
-  - service: notify.notify
-    data:
-      message: Turning on Charles blanket
   - delay:
       hours: 0
       minutes: 0
@@ -110,9 +107,6 @@
     device_id: a7c437c79cc44a2bf92675ba55644d5c
     entity_id: switch.gaby_blanket
     domain: switch
-  - service: notify.notify
-    data:
-      message: Turning on Gaby's blanket
   - delay:
       hours: 0
       minutes: 0
