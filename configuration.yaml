@@ -58,14 +58,14 @@ switch:
     stop_time: "23:00"
   # No dimming:
   #- platform: flux
-   # lights:
-   #   - light.sitting_room
-     # - light.sitting_room_lamp
-     # - light.kitchen
-   # name: Use flux (no dimming)
+  # lights:
+  #   - light.sitting_room
+  # - light.sitting_room_lamp
+  # - light.kitchen
+  # name: Use flux (no dimming)
   #  disable_brightness_adjust: true
-   # start_time: "7:30"
-   # stop_time: "23:00"
+  # start_time: "7:30"
+  # stop_time: "23:00"
 
 binary_sensor: !include bayesian_sensors.yaml
 sensor: !include_dir_merge_list sensors
@@ -115,6 +115,7 @@ google_assistant:
   project_id: house-absolute
   service_account: !include secret_files/google_service_account.json
   report_state: true
+  expose_by_default: true
   exposed_domains:
     - switch
     - climate
@@ -123,12 +124,14 @@ google_assistant:
   entity_config:
     light.lamp:
       name: Bedroom lamp
+      room: Bedroom
     switch.use_flux:
       name: Flux
     input_boolean.hot_water_tomorrow:
       name: Hot water tomorrow
-    water_heater.hot_water: {}
-    
+    water_heater.hot_water:
+      name: Hot water
+
     # light.kitchen:
     #   name: CUSTOM_NAME_FOR_GOOGLE_ASSISTANT
     #   aliases:
