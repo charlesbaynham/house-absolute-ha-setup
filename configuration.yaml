@@ -131,6 +131,8 @@ google_assistant:
       name: Hot water tomorrow
     water_heater.hot_water:
       name: Hot water
+    script.cast_to_living_room_tv:
+      name: Cast home assistant
 
     # light.kitchen:
     #   name: CUSTOM_NAME_FOR_GOOGLE_ASSISTANT
