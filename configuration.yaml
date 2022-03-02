@@ -57,15 +57,14 @@ switch:
     start_time: "7:30"
     stop_time: "23:00"
   # No dimming:
-  #- platform: flux
-  # lights:
-  #   - light.sitting_room
-  # - light.sitting_room_lamp
-  # - light.kitchen
-  # name: Use flux (no dimming)
+  - platform: flux
+    lights:
+     - light.sitting_room
+     - light.sitting_room_lamp
+    name: Use flux (sitting room)
   #  disable_brightness_adjust: true
-  # start_time: "7:30"
-  # stop_time: "23:00"
+    start_time: "7:30"
+    stop_time: "23:00"
 
 binary_sensor: !include bayesian_sensors.yaml
 sensor: !include_dir_merge_list sensors
