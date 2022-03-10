@@ -358,12 +358,12 @@
       milliseconds: 0
   mode: single
 - id: '1641726635601'
-  alias: Run the vacuum cleaner
+  alias: 'VACUUM: Run the vacuum cleaner'
   description: Run the vacuum cleaner if it hasn't run in 24 hours and we're away
     from home
   trigger:
   - platform: time_pattern
-    minutes: '10'
+    minutes: /10
   condition:
   - condition: state
     entity_id: group.any_home
