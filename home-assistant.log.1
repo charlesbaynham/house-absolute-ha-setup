@@ -1,41 +1,31 @@
-2022-03-10 15:14:19 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration pyscript which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
-2022-03-10 15:14:19 WARNING (SyncWorker_1) [homeassistant.loader] We found a custom integration hacs which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
-2022-03-10 15:14:30 WARNING (MainThread) [homeassistant.components.webhook] Received message for unregistered webhook 80db6ea6b9d65cf76249cfd63168ed50f8253402cb3f23bc51832bed60a50fac from 82.132.237.112
-2022-03-10 15:14:40 WARNING (MainThread) [homeassistant.setup] Setup of automation is taking over 10 seconds.
-2022-03-10 15:15:03 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-03-10 15:15:03 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-03-10 15:15:03 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-03-10 15:15:03 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-03-10 15:15:03 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-03-10 15:15:03 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-03-10 15:15:03 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-03-10 15:15:03 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-03-10 15:15:03 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-03-10 15:15:03 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-03-10 15:15:03 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-03-10 15:15:26 WARNING (MainThread) [homeassistant.bootstrap] Waiting on integrations to complete setup: pyscript
-2022-03-10 15:15:32 ERROR (MainThread) [homeassistant.components.automation.home_assistant_restart_notification] Home Assistant Restart Notification: Error executing script. Error for device at pos 1: Unable to resolve webhook ID from the device ID
-2022-03-10 15:15:32 ERROR (MainThread) [homeassistant.components.automation.home_assistant_restart_notification] Error while executing automation automation.home_assistant_restart_notification: Unable to resolve webhook ID from the device ID
-2022-03-10 17:06:14 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration pyscript which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
-2022-03-10 17:06:14 WARNING (SyncWorker_9) [homeassistant.loader] We found a custom integration hacs which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
-2022-03-10 17:06:14 WARNING (SyncWorker_3) [homeassistant.loader] We found a custom integration adaptive_lighting which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
-2022-03-10 17:09:40 ERROR (MainThread) [homeassistant.helpers.entity] Update for sensor.replay_light_sitting_room fails
-Traceback (most recent call last):
-  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 521, in async_update_ha_state
-    await self.async_device_update()
-  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 725, in async_device_update
-    raise exc
-  File "/usr/src/homeassistant/homeassistant/components/history_stats/sensor.py", line 228, in async_update
-    await self.hass.async_add_executor_job(
-  File "/usr/local/lib/python3.9/concurrent/futures/thread.py", line 52, in run
-    result = self.fn(*self.args, **self.kwargs)
-  File "/usr/src/homeassistant/homeassistant/components/history_stats/sensor.py", line 234, in _update
-    history_list = history.state_changes_during_period(
-  File "/usr/src/homeassistant/homeassistant/components/recorder/history.py", line 143, in state_changes_during_period
-    with session_scope(hass=hass) as session:
-  File "/usr/local/lib/python3.9/contextlib.py", line 119, in __enter__
-    return next(self.gen)
-  File "/usr/src/homeassistant/homeassistant/components/recorder/util.py", line 76, in session_scope
-    session = hass.data[DATA_INSTANCE].get_session()
-TypeError: 'NoneType' object is not callable
-2022-03-10 17:09:42 ERROR (MainThread) [homeassistant.components.hassio.handler] Timeout on /homeassistant/restart request
+2022-03-10 17:09:56 WARNING (SyncWorker_2) [homeassistant.loader] We found a custom integration hacs which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2022-03-10 17:09:56 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration adaptive_lighting which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2022-03-10 17:09:56 WARNING (SyncWorker_1) [homeassistant.loader] We found a custom integration pyscript which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2022-03-10 17:10:09 WARNING (MainThread) [homeassistant.components.webhook] Received message for unregistered webhook 80db6ea6b9d65cf76249cfd63168ed50f8253402cb3f23bc51832bed60a50fac from 82.132.237.112
+2022-03-10 17:10:14 WARNING (MainThread) [homeassistant.setup] Setup of automation is taking over 10 seconds.
+2022-03-10 17:10:33 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-03-10 17:10:33 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-03-10 17:10:33 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-03-10 17:10:33 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-03-10 17:10:33 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-03-10 17:10:33 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-03-10 17:10:33 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-03-10 17:10:33 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-03-10 17:10:33 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-03-10 17:10:33 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-03-10 17:10:33 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-03-10 17:11:00 WARNING (MainThread) [homeassistant.bootstrap] Waiting on integrations to complete setup: pyscript
+2022-03-10 17:11:03 ERROR (MainThread) [homeassistant.components.automation.home_assistant_restart_notification] Home Assistant Restart Notification: Error executing script. Error for device at pos 1: Unable to resolve webhook ID from the device ID
+2022-03-10 17:11:03 ERROR (MainThread) [homeassistant.components.automation.home_assistant_restart_notification] Error while executing automation automation.home_assistant_restart_notification: Unable to resolve webhook ID from the device ID
+2022-03-10 17:11:06 ERROR (MainThread) [homeassistant.components.google_assistant.http] Request for https://homegraph.googleapis.com/v1/devices:reportStateAndNotification failed: 404
+2022-03-10 17:14:12 ERROR (MainThread) [frontend.js.latest.202202030] :0:0 ResizeObserver loop completed with undelivered notifications.
+2022-03-10 17:14:21 ERROR (MainThread) [frontend.js.latest.202202030] :0:0 ResizeObserver loop completed with undelivered notifications.
+2022-03-10 17:14:26 ERROR (MainThread) [frontend.js.latest.202202030] :0:0 ResizeObserver loop completed with undelivered notifications.
+2022-03-10 17:14:31 ERROR (MainThread) [frontend.js.latest.202202030] :0:0 ResizeObserver loop completed with undelivered notifications.
+2022-03-10 17:15:53 ERROR (MainThread) [frontend.js.latest.202202030] :0:0 ResizeObserver loop completed with undelivered notifications.
+2022-03-10 17:17:19 ERROR (MainThread) [frontend.js.latest.202202030] :0:0 ResizeObserver loop completed with undelivered notifications.
+2022-03-10 17:19:09 ERROR (MainThread) [homeassistant.components.hassio.ingress] Can't set forward_for header, missing peername
+2022-03-10 17:19:09 ERROR (MainThread) [homeassistant.components.hassio.ingress] Can't set forward_for header, missing peername
+2022-03-10 17:19:10 ERROR (MainThread) [homeassistant.components.hassio.ingress] Can't set forward_for header, missing peername
+2022-03-10 17:19:12 ERROR (MainThread) [homeassistant.components.hassio.ingress] Can't set forward_for header, missing peername
+2022-03-10 17:19:46 ERROR (MainThread) [homeassistant.components.hassio.handler] Client error on /homeassistant/restart request Server disconnected

@@ -10,20 +10,20 @@
         {{ (100 * state_attr('binary_sensor.charles_sleeping_bayesian', 'probability')|float)|int }}%
       icon: mdi:sleep
       state_class: measurement
-- sensor:
-    - name: Gaby sleep state
-      state: >
-        {% set sensor = 'binary_sensor.gaby_sleeping_bayesian' %}
-        {% set since = relative_time(states.binary_sensor.gaby_sleeping_bayesian.last_changed) %}
-        {# Without this, the sensor will not update: #}
-        {% set bump = now() %}
-        {% if is_state(sensor, 'on') %}
-          Asleep {{since}}
-        {% elif is_state(sensor, 'off') %}
-          Awake {{since}}
-        {% else %}
-          Error
-        {% endif %}
+# - sensor:
+#     - name: Gaby sleep state
+#       state: >
+#         {% set sensor = 'binary_sensor.gaby_sleeping_bayesian' %}
+#         {% set since = relative_time(states.binary_sensor.gaby_sleeping_bayesian.last_changed) %}
+#         {# Without this, the sensor will not update: #}
+#         {% set bump = now() %}
+#         {% if is_state(sensor, 'on') %}
+#           Asleep {{since}}
+#         {% elif is_state(sensor, 'off') %}
+#           Awake {{since}}
+#         {% else %}
+#           Error
+#         {% endif %}
 - sensor:
     - name: Time since last vacuum
       state: >
