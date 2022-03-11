@@ -121,3 +121,4 @@
   - sensor.gaby_honor_wifi_ip_address
   - sensor.gaby_honor_wifi_link_speed
   - sensor.gaby_honor_wifi_signal_strength
+  - sensor.time
