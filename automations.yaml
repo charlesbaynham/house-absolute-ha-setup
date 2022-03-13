@@ -287,7 +287,7 @@
   description: Reset the heating and turn off the lights at 4am
   trigger:
   - platform: time
-    at: 04:00:00
+    at: 04:00
   condition: []
   action:
   - device_id: 32b1896caaf2ef09416ece31de5874a1
@@ -296,6 +296,11 @@
     type: set_hvac_mode
     hvac_mode: auto
   - scene: scene.all_lights_off
+  - service: water_heater.set_operation_mode
+    data:
+      operation_mode: auto
+    target:
+      entity_id: water_heater.hot_water
   mode: single
 - id: '1640185443869'
   alias: Turn on away mode after a day
