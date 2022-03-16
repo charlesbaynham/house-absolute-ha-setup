@@ -1,20 +1,667 @@
-2022-03-12 18:10:10 WARNING (SyncWorker_1) [homeassistant.loader] We found a custom integration adaptive_lighting which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
-2022-03-12 18:10:10 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration pyscript which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
-2022-03-12 18:10:10 WARNING (SyncWorker_2) [homeassistant.loader] We found a custom integration hacs which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
-2022-03-12 18:10:28 WARNING (MainThread) [homeassistant.setup] Setup of automation is taking over 10 seconds.
-2022-03-12 18:10:46 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-03-12 18:10:46 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-03-12 18:10:46 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-03-12 18:10:46 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-03-12 18:10:46 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-03-12 18:10:46 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-03-12 18:10:46 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-03-12 18:10:46 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-03-12 18:10:46 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-03-12 18:10:46 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-03-12 18:10:46 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
-2022-03-12 18:11:15 WARNING (MainThread) [homeassistant.bootstrap] Waiting on integrations to complete setup: pyscript
-2022-03-12 18:11:16 ERROR (MainThread) [homeassistant.components.automation.home_assistant_restart_notification] Home Assistant Restart Notification: Error executing script. Error for device at pos 1: Unable to resolve webhook ID from the device ID
-2022-03-12 18:11:16 ERROR (MainThread) [homeassistant.components.automation.home_assistant_restart_notification] Error while executing automation automation.home_assistant_restart_notification: Unable to resolve webhook ID from the device ID
-2022-03-12 18:11:21 ERROR (MainThread) [homeassistant.components.google_assistant.http] Request for https://homegraph.googleapis.com/v1/devices:reportStateAndNotification failed: 404
-2022-03-12 18:16:47 ERROR (MainThread) [homeassistant.components.hassio.handler] Client error on /homeassistant/restart request Server disconnected
+2022-03-12 18:17:00 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration adaptive_lighting which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2022-03-12 18:17:00 WARNING (SyncWorker_1) [homeassistant.loader] We found a custom integration pyscript which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2022-03-12 18:17:00 WARNING (SyncWorker_2) [homeassistant.loader] We found a custom integration hacs which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2022-03-12 18:17:18 WARNING (MainThread) [homeassistant.setup] Setup of automation is taking over 10 seconds.
+2022-03-12 18:17:36 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-03-12 18:17:36 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-03-12 18:17:36 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-03-12 18:17:36 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-03-12 18:17:36 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-03-12 18:17:36 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-03-12 18:17:36 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-03-12 18:17:36 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-03-12 18:17:36 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-03-12 18:17:36 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-03-12 18:17:36 WARNING (MainThread) [aiohue.util] Value {} of type <class 'dict'> is invalid for Device.identify, expected value of type typing.Optional[aiohue.v2.models.feature.IdentifyFeature]
+2022-03-12 18:18:04 WARNING (MainThread) [homeassistant.bootstrap] Waiting on integrations to complete setup: pyscript
+2022-03-12 18:18:06 ERROR (MainThread) [homeassistant.components.automation.home_assistant_restart_notification] Home Assistant Restart Notification: Error executing script. Error for device at pos 1: Unable to resolve webhook ID from the device ID
+2022-03-12 18:18:06 ERROR (MainThread) [homeassistant.components.automation.home_assistant_restart_notification] Error while executing automation automation.home_assistant_restart_notification: Unable to resolve webhook ID from the device ID
+2022-03-12 18:33:39 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-12 18:56:40 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-12 19:16:40 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-12 19:56:40 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-12 21:31:27 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-12 21:59:56 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-12 22:08:20 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-12 22:09:24 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-13 00:37:59 ERROR (MainThread) [homeassistant.components.automation.new_automation_2] Location ping: Error executing script. Service not found for call_service at pos 1: Unable to find service notify.mobile_app_charles_honor
+2022-03-13 00:37:59 ERROR (MainThread) [homeassistant.components.automation.new_automation_2] Error while executing automation automation.new_automation_2: Unable to find service notify.mobile_app_charles_honor
+2022-03-13 00:46:17 ERROR (MainThread) [homeassistant.components.automation.new_automation_2] Location ping: Error executing script. Service not found for call_service at pos 1: Unable to find service notify.mobile_app_charles_honor
+2022-03-13 00:46:17 ERROR (MainThread) [homeassistant.components.automation.new_automation_2] Error while executing automation automation.new_automation_2: Unable to find service notify.mobile_app_charles_honor
+2022-03-13 01:39:32 WARNING (Thread-7) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Heartbeat timeout, resetting connection
+2022-03-13 01:40:02 ERROR (Thread-7) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Failed to connect to service ServiceInfo(type='host', data=('192.168.1.246', 8009)), retrying in 5.0s
+2022-03-13 03:05:55 ERROR (MainThread) [homeassistant.components.xiaomi_miio] Timeout fetching Noonoo data
+2022-03-13 04:13:40 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-13 09:18:44 WARNING (MainThread) [homeassistant.components.http.security_filter] Filtered a potential harmful request to: /cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh
+2022-03-13 10:12:20 WARNING (Thread-6) [pychromecast.socket_client] [Living Room speaker 2(192.168.1.234):8009] Heartbeat timeout, resetting connection
+2022-03-13 10:12:35 ERROR (Thread-6) [pychromecast.socket_client] [Living Room speaker 2(192.168.1.234):8009] Failed to connect to service ServiceInfo(type='host', data=('192.168.1.234', 8009)), retrying in 5.0s
+2022-03-13 10:30:40 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-13 10:33:41 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-13 11:05:29 WARNING (Thread-7) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Heartbeat timeout, resetting connection
+2022-03-13 11:05:59 ERROR (Thread-7) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Failed to connect to service ServiceInfo(type='host', data=('192.168.1.246', 8009)), retrying in 5.0s
+2022-03-13 14:53:42 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-13 15:30:41 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-13 15:33:42 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-13 16:10:41 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-13 18:19:42 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-13 18:21:11 WARNING (Thread-7) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Heartbeat timeout, resetting connection
+2022-03-13 18:21:30 ERROR (Thread-7) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Failed to connect to service ServiceInfo(type='host', data=('192.168.1.246', 8009)), retrying in 5.0s
+2022-03-13 18:36:41 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-13 19:56:42 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-13 21:36:42 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-13 22:31:16 WARNING (Thread-7) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Heartbeat timeout, resetting connection
+2022-03-13 22:31:46 ERROR (Thread-7) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Failed to connect to service ServiceInfo(type='host', data=('192.168.1.246', 8009)), retrying in 5.0s
+2022-03-13 22:37:15 WARNING (SyncWorker_4) [homeassistant.components.rpi_power.binary_sensor] Under-voltage was detected. Consider getting a uninterruptible power supply for your Raspberry Pi.
+2022-03-13 23:12:19 WARNING (Thread-7) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Heartbeat timeout, resetting connection
+2022-03-13 23:12:49 ERROR (Thread-7) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Failed to connect to service ServiceInfo(type='host', data=('192.168.1.246', 8009)), retrying in 5.0s
+2022-03-13 23:53:42 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-14 02:36:43 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-14 03:05:52 ERROR (MainThread) [homeassistant.components.xiaomi_miio] Timeout fetching Noonoo data
+2022-03-14 03:06:45 WARNING (Thread-6) [pychromecast.socket_client] [Living Room speaker 2(192.168.1.234):8009] Heartbeat timeout, resetting connection
+2022-03-14 03:07:01 ERROR (Thread-6) [pychromecast.socket_client] [Living Room speaker 2(192.168.1.234):8009] Failed to connect to service ServiceInfo(type='host', data=('192.168.1.234', 8009)), retrying in 5.0s
+2022-03-14 03:36:43 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-14 04:36:43 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-14 06:33:42 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-14 06:53:42 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-14 07:13:42 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-14 10:53:43 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-14 11:13:43 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-14 11:48:59 WARNING (MainThread) [homeassistant.components.http.security_filter] Filtered a potential harmful request to: /cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh
+2022-03-14 12:08:23 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/aiohttp/web_protocol.py", line 334, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+  File "aiohttp/_http_parser.pyx", line 551, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadHttpMessage: 400, message='Pause on PRI/Upgrade'
+2022-03-14 13:47:11 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/aiohttp/web_protocol.py", line 334, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+  File "aiohttp/_http_parser.pyx", line 551, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadHttpMessage: 400, message='Pause on PRI/Upgrade'
+2022-03-14 14:46:56 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/aiohttp/web_protocol.py", line 334, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+  File "aiohttp/_http_parser.pyx", line 551, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadHttpMessage: 400, message='Pause on PRI/Upgrade'
+2022-03-14 15:10:58 ERROR (MainThread) [homeassistant.components.xiaomi_miio] Timeout fetching Noonoo data
+2022-03-14 15:11:04 ERROR (MainThread) [homeassistant.components.google_assistant.http] Could not contact https://homegraph.googleapis.com/v1/devices:reportStateAndNotification
+2022-03-14 15:12:37 ERROR (MainThread) [homeassistant] Error doing job: Future exception was never retrieved
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 703, in urlopen
+    httplib_response = self._make_request(
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 449, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 444, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1371, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 319, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 280, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/local/lib/python3.9/socket.py", line 704, in readinto
+    return self._sock.recv_into(b)
+  File "/usr/local/lib/python3.9/ssl.py", line 1241, in recv_into
+    return self.read(nbytes, buffer)
+  File "/usr/local/lib/python3.9/ssl.py", line 1099, in read
+    return self._sslobj.read(len, buffer)
+ConnectionResetError: [Errno 104] Connection reset by peer
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/requests/adapters.py", line 440, in send
+    resp = conn.urlopen(
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 785, in urlopen
+    retries = retries.increment(
+  File "/usr/local/lib/python3.9/site-packages/urllib3/util/retry.py", line 550, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/usr/local/lib/python3.9/site-packages/urllib3/packages/six.py", line 769, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 703, in urlopen
+    httplib_response = self._make_request(
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 449, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 444, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/local/lib/python3.9/http/client.py", line 1371, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.9/http/client.py", line 319, in begin
+    version, status, reason = self._read_status()
+  File "/usr/local/lib/python3.9/http/client.py", line 280, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/local/lib/python3.9/socket.py", line 704, in readinto
+    return self._sock.recv_into(b)
+  File "/usr/local/lib/python3.9/ssl.py", line 1241, in recv_into
+    return self.read(nbytes, buffer)
+  File "/usr/local/lib/python3.9/ssl.py", line 1099, in read
+    return self._sslobj.read(len, buffer)
+urllib3.exceptions.ProtocolError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/concurrent/futures/thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/usr/src/homeassistant/homeassistant/components/tado/__init__.py", line 80, in <lambda>
+    lambda now: tadoconnector.update(),
+  File "/usr/src/homeassistant/homeassistant/util/__init__.py", line 193, in wrapper
+    result = method(*args, **kwargs)
+  File "/usr/src/homeassistant/homeassistant/components/tado/__init__.py", line 164, in update
+    self.update_devices()
+  File "/usr/src/homeassistant/homeassistant/components/tado/__init__.py", line 174, in update_devices
+    devices = self.tado.getDevices()
+  File "/usr/local/lib/python3.9/site-packages/PyTado/interface.py", line 170, in getDevices
+    data = self._apiCall(cmd)
+  File "/usr/local/lib/python3.9/site-packages/PyTado/interface.py", line 81, in _apiCall
+    response = self._http_session.request(method, url, timeout=self.timeout,
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 529, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 645, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/adapters.py", line 501, in send
+    raise ConnectionError(err, request=request)
+requests.exceptions.ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
+2022-03-14 16:04:44 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-14 17:21:43 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-14 17:30:06 ERROR (MainThread) [homeassistant.components.automation.new_automation_2] Location ping: Error executing script. Service not found for call_service at pos 1: Unable to find service notify.mobile_app_charles_honor
+2022-03-14 17:30:06 ERROR (MainThread) [homeassistant.components.automation.new_automation_2] Error while executing automation automation.new_automation_2: Unable to find service notify.mobile_app_charles_honor
+2022-03-14 19:29:44 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-14 19:57:41 ERROR (MainThread) [homeassistant] Error doing job: Future exception was never retrieved
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connection.py", line 174, in _new_conn
+    conn = connection.create_connection(
+  File "/usr/local/lib/python3.9/site-packages/urllib3/util/connection.py", line 72, in create_connection
+    for res in socket.getaddrinfo(host, port, family, socket.SOCK_STREAM):
+  File "/usr/local/lib/python3.9/socket.py", line 954, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno -2] Name does not resolve
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 703, in urlopen
+    httplib_response = self._make_request(
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 386, in _make_request
+    self._validate_conn(conn)
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 1040, in _validate_conn
+    conn.connect()
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connection.py", line 358, in connect
+    conn = self._new_conn()
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connection.py", line 186, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPSConnection object at 0x7f66a473d0>: Failed to establish a new connection: [Errno -2] Name does not resolve
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/requests/adapters.py", line 440, in send
+    resp = conn.urlopen(
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 785, in urlopen
+    retries = retries.increment(
+  File "/usr/local/lib/python3.9/site-packages/urllib3/util/retry.py", line 592, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='my.tado.com', port=443): Max retries exceeded with url: /api/v2/homes/79023/devices (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f66a473d0>: Failed to establish a new connection: [Errno -2] Name does not resolve'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/concurrent/futures/thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/usr/src/homeassistant/homeassistant/components/tado/__init__.py", line 80, in <lambda>
+    lambda now: tadoconnector.update(),
+  File "/usr/src/homeassistant/homeassistant/util/__init__.py", line 193, in wrapper
+    result = method(*args, **kwargs)
+  File "/usr/src/homeassistant/homeassistant/components/tado/__init__.py", line 164, in update
+    self.update_devices()
+  File "/usr/src/homeassistant/homeassistant/components/tado/__init__.py", line 174, in update_devices
+    devices = self.tado.getDevices()
+  File "/usr/local/lib/python3.9/site-packages/PyTado/interface.py", line 170, in getDevices
+    data = self._apiCall(cmd)
+  File "/usr/local/lib/python3.9/site-packages/PyTado/interface.py", line 81, in _apiCall
+    response = self._http_session.request(method, url, timeout=self.timeout,
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 529, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 645, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/adapters.py", line 519, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='my.tado.com', port=443): Max retries exceeded with url: /api/v2/homes/79023/devices (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f66a473d0>: Failed to establish a new connection: [Errno -2] Name does not resolve'))
+2022-03-14 20:00:50 ERROR (MainThread) [homeassistant.components.xiaomi_miio] Timeout fetching Noonoo data
+2022-03-14 20:08:42 ERROR (MainThread) [homeassistant.helpers.entity] Update for calendar.oxford_university_term_dates fails
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 521, in async_update_ha_state
+    await self.async_device_update()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 725, in async_device_update
+    raise exc
+  File "/usr/local/lib/python3.9/concurrent/futures/thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/usr/src/homeassistant/homeassistant/components/google/calendar.py", line 110, in update
+    self.data.update()
+  File "/usr/src/homeassistant/homeassistant/util/__init__.py", line 193, in wrapper
+    result = method(*args, **kwargs)
+  File "/usr/src/homeassistant/homeassistant/components/google/calendar.py", line 182, in update
+    service, params = self._prepare_query()
+  File "/usr/src/homeassistant/homeassistant/components/google/calendar.py", line 133, in _prepare_query
+    service = self.calendar_service.get()
+  File "/usr/src/homeassistant/homeassistant/components/google/__init__.py", line 397, in get
+    service = google_discovery.build(
+  File "/usr/local/lib/python3.9/site-packages/oauth2client/_helpers.py", line 133, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/googleapiclient/discovery.py", line 228, in build
+    content = _retrieve_discovery_doc(
+  File "/usr/local/lib/python3.9/site-packages/googleapiclient/discovery.py", line 276, in _retrieve_discovery_doc
+    resp, content = http.request(actual_url)
+  File "/usr/local/lib/python3.9/site-packages/oauth2client/transport.py", line 173, in new_request
+    resp, content = request(orig_request_method, uri, method, body,
+  File "/usr/local/lib/python3.9/site-packages/oauth2client/transport.py", line 280, in request
+    return http_callable(uri, method=method, body=body, headers=headers,
+  File "/usr/local/lib/python3.9/site-packages/httplib2/__init__.py", line 1701, in request
+    (response, content) = self._request(
+  File "/usr/local/lib/python3.9/site-packages/httplib2/__init__.py", line 1421, in _request
+    (response, content) = self._conn_request(conn, request_uri, method, body, headers)
+  File "/usr/local/lib/python3.9/site-packages/httplib2/__init__.py", line 1343, in _conn_request
+    conn.connect()
+  File "/usr/local/lib/python3.9/site-packages/httplib2/__init__.py", line 1179, in connect
+    raise socket_err
+  File "/usr/local/lib/python3.9/site-packages/httplib2/__init__.py", line 1133, in connect
+    sock.connect((self.host, self.port))
+OSError: [Errno 101] Network unreachable
+2022-03-14 20:19:31 ERROR (MainThread) [homeassistant] Error doing job: Task exception was never retrieved
+Traceback (most recent call last):
+  File "/config/custom_components/hacs/base.py", line 678, in recurring_tasks_installed
+    await self.handle_critical_repositories()
+  File "/config/custom_components/hacs/base.py", line 656, in handle_critical_repositories
+    await critical_queue.execute()
+  File "/config/custom_components/hacs/utils/queue_manager.py", line 69, in execute
+    await asyncio.gather(*local_queue)
+  File "/config/custom_components/hacs/utils/decorator.py", line 22, in wrapper
+    await function(*args, **kwargs)
+  File "/config/custom_components/hacs/repositories/base.py", line 516, in common_update
+    await self.common_update_data(ignore_issues=ignore_issues, force=force)
+  File "/config/custom_components/hacs/repositories/base.py", line 942, in common_update_data
+    raise HacsRepositoryArchivedException("Repository is archived.")
+custom_components.hacs.exceptions.HacsRepositoryArchivedException: Repository is archived.
+2022-03-14 20:21:45 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-14 20:23:44 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-14 20:25:42 ERROR (MainThread) [homeassistant.helpers.entity] Update for calendar.oxford_university_term_dates fails
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 521, in async_update_ha_state
+    await self.async_device_update()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 725, in async_device_update
+    raise exc
+  File "/usr/local/lib/python3.9/concurrent/futures/thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/usr/src/homeassistant/homeassistant/components/google/calendar.py", line 110, in update
+    self.data.update()
+  File "/usr/src/homeassistant/homeassistant/util/__init__.py", line 193, in wrapper
+    result = method(*args, **kwargs)
+  File "/usr/src/homeassistant/homeassistant/components/google/calendar.py", line 182, in update
+    service, params = self._prepare_query()
+  File "/usr/src/homeassistant/homeassistant/components/google/calendar.py", line 133, in _prepare_query
+    service = self.calendar_service.get()
+  File "/usr/src/homeassistant/homeassistant/components/google/__init__.py", line 397, in get
+    service = google_discovery.build(
+  File "/usr/local/lib/python3.9/site-packages/oauth2client/_helpers.py", line 133, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/googleapiclient/discovery.py", line 228, in build
+    content = _retrieve_discovery_doc(
+  File "/usr/local/lib/python3.9/site-packages/googleapiclient/discovery.py", line 276, in _retrieve_discovery_doc
+    resp, content = http.request(actual_url)
+  File "/usr/local/lib/python3.9/site-packages/oauth2client/transport.py", line 173, in new_request
+    resp, content = request(orig_request_method, uri, method, body,
+  File "/usr/local/lib/python3.9/site-packages/oauth2client/transport.py", line 280, in request
+    return http_callable(uri, method=method, body=body, headers=headers,
+  File "/usr/local/lib/python3.9/site-packages/httplib2/__init__.py", line 1701, in request
+    (response, content) = self._request(
+  File "/usr/local/lib/python3.9/site-packages/httplib2/__init__.py", line 1421, in _request
+    (response, content) = self._conn_request(conn, request_uri, method, body, headers)
+  File "/usr/local/lib/python3.9/site-packages/httplib2/__init__.py", line 1343, in _conn_request
+    conn.connect()
+  File "/usr/local/lib/python3.9/site-packages/httplib2/__init__.py", line 1179, in connect
+    raise socket_err
+  File "/usr/local/lib/python3.9/site-packages/httplib2/__init__.py", line 1133, in connect
+    sock.connect((self.host, self.port))
+OSError: [Errno 101] Network unreachable
+2022-03-14 20:32:26 WARNING (MainThread) [homeassistant.components.websocket_api.http.connection] [547189445584] Disconnected: Did not receive auth message within 10 seconds
+2022-03-14 20:32:47 WARNING (MainThread) [homeassistant.components.websocket_api.http.connection] [547215679008] Disconnected: Did not receive auth message within 10 seconds
+2022-03-14 20:32:47 WARNING (MainThread) [homeassistant.components.websocket_api.http.connection] [547349067040] Disconnected: Did not receive auth message within 10 seconds
+2022-03-14 20:32:47 WARNING (MainThread) [homeassistant.components.websocket_api.http.connection] [547214068416] Disconnected: Did not receive auth message within 10 seconds
+2022-03-14 20:32:47 WARNING (MainThread) [homeassistant.components.websocket_api.http.connection] [547618517104] Disconnected: Did not receive auth message within 10 seconds
+2022-03-14 20:32:47 WARNING (MainThread) [homeassistant.components.websocket_api.http.connection] [547654877296] Disconnected: Did not receive auth message within 10 seconds
+2022-03-14 20:32:47 WARNING (MainThread) [homeassistant.components.websocket_api.http.connection] [547449494304] Disconnected: Did not receive auth message within 10 seconds
+2022-03-14 20:32:47 WARNING (MainThread) [homeassistant.components.websocket_api.http.connection] [547379144880] Disconnected: Did not receive auth message within 10 seconds
+2022-03-14 20:32:48 WARNING (MainThread) [homeassistant.components.websocket_api.http.connection] [547420250512] Disconnected: Did not receive auth message within 10 seconds
+2022-03-14 20:32:48 WARNING (MainThread) [homeassistant.components.websocket_api.http.connection] [547452802144] Disconnected: Did not receive auth message within 10 seconds
+2022-03-14 20:32:48 WARNING (MainThread) [homeassistant.components.websocket_api.http.connection] [547655899024] Disconnected: Did not receive auth message within 10 seconds
+2022-03-14 20:32:48 WARNING (MainThread) [homeassistant.components.websocket_api.http.connection] [547297487792] Disconnected: Did not receive auth message within 10 seconds
+2022-03-14 20:32:48 WARNING (MainThread) [homeassistant.components.websocket_api.http.connection] [547371232992] Disconnected: Did not receive auth message within 10 seconds
+2022-03-14 20:43:47 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-14 20:47:44 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-14 20:55:14 WARNING (Thread-7) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Heartbeat timeout, resetting connection
+2022-03-14 20:55:29 ERROR (Thread-7) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Failed to connect to service ServiceInfo(type='host', data=('192.168.1.246', 8009)), retrying in 5.0s
+2022-03-14 20:57:39 ERROR (MainThread) [homeassistant] Error doing job: Future exception was never retrieved
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connection.py", line 174, in _new_conn
+    conn = connection.create_connection(
+  File "/usr/local/lib/python3.9/site-packages/urllib3/util/connection.py", line 95, in create_connection
+    raise err
+  File "/usr/local/lib/python3.9/site-packages/urllib3/util/connection.py", line 85, in create_connection
+    sock.connect(sa)
+OSError: [Errno 101] Network unreachable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 703, in urlopen
+    httplib_response = self._make_request(
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 386, in _make_request
+    self._validate_conn(conn)
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 1040, in _validate_conn
+    conn.connect()
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connection.py", line 358, in connect
+    conn = self._new_conn()
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connection.py", line 186, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPSConnection object at 0x7f71d310a0>: Failed to establish a new connection: [Errno 101] Network unreachable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/requests/adapters.py", line 440, in send
+    resp = conn.urlopen(
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 785, in urlopen
+    retries = retries.increment(
+  File "/usr/local/lib/python3.9/site-packages/urllib3/util/retry.py", line 592, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='auth.tado.com', port=443): Max retries exceeded with url: /oauth/token?client_id=public-api-preview&client_secret=4HJGRffVR8xb3XdEUQpjgZ1VplJi6Xgw&grant_type=refresh_token&scope=home.user&refresh_token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicGFydG5lciJdLCJzdWIiOiI1OTVlNDUxNDA5OGYzMzI1MGFkY2ZiOGMiLCJuYmYiOjE2NDcyOTA4NjAsInRhZG9fc2NvcGUiOlsiaG9tZS51c2VyIl0sInRhZG9fdXNlcm5hbWUiOiJiYXluZXJzMTIzQGdtYWlsLmNvbSIsImF0aSI6Ijc3YjYyYmY2LWFlM2YtNDI1Yy05NTc4LTZlNmNlZjk3YzU1YyIsImlzcyI6InRhZG8iLCJleHAiOjE2NDk4ODI4NjAsImlhdCI6MTY0NzI5MDg2MCwidGFkb19jbGllbnRfaWQiOiJwdWJsaWMtYXBpLXByZXZpZXciLCJqdGkiOiJmNTlmMzUxYS01MzUwLTQ5M2ItYmI1Yy1mNjI2YzZmMTMyNGYifQ.jRpmK01w53Fe1HcsyO3JR_QXKo1hpgliD-KlcEJX_SKX1MyE2_KR1b3sboAPOjaPRhG4-BlQ1pMz1gj1GEVWU7_1QHp34NaN4QKovZUMuI1rTEzAhg__oJrRbrExU5yV4qaTGTf-Op7EImu7fNWjiX6YSsCQe1_PNjHEuxw2glqaNJgQrCJCWli3sV3S5UIAk42BAd_BnxGuewuy3jH1FKMe5QG9yr5FDaKhfMeRjwhO0Bn1TinEAZaiqFt8n9aNyKDQBIwERWHk3IgP2s47UF6urznawZHA5tf2A9JDpTxNUhz24AtiaspMuKW-gyvYs62IqkFz8svwsQ9UYtYvQg (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f71d310a0>: Failed to establish a new connection: [Errno 101] Network unreachable'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/concurrent/futures/thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/usr/src/homeassistant/homeassistant/components/tado/__init__.py", line 80, in <lambda>
+    lambda now: tadoconnector.update(),
+  File "/usr/src/homeassistant/homeassistant/util/__init__.py", line 193, in wrapper
+    result = method(*args, **kwargs)
+  File "/usr/src/homeassistant/homeassistant/components/tado/__init__.py", line 164, in update
+    self.update_devices()
+  File "/usr/src/homeassistant/homeassistant/components/tado/__init__.py", line 174, in update_devices
+    devices = self.tado.getDevices()
+  File "/usr/local/lib/python3.9/site-packages/PyTado/interface.py", line 170, in getDevices
+    data = self._apiCall(cmd)
+  File "/usr/local/lib/python3.9/site-packages/PyTado/interface.py", line 62, in _apiCall
+    self._refresh_token()
+  File "/usr/local/lib/python3.9/site-packages/PyTado/interface.py", line 126, in _refresh_token
+    response = self._http_session.request("post", url, params=data, timeout=self.timeout, data=json.dumps({}).encode('utf8'),
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 529, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 645, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/adapters.py", line 519, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='auth.tado.com', port=443): Max retries exceeded with url: /oauth/token?client_id=public-api-preview&client_secret=4HJGRffVR8xb3XdEUQpjgZ1VplJi6Xgw&grant_type=refresh_token&scope=home.user&refresh_token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicGFydG5lciJdLCJzdWIiOiI1OTVlNDUxNDA5OGYzMzI1MGFkY2ZiOGMiLCJuYmYiOjE2NDcyOTA4NjAsInRhZG9fc2NvcGUiOlsiaG9tZS51c2VyIl0sInRhZG9fdXNlcm5hbWUiOiJiYXluZXJzMTIzQGdtYWlsLmNvbSIsImF0aSI6Ijc3YjYyYmY2LWFlM2YtNDI1Yy05NTc4LTZlNmNlZjk3YzU1YyIsImlzcyI6InRhZG8iLCJleHAiOjE2NDk4ODI4NjAsImlhdCI6MTY0NzI5MDg2MCwidGFkb19jbGllbnRfaWQiOiJwdWJsaWMtYXBpLXByZXZpZXciLCJqdGkiOiJmNTlmMzUxYS01MzUwLTQ5M2ItYmI1Yy1mNjI2YzZmMTMyNGYifQ.jRpmK01w53Fe1HcsyO3JR_QXKo1hpgliD-KlcEJX_SKX1MyE2_KR1b3sboAPOjaPRhG4-BlQ1pMz1gj1GEVWU7_1QHp34NaN4QKovZUMuI1rTEzAhg__oJrRbrExU5yV4qaTGTf-Op7EImu7fNWjiX6YSsCQe1_PNjHEuxw2glqaNJgQrCJCWli3sV3S5UIAk42BAd_BnxGuewuy3jH1FKMe5QG9yr5FDaKhfMeRjwhO0Bn1TinEAZaiqFt8n9aNyKDQBIwERWHk3IgP2s47UF6urznawZHA5tf2A9JDpTxNUhz24AtiaspMuKW-gyvYs62IqkFz8svwsQ9UYtYvQg (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f71d310a0>: Failed to establish a new connection: [Errno 101] Network unreachable'))
+2022-03-14 20:57:47 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-14 21:03:44 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-14 21:12:42 ERROR (MainThread) [homeassistant.helpers.entity] Update for calendar.holidays_in_the_united_kingdom fails
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 521, in async_update_ha_state
+    await self.async_device_update()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 725, in async_device_update
+    raise exc
+  File "/usr/local/lib/python3.9/concurrent/futures/thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/usr/src/homeassistant/homeassistant/components/google/calendar.py", line 110, in update
+    self.data.update()
+  File "/usr/src/homeassistant/homeassistant/util/__init__.py", line 193, in wrapper
+    result = method(*args, **kwargs)
+  File "/usr/src/homeassistant/homeassistant/components/google/calendar.py", line 182, in update
+    service, params = self._prepare_query()
+  File "/usr/src/homeassistant/homeassistant/components/google/calendar.py", line 133, in _prepare_query
+    service = self.calendar_service.get()
+  File "/usr/src/homeassistant/homeassistant/components/google/__init__.py", line 397, in get
+    service = google_discovery.build(
+  File "/usr/local/lib/python3.9/site-packages/oauth2client/_helpers.py", line 133, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/googleapiclient/discovery.py", line 228, in build
+    content = _retrieve_discovery_doc(
+  File "/usr/local/lib/python3.9/site-packages/googleapiclient/discovery.py", line 276, in _retrieve_discovery_doc
+    resp, content = http.request(actual_url)
+  File "/usr/local/lib/python3.9/site-packages/oauth2client/transport.py", line 173, in new_request
+    resp, content = request(orig_request_method, uri, method, body,
+  File "/usr/local/lib/python3.9/site-packages/oauth2client/transport.py", line 280, in request
+    return http_callable(uri, method=method, body=body, headers=headers,
+  File "/usr/local/lib/python3.9/site-packages/httplib2/__init__.py", line 1701, in request
+    (response, content) = self._request(
+  File "/usr/local/lib/python3.9/site-packages/httplib2/__init__.py", line 1421, in _request
+    (response, content) = self._conn_request(conn, request_uri, method, body, headers)
+  File "/usr/local/lib/python3.9/site-packages/httplib2/__init__.py", line 1343, in _conn_request
+    conn.connect()
+  File "/usr/local/lib/python3.9/site-packages/httplib2/__init__.py", line 1179, in connect
+    raise socket_err
+  File "/usr/local/lib/python3.9/site-packages/httplib2/__init__.py", line 1133, in connect
+    sock.connect((self.host, self.port))
+OSError: [Errno 101] Network unreachable
+2022-03-14 21:12:44 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-14 21:15:19 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/aiohttp/web_protocol.py", line 334, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+  File "aiohttp/_http_parser.pyx", line 551, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadHttpMessage: 400, message='Pause on PRI/Upgrade'
+2022-03-14 21:16:45 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-14 21:27:39 ERROR (MainThread) [homeassistant] Error doing job: Future exception was never retrieved
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connection.py", line 174, in _new_conn
+    conn = connection.create_connection(
+  File "/usr/local/lib/python3.9/site-packages/urllib3/util/connection.py", line 72, in create_connection
+    for res in socket.getaddrinfo(host, port, family, socket.SOCK_STREAM):
+  File "/usr/local/lib/python3.9/socket.py", line 954, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno -2] Name does not resolve
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 703, in urlopen
+    httplib_response = self._make_request(
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 386, in _make_request
+    self._validate_conn(conn)
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 1040, in _validate_conn
+    conn.connect()
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connection.py", line 358, in connect
+    conn = self._new_conn()
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connection.py", line 186, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPSConnection object at 0x7f6d797970>: Failed to establish a new connection: [Errno -2] Name does not resolve
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/requests/adapters.py", line 440, in send
+    resp = conn.urlopen(
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 785, in urlopen
+    retries = retries.increment(
+  File "/usr/local/lib/python3.9/site-packages/urllib3/util/retry.py", line 592, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='my.tado.com', port=443): Max retries exceeded with url: /api/v2/homes/79023/devices (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f6d797970>: Failed to establish a new connection: [Errno -2] Name does not resolve'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/concurrent/futures/thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/usr/src/homeassistant/homeassistant/components/tado/__init__.py", line 80, in <lambda>
+    lambda now: tadoconnector.update(),
+  File "/usr/src/homeassistant/homeassistant/util/__init__.py", line 193, in wrapper
+    result = method(*args, **kwargs)
+  File "/usr/src/homeassistant/homeassistant/components/tado/__init__.py", line 164, in update
+    self.update_devices()
+  File "/usr/src/homeassistant/homeassistant/components/tado/__init__.py", line 174, in update_devices
+    devices = self.tado.getDevices()
+  File "/usr/local/lib/python3.9/site-packages/PyTado/interface.py", line 170, in getDevices
+    data = self._apiCall(cmd)
+  File "/usr/local/lib/python3.9/site-packages/PyTado/interface.py", line 81, in _apiCall
+    response = self._http_session.request(method, url, timeout=self.timeout,
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 529, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 645, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/adapters.py", line 519, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='my.tado.com', port=443): Max retries exceeded with url: /api/v2/homes/79023/devices (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f6d797970>: Failed to establish a new connection: [Errno -2] Name does not resolve'))
+2022-03-14 21:32:45 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-14 21:42:46 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-14 22:13:44 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-14 22:35:45 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-14 22:37:52 WARNING (Thread-7) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Heartbeat timeout, resetting connection
+2022-03-14 22:38:22 ERROR (Thread-7) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Failed to connect to service ServiceInfo(type='host', data=('192.168.1.246', 8009)), retrying in 5.0s
+2022-03-15 02:06:44 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-15 02:09:45 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-15 02:46:44 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-15 02:49:45 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-15 03:05:42 ERROR (MainThread) [homeassistant.components.xiaomi_miio] Timeout fetching Noonoo data
+2022-03-15 03:26:44 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-15 03:29:45 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-15 03:33:46 WARNING (Thread-6) [pychromecast.socket_client] [Living Room speaker 2(192.168.1.234):8009] Heartbeat timeout, resetting connection
+2022-03-15 03:34:01 ERROR (Thread-6) [pychromecast.socket_client] [Living Room speaker 2(192.168.1.234):8009] Failed to connect to service ServiceInfo(type='host', data=('192.168.1.234', 8009)), retrying in 5.0s
+2022-03-15 04:09:45 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-15 04:46:44 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-15 05:06:44 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-15 05:09:45 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-15 05:29:45 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-15 06:26:45 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-15 09:29:29 WARNING (Thread-7) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Heartbeat timeout, resetting connection
+2022-03-15 09:29:47 ERROR (Thread-7) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Failed to connect to service ServiceInfo(type='host', data=('192.168.1.246', 8009)), retrying in 5.0s
+2022-03-15 10:09:46 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-15 10:29:46 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-15 11:44:42 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/aiohttp/web_protocol.py", line 334, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+  File "aiohttp/_http_parser.pyx", line 551, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadStatusLine: 400, message="Bad status line 'Invalid method encountered'"
+2022-03-15 11:44:47 WARNING (MainThread) [homeassistant.components.http.security_filter] Filtered a potential harmful request to: /cgi-bin/.%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/etc/hosts
+2022-03-15 13:21:56 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/aiohttp/web_protocol.py", line 334, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+  File "aiohttp/_http_parser.pyx", line 551, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadHttpMessage: 400, message='Pause on PRI/Upgrade'
+2022-03-15 13:36:30 WARNING (Thread-7) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Heartbeat timeout, resetting connection
+2022-03-15 13:37:00 ERROR (Thread-7) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Failed to connect to service ServiceInfo(type='host', data=('192.168.1.246', 8009)), retrying in 5.0s
+2022-03-15 13:57:04 ERROR (MainThread) [homeassistant.components.xiaomi_miio] Timeout fetching Noonoo data
+2022-03-15 13:57:08 ERROR (MainThread) [homeassistant.components.google_assistant.http] Could not contact https://homegraph.googleapis.com/v1/devices:reportStateAndNotification
+2022-03-15 14:14:45 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-15 14:27:39 ERROR (MainThread) [homeassistant] Error doing job: Future exception was never retrieved
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connection.py", line 174, in _new_conn
+    conn = connection.create_connection(
+  File "/usr/local/lib/python3.9/site-packages/urllib3/util/connection.py", line 72, in create_connection
+    for res in socket.getaddrinfo(host, port, family, socket.SOCK_STREAM):
+  File "/usr/local/lib/python3.9/socket.py", line 954, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno -2] Name does not resolve
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 703, in urlopen
+    httplib_response = self._make_request(
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 386, in _make_request
+    self._validate_conn(conn)
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 1040, in _validate_conn
+    conn.connect()
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connection.py", line 358, in connect
+    conn = self._new_conn()
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connection.py", line 186, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPSConnection object at 0x7f67063fd0>: Failed to establish a new connection: [Errno -2] Name does not resolve
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/requests/adapters.py", line 440, in send
+    resp = conn.urlopen(
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 785, in urlopen
+    retries = retries.increment(
+  File "/usr/local/lib/python3.9/site-packages/urllib3/util/retry.py", line 592, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='my.tado.com', port=443): Max retries exceeded with url: /api/v2/homes/79023/devices (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f67063fd0>: Failed to establish a new connection: [Errno -2] Name does not resolve'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/concurrent/futures/thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/usr/src/homeassistant/homeassistant/components/tado/__init__.py", line 80, in <lambda>
+    lambda now: tadoconnector.update(),
+  File "/usr/src/homeassistant/homeassistant/util/__init__.py", line 193, in wrapper
+    result = method(*args, **kwargs)
+  File "/usr/src/homeassistant/homeassistant/components/tado/__init__.py", line 164, in update
+    self.update_devices()
+  File "/usr/src/homeassistant/homeassistant/components/tado/__init__.py", line 174, in update_devices
+    devices = self.tado.getDevices()
+  File "/usr/local/lib/python3.9/site-packages/PyTado/interface.py", line 170, in getDevices
+    data = self._apiCall(cmd)
+  File "/usr/local/lib/python3.9/site-packages/PyTado/interface.py", line 81, in _apiCall
+    response = self._http_session.request(method, url, timeout=self.timeout,
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 529, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 645, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/adapters.py", line 519, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='my.tado.com', port=443): Max retries exceeded with url: /api/v2/homes/79023/devices (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f67063fd0>: Failed to establish a new connection: [Errno -2] Name does not resolve'))
+2022-03-15 14:34:45 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-15 14:37:46 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-15 15:39:03 WARNING (MainThread) [homeassistant.components.http.security_filter] Filtered a potential harmful request to: /cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh
+2022-03-15 15:54:45 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-15 16:09:51 WARNING (MainThread) [homeassistant.components.websocket_api.http.connection] [547189057760] Disconnected: Did not receive auth message within 10 seconds
+2022-03-15 16:34:46 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-15 17:09:57 ERROR (MainThread) [homeassistant.components.automation.notify_if_someone_at_home] Notify if someone at home: Error executing script. Service not found for call_service at pos 1: Unable to find service notify.mobile_app_charles_honor
+2022-03-15 17:09:57 ERROR (MainThread) [homeassistant.components.automation.notify_if_someone_at_home] Error while executing automation automation.notify_if_someone_at_home: Unable to find service notify.mobile_app_charles_honor
+2022-03-15 17:11:57 ERROR (MainThread) [homeassistant.components.automation.notify_if_someone_at_home] Notify if someone at home: Error executing script. Service not found for call_service at pos 1: Unable to find service notify.mobile_app_charles_honor
+2022-03-15 17:11:57 ERROR (MainThread) [homeassistant.components.automation.notify_if_someone_at_home] Error while executing automation automation.notify_if_someone_at_home: Unable to find service notify.mobile_app_charles_honor
+2022-03-15 17:14:46 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-15 17:17:47 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-15 17:51:33 ERROR (MainThread) [homeassistant.components.automation.new_automation_2] Location ping: Error executing script. Service not found for call_service at pos 1: Unable to find service notify.mobile_app_charles_honor
+2022-03-15 17:51:33 ERROR (MainThread) [homeassistant.components.automation.new_automation_2] Error while executing automation automation.new_automation_2: Unable to find service notify.mobile_app_charles_honor
+2022-03-15 18:51:47 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-15 19:49:33 ERROR (MainThread) [homeassistant.components.xiaomi_miio] Timeout fetching Noonoo data
+2022-03-15 20:11:47 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-15 20:39:25 WARNING (MainThread) [homeassistant.components.http.security_filter] Filtered a request with a potential harmful query string: ///remote/fgt_lang?lang=/../../../..//////////dev/
+2022-03-15 20:51:47 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-15 20:54:00 WARNING (MainThread) [homeassistant.components.websocket_api.http.connection] [547183303840] Disconnected: Did not receive auth message within 10 seconds
+2022-03-15 21:10:14 WARNING (MainThread) [homeassistant.components.automation.announce_end_of_dishwasher_cycle] Announce end of dishwasher cycle: Already running
+2022-03-15 22:22:47 ERROR (MainThread) [homeassistant.components.hassio.handler] /ingress/validate_session return code 401
+2022-03-15 22:22:47 ERROR (MainThread) [homeassistant.components.hassio] Failed to to call /ingress/validate_session - 
+2022-03-15 22:22:47 ERROR (MainThread) [homeassistant.components.hassio.handler] /ingress/validate_session return code 401
+2022-03-15 22:22:47 ERROR (MainThread) [homeassistant.components.hassio] Failed to to call /ingress/validate_session - 
+2022-03-15 22:22:47 ERROR (MainThread) [homeassistant.components.hassio.handler] /ingress/validate_session return code 401
+2022-03-15 22:22:47 ERROR (MainThread) [homeassistant.components.hassio] Failed to to call /ingress/validate_session - 
+2022-03-15 22:28:46 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-15 23:28:47 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-15 23:33:59 ERROR (MainThread) [homeassistant.components.websocket_api.http.connection] [547184399264] Client unable to keep up with pending messages. Stayed over 512 for 5 seconds
+2022-03-16 00:20:32 WARNING (Thread-7) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Heartbeat timeout, resetting connection
+2022-03-16 00:21:02 ERROR (Thread-7) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Failed to connect to service ServiceInfo(type='host', data=('192.168.1.246', 8009)), retrying in 5.0s
+2022-03-16 00:28:47 WARNING (MainThread) [homeassistant.helpers.template] Template warning: 'float' got invalid input 'unavailable' when rendering template '{% set dishwasher_power = states('sensor.dishwasher_energy_power')|float %} {% if dishwasher_power > 10 %} running {% elif dishwasher_power > 1 %} standby {% else %} off {% endif %}' but no default was specified. Currently 'float' will return '0', however this template will fail to render in Home Assistant core 2022.1
+2022-03-16 03:25:10 WARNING (Thread-6) [pychromecast.socket_client] [Living Room speaker 2(192.168.1.234):8009] Heartbeat timeout, resetting connection
+2022-03-16 03:25:25 ERROR (Thread-6) [pychromecast.socket_client] [Living Room speaker 2(192.168.1.234):8009] Failed to connect to service ServiceInfo(type='host', data=('192.168.1.234', 8009)), retrying in 5.0s
+2022-03-16 09:16:14 WARNING (Thread-7) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Error communicating with socket, resetting connection
+2022-03-16 09:17:30 ERROR (MainThread) [metno] Access to https://aa015h6buqvih86i1.api.met.no/weatherapi/locationforecast/2.0/complete returned error 'ClientConnectorError'
+2022-03-16 09:18:25 ERROR (Thread-7) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Error reading from socket.
+2022-03-16 09:18:25 WARNING (Thread-7) [pychromecast.socket_client] [Living Room TV(192.168.1.246):8009] Error communicating with socket, resetting connection
+2022-03-16 09:18:25 WARNING (MainThread) [homeassistant.helpers.entity] Update of sensor.replay_light_lamp is taking over 10 seconds
+2022-03-16 09:18:25 WARNING (MainThread) [homeassistant.helpers.entity] Update of sensor.replay_light_sitting_room is taking over 10 seconds
+2022-03-16 09:18:25 WARNING (MainThread) [homeassistant.helpers.entity] Update of sensor.replay_light_bedroom_1 is taking over 10 seconds
+2022-03-16 09:18:25 WARNING (MainThread) [homeassistant.helpers.entity] Update of sensor.replay_light_bedroom_2 is taking over 10 seconds
+2022-03-16 09:18:25 WARNING (MainThread) [homeassistant.helpers.entity] Update of sensor.replay_light_bedroom_3 is taking over 10 seconds
+2022-03-16 09:18:25 WARNING (MainThread) [homeassistant.helpers.entity] Update of sensor.replay_light_office is taking over 10 seconds
+2022-03-16 09:25:17 ERROR (MainThread) [homeassistant.components.hassio.handler] Client error on /core/update request Server disconnected
+2022-03-16 09:25:17 ERROR (MainThread) [homeassistant.components.hassio] Failed to to call /core/update - 
