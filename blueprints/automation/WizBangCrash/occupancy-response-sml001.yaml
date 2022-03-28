@@ -1,0 +1,228 @@
+blueprint:
+  name: Occupancy Detection Response (SML001)
+  description: 'The basic occupancy sensor automation does the following:
+
+    The sets the sensor attributes when Home Assistant boots
+
+    Turn on light(s) when occupancy detected and off when unoccupied.
+
+    Uses a different brightness at night
+
+    Optionally, choose a TV and the occupancy sensor will be ignored when the TV is
+    on
+
+    '
+  domain: automation
+  input:
+    occupancy_entity:
+      name: Occupancy Sensor
+      description: The occupancy sensor to use for this automation
+      selector:
+        entity:
+          domain: binary_sensor
+          device_class: occupancy
+    ieee_id:
+      name: Occupancy Sensor Zigbee IEEE ID
+      description: The zigbee network id of the sensor
+      selector:
+        text: {}
+    o_to_u_delay:
+      name: Occupied to Unoccupied delay
+      description: 'Set the time in seconds we require the light(s) to stay on.
+
+        This delay is reset each time motion is detected.
+
+
+        NOTE: Restart Home Assistant on changing this value
+
+        '
+      default: 180
+      selector:
+        number:
+          min: 0.0
+          max: 1800.0
+          mode: box
+          unit_of_measurement: seconds
+          step: 1.0
+    sensitivity:
+      name: Sensitivity of sensor
+      description: 'Set how sensitive we want the sensor to be: 0 = least sensitive
+
+
+        NOTE: Restart Home Assistant on changing this value
+
+        '
+      default: 2
+      selector:
+        number:
+          min: 0.0
+          max: 2.0
+          mode: slider
+          step: 1.0
+    illuminance_entity:
+      name: Illuminance
+      description: The luminance sensor to use
+      selector:
+        entity:
+          domain: sensor
+          device_class: illuminance
+    luminance_value:
+      name: Light trigger level
+      description: Anything darker than this will turn on the light
+      default: 6
+      selector:
+        number:
+          min: 2.0
+          max: 3000.0
+          mode: box
+          unit_of_measurement: lx
+          step: 1.0
+    light_entity:
+      name: Lights
+      description: The light(s) to control
+      selector:
+        entity:
+          domain: light
+    daytime_brightness:
+      name: Daytime Brightness
+      description: The brightness to set the light during the day (100%)
+      default: 75
+      selector:
+        number:
+          min: 10.0
+          max: 100.0
+          mode: box
+          unit_of_measurement: '%'
+          step: 1.0
+    nighttime_brightness:
+      name: Nighttime Brightness
+      description: The brightness to set the light at night(100%)
+      default: 10
+      selector:
+        number:
+          min: 10.0
+          max: 100.0
+          mode: box
+          unit_of_measurement: '%'
+          step: 1.0
+    daytime_colour:
+      name: Daytime colour temperature
+      description: The colour temperature during the day (4500K)
+      default: 4500
+      selector:
+        number:
+          min: 2200.0
+          max: 6500.0
+          step: 100.0
+          mode: box
+          unit_of_measurement: Kelvin
+    nighttime_colour:
+      name: Nighttime colour temperature
+      description: The colour temperature during the night (3000K)
+      default: 3000
+      selector:
+        number:
+          min: 2200.0
+          max: 6500.0
+          step: 100.0
+          mode: box
+          unit_of_measurement: Kelvin
+    disable_entity:
+      name: Input Boolean to use for disabling sensor
+      description: 'Set to an input_boolean. If the input_boolean is in the ''on''
+        state then the occupancy sensor will be disabled
+
+        '
+      default: {}
+      selector:
+        target:
+          entity:
+            domain: input_boolean
+    media_entity:
+      name: If this media player is on than disable occupancy sensor
+      description: 'Set to a media_player e.g. TV. If the media player is in the ''on''
+        state then the occupancy sensor will be disabled e.g. media_player.lounge_tv
+
+        '
+      default: {}
+      selector:
+        target:
+          entity:
+            domain: media_player
+  source_url: https://gist.github.com/WizBangCrash/e6d67e8a2340b998914fcabe952748b9
+variables:
+  ieee_id: !input 'ieee_id'
+  disable_entity: !input 'disable_entity'
+  media_entity: !input 'media_entity'
+mode: single
+trigger:
+- platform: homeassistant
+  event: start
+- platform: state
+  entity_id: !input 'occupancy_entity'
+condition:
+- alias: Exit if sensor is disabled
+  condition: template
+  value_template: '{{ True if not disable_entity else is_state(disable_entity.entity_id,
+    ''off'') }}'
+- alias: Exit if media player on
+  condition: template
+  value_template: '{{ True if not media_entity else is_state(media_entity.entity_id,
+    ''off'') }}'
+action:
+- alias: What caused the trigger?
+  choose:
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.platform == ''homeassistant'' }}'
+    sequence:
+    - service: zha.set_zigbee_cluster_attribute
+      data:
+        ieee: '{{ ieee_id }}'
+        endpoint_id: 2
+        cluster_id: 1030
+        cluster_type: in
+        attribute: 16
+        value: !input 'o_to_u_delay'
+    - service: zha.set_zigbee_cluster_attribute
+      data:
+        ieee: '{{ ieee_id }}'
+        endpoint_id: 2
+        cluster_id: 1030
+        cluster_type: in
+        attribute: 48
+        value: !input 'sensitivity'
+  - conditions:
+    - condition: template
+      value_template: "{{\n  trigger.platform == 'state'\n  and trigger.to_state.state\
+        \ == 'on'\n}}\n"
+    - condition: numeric_state
+      entity_id: !input 'illuminance_entity'
+      below: !input 'luminance_value'
+    sequence:
+    - alias: Night time or day time?
+      choose:
+      - conditions:
+        - condition: time
+          after: '22:00:00'
+          before: 07:00:00
+        sequence:
+        - service: light.turn_on
+          entity_id: !input 'light_entity'
+          data:
+            brightness_pct: !input 'nighttime_brightness'
+            kelvin: !input 'nighttime_colour'
+      default:
+      - service: light.turn_on
+        entity_id: !input 'light_entity'
+        data:
+          brightness_pct: !input 'daytime_brightness'
+          kelvin: !input 'daytime_colour'
+  - conditions:
+    - condition: template
+      value_template: "{{\n  trigger.platform == 'state'\n  and trigger.to_state.state\
+        \ == 'off'\n}}\n"
+    sequence:
+    - service: light.turn_off
+      entity_id: !input 'light_entity'
+  default: []
