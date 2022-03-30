@@ -617,3 +617,44 @@
     type: set_hvac_mode
     hvac_mode: auto
   mode: single
+- id: '1648623157497'
+  alias: LIGHTS kitchen motion
+  description: ''
+  trigger:
+  - type: occupied
+    platform: device
+    device_id: b7b1b7ffa3b966e2f138dc9be5050777
+    entity_id: binary_sensor.kitchen_motion_sensor_occupancy
+    domain: binary_sensor
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 0bd6ffc11a39064f15b71cef66219578
+    entity_id: light.kitchen
+    domain: light
+  - delay:
+      hours: 0
+      minutes: 2
+      seconds: 0
+      milliseconds: 0
+  - type: turn_off
+    device_id: 0bd6ffc11a39064f15b71cef66219578
+    entity_id: light.kitchen
+    domain: light
+  mode: restart
+- id: '1648623398542'
+  alias: 'LIGHTS bedroom switch '
+  description: ''
+  trigger:
+  - device_id: a67d053900624a172b342f462714474b
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: turn_on
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 585bb9ff1bbf51cbc3e806308b6ae458
+    entity_id: light.bedroom_1
+    domain: light
+  mode: single
