@@ -130,7 +130,7 @@
     data: {}
   mode: single
 - id: '1610737920275'
-  alias: Turn on living room lights when we come home
+  alias: LIGHTS Turn on living room lights when we come home
   description: ''
   trigger:
   - platform: state
@@ -140,19 +140,14 @@
   - condition: sun
     after: sunset
   action:
-  - domain: light
-    entity_id: light.sitting_room
-    device_id: b71f880d440cbffae42fb3b433b12d67
-    type: turn_on
-    brightness_pct: 100
-  - domain: light
-    entity_id: light.sitting_room_lamp
-    device_id: d8067c7712895dfc0b70252968cd31c0
-    type: turn_on
-    brightness_pct: 100
+  - service: light.turn_on
+    data: {}
+    target:
+      area_id:
+      - living_room
   mode: single
 - id: '1610743960228'
-  alias: 'Turn off the lights when we leave home '
+  alias: 'LIGHTS Turn off the lights when we leave home '
   description: ''
   trigger:
   - platform: state
@@ -160,26 +155,14 @@
     from: home
   condition: []
   action:
-  - scene: scene.all_lights_off
-  mode: single
-- id: '1611169147035'
-  alias: Turn off office lights
-  description: Turn off office if Charles work laptop disconnects
-  trigger:
-  - platform: state
-    entity_id: device_tracker.work_laptop
-    from: home
-    for: 00:00:10
-  condition: []
-  action:
-  - type: turn_off
-    device_id: 38d17eafa75f488b469e20456380401e
-    entity_id: light.office
-    domain: light
-  - type: turn_off
-    device_id: 31ad1ae771c656caacded7bcba3b6433
-    entity_id: light.office_lamp
-    domain: light
+  - service: light.turn_off
+    data: {}
+    target:
+      area_id:
+      - bedroom
+      - kitchen
+      - living_room
+      - office
   mode: single
 - id: '1611306669717'
   alias: Turn on office lights
@@ -642,8 +625,8 @@
     entity_id: light.kitchen
     domain: light
   mode: restart
-- id: '1648623398542'
-  alias: 'LIGHTS bedroom switch '
+- id: '1648623700269'
+  alias: LIGHTS bedroom switch on
   description: ''
   trigger:
   - device_id: a67d053900624a172b342f462714474b
@@ -653,8 +636,33 @@
     subtype: turn_on
   condition: []
   action:
-  - type: turn_on
-    device_id: 585bb9ff1bbf51cbc3e806308b6ae458
-    entity_id: light.bedroom_1
-    domain: light
+  - service: light.turn_on
+    data: {}
+    target:
+      area_id: bedroom
   mode: single
+- id: '1648624326824'
+  alias: LIGHTS bedroom switch off
+  description: ''
+  trigger:
+  - device_id: a67d053900624a172b342f462714474b
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: turn_off
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    target:
+      area_id: bedroom
+  mode: single
+- id: '1648624464243'
+  alias: LIGHTS bedroom switch
+  description: ''
+  use_blueprint:
+    path: vanstinator/zha-philips-hue-dimmer-switch-rwl020-rwl021.yaml
+    input:
+      remote: a67d053900624a172b342f462714474b
+      light:
+        area_id: kitchen
