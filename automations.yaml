@@ -665,4 +665,5 @@
     input:
       remote: a67d053900624a172b342f462714474b
       light:
-        area_id: kitchen
+        area_id:
+        - bedroom
