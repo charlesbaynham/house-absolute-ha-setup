@@ -667,3 +667,13 @@
       light:
         area_id:
         - bedroom
+- id: '1648756054523'
+  alias: LIGHTS living room switch
+  description: ''
+  use_blueprint:
+    path: vanstinator/zha-philips-hue-dimmer-switch-rwl020-rwl021.yaml
+    input:
+      remote: cbcf800abd3ba2525fdfbff5bca4c794
+      light:
+        area_id:
+        - living_room
