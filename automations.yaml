@@ -585,13 +585,13 @@
   description: ''
   trigger:
   - platform: template
-    value_template: '{{state_attr("climate.house_absolute", "temperature") > 22.0
+    value_template: '{{state_attr("climate.house_absolute", "temperature") > 21.0
       }}'
   condition: []
   action:
   - delay:
       hours: 0
-      minutes: 2
+      minutes: 5
       seconds: 0
       milliseconds: 0
   - device_id: 32b1896caaf2ef09416ece31de5874a1
