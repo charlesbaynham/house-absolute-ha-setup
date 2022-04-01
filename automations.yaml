@@ -574,6 +574,9 @@
   - condition: state
     entity_id: binary_sensor.charles_sleeping_bayesian
     state: 'off'
+  - condition: state
+    entity_id: binary_sensor.charles_sleeping_bayesian
+    state: 'off'
   action:
   - service: tts.google_translate_say
     data:
