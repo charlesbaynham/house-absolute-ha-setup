@@ -618,6 +618,14 @@
     device_id: 0bd6ffc11a39064f15b71cef66219578
     entity_id: light.kitchen
     domain: light
+  - wait_for_trigger:
+    - type: not_occupied
+      platform: device
+      device_id: b7b1b7ffa3b966e2f138dc9be5050777
+      entity_id: binary_sensor.kitchen_motion_sensor_occupancy
+      domain: binary_sensor
+    continue_on_timeout: true
+    timeout: '10000'
   - delay:
       hours: 0
       minutes: 2
