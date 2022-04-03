@@ -40,6 +40,12 @@
   - condition: zone
     entity_id: person.charles
     zone: zone.home
+  - type: is_temperature
+    condition: device
+    device_id: 32b1896caaf2ef09416ece31de5874a1
+    entity_id: sensor.house_absolute_temperature
+    domain: sensor
+    below: 18.5
   action:
   - type: turn_off
     device_id: 114e22d1af178828cb508da883b67dd4
@@ -57,8 +63,7 @@
   mode: single
 - id: '1610050834000'
   alias: Keep Charles Blanket on
-  description: Keep Charles' blanket on if the living room lights are on and Charles
-    is home
+  description: Keep Charles' blanket on if Charles is home
   trigger:
   - platform: time_pattern
     minutes: '11'
