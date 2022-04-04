@@ -45,7 +45,7 @@
     device_id: 32b1896caaf2ef09416ece31de5874a1
     entity_id: sensor.house_absolute_temperature
     domain: sensor
-    below: 18.5
+    below: 20
   action:
   - type: turn_off
     device_id: 114e22d1af178828cb508da883b67dd4
