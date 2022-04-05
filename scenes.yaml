@@ -82,3 +82,181 @@
       friendly_name: Office
       supported_features: 41
       state: 'off'
+- id: '1649194482360'
+  name: 'Bedroom relaxed '
+  entities:
+    light.bedroom_1:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: color_temp
+      brightness: 145
+      color_temp: 500
+      hs_color:
+      - 30.601
+      - 94.547
+      rgb_color:
+      - 255
+      - 136
+      - 13
+      xy_color:
+      - 0.599
+      - 0.382
+      off_brightness:
+      friendly_name: Bedroom 1
+      supported_features: 63
+      state: 'on'
+    light.bedroom_2:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: color_temp
+      brightness: 104
+      color_temp: 500
+      hs_color:
+      - 30.601
+      - 94.547
+      rgb_color:
+      - 255
+      - 136
+      - 13
+      xy_color:
+      - 0.599
+      - 0.382
+      off_brightness:
+      friendly_name: Bedroom 2
+      supported_features: 63
+      state: 'on'
+    light.lamp:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 38
+      off_brightness:
+      friendly_name: Bedroom lamp
+      supported_features: 41
+      state: 'on'
+    light.bedroom_3:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: color_temp
+      brightness: 69
+      color_temp: 500
+      hs_color:
+      - 30.601
+      - 94.547
+      rgb_color:
+      - 255
+      - 136
+      - 13
+      xy_color:
+      - 0.599
+      - 0.382
+      off_brightness:
+      friendly_name: Bedroom 3
+      supported_features: 63
+      state: 'on'
+  icon: mdi:sleep
+- id: '1649194608719'
+  name: Sexy
+  entities:
+    light.bedroom_1:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: hs
+      brightness: 89
+      hs_color:
+      - 71.321
+      - 20.784
+      rgb_color:
+      - 244
+      - 255
+      - 202
+      xy_color:
+      - 0.346
+      - 0.388
+      effect: colorloop
+      off_brightness:
+      friendly_name: Bedroom 1
+      supported_features: 63
+      state: 'on'
+    light.bedroom_2:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: color_temp
+      brightness: 87
+      color_temp: 500
+      hs_color:
+      - 30.601
+      - 94.547
+      rgb_color:
+      - 255
+      - 136
+      - 13
+      xy_color:
+      - 0.599
+      - 0.382
+      effect: colorloop
+      off_brightness:
+      friendly_name: Bedroom 2
+      supported_features: 63
+      state: 'on'
+    light.bedroom_3:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: color_temp
+      brightness: 69
+      color_temp: 500
+      hs_color:
+      - 30.601
+      - 94.547
+      rgb_color:
+      - 255
+      - 136
+      - 13
+      xy_color:
+      - 0.599
+      - 0.382
+      effect: colorloop
+      off_brightness:
+      friendly_name: Bedroom 3
+      supported_features: 63
+      state: 'on'
+    light.lamp:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 23
+      off_brightness:
+      friendly_name: Bedroom lamp
+      supported_features: 41
+      state: 'on'
+  icon: mdi:bed-double-outline
