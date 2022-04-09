@@ -296,16 +296,17 @@
   trigger:
   - platform: state
     entity_id: group.any_home
-    to: away
     for:
       hours: 24
       minutes: 0
       seconds: 0
+    to: not_home
   condition: []
   action:
   - service: input_boolean.turn_on
     target:
       entity_id: input_boolean.away_mode_active
+    data: {}
   mode: single
 - id: '1640185488128'
   alias: Turn off away mode when we come home
