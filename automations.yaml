@@ -543,12 +543,14 @@
       entity_id: input_boolean.hot_water_tomorrow
   mode: single
 - id: '1642499646405'
-  alias: Notify if someone at home
+  alias: NOTIFY if someone at home
   description: ''
   trigger:
-  - platform: state
-    entity_id: binary_sensor.kitchen_motion_sensor_motion
-    to: 'on'
+  - type: occupied
+    platform: device
+    device_id: b7b1b7ffa3b966e2f138dc9be5050777
+    entity_id: binary_sensor.kitchen_motion_sensor_occupancy
+    domain: binary_sensor
   condition:
   - condition: state
     entity_id: group.any_home
