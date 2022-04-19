@@ -734,9 +734,9 @@
   alias: 'LIGHTS: Office switch'
   description: 'Single press = toggle lights
 
-    Long press = toggle motion sensor mode
+    Double press = toggle motion sensor mode
 
-    Double press = unused'
+    Long press = unused'
   use_blueprint:
     path: garykrige/sonoff_switch.yaml
     input:
@@ -779,8 +779,33 @@
           device_id: 546f0863910d005d1729ba6fd4471bbc
           entity_id: light.office_lamp
           domain: light
-      off_action:
+      on_action:
       - service: input_boolean.toggle
         data: {}
         target:
           entity_id: input_boolean.office_motion_enabled
+      - choose:
+        - conditions:
+          - condition: state
+            entity_id: input_boolean.office_motion_enabled
+            state: 'on'
+          sequence:
+          - repeat:
+              count: 2
+              sequence: 
+                - service: light.turn_on
+                  data:
+                    flash: short
+                  target:
+                    area_id: office
+          - service: light.turn_on
+                  data:
+                    flash: short
+                  target:
+                    area_id: office
+        default:
+          - service: light.turn_on
+            data:
+              flash: long
+            target:
+              area_id: office
