@@ -730,8 +730,8 @@
     type: set_position
     position: 0
   mode: single
-- id: '1650364423544'
-  alias: 'LIGHTS: Office switch'
+- id: '1650366731175'
+  alias: 'LIGHTS: Office button and controls'
   description: 'Single press = toggle lights
 
     Double press = toggle motion sensor mode
@@ -791,21 +791,29 @@
             state: 'on'
           sequence:
           - repeat:
-              count: 2
-              sequence: 
-                - service: light.turn_on
-                  data:
-                    flash: short
-                  target:
-                    area_id: office
-          - service: light.turn_on
-                  data:
-                    flash: short
-                  target:
-                    area_id: office
+            count: 4
+            sequence:
+            - service: light.toggle
+              data:
+                transition: 0
+              target:
+                area_id: office
+            - delay:
+                hours: 0
+                minutes: 0
+                seconds: 0
+                milliseconds: 500
         default:
-          - service: light.turn_on
-            data:
-              flash: long
-            target:
-              area_id: office
+        - repeat:
+            count: 2
+            sequence:
+            - service: light.toggle
+              data:
+                transition: 0
+              target:
+                area_id: office
+            - delay:
+                hours: 0
+                minutes: 0
+                seconds: 0
+                milliseconds: 500
