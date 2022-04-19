@@ -181,19 +181,19 @@
       supported_color_modes:
       - color_temp
       - hs
-      color_mode: hs
-      brightness: 89
+      color_mode: color_temp
+      brightness: 254
+      color_temp: 281
       hs_color:
-      - 71.321
-      - 20.784
+      - 27.117
+      - 43.528
       rgb_color:
-      - 244
       - 255
-      - 202
+      - 194
+      - 144
       xy_color:
-      - 0.346
-      - 0.388
-      effect: colorloop
+      - 0.449
+      - 0.373
       off_brightness:
       friendly_name: Bedroom 1
       supported_features: 63
@@ -207,19 +207,18 @@
       - color_temp
       - hs
       color_mode: color_temp
-      brightness: 87
-      color_temp: 500
+      brightness: 254
+      color_temp: 281
       hs_color:
-      - 30.601
-      - 94.547
+      - 27.117
+      - 43.528
       rgb_color:
       - 255
-      - 136
-      - 13
+      - 194
+      - 144
       xy_color:
-      - 0.599
-      - 0.382
-      effect: colorloop
+      - 0.449
+      - 0.373
       off_brightness:
       friendly_name: Bedroom 2
       supported_features: 63
@@ -233,19 +232,18 @@
       - color_temp
       - hs
       color_mode: color_temp
-      brightness: 69
-      color_temp: 500
+      brightness: 254
+      color_temp: 281
       hs_color:
-      - 30.601
-      - 94.547
+      - 27.117
+      - 43.528
       rgb_color:
       - 255
-      - 136
-      - 13
+      - 194
+      - 144
       xy_color:
-      - 0.599
-      - 0.382
-      effect: colorloop
+      - 0.449
+      - 0.373
       off_brightness:
       friendly_name: Bedroom 3
       supported_features: 63
@@ -254,9 +252,14 @@
       supported_color_modes:
       - brightness
       color_mode: brightness
-      brightness: 23
+      brightness: 254
       off_brightness:
       friendly_name: Bedroom lamp
       supported_features: 41
       state: 'on'
+    cover.bedroom_blinds_window_covering:
+      current_position: 86
+      friendly_name: Bedroom blinds window_covering
+      supported_features: 15
+      state: closing
   icon: mdi:bed-double-outline
