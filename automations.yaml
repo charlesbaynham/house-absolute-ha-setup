@@ -795,9 +795,9 @@
               sequence:
               - service: light.toggle
                 data:
-                  transition: 0.1
+                  transition: 0
                 target:
-                  device_id: 6c66890cea366444cbfd5fd9f23e0ad0
+                  device_id: 546f0863910d005d1729ba6fd4471bbc
               - delay:
                   hours: 0
                   minutes: 0
@@ -815,7 +815,7 @@
                 data:
                   transition: 0
                 target:
-                  device_id: 6c66890cea366444cbfd5fd9f23e0ad0
+                  device_id: 546f0863910d005d1729ba6fd4471bbc
               - delay:
                   hours: 0
                   minutes: 0
