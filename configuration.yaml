@@ -127,6 +127,7 @@ google_assistant:
     - climate
     - vacuum
     - light
+    - cover
   entity_config:
     light.lamp:
       name: Bedroom lamp
@@ -139,6 +140,8 @@ google_assistant:
       name: Hot water
     script.cast_to_living_room_tv:
       name: Cast home assistant
+    cover.bedroom_blinds_window_covering:
+      name: Bedroom blinds
 
     # light.kitchen:
     #   name: CUSTOM_NAME_FOR_GOOGLE_ASSISTANT

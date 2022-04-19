@@ -696,3 +696,37 @@
       light:
         area_id:
         - living_room
+- id: '1650359767117'
+  alias: 'LIGHTS bedroom switch curtains up '
+  description: ''
+  trigger:
+  - device_id: a67d053900624a172b342f462714474b
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: dim_up
+  condition: []
+  action:
+  - device_id: 05e7e67963dde2059de0f6e9f2ec02ad
+    domain: cover
+    entity_id: cover.bedroom_blinds_window_covering
+    type: set_position
+    position: 100
+  mode: single
+- id: '1650359787446'
+  alias: LIGHTS bedroom switch curtains down
+  description: ''
+  trigger:
+  - device_id: a67d053900624a172b342f462714474b
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: dim_down
+  condition: []
+  action:
+  - device_id: 05e7e67963dde2059de0f6e9f2ec02ad
+    domain: cover
+    entity_id: cover.bedroom_blinds_window_covering
+    type: set_position
+    position: 0
+  mode: single
