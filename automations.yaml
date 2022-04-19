@@ -829,10 +829,7 @@
   - platform: sun
     event: sunset
     offset: 00:30
-  condition:
-  - condition: state
-    entity_id: group.any_home
-    state: 'on'
+  condition: []
   action:
   - service: cover.close_cover
     data:
