@@ -730,3 +730,57 @@
     type: set_position
     position: 0
   mode: single
+- id: '1650364423544'
+  alias: 'LIGHTS: Office switch'
+  description: 'Single press = toggle lights
+
+    Long press = toggle motion sensor mode
+
+    Double press = unused'
+  use_blueprint:
+    path: garykrige/sonoff_switch.yaml
+    input:
+      sonoff_button: e74f6609b4c7ac897366531a40e25436
+      toggle_action:
+      - type: toggle
+        device_id: 6c66890cea366444cbfd5fd9f23e0ad0
+        entity_id: light.office
+        domain: light
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 0
+          milliseconds: 500
+      - choose:
+        - conditions:
+          - condition: device
+            type: is_off
+            device_id: 6c66890cea366444cbfd5fd9f23e0ad0
+            entity_id: light.office
+            domain: light
+          sequence:
+          - type: turn_off
+            device_id: 546f0863910d005d1729ba6fd4471bbc
+            entity_id: light.office_lamp
+            domain: light
+        - conditions:
+          - condition: device
+            type: is_on
+            device_id: 6c66890cea366444cbfd5fd9f23e0ad0
+            entity_id: light.office
+            domain: light
+          sequence:
+          - type: turn_on
+            device_id: 546f0863910d005d1729ba6fd4471bbc
+            entity_id: light.office_lamp
+            domain: light
+        default:
+        - type: toggle
+          device_id: 546f0863910d005d1729ba6fd4471bbc
+          entity_id: light.office_lamp
+          domain: light
+      off_action:
+      - service: input_boolean.toggle
+        data: {}
+        target:
+          entity_id: input_boolean.office_motion_enabled

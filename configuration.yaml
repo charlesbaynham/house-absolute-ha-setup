@@ -90,6 +90,8 @@ input_boolean:
     name: Lights in away mode
   hot_water_tomorrow:
     name: Request hot water tomorrow
+  office_motion_enabled:
+    name: Office lights controlled by motion
 
 google:
   client_id: !secret google_client_id
