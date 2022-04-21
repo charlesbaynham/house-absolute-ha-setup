@@ -835,3 +835,35 @@
     data:
       entity_id: all
   mode: single
+- id: '1650538419852'
+  alias: 'LIGHTS: Bedroom aux button'
+  description: ''
+  use_blueprint:
+    path: charles/ikea_switch.yaml
+    input:
+      IKEA_button: ccf90f865b5b2f7e0eb757d71be19506
+      up_action:
+      - device_id: 05e7e67963dde2059de0f6e9f2ec02ad
+        domain: cover
+        entity_id: cover.bedroom_blinds_window_covering
+        type: set_position
+        position: 100
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 10
+          milliseconds: 0
+      - service: scene.turn_on
+        target:
+          entity_id: scene.bedroom_lights_off
+        metadata: {}
+      down_action:
+      - service: scene.turn_on
+        target:
+          entity_id: scene.bedroom_relaxed
+        metadata: {}
+      - device_id: 05e7e67963dde2059de0f6e9f2ec02ad
+        domain: cover
+        entity_id: cover.bedroom_blinds_window_covering
+        type: set_position
+        position: 0

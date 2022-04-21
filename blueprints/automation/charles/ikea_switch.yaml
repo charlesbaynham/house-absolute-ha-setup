@@ -8,7 +8,6 @@ blueprint:
       selector:
         device:
           integration: zha
-          manufacturer: KE
           model: TRADFRI open/close remote
     up_action:
       name: Sun press
@@ -22,9 +21,15 @@ blueprint:
       default: []
       selector:
         action: ~
+    up_stop_action:
+      name: Sun press, hold, release
+      description: Action to run on release of a long press of the sun button
+      default: []
+      selector:
+        action: ~
     down_stop_action:
       name: Blinds press, hold, release
-      description: Action to run on release of a long press of the down button
+      description: Action to run on release of a long press of the blinds button
       default: []
       selector:
         action: ~
@@ -41,6 +46,8 @@ trigger:
 variables:
   up_action: !input up_action
   down_action: !input down_action
+  up_stop_action: !input up_stop_action
+  down_stop_action: !input down_stop_action
 
 action:
   - variables:
@@ -53,5 +60,8 @@ action:
           - '{{ command == "down_close" }}'
         sequence: !input down_action
       - conditions:
-          - '{{ command == "off" }}'
-        sequence: !input off_action
+          - '{{ command == "stop_opening" }}'
+        sequence: !input up_stop_action
+      - conditions:
+          - '{{ command == "stop_closing" }}'
+        sequence: !input down_stop_action
