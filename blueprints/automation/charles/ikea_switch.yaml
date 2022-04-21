@@ -1,0 +1,57 @@
+blueprint:
+  name: IKEA Blinds Button
+  description: Automate the button that comes with the IKEA Fyrtur blinds
+  domain: automation
+  input:
+    IKEA_button:
+      name: IKEA Button
+      selector:
+        device:
+          integration: zha
+          manufacturer: KE
+          model: TRADFRI open/close remote
+    up_action:
+      name: Sun press
+      description: Action to run on single press of the sun button
+      default: []
+      selector:
+        action: ~
+    down_action:
+      name: Blinds Press
+      description: Action to run on single press of the blinds button
+      default: []
+      selector:
+        action: ~
+    down_stop_action:
+      name: Blinds press, hold, release
+      description: Action to run on release of a long press of the down button
+      default: []
+      selector:
+        action: ~
+
+mode: single
+max_exceeded: silent
+
+trigger:
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input IKEA_button
+
+variables:
+  up_action: !input up_action
+  down_action: !input down_action
+
+action:
+  - variables:
+      command: "{{ trigger.event.data.command }}"
+  - choose:
+      - conditions:
+          - '{{ command == "up_open" }}'
+        sequence: !input up_action
+      - conditions:
+          - '{{ command == "down_close" }}'
+        sequence: !input down_action
+      - conditions:
+          - '{{ command == "off" }}'
+        sequence: !input off_action
