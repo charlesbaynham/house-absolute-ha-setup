@@ -367,7 +367,7 @@
       seconds: 0
     state: not_home
   - condition: template
-    value_template: "{{ \n  now() - timedelta(hours = 24)\n  >\n  as_datetime(states('sensor.noonoo_last_clean_end'))\n\
+    value_template: "{{ \n  now() - timedelta(hours = 20)\n  >\n  as_datetime(states('sensor.noonoo_last_clean_end'))\n\
       and\n  is_state('vacuum.noonoo', 'docked')\n}}"
   action:
   - service: notify.notify
