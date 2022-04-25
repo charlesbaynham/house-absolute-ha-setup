@@ -31,7 +31,7 @@
       notify_device: 10e24cdea3aaf31ef94c59725b643354
       zone_entity: zone.home
 - id: '1610050834159'
-  alias: Turn on Charles blanket
+  alias: BLANKET Turn on Charles blanket
   description: Turn on Charles' blanket
   trigger:
   - platform: time
@@ -62,8 +62,8 @@
     domain: switch
   mode: single
 - id: '1610050834000'
-  alias: Keep Charles Blanket on
-  description: Keep Charles' blanket on if Charles is home
+  alias: BLANKET Keep Charles Blanket on
+  description: Keep Charles' blanket on if Charles is home until 12
   trigger:
   - platform: time_pattern
     minutes: '11'
@@ -79,9 +79,9 @@
   - condition: or
     conditions:
     - condition: time
-      after: '22:00'
+      after: '12:00:00'
     - condition: time
-      before: 02:00
+      before: 00:01:00
   action:
   - type: turn_off
     device_id: 114e22d1af178828cb508da883b67dd4
