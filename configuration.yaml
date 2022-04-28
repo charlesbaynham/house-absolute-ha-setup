@@ -119,17 +119,17 @@ counter:
     initial: 0
     step: 1
 
-# these are not set up yet 
-# see the github readme for the cloud map extractor
-camera:
-  - platform: xiaomi_cloud_map_extractor
-    host: !secret xiaomi_vacuum_host
-    token: !secret xiaomi_vacuum_token
-    username: !secret xiaomi_cloud_username
-    password: !secret xiaomi_cloud_password
-    draw: ['all']
-    attributes:
-      - calibration_points
+# # these are not set up yet 
+# # see the github readme for the cloud map extractor
+# camera:
+#   - platform: xiaomi_cloud_map_extractor
+#     host: !secret xiaomi_vacuum_host
+#     token: !secret xiaomi_vacuum_token
+#     username: !secret xiaomi_cloud_username
+#     password: !secret xiaomi_cloud_password
+#     draw: ['all']
+#     attributes:
+#       - calibration_points
 
 google_assistant:
   project_id: house-absolute
