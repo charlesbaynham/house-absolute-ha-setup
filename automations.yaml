@@ -169,24 +169,6 @@
       - living_room
       - office
   mode: single
-- id: '1611306669717'
-  alias: Turn on office lights
-  description: ''
-  trigger:
-  - platform: state
-    entity_id: device_tracker.work_laptop
-    to: home
-  condition: []
-  action:
-  - type: turn_on
-    device_id: 38d17eafa75f488b469e20456380401e
-    entity_id: light.office
-    domain: light
-  - type: turn_on
-    device_id: 31ad1ae771c656caacded7bcba3b6433
-    entity_id: light.office_lamp
-    domain: light
-  mode: single
 - id: '1618440612170'
   alias: Location ping
   description: ''
@@ -326,7 +308,7 @@
       entity_id: input_boolean.away_mode_active
   mode: single
 - id: '1641310525501'
-  alias: Announce end of dishwasher cycle
+  alias: ANNOUNCE Dishwasher cycle
   description: ''
   trigger:
   - platform: state
@@ -679,16 +661,6 @@
     target:
       area_id: bedroom
   mode: single
-- id: '1648624464243'
-  alias: LIGHTS bedroom switch
-  description: ''
-  use_blueprint:
-    path: vanstinator/zha-philips-hue-dimmer-switch-rwl020-rwl021.yaml
-    input:
-      remote: a67d053900624a172b342f462714474b
-      light:
-        area_id:
-        - bedroom
 - id: '1648756054523'
   alias: LIGHTS living room switch
   description: ''
@@ -875,3 +847,111 @@
         target:
           entity_id: scene.bedroom_lights_off
         metadata: {}
+- id: '1651179847004'
+  alias: LIGHTS office motion
+  description: ''
+  trigger:
+  - type: occupied
+    platform: device
+    device_id: 83a6afa7e4a5c030a42e638987c0666c
+    entity_id: binary_sensor.office_occupancy
+    domain: binary_sensor
+  condition: []
+  action:
+  - service: light.turn_on
+    data: {}
+    target:
+      area_id: office
+  - wait_for_trigger:
+    - type: not_occupied
+      platform: device
+      device_id: 83a6afa7e4a5c030a42e638987c0666c
+      entity_id: binary_sensor.office_occupancy
+      domain: binary_sensor
+    continue_on_timeout: true
+    timeout: '10000'
+  - delay:
+      hours: 0
+      minutes: 2
+      seconds: 0
+      milliseconds: 0
+  - service: light.turn_off
+    data: {}
+    target:
+      area_id: office
+  mode: restart
+- id: '1651179939151'
+  alias: LIGHTS office motion
+  description: ''
+  trigger:
+  - type: motion
+    platform: device
+    device_id: 83a6afa7e4a5c030a42e638987c0666c
+    entity_id: binary_sensor.office_motion
+    domain: binary_sensor
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 0bd6ffc11a39064f15b71cef66219578
+    entity_id: light.kitchen
+    domain: light
+  - wait_for_trigger:
+    - type: not_occupied
+      platform: device
+      device_id: b7b1b7ffa3b966e2f138dc9be5050777
+      entity_id: binary_sensor.kitchen_motion_sensor_occupancy
+      domain: binary_sensor
+    continue_on_timeout: true
+    timeout: '10000'
+  - delay:
+      hours: 0
+      minutes: 2
+      seconds: 0
+      milliseconds: 0
+  - type: turn_off
+    device_id: 0bd6ffc11a39064f15b71cef66219578
+    entity_id: light.kitchen
+    domain: light
+  mode: restart
+- id: '1651180002777'
+  alias: New Automation
+  description: ''
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.office_motion
+      light_target:
+        area_id: office
+- id: '1651180491302'
+  alias: LIGHTS kitchen motion (Duplicate)
+  description: ''
+  trigger:
+  - type: occupied
+    platform: device
+    device_id: 83a6afa7e4a5c030a42e638987c0666c
+    entity_id: binary_sensor.office_occupancy
+    domain: binary_sensor
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 0bd6ffc11a39064f15b71cef66219578
+    entity_id: light.kitchen
+    domain: light
+  - wait_for_trigger:
+    - type: not_occupied
+      platform: device
+      device_id: b7b1b7ffa3b966e2f138dc9be5050777
+      entity_id: binary_sensor.kitchen_motion_sensor_occupancy
+      domain: binary_sensor
+    continue_on_timeout: true
+    timeout: '10000'
+  - delay:
+      hours: 0
+      minutes: 2
+      seconds: 0
+      milliseconds: 0
+  - type: turn_off
+    device_id: 0bd6ffc11a39064f15b71cef66219578
+    entity_id: light.kitchen
+    domain: light
+  mode: restart
