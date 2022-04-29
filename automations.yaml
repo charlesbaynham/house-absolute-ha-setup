@@ -851,10 +851,10 @@
   alias: LIGHTS office motion
   description: ''
   trigger:
-  - type: occupied
+  - type: motion
     platform: device
     device_id: 83a6afa7e4a5c030a42e638987c0666c
-    entity_id: binary_sensor.office_occupancy
+    entity_id: binary_sensor.office_motion
     domain: binary_sensor
   condition:
   - condition: state
@@ -866,21 +866,30 @@
     target:
       area_id: office
   - wait_for_trigger:
-    - type: not_occupied
+    - type: no_motion
       platform: device
       device_id: 83a6afa7e4a5c030a42e638987c0666c
-      entity_id: binary_sensor.office_occupancy
+      entity_id: binary_sensor.office_motion
       domain: binary_sensor
     continue_on_timeout: true
     timeout: '10000'
+  - condition: or
+    conditions:
+    - condition: device
+      type: is_on
+      device_id: 546f0863910d005d1729ba6fd4471bbc
+      entity_id: light.office_lamp
+      domain: light
+    - condition: device
+      type: is_on
+      device_id: 6c66890cea366444cbfd5fd9f23e0ad0
+      entity_id: light.office
+      domain: light
   - delay:
       hours: 0
       minutes: 2
       seconds: 0
       milliseconds: 0
-  - condition: state
-    entity_id: input_boolean.office_motion_enabled
-    state: 'on'
   - service: light.turn_off
     data: {}
     target:
