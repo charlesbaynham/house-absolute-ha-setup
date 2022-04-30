@@ -9,3 +9,4 @@ secret_files/
 *.db-shm
 *.db-wal
 zigbee.db
+*.db
