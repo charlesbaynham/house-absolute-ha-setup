@@ -1,6 +1,4 @@
 {
-  set -o xtrace
-  
   cd /config
 
   # Copy ssh key into this instance
@@ -12,10 +10,7 @@
   # This can be (re)obtained with "ssh-keyscan -H gitlab.com > secret_files/known_hosts"
   cp secret_files/known_hosts ~/.ssh/known_hosts
 
-  cat ~/.ssh/id_rsa.pub
-  ls ~/.ssh
-
   git add .
   git commit -am "Automatic commit"
-  GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa" git push -vv
-} 2>&1 | tee -a /config/backup_out.log
+  GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa" git push
+} 2>&1 | tee /config/backup_out.log
