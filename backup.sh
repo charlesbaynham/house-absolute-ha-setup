@@ -2,6 +2,7 @@
   set -o xtrace
   
   cd /config
+  mkdir -p ~/.ssh
   cp secret_files/id_rsa ~/.ssh/.
   cp secret_files/id_rsa.pub ~/.ssh/.
   
