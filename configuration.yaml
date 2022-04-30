@@ -125,6 +125,7 @@ camera:
     token: !secret xiaomi_vacuum_token
     username: !secret xiaomi_cloud_username
     password: !secret xiaomi_cloud_password
+    name: Noonoo map
     draw: ['all']
     attributes:
       - calibration_points
