@@ -351,6 +351,9 @@
   - condition: template
     value_template: "{{ \n  now() - timedelta(hours = 20)\n  >\n  as_datetime(states('sensor.noonoo_last_clean_end'))\n\
       and\n  is_state('vacuum.noonoo', 'docked')\n}}"
+  - condition: state
+    entity_id: input_boolean.quiet_time
+    state: 'off'
   action:
   - service: notify.notify
     data:
@@ -895,3 +898,29 @@
     target:
       area_id: office
   mode: restart
+- id: '1651488353879'
+  alias: 'BOOLEANS: Quiet hours on'
+  description: ''
+  trigger:
+  - platform: time
+    at: '22:00:00'
+  condition: []
+  action:
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.quiet_time
+  mode: single
+- id: '1651488410050'
+  alias: 'BOOLEANS: Quiet hours off'
+  description: ''
+  trigger:
+  - platform: time
+    at: 09:00:00
+  condition: []
+  action:
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.quiet_time
+  mode: single
