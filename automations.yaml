@@ -318,7 +318,10 @@
       minutes: 0
       seconds: 0
     to: 'off'
-  condition: []
+  condition:
+  - condition: state
+    entity_id: input_boolean.quiet_time
+    state: 'off'
   action:
   - service: tts.google_translate_say
     data:
