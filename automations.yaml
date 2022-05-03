@@ -900,6 +900,9 @@
     data: {}
     target:
       area_id: office
+  - condition: state
+    entity_id: input_boolean.office_motion_enabled
+    state: 'on'
   mode: restart
 - id: '1651488353879'
   alias: 'BOOLEANS: Quiet hours on'
