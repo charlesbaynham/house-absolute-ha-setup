@@ -565,14 +565,8 @@
     - condition: state
       entity_id: person.gaby
       state: home
-    - condition: state
-      entity_id: binary_sensor.charles_sleeping_bayesian
-      state: 'off'
   - condition: template
     value_template: '{{trigger.from_state.state != trigger.to_state.state}}'
-  - condition: state
-    entity_id: binary_sensor.charles_sleeping_bayesian
-    state: 'off'
   - condition: state
     entity_id: binary_sensor.charles_sleeping_bayesian
     state: 'off'
