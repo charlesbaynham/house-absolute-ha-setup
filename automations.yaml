@@ -930,3 +930,17 @@
     target:
       entity_id: input_boolean.quiet_time
   mode: single
+- id: '1651687246008'
+  alias: 'LIGHTS: Living room switch cast aux function'
+  description: ''
+  trigger:
+  - device_id: cbcf800abd3ba2525fdfbff5bca4c794
+    domain: zha
+    platform: device
+    type: remote_button_triple_press
+    subtype: turn_off
+  condition: []
+  action:
+  - service: script.cast_to_living_room_tv
+    data: {}
+  mode: single
