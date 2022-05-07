@@ -22,7 +22,7 @@
       prob_given_false: 0.45
       platform: "state"
       to_state: "off"
-    - entity_id: "light.bedroom1"
+    - entity_id: "light.bedroom_1"
       platform: state
       to_state: "unavailable"
       prob_given_true: 0.04
@@ -135,14 +135,14 @@
       value_template: '{{ states("person.charles") != "home" }}'
     - entity_id: "light.bedroom_1"
       prob_given_true: 0.1
-      prob_given_false: 0.2
+      prob_given_false: 0.15
       platform: "state"
       to_state: "on"
-    - entity_id: "light.bedroom1"
+    - entity_id: "light.bedroom_1"
       platform: "state"
       to_state: "off"
-      prob_given_false: 0.15
-      prob_given_true: 0.8
+      prob_given_false: 0.85
+      prob_given_true: 0.9
     - platform: "template"
       value_template: >
         {{
@@ -159,7 +159,7 @@
         }}
       prob_given_true: 0.97
       prob_given_false: 0.8
-    - entity_id: "sensor.charles_honor_sleep_confidence"
+    - entity_id: "sensor.charles_pixel_sleep_confidence"
       prob_given_true: 0.70
       prob_given_false: 0.2
       platform: "numeric_state"
@@ -168,7 +168,7 @@
       prob_given_false: 0.4
       platform: "template"
       value_template: >
-        {% set locked_state = states.binary_sensor.charles_honor_device_locked %}
+        {% set locked_state = states.binary_sensor.charles_pixel_device_locked %}
         {% set bump = now() %}
         {{
           locked_state and locked_state.state == 'on' and (
@@ -180,7 +180,7 @@
       prob_given_false: 0.6
       platform: "template"
       value_template: >
-        {% set locked_state = states.binary_sensor.charles_honor_device_locked %}
+        {% set locked_state = states.binary_sensor.charles_pixel_device_locked %}
         {% set bump = now() %}
         {{
           not (locked_state and locked_state.state == 'on' and (
