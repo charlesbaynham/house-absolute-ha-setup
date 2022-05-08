@@ -84,8 +84,26 @@
 
 - sensor:
     - name: Gaby total saved via eBike
+      unit_of_measurement: "£"
+      state: >
+        {{
+        (states('counter.gaby_number_saved_train_journeys')|float)
+        *
+        (states('input_number.gaby_oneway_train_cost')|float)
+        }}
+      state_class: total_increasing
+      device_class: monetary
+- sensor:
+    - name: Gaby total saved this month
       state_class: total_increasing
       device_class: monetary
       unit_of_measurement: "£"
       state: >
-        {{ (states('counter.gaby_number_saved_train_journeys')|float)* 10.0/2}}
+        {{
+          (
+            (states('counter.gaby_number_saved_train_journeys')|float)
+            - 
+            (states('counter.gaby_total_trips_at_month_start')|float)
+          ) * 
+          (states('input_number.gaby_oneway_train_cost')|float)
+        }}
