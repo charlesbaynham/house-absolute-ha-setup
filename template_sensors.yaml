@@ -55,19 +55,32 @@
         {% else %}
         mdi:alert-circle
         {% endif %}
-        
-        
+
 - sensor:
-  - name: Total saved via eBike
-    unit_of_measurement: "£"
-    state: >
-      {{ (states('counter.charles_number_saved_train_journeys')|float)* 12.5/2}}
-    state_class: total_increasing
-    device_class: monetary
+    - name: Charles total saved via eBike
+      unit_of_measurement: "£"
+      state: >
+        {{ (states('counter.charles_number_saved_train_journeys')|float)* 12.5/2}}
+      state_class: total_increasing
+      device_class: monetary
+
 - sensor:
-  - name: Total saved via eBike
-    unit_of_measurement: "£"
-    state: >
-      {{ (states('counter.gaby_number_saved_train_journeys')|float)* 10.0/2}}
-    state_class: total_increasing
-    device_class: monetary
+    - name: Num trips at start of month
+      state: >
+        {% if (now().strftime("%d") | int) == 1 %}
+          {{ states('counter.charles_number_saved_train_journeys')|float }}
+        {% else %}
+          {{ this }}
+        {% endif %}
+  trigger:
+    # Trigger daily, but only update the value if it's the first of the month 
+    - platform: time
+      at: '00:01:00'
+
+- sensor:
+    - name: Gaby total saved via eBike
+      unit_of_measurement: "£"
+      state: >
+        {{ (states('counter.gaby_number_saved_train_journeys')|float)* 10.0/2}}
+      state_class: total_increasing
+      device_class: monetary
