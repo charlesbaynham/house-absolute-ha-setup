@@ -87,7 +87,7 @@
           (
             (states('counter.charles_number_saved_train_journeys')|float)
             - 
-            (states('counter.charles_total_trips_at_month_start')|float)
+            (states('sensor.charles_total_trips_at_month_start')|float)
           ) * 
           (states('input_number.charles_oneway_train_cost')|float)
         }}
@@ -123,7 +123,7 @@
           (
             (states('counter.gaby_number_saved_train_journeys')|float)
             - 
-            (states('counter.gaby_total_trips_at_month_start')|float)
+            (states('sensor.gaby_total_trips_at_month_start')|float)
           ) * 
           (states('input_number.gaby_oneway_train_cost')|float)
         }}

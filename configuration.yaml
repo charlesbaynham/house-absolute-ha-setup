@@ -96,14 +96,6 @@ input_number:
     max: 6.26
     min: 6.25
     initial: 6.25
-  gaby_total_trips_at_month_start:
-    max: 1000000
-    min: 0
-    initial: 0
-  charles_total_trips_at_month_start:
-    max: 1000000
-    min: 0
-    initial: 0
 
 input_boolean:
   away_mode_active:
