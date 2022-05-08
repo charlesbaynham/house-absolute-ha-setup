@@ -56,6 +56,15 @@
         mdi:alert-circle
         {% endif %}
 
+# Store current total number of trips in a template variable,
+# updated monthly (by an automation firing an event)
+- sensor:
+    name: Charles total trips at month start
+    state: "{{ states('counter.charles_number_saved_train_journeys')|float }}"
+  trigger:
+    - platform: event
+      event_type: "RESET_BICYCLE_MONTHLY_COUNTS"
+# Calculate total saved
 - sensor:
     - name: Charles total saved via eBike
       unit_of_measurement: "£"
@@ -67,6 +76,7 @@
         }}
       state_class: total_increasing
       device_class: monetary
+# Calculate total saved since start of month
 - sensor:
     - name: Charles total saved this month
       state_class: total_increasing
@@ -82,6 +92,15 @@
           (states('input_number.charles_oneway_train_cost')|float)
         }}
 
+# Store current total number of trips in a template variable,
+# updated monthly (by an automation firing an event)
+- sensor:
+    name: Gaby total trips at month start
+    state: "{{ states('counter.gaby_number_saved_train_journeys')|float }}"
+  trigger:
+    - platform: event
+      event_type: "RESET_BICYCLE_MONTHLY_COUNTS"
+# Calculate total saved
 - sensor:
     - name: Gaby total saved via eBike
       unit_of_measurement: "£"
@@ -93,6 +112,7 @@
         }}
       state_class: total_increasing
       device_class: monetary
+# Calculate total saved since start of month
 - sensor:
     - name: Gaby total saved this month
       state_class: total_increasing

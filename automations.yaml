@@ -942,16 +942,16 @@
     - service: script.cast_to_living_room_tv
       data: {}
   mode: single
-- id: '1652036134118'
-  alias: 'BICYCLE_COUNTER: Gaby monthly reset'
-  description: ''
+- id: "1652036134118"
+  alias: "BICYCLE_COUNTER: Monthly resets"
+  description: ""
   trigger:
-  - platform: time
-    at: 00:01:00
+    - platform: time
+      at: 00:01:00
   condition:
-  - condition: template
-    value_template: '{{ (now().strftime("%d") | int) == 1 }}'
+    - condition: template
+      value_template: '{{ (now().strftime("%d") | int) == 1 }}'
   action:
-  - service: input_number.set_value
-    data: {}
+    - event: RESET_BICYCLE_MONTHLY_COUNTS
+      event_data: {}
   mode: single
