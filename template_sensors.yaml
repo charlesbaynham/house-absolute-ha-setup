@@ -68,14 +68,19 @@
     - name: Num trips at start of month
       state: >
         {% if (now().strftime("%d") | int) == 1 %}
+        {% if (now().strftime("%m") | int) == 1 %}
           {{ states('counter.charles_number_saved_train_journeys')|float }}
         {% else %}
-          {{ this }}
+          {{ this.state }}
         {% endif %}
   trigger:
-    # Trigger daily, but only update the value if it's the first of the month 
-    - platform: time
-      at: '00:01:00'
+    # Trigger daily, but only update the value if it's the first of the month
+    # - platform: time
+    #   at: "00:01:00"
+    - platform: time_pattern
+      # hours: "*"
+      # minutes: "/1"
+      seconds: "/10"
 
 - sensor:
     - name: Gaby total saved via eBike
