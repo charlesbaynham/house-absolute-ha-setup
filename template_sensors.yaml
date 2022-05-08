@@ -58,13 +58,16 @@
         
         
 - sensor:
-  - name: Train saved Charles
+  - name: Total saved via eBike
     unit_of_measurement: "£"
     state: >
       {{ (states('counter.charles_number_saved_train_journeys')|float)* 12.5/2}}
     state_class: total_increasing
-  - name: Train saved Gaby
+    device_class: monetary
+- sensor:
+  - name: Total saved via eBike
     unit_of_measurement: "£"
     state: >
-      {{ (states('counter.gaby_number_saved_train_journeys')|float)* 12.5/2}}
+      {{ (states('counter.gaby_number_saved_train_journeys')|float)* 10.0/2}}
     state_class: total_increasing
+    device_class: monetary
