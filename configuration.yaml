@@ -85,6 +85,18 @@ input_number:
     step: 1
     # 1 week in seconds:
     initial: 604800
+
+  gaby_oneway_train_cost:
+    name: Gaby one-way train ticket cost
+    max: 5
+    min: 5
+    initial: 5
+  charles_oneway_train_cost:
+    name: Charles one-way train ticket cost
+    max: 6.25
+    min: 6.25
+    initial: 6.25
+
 input_boolean:
   away_mode_active:
     name: Lights in away mode
@@ -105,20 +117,30 @@ counter:
   gaby_trips_to_work_today:
     initial: 0
     step: 1
-  charles_trips_to_work_today:
-    initial: 0
-    step: 1
   gaby_trips_via_wimbledon_today:
     initial: 0
     step: 1
-  charles_trips_via_wimbledon_today:
+  gaby_total_trips_at_month_start:
     initial: 0
     step: 1
   gaby_number_saved_train_journeys:
     initial: 0
     step: 1
+
+  charles_trips_to_work_today:
+    initial: 0
+    step: 1
+  charles_trips_via_wimbledon_today:
+    initial: 0
+    step: 1
   charles_number_saved_train_journeys:
     initial: 0
+    step: 1
+  charles_total_trips_at_month_start:
+    initial: 0
+    step: 1
+  charles_oneway_train_cost:
+    initial: 6.25
     step: 1
 
 camera:
@@ -128,7 +150,7 @@ camera:
     username: !secret xiaomi_cloud_username
     password: !secret xiaomi_cloud_password
     name: Noonoo map
-    draw: ['all']
+    draw: ["all"]
     attributes:
       - calibration_points
 

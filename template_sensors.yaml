@@ -60,32 +60,32 @@
     - name: Charles total saved via eBike
       unit_of_measurement: "£"
       state: >
-        {{ (states('counter.charles_number_saved_train_journeys')|float)* 12.5/2}}
+        {{
+        (states('counter.charles_number_saved_train_journeys')|float)
+        *
+        (states('input_number.charles_oneway_train_cost')|float)
+        }}
       state_class: total_increasing
       device_class: monetary
-
 - sensor:
-    - name: Num trips at start of month
+    - name: Charles total saved this month
+      state_class: total_increasing
+      device_class: monetary
+      unit_of_measurement: "£"
       state: >
-        {% if (now().strftime("%d") | int) == 1 %}
-        {% if (now().strftime("%m") | int) == 1 %}
-          {{ states('counter.charles_number_saved_train_journeys')|float }}
-        {% else %}
-          {{ this.state }}
-        {% endif %}
-  trigger:
-    # Trigger daily, but only update the value if it's the first of the month
-    # - platform: time
-    #   at: "00:01:00"
-    - platform: time_pattern
-      # hours: "*"
-      # minutes: "/1"
-      seconds: "/10"
+        {{
+          (
+            (states('counter.charles_number_saved_train_journeys')|float)
+            - 
+            (states('counter.charles_total_trips_at_month_start')|float)
+          ) * 
+          (states('input_number.charles_oneway_train_cost')|float)
+        }}
 
 - sensor:
     - name: Gaby total saved via eBike
+      state_class: total_increasing
+      device_class: monetary
       unit_of_measurement: "£"
       state: >
         {{ (states('counter.gaby_number_saved_train_journeys')|float)* 10.0/2}}
-      state_class: total_increasing
-      device_class: monetary
