@@ -80,9 +80,8 @@ template: !include template_sensors.yaml
 input_number:
   away_mode_lookback_duration:
     name: Lookback duration for away mode
-    min: 10
-    max: 2400000
-    step: 1
+    min: 604800
+    max: 604800.1
     # 1 week in seconds:
     initial: 604800
 
