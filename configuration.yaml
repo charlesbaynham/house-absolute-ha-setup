@@ -150,11 +150,11 @@ google_assistant:
   report_state: true
   expose_by_default: true
   exposed_domains:
-    - switch
     - climate
     - vacuum
     - light
     - cover
+    - script
   entity_config:
     light.lamp:
       name: Bedroom lamp
@@ -169,6 +169,8 @@ google_assistant:
       name: Cast home assistant
     cover.bedroom_blinds_window_covering:
       name: Bedroom blinds
+    script.clean_the_kitchen:
+      name: Clean the kitchen
 
     # light.kitchen:
     #   name: CUSTOM_NAME_FOR_GOOGLE_ASSISTANT

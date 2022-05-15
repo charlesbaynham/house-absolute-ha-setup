@@ -7,3 +7,17 @@ cast_to_living_room_tv:
       view_path: '0'
     service: cast.show_lovelace_view
   mode: single
+clean_the_kitchen:
+  alias: Clean the kitchen
+  sequence:
+  - service: xiaomi_miio.vacuum_clean_zone
+    data:
+      zone:
+      - - 26210
+        - 29156
+        - 29137
+        - 31656
+      repeats: 2
+      entity_id: vacuum.noonoo
+  mode: single
+  icon: mdi:countertop
