@@ -168,6 +168,10 @@
       - kitchen
       - living_room
       - office
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.office_motion_enabled
   mode: single
 - id: '1618440612170'
   alias: Location ping
@@ -265,12 +269,12 @@
     entity_id: climate.house_absolute
     type: set_hvac_mode
     hvac_mode: auto
-  - scene: scene.all_lights_off
   - service: water_heater.set_operation_mode
     data:
       operation_mode: auto
     target:
       entity_id: water_heater.hot_water
+  - scene: scene.all_lights_off
   mode: single
 - id: '1640185443869'
   alias: Turn on away mode after a day
