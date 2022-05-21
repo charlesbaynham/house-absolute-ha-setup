@@ -132,19 +132,19 @@
       platform: "state"
       to_state: "home"
     - platform: template
-      value_template: '{{ today_at("10:00") < now() and now() < today_at("22:00") }}'
-      prob_given_true: 0.03
-      prob_given_false: 0.9
+      value_template: '{{ today_at("9:00") < now() and now() < today_at("22:00") }}'
+      prob_given_true: 0.2
+      prob_given_false: 0.7
     - platform: template
-      value_template: '{{ not (today_at("10:00") < now() and now() < today_at("22:00")) }}'
-      prob_given_true: 0.97
-      prob_given_false: 0.1
+      value_template: '{{ not (today_at("9:00") < now() and now() < today_at("22:00")) }}'
+      prob_given_true: 0.8
+      prob_given_false: 0.3
     - prob_given_true: 0.05
       prob_given_false: 0.5
       platform: "template"
       value_template: '{{ states("person.charles") != "home" }}'
     - entity_id: "light.bedroom_1"
-      prob_given_true: 0.1
+      prob_given_true: 0.05
       prob_given_false: 0.15
       platform: "state"
       to_state: "on"
@@ -152,7 +152,7 @@
       platform: "state"
       to_state: "off"
       prob_given_false: 0.85
-      prob_given_true: 0.9
+      prob_given_true: 0.95
     - entity_id: "cover.bedroom_blinds_window_covering"
       platform: state
       to_state: "closed"
@@ -169,6 +169,8 @@
           states('media_player.living_room_tv') == 'playing'
             or
           states('media_player.living_room_tv') == 'paused'
+            or
+          states('media_player.living_room_tv') == 'idle'
         }}
       prob_given_true: 0.01
       prob_given_false: 0.2
