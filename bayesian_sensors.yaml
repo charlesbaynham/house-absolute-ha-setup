@@ -170,15 +170,18 @@
             or
           states('media_player.living_room_tv') == 'paused'
         }}
-      prob_given_true: 0.03
+      prob_given_true: 0.01
       prob_given_false: 0.2
-    - platform: "template"
-      value_template: >
-        {{
-          states('media_player.living_room_tv') == 'unavailable'
-        }}
-      prob_given_true: 0.97
-      prob_given_false: 0.8
+    - platform: "state"
+      entity_id: media_player.living_room_tv
+      to_state: off
+      prob_given_true: 0.03
+      prob_given_false: 0.1
+    - platform: "state"
+      entity_id: media_player.living_room_tv
+      to_state: unavailable
+      prob_given_true: 0.94
+      prob_given_false: 0.7
     - entity_id: "sensor.charles_pixel_sleep_confidence"
       prob_given_true: 0.70
       prob_given_false: 0.2
