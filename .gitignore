@@ -9,5 +9,6 @@ home-assistant_v2.db
 secret_files/
 *.db-shm
 *.db-wal
+*.db-journal
 zigbee.db
 *.db
