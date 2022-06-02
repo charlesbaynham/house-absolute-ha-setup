@@ -675,6 +675,7 @@
       light:
         area_id:
         - living_room
+      brightness: 100
 - id: '1650359767117'
   alias: 'LIGHTS bedroom switch curtains up '
   description: ''
