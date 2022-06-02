@@ -808,7 +808,13 @@
   - platform: sun
     event: sunset
     offset: 00:30
-  condition: []
+  condition:
+  - type: is_temperature
+    condition: device
+    device_id: 32b1896caaf2ef09416ece31de5874a1
+    entity_id: sensor.house_absolute_temperature
+    domain: sensor
+    below: 20
   action:
   - service: cover.close_cover
     data:
