@@ -327,3 +327,10 @@ a2_67_7f_b9_be_ce:
   icon:
   picture:
   track: false
+
+HarryPhone:
+  name: HarryPhone
+  mac: A8:CC:6F:02:75:C1
+  icon:
+  picture:
+  track: true
