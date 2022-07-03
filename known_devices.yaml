@@ -334,3 +334,10 @@ HarryPhone:
   icon:
   picture:
   track: true
+
+tplink_ap:
+  name: TPLINK_AP
+  mac: 28:EE:52:B7:5E:40
+  icon:
+  picture:
+  track: false
