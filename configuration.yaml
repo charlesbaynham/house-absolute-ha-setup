@@ -106,6 +106,10 @@ input_boolean:
   quiet_time:
     name: Quiet times of the day
 
+input_text:
+  garden_bssid:
+    initial: !secret garden_ap_bssid
+
 google:
   client_id: !secret google_client_id
   client_secret: !secret google_client_secret

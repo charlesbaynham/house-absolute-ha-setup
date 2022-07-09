@@ -127,3 +127,19 @@
           ) * 
           (states('input_number.gaby_oneway_train_cost')|float)
         }}
+
+
+# Detect if charles or gaby are in the garden
+- sensor:
+    - name: In garden Charles
+      state: >
+        {{
+          states('sensor.charles_pixel_wifi_bssid') ==
+          states('input_text.garden_bssid')
+        }}
+    - name: In garden Gaby
+      state: >
+        {{
+          states('sensor.gaby_honor_wifi_bssid') ==
+          states('input_text.garden_bssid')
+        }}
