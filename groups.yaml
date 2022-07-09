@@ -4,3 +4,4 @@ any_home:
   entities:
     - person.charles
     - person.gaby
+    - person.harry
