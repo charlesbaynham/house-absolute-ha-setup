@@ -962,7 +962,8 @@
   - event: RESET_BICYCLE_MONTHLY_COUNTS
     event_data: {}
   mode: single
-- id: '1657446911269'
+
+- id: 'garden_return_gaby'
   alias: 'ANNOUNCE: Garden return (Gaby)'
   description: ''
   trigger:
@@ -970,7 +971,15 @@
     entity_id:
     - sensor.in_garden_gaby
     to: 'True'
-  condition: []
+  condition:
+  - condition: time
+    after: '12:00:00'
+    weekday:
+    - fri
+    - thu
+    - wed
+    - tue
+    - mon
   action:
   - service: tts.google_translate_say
     data:
@@ -978,4 +987,42 @@
       message: Welcome back Gaby. You have saved {{states('sensor.gaby_total_saved_this_month')|int}}
         pounds this month by cycling, and a total of {{states('sensor.gaby_total_saved_via_ebike')|int}}}}
         pounds altogether.
+  - delay:
+      hours: 12
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
   mode: single
+  max_exceeded: silent
+
+- id: 'garden_return_charles'
+  alias: 'ANNOUNCE: Garden return (Charles)'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.in_garden_charles
+    to: 'True'
+  condition:
+  - condition: time
+    after: '12:00:00'
+    weekday:
+    - fri
+    - thu
+    - wed
+    - tue
+    - mon
+  action:
+  - service: tts.google_translate_say
+    data:
+      entity_id: media_player.garden_speaker
+      message: Welcome back Charles. You have saved {{states('sensor.charles_total_saved_this_month')|int}}
+        pounds this month by cycling, and a total of {{states('sensor.charles_total_saved_via_ebike')|int}}}}
+        pounds altogether.
+  - delay:
+      hours: 12
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  mode: single
+  max_exceeded: silent
