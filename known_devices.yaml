@@ -341,3 +341,10 @@ tplink_ap:
   icon:
   picture:
   track: false
+
+6c_a1_00_01_f5_ae:
+  name: 6c_a1_00_01_f5_ae
+  mac: 6C:A1:00:01:F5:AE
+  icon:
+  picture:
+  track: false
