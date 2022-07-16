@@ -846,7 +846,7 @@
       down_action:
       - service: scene.turn_on
         target:
-          entity_id: scene.bedroom_relaxed
+          entity_id: scene.bedroom_lights_off
         metadata: {}
       - device_id: 05e7e67963dde2059de0f6e9f2ec02ad
         domain: cover
@@ -856,7 +856,7 @@
       down_stop_action:
       - service: scene.turn_on
         target:
-          entity_id: scene.bedroom_lights_off
+          entity_id: scene.bedroom_relaxed
         metadata: {}
 - id: '1651179847004'
   alias: LIGHTS office motion
