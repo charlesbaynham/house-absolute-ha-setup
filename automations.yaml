@@ -1049,13 +1049,9 @@
   description: ''
   trigger:
   - platform: numeric_state
-    entity_id: weather.home_hourly
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 0
-    attribute: temperature
-    above: '25'
+    entity_id: sun.sun
+    attribute: azimuth
+    above: '155'
   condition: []
   action:
   - device_id: 05e7e67963dde2059de0f6e9f2ec02ad
