@@ -1044,3 +1044,23 @@
       milliseconds: 0
   mode: single
   max_exceeded: silent
+- id: '1658046384740'
+  alias: '!TMP close blinds in heat'
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: weather.home_hourly
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 0
+    attribute: temperature
+    above: '25'
+  condition: []
+  action:
+  - device_id: 05e7e67963dde2059de0f6e9f2ec02ad
+    domain: cover
+    entity_id: cover.bedroom_blinds_window_covering
+    type: set_position
+    position: 0
+  mode: single
