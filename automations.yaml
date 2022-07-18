@@ -979,6 +979,8 @@
     - wed
     - tue
     - mon
+    - sat
+    - sun
   - condition: state
     entity_id: sensor.in_garden_charles
     state: 'False'
@@ -991,9 +993,7 @@
   - service: tts.google_translate_say
     data:
       entity_id: media_player.garden_speaker
-      message: Welcome back Gaby. You have saved {{states('sensor.gaby_total_saved_this_month')|int}}
-        pounds this month by cycling, and a total of {{states('sensor.gaby_total_saved_via_ebike')|int}}}}
-        pounds altogether.
+      message: Hi gaby, welcome back to your garden paradise. woop woop woop woop.
   - delay:
       hours: 12
       minutes: 0
