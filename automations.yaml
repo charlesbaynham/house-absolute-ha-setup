@@ -1052,7 +1052,11 @@
     entity_id: sun.sun
     attribute: azimuth
     above: '155'
-  condition: []
+  condition:
+  - condition: numeric_state
+    entity_id: weather.home
+    attribute: temperature
+    above: '30'
   action:
   - device_id: 05e7e67963dde2059de0f6e9f2ec02ad
     domain: cover
