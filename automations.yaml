@@ -1077,7 +1077,7 @@
   condition:
   - condition: state
     entity_id: input_boolean.away_mode_active
-    state: 'true'
+    state: 'on'
   action:
   - choose:
     - conditions:
