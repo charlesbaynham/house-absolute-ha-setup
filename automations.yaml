@@ -1064,3 +1064,35 @@
     type: set_position
     position: 0
   mode: single
+- id: '1658568543937'
+  alias: '!TMP: Blinds with sun in away mode'
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunrise
+    offset: '2'
+  - platform: sun
+    event: sunset
+    offset: 0
+  condition:
+  - condition: state
+    entity_id: input_boolean.away_mode_active
+    state: 'true'
+  action:
+  - choose:
+    - conditions:
+      - condition: time
+        after: '12:00:00'
+      sequence:
+      - device_id: 05e7e67963dde2059de0f6e9f2ec02ad
+        domain: cover
+        entity_id: cover.bedroom_blinds_window_covering
+        type: set_position
+        position: 0
+    default:
+    - device_id: 05e7e67963dde2059de0f6e9f2ec02ad
+      domain: cover
+      entity_id: cover.bedroom_blinds_window_covering
+      type: set_position
+      position: 100
+  mode: single
