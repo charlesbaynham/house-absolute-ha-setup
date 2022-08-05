@@ -58,3 +58,12 @@
   start: >
     {{ as_timestamp(now()) - float(states('input_number.away_mode_lookback_duration')) }}
   duration: 00:00:30
+
+- platform: history_stats
+  name: "test_replay_light.office"
+  entity_id: light.office
+  state: "on"
+  type: time
+  start: >
+    {{ as_timestamp(now()) - 100.0 }}
+  duration: 00:00:30
