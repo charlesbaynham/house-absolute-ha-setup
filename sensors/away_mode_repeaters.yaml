@@ -9,7 +9,7 @@
   name: "replay_light.lamp"
   entity_id: light.lamp
   state: "on"
-  type: count
+  type: time
   start: >
     {{ as_timestamp(now()) - float(states('input_number.away_mode_lookback_duration')) }}
   duration: 00:00:30
@@ -18,7 +18,7 @@
   name: "replay_light.sitting_room"
   entity_id: light.sitting_room
   state: "on"
-  type: count
+  type: time
   start: >
     {{ as_timestamp(now()) - float(states('input_number.away_mode_lookback_duration')) }}
   duration: 00:00:30
@@ -27,7 +27,7 @@
   name: "replay_light.bedroom_1"
   entity_id: light.bedroom_1
   state: "on"
-  type: count
+  type: time
   start: >
     {{ as_timestamp(now()) - float(states('input_number.away_mode_lookback_duration')) }}
   duration: 00:00:30
@@ -36,7 +36,7 @@
   name: "replay_light.bedroom_2"
   entity_id: light.bedroom_2
   state: "on"
-  type: count
+  type: time
   start: >
     {{ as_timestamp(now()) - float(states('input_number.away_mode_lookback_duration')) }}
   duration: 00:00:30
@@ -45,7 +45,7 @@
   name: "replay_light.bedroom_3"
   entity_id: light.bedroom_3
   state: "on"
-  type: count
+  type: time
   start: >
     {{ as_timestamp(now()) - float(states('input_number.away_mode_lookback_duration')) }}
   duration: 00:00:30
@@ -54,16 +54,7 @@
   name: "replay_light.office"
   entity_id: light.office
   state: "on"
-  type: count
-  start: >
-    {{ as_timestamp(now()) - float(states('input_number.away_mode_lookback_duration')) }}
-  duration: 00:00:30
-
-- platform: history_stats
-  name: "test_replay_light.office"
-  entity_id: light.office
-  state: "on"
   type: time
   start: >
-    {{ as_timestamp(now()) - 100.0 }}
+    {{ as_timestamp(now()) - float(states('input_number.away_mode_lookback_duration')) }}
   duration: 00:00:30
