@@ -80,10 +80,10 @@ template: !include template_sensors.yaml
 input_number:
   away_mode_lookback_duration:
     name: Lookback duration for away mode
-    min: 604800
-    max: 604800.1
+    min: 4838400
+    max: 4838400.1
     # 1 week in seconds:
-    initial: 604800
+    initial: 4838400
 
   gaby_oneway_train_cost:
     name: Gaby one-way train ticket cost
