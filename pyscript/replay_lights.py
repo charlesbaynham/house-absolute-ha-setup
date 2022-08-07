@@ -40,7 +40,7 @@ for sensor_name, light_name in replay_sensors_to_light.items():
     ):
         log.info(f"trigger_replay_func for {sensor_name} called with kwargs={kwargs}")
 
-        if int(state.get(sensor_name)) > 0:
+        if float(state.get(sensor_name)) > 0:
             service.call("light", "turn_on", entity_id=light_name)
         else:
             service.call("light", "turn_off", entity_id=light_name)
