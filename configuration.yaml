@@ -13,6 +13,18 @@ recorder:
   commit_interval: 60
   exclude:
     entities: !include excluded_sensors.yaml
+    
+history:
+  include:
+    domains:
+      - light
+      - group
+      - person
+      - climate
+      - vacuum
+    entities: 
+      - sensor.in_garden_gaby
+      - sensor.in_garden_charles
 
 # Text to speech
 tts:
