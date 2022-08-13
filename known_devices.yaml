@@ -348,3 +348,10 @@ tplink_ap:
   icon:
   picture:
   track: false
+
+f0_6e_0b_3f_8a_bd:
+  name: f0_6e_0b_3f_8a_bd
+  mac: F0:6E:0B:3F:8A:BD
+  icon:
+  picture:
+  track: false
