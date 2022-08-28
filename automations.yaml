@@ -1045,7 +1045,7 @@
   mode: single
   max_exceeded: silent
 - id: '1658046384740'
-  alias: '!TMP close blinds in heat'
+  alias: 'BLINDS: close blinds in heat'
   description: ''
   trigger:
   - platform: numeric_state
@@ -1095,4 +1095,37 @@
       entity_id: cover.bedroom_blinds_window_covering
       type: set_position
       position: 100
+  mode: single
+- id: '1661683329883'
+  alias: 'ONEOFF: Announce wakeup'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.gaby_sleeping_bayesian
+    to: 'off'
+  condition: []
+  action:
+  - service: media_player.play_media
+    target:
+      entity_id: media_player.garden_speaker
+    data:
+      media_content_id: media-source://tts/google_translate?message=Gaby+is+awake
+      media_content_type: provider
+    metadata:
+      title: Gaby is awake
+      thumbnail: https://brands.home-assistant.io/_/google_translate/logo.png
+      media_class: app
+      children_media_class:
+      navigateIds:
+      - {}
+      - media_content_type: app
+        media_content_id: media-source://tts
+      - media_content_type: provider
+        media_content_id: media-source://tts/google_translate?message=Gaby+is+awake
+  - service: automation.turn_off
+    data:
+      stop_actions: false
+    target:
+      entity_id: automation.oneoff_announce_wakeup
   mode: single
