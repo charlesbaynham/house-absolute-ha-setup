@@ -1065,7 +1065,7 @@
     position: 0
   mode: single
 - id: '1658568543937'
-  alias: '!TMP: Blinds with sun in away mode'
+  alias: 'AWAY: Blinds with sun in away mode'
   description: ''
   trigger:
   - platform: sun
