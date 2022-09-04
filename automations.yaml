@@ -996,7 +996,7 @@
       message: Hi gaby, welcome back to your garden paradise. Woop woop woop woop.
         You have saved {{states('sensor.gaby_total_saved_this_month')|int}} pounds
         this month, and a total of {{states('sensor.gaby_total_saved_via_ebike')|int}}}}
-        pounds altogether. You go Tiger. Roar!
+        pounds altogether. You go Tiger. Rarh!
   - delay:
       hours: 12
       minutes: 0
@@ -1144,10 +1144,21 @@
     entity_id:
     - sensor.in_garden_gaby
     to: 'True'
+  - platform: sun
+    event: sunset
+    offset: 0
   condition:
   - condition: sun
     before: sunrise
     after: sunset
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: sensor.in_garden_charles
+      state: 'True'
+    - condition: state
+      entity_id: sensor.in_garden_gaby
+      state: 'True'
   action:
   - service: light.turn_on
     data: {}
