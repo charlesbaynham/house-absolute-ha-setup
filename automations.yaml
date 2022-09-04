@@ -993,7 +993,10 @@
   - service: tts.google_translate_say
     data:
       entity_id: media_player.garden_speaker
-      message: Hi gaby, welcome back to your garden paradise. woop woop woop woop.
+      message: Hi gaby, welcome back to your garden paradise. Woop woop woop woop.
+        You have saved {{states('sensor.gaby_total_saved_this_month')|int}} pounds
+        this month, and a total of {{states('sensor.gaby_total_saved_via_ebike')|int}}}}
+        pounds altogether. You go Tiger. Roar!
   - delay:
       hours: 12
       minutes: 0
