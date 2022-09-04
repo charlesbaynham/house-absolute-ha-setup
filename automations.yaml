@@ -1129,3 +1129,25 @@
     target:
       entity_id: automation.oneoff_announce_wakeup
   mode: single
+- id: '1662309759018'
+  alias: LIGHTS garden motion on
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.in_garden_charles
+    to: 'True'
+  - platform: state
+    entity_id:
+    - sensor.in_garden_gaby
+    to: 'True'
+  condition:
+  - condition: sun
+    before: sunrise
+    after: sunset
+  action:
+  - service: light.turn_on
+    data: {}
+    target:
+      area_id: garden
+  mode: restart
