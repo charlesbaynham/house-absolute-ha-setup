@@ -1151,3 +1151,30 @@
     target:
       area_id: garden
   mode: restart
+- id: '1662309947272'
+  alias: LIGHTS garden motion off
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.in_garden_charles
+    to: 'False'
+  - platform: state
+    entity_id:
+    - sensor.in_garden_gaby
+    to: 'False'
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: sensor.in_garden_charles
+      state: 'False'
+    - condition: state
+      entity_id: sensor.in_garden_gaby
+      state: 'False'
+  action:
+  - service: light.turn_off
+    data: {}
+    target:
+      area_id: garden
+  mode: single
