@@ -1149,7 +1149,6 @@
     offset: 0
   condition:
   - condition: sun
-    before: sunrise
     after: sunset
   - condition: or
     conditions:
