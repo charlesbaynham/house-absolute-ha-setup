@@ -27,6 +27,14 @@ history:
       - sensor.in_garden_gaby
       - sensor.in_garden_charles
 
+proximity:
+  home:
+    devices:
+      - person.charles
+      - person.gaby
+    tolerance: 50
+    unit_of_measurement: km
+
 # Text to speech
 tts:
   - platform: google_translate
