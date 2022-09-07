@@ -362,9 +362,6 @@
     entity_id: input_boolean.quiet_time
     state: 'off'
   action:
-  - service: notify.notify
-    data:
-      message: Launching Noonoo
   - device_id: ff72e33712aea3043f148cb5cdc99614
     domain: vacuum
     entity_id: vacuum.noonoo
