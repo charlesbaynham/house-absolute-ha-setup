@@ -41,7 +41,7 @@
       prob_given_false: 0.4
       platform: "template"
       value_template: >
-        {% set locked_state = states.binary_sensor.gaby_honor_device_locked %}
+        {% set locked_state = states.binary_sensor.big_gaby_device_locked %}
         {% set bump = now() %}
         {{
           locked_state and locked_state.state == 'on' and (
@@ -53,7 +53,7 @@
       prob_given_false: 0.6
       platform: "template"
       value_template: >
-        {% set locked_state = states.binary_sensor.gaby_honor_device_locked %}
+        {% set locked_state = states.binary_sensor.big_gaby_device_locked %}
         {% set bump = now() %}
         {{
           not (locked_state and locked_state.state == 'on' and (
@@ -61,12 +61,12 @@
             - as_timestamp(locked_state.last_changed)
           ) > 900)
         }}
-    - entity_id: "sensor.gaby_honor_sleep_confidence"
+    - entity_id: "sensor.big_gaby_sleep_confidence"
       prob_given_true: 0.90
       prob_given_false: 0.10
       platform: "numeric_state"
       above: 80
-    - entity_id: "sensor.gaby_honor_sleep_confidence"
+    - entity_id: "sensor.big_gaby_sleep_confidence"
       prob_given_true: 0.10
       platform: "numeric_state"
       below: 20

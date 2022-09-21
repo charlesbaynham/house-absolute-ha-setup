@@ -140,6 +140,6 @@
     - name: In garden Gaby
       state: >
         {{
-          states('sensor.gaby_honor_wifi_bssid') ==
+          states('sensor.big_gaby_wifi_bssid') ==
           states('input_text.garden_bssid')
         }}
