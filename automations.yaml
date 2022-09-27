@@ -540,6 +540,11 @@
     device_id: b7b1b7ffa3b966e2f138dc9be5050777
     entity_id: binary_sensor.kitchen_motion_sensor_occupancy
     domain: binary_sensor
+  - type: occupied
+    platform: device
+    device_id: 83a6afa7e4a5c030a42e638987c0666c
+    entity_id: binary_sensor.office_occupancy
+    domain: binary_sensor
   condition:
   - condition: state
     entity_id: group.any_home
