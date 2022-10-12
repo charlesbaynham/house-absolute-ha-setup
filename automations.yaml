@@ -496,7 +496,7 @@
   description: Turn on the hot water if exception requested
   trigger:
   - platform: time
-    at: 05:00
+    at: 04:00:00
   condition:
   - condition: state
     entity_id: input_boolean.hot_water_tomorrow
