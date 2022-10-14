@@ -946,6 +946,11 @@
     platform: device
     type: remote_button_triple_press
     subtype: turn_off
+  - device_id: cbcf800abd3ba2525fdfbff5bca4c794
+    domain: zha
+    platform: device
+    type: remote_button_triple_press
+    subtype: turn_on
   condition: []
   action:
   - service: script.cast_to_living_room_tv
