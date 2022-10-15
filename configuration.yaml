@@ -26,6 +26,8 @@ history:
     entities: 
       - sensor.in_garden_gaby
       - sensor.in_garden_charles
+      - sensor.charles_sleep_probability
+      - sensor.gaby_sleep_probability
 
 proximity:
   home:
