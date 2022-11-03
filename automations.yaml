@@ -1198,3 +1198,34 @@
     target:
       area_id: garden
   mode: single
+- id: '1667512402105'
+  alias: BLANKET Turn on Gaby blanket
+  description: ''
+  trigger:
+  - platform: time
+    at: '22:10:00'
+  condition:
+  - condition: zone
+    entity_id: person.gaby
+    zone: zone.home
+  - type: is_temperature
+    condition: device
+    device_id: 32b1896caaf2ef09416ece31de5874a1
+    entity_id: sensor.house_absolute_temperature
+    domain: sensor
+    below: 21
+  action:
+  - type: turn_off
+    device_id: a7c437c79cc44a2bf92675ba55644d5c
+    entity_id: switch.gaby_blanket
+    domain: switch
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+  - type: turn_on
+    device_id: a7c437c79cc44a2bf92675ba55644d5c
+    entity_id: switch.gaby_blanket
+    domain: switch
+  mode: single
