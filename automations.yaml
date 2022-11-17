@@ -587,7 +587,7 @@
   description: ''
   trigger:
   - platform: template
-    value_template: '{{state_attr("climate.house_absolute", "temperature") > 21.0
+    value_template: '{{state_attr("climate.house_absolute", "temperature") > 20.0
       }}'
   condition: []
   action:
@@ -596,11 +596,11 @@
       minutes: 5
       seconds: 0
       milliseconds: 0
-  - device_id: 32b1896caaf2ef09416ece31de5874a1
-    domain: climate
-    entity_id: climate.house_absolute
-    type: set_hvac_mode
-    hvac_mode: auto
+  - service: climate.set_temperature
+    data:
+      temperature: 20
+    target:
+      area_id: house_absolute
   mode: single
 - id: '1648623157497'
   alias: LIGHTS kitchen motion
