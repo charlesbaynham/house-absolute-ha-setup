@@ -66,7 +66,7 @@
   description: Keep Charles' blanket on if Charles is home until 12
   trigger:
   - platform: time_pattern
-    minutes: '11'
+    minutes: '45'
   condition:
   - condition: zone
     entity_id: person.charles
@@ -82,6 +82,9 @@
       after: '12:00:00'
     - condition: time
       before: 00:01:00
+  - condition: state
+    entity_id: binary_sensor.charles_sleeping_bayesian
+    state: 'off'
   action:
   - type: turn_off
     device_id: 114e22d1af178828cb508da883b67dd4
