@@ -1232,3 +1232,19 @@
     entity_id: switch.gaby_blanket
     domain: switch
   mode: single
+- id: '1669474125088'
+  alias: 'HEATING: Reset if no one home'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - group.any_home
+    to: not_home
+  condition: []
+  action:
+  - device_id: 32b1896caaf2ef09416ece31de5874a1
+    domain: climate
+    entity_id: climate.house_absolute
+    type: set_hvac_mode
+    hvac_mode: auto
+  mode: single
