@@ -21,3 +21,24 @@ clean_the_kitchen:
       entity_id: vacuum.noonoo
   mode: single
   icon: mdi:countertop
+boost_heating_for_1h:
+  alias: Boost heating for 1h
+  sequence:
+  - service: climate.set_temperature
+    data:
+      temperature: 20
+      hvac_mode: heat
+    target:
+      area_id: house_absolute
+  - delay:
+      hours: 1
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  - device_id: 32b1896caaf2ef09416ece31de5874a1
+    domain: climate
+    entity_id: climate.house_absolute
+    type: set_hvac_mode
+    hvac_mode: auto
+  mode: restart
+  icon: mdi:radiator
