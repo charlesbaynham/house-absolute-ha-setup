@@ -1248,3 +1248,25 @@
     type: set_hvac_mode
     hvac_mode: auto
   mode: single
+- id: '1669556007713'
+  alias: 'BUTTON: Gaby coffee button'
+  description: 'Single press = Toggle lights
+
+    Long press = x
+
+    Double press = Request coffee'
+  use_blueprint:
+    path: garykrige/sonoff_switch.yaml
+    input:
+      sonoff_button: d27a2225a709c190ca0b2115ddd2fc91
+      toggle_action:
+      - service: light.toggle
+        data: {}
+        target:
+          area_id: bedroom
+      off_action: []
+      on_action:
+      - service: tts.google_translate_say
+        data:
+          entity_id: media_player.living_room_speaker
+          message: Your loving girlfriend kindly requests a coffee.
