@@ -128,7 +128,6 @@
           (states('input_number.gaby_oneway_train_cost')|float)
         }}
 
-
 # Detect if charles or gaby are in the garden
 - sensor:
     - name: In garden Charles
@@ -143,3 +142,10 @@
           states('sensor.big_gaby_wifi_bssid') ==
           states('input_text.garden_bssid')
         }}
+
+# Measure distance between gaby and charles
+- sensor:
+    - name: Distance between lovers
+      unit_of_measurement: "m"
+      state: >
+        {{ 1000*distance("person.gaby", "person.charles") }}

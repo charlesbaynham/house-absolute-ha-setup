@@ -1270,3 +1270,26 @@
         data:
           entity_id: media_player.living_room_speaker
           message: Your loving girlfriend kindly requests a coffee.
+- id: '1669557382694'
+  alias: 'NOTIFY: Lovers are close'
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.distance_between_lovers
+    below: '1000'
+  condition: []
+  action:
+  - service: notify.mobile_app_charles_pixel
+    data:
+      message: Gaby is within 1km
+      title: Gaby incoming!
+  - service: notify.mobile_app_big_gaby
+    data:
+      message: Charles is within 1km
+      title: Charles incoming!
+  - wait_for_trigger:
+    - platform: numeric_state
+      entity_id: sensor.distance_between_lovers
+      above: '1300'
+    timeout: '7200'
+  mode: single
