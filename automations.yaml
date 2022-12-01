@@ -35,11 +35,10 @@
   description: Turn on Charles' blanket
   trigger:
   - platform: time
-    at: '21:00'
+    at: '21:00:00'
   condition:
-  - condition: zone
-    entity_id: person.charles
-    zone: zone.home
+  - condition: template
+    value_template: '{{distance("person.charles") < 20}}'
   - type: is_temperature
     condition: device
     device_id: 32b1896caaf2ef09416ece31de5874a1
@@ -1205,9 +1204,8 @@
   - platform: time
     at: '22:10:00'
   condition:
-  - condition: zone
-    entity_id: person.gaby
-    zone: zone.home
+  - condition: template
+    value_template: '{{distance("person.gaby") < 20}}'
   - type: is_temperature
     condition: device
     device_id: 32b1896caaf2ef09416ece31de5874a1
