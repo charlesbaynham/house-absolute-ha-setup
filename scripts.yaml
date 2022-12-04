@@ -42,13 +42,13 @@ boost_heating_for_1h:
     hvac_mode: auto
   mode: restart
   icon: mdi:radiator
-# Example script to play playlist
-
-play_jazz_guitar:
+play_jazz_in_living_room:
+  alias: Play jazz in living room
   sequence:
-    - service: media_player.play_media
-      target:
-        entity_id: media_player.spotify
-      data:
-        media_content_id: "https://open.spotify.com/playlist/5xddIVAtLrZKtt4YGLM1SQ?si=YcvRqaKNTxOi043Qn4LYkg"
-        media_content_type: playlist
+  - service: spotcast.start
+    data:
+      search: Instrumental jazz
+      random_song: true
+      device_name: Living Room TV
+  mode: single
+  icon: mdi:saxophone
