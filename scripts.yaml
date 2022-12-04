@@ -49,6 +49,7 @@ play_jazz_in_living_room:
     data:
       search: Instrumental jazz
       random_song: true
-      device_name: Living Room TV
+      entity_id: media_player.living_room_tv
+      force_playback: true
   mode: single
   icon: mdi:saxophone
