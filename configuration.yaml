@@ -26,16 +26,6 @@ history:
     entities: 
       - sensor.in_garden_gaby
       - sensor.in_garden_charles
-      - sensor.charles_sleep_probability
-      - sensor.gaby_sleep_probability
-
-proximity:
-  home:
-    devices:
-      - person.charles
-      - person.gaby
-    tolerance: 50
-    unit_of_measurement: km
 
 # Text to speech
 tts:
@@ -82,7 +72,7 @@ adaptive_lighting:
     transition: 45
     initial_transition: 1
     interval: 90
-    min_brightness: 30
+    min_brightness: 15
     max_brightness: 100
     min_color_temp: 2000
     max_color_temp: 5500
@@ -207,3 +197,7 @@ google_assistant:
     # light.living_room:
     #   expose: false
     #   room: LIVING_ROOM
+    
+spotify:
+  client_id: !secret spotify_clientid
+  client_secret: !secret spotify_secret
