@@ -1,0 +1,30 @@
+{
+    "version": 1,
+    "minor_version": 1,
+    "key": "image",
+    "data": {
+        "items": [
+            {
+                "id": "28ccb9a52a7c45e7392989d2ee01535a",
+                "filesize": 29312,
+                "content_type": "image/jpeg",
+                "name": "me_lowres.jpg",
+                "uploaded_at": "2021-01-09T11:40:57.811939+00:00"
+            },
+            {
+                "id": "87aab34880911ea399fd78c9377d58a5",
+                "filesize": 443404,
+                "content_type": "image/jpeg",
+                "name": "PXL_20220702_000733465.jpg",
+                "uploaded_at": "2022-07-02T00:07:50.163322+00:00"
+            },
+            {
+                "id": "4878c59d5cc89ae8d9c6bc3087047031",
+                "filesize": 271310,
+                "content_type": "image/jpeg",
+                "name": "IMG-20220626-WA0013.jpg",
+                "uploaded_at": "2022-07-02T08:59:31.338881+00:00"
+            }
+        ]
+    }
+}

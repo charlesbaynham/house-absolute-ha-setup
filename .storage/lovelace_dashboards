@@ -1,0 +1,27 @@
+{
+    "version": 1,
+    "minor_version": 1,
+    "key": "lovelace_dashboards",
+    "data": {
+        "items": [
+            {
+                "require_admin": false,
+                "show_in_sidebar": true,
+                "icon": "mdi:cast",
+                "title": "TV",
+                "url_path": "lovelace-tv",
+                "mode": "storage",
+                "id": "lovelace_tv"
+            },
+            {
+                "require_admin": true,
+                "show_in_sidebar": true,
+                "icon": "mdi:brightness-auto",
+                "title": "Auto",
+                "url_path": "lovelace-auto",
+                "mode": "storage",
+                "id": "lovelace_auto"
+            }
+        ]
+    }
+}

@@ -1,0 +1,8 @@
+trace.*
+hacs.repositories
+core.entity_registry
+core.restore_state
+core.device_registry
+hacs/*
+auth
+repairs.*

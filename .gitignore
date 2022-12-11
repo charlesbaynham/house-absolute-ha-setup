@@ -3,7 +3,6 @@
 .vscode
 .google.token
 .cloud/
-.storage/
 secrets.yaml
 tts
 home-assistant_v2.db

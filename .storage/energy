@@ -1,0 +1,20 @@
+{
+    "version": 1,
+    "minor_version": 1,
+    "key": "energy",
+    "data": {
+        "energy_sources": [
+            {
+                "type": "grid",
+                "flow_from": [],
+                "flow_to": [],
+                "cost_adjustment_day": 0.0
+            }
+        ],
+        "device_consumption": [
+            {
+                "stat_consumption": "sensor.tasmota_socket_1_energy_total"
+            }
+        ]
+    }
+}

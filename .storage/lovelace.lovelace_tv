@@ -1,0 +1,119 @@
+{
+    "version": 1,
+    "minor_version": 1,
+    "key": "lovelace.lovelace_tv",
+    "data": {
+        "config": {
+            "title": "House absolute",
+            "views": [
+                {
+                    "path": "default_view",
+                    "title": "Home",
+                    "icon": "mdi:home",
+                    "theme": "",
+                    "badges": [
+                        {
+                            "entity": "sensor.house_absolute_temperature"
+                        },
+                        {
+                            "entity": "sensor.house_absolute_humidity"
+                        },
+                        {
+                            "entity": "sensor.house_absolute_heating"
+                        },
+                        {
+                            "entity": "sensor.dishwasher_state"
+                        },
+                        {
+                            "entity": "light.bedroom_1"
+                        },
+                        {
+                            "entity": "light.kitchen"
+                        },
+                        {
+                            "entity": "light.lamp"
+                        },
+                        {
+                            "entity": "light.office"
+                        },
+                        {
+                            "entity": "light.office_lamp"
+                        },
+                        {
+                            "entity": "light.sitting_room"
+                        },
+                        {
+                            "entity": "light.sitting_room_lamp"
+                        },
+                        {
+                            "entity": "sensor.gaby_sleep_probability"
+                        },
+                        {
+                            "entity": "sensor.charles_sleep_probability"
+                        },
+                        {
+                            "entity": "switch.charles_blanket"
+                        },
+                        {
+                            "entity": "switch.gaby_blanket"
+                        },
+                        {
+                            "entity": "sensor.time_since_last_vacuum"
+                        },
+                        {
+                            "entity": "input_boolean.office_motion_enabled"
+                        },
+                        {
+                            "entity": "sensor.charles_total_saved_via_ebike"
+                        },
+                        {
+                            "entity": "sensor.gaby_total_saved_via_ebike"
+                        }
+                    ],
+                    "cards": [
+                        {
+                            "type": "map",
+                            "entities": [
+                                {
+                                    "entity": "person.charles"
+                                },
+                                {
+                                    "entity": "person.gaby"
+                                }
+                            ],
+                            "hours_to_show": 12
+                        },
+                        {
+                            "show_state": false,
+                            "show_name": false,
+                            "camera_view": "auto",
+                            "type": "picture-entity",
+                            "entity": "camera.noonoo_map",
+                            "aspect_ratio": "2"
+                        },
+                        {
+                            "type": "calendar",
+                            "entities": [
+                                "calendar.family"
+                            ],
+                            "initial_view": "listWeek"
+                        },
+                        {
+                            "type": "weather-forecast",
+                            "entity": "weather.home"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.garden_speaker"
+                        },
+                        {
+                            "type": "weather-forecast",
+                            "entity": "weather.home_hourly",
+                            "show_current": false
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
