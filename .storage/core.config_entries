@@ -224,12 +224,20 @@
           "sunset_time": "20:00:00",
           "take_over_control": true,
           "detect_non_ha_changes": true,
+          "send_split_delay": 0,
           "prefer_rgb_color": false,
-          "sunset_offset": 0.0,
-          "only_once": false,
-          "sunrise_offset": 0.0,
           "separate_turn_on_commands": false,
-          "sleep_transition": 1.0
+          "sunrise_offset": 0.0,
+          "only_once": false,
+          "sleep_rgb_or_color_temp": "color_temp",
+          "sleep_transition": 1.0,
+          "sleep_rgb_color": [
+            255,
+            56,
+            0
+          ],
+          "adapt_delay": 0,
+          "sunset_offset": 0.0
         },
         "options": {},
         "pref_disable_new_entities": false,
@@ -553,32 +561,6 @@
         "disabled_by": null
       },
       {
-        "entry_id": "9d49741eafb5457a43faa082bc65e6e4",
-        "version": 1,
-        "domain": "spotify",
-        "title": "Charles",
-        "data": {
-          "auth_implementation": "cloud",
-          "token": {
-            "access_token": "BQDS61GqPpirCUVlBv5m5FbxRDhkonAnTXX0eDKNmE3q6kjjdKTCgqnOywK99VrTTXcN85HtKkhgxi03E0eeKlWQQERinvbxj2KXkxXDoKnrlj4C_yAroDN6e45GCOP0WlcK3Bzj4STEkdsdaX0zGZotb39RFrLkSknTT8kzebsf0-68BXhXL9ZL6AmgHYSrfUR8kKm8ZOz8P1zH8xBKbYpF3npbL7U4sMRqewqQDP2JXXhLlvxU5n00e2ZKByZgzA",
-            "token_type": "Bearer",
-            "expires_in": 3600,
-            "refresh_token": "AQCYULOme6TdwDmAjjtDkQ_hrmmPFZBM3ep5FAHsp0meMGVNuK9-4B5kllUF57ltB5sSCSPTeINWh6VCdkpBqiZTcCeNSl7Iuczj4ecSydkWGFGrNf3yarSrLnKyu6n0wj0",
-            "scope": "playlist-read-private playlist-read-collaborative user-modify-playback-state user-library-read user-follow-read user-read-playback-state user-read-recently-played user-read-playback-position user-read-private user-top-read",
-            "service": "spotify",
-            "expires_at": 1670783444.1767848
-          },
-          "id": "dm1c17sgs19tjq514r2j448sh",
-          "name": "Charles"
-        },
-        "options": {},
-        "pref_disable_new_entities": false,
-        "pref_disable_polling": false,
-        "source": "user",
-        "unique_id": "dm1c17sgs19tjq514r2j448sh",
-        "disabled_by": null
-      },
-      {
         "entry_id": "856e4eaa8e8a8a2d1c38d5a34c251b83",
         "version": 1,
         "domain": "raspberry_pi",
@@ -604,6 +586,41 @@
         "pref_disable_polling": false,
         "source": "import",
         "unique_id": "house-absolute",
+        "disabled_by": null
+      },
+      {
+        "entry_id": "91e7c4adffac3f7545d7f61b79de0077",
+        "version": 1,
+        "domain": "mass",
+        "title": "Music Assistant",
+        "data": {},
+        "options": {
+          "hide_source_players": false,
+          "create_mass_players": false,
+          "player_entities": [
+            "media_player.living_room_tv",
+            "media_player.living_room_speaker",
+            "media_player.bedroom_speaker",
+            "media_player.all"
+          ],
+          "spotify_enabled": true,
+          "spotify_username": "charles.baynham@gmail.com",
+          "spotify_password": "7SaS7hKwoYeR",
+          "qobuz_enabled": false,
+          "qobuz_username": "",
+          "qobuz_password": "",
+          "tunein_enabled": false,
+          "tunein_username": "",
+          "ytmusic_enabled": false,
+          "ytmusic_username": "",
+          "ytmusic_password": "",
+          "filesystem_enabled": false,
+          "filesystem_directory": ""
+        },
+        "pref_disable_new_entities": false,
+        "pref_disable_polling": false,
+        "source": "user",
+        "unique_id": null,
         "disabled_by": null
       }
     ]
