@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "*.yaml": "home-assistant"
-    },
-    "vscode-home-assistant.longLivedAccessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiI4YjRmYWMwODM5N2E0MzVhOTY5MGQzMzA2YjUyODY4NyIsImlhdCI6MTY2NTgzMjUyMSwiZXhwIjoxOTgxMTkyNTIxfQ.imhyaWGJ92d2VRKeEfzBIt8VD5_DYdP3ULaN0A9eDwE",
-    "vscode-home-assistant.hostUrl": "https://houseabsolute.duckdns.org"
-}
