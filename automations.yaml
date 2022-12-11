@@ -355,8 +355,8 @@
       seconds: 0
     state: not_home
   - condition: template
-    value_template: "{{ \n  now() - timedelta(hours = 20)\n  >\n  as_datetime(states('sensor.noonoo_last_clean_end'))\n\
-      and\n  is_state('vacuum.noonoo', 'docked')\n}}"
+    value_template: "{{ \n  now() - timedelta(hours = 20)\n  >\n  as_datetime(states('sensor.noonoo_last_clean_end'))\nand\n
+      \ is_state('vacuum.noonoo', 'docked')\n}}"
   - condition: state
     entity_id: input_boolean.quiet_time
     state: 'off'
@@ -845,10 +845,15 @@
           minutes: 0
           seconds: 10
           milliseconds: 0
-      - service: scene.turn_on
-        target:
-          entity_id: scene.bedroom_lights_off
-        metadata: {}
+      - if:
+        - condition: sun
+          after: sunrise
+          before: sunrise
+        then:
+        - service: light.turn_on
+          data: {}
+          target:
+            area_id: bedroom
       down_action:
       - service: scene.turn_on
         target:
