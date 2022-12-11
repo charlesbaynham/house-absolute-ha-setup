@@ -847,8 +847,8 @@
           milliseconds: 0
       - if:
         - condition: sun
-          after: sunrise
           before: sunrise
+          before_offset: 00:45:00
         then:
         - service: light.turn_on
           data: {}
