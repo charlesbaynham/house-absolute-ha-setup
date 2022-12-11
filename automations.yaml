@@ -809,19 +809,16 @@
                   milliseconds: 250
         default: []
 - id: '1650388868703'
-  alias: 'SHUTTERS: Close at sundown'
+  alias: 'BLINDS: Close at sundown'
   description: Close all shutters at sundown if we are home
   trigger:
   - platform: sun
     event: sunset
     offset: 00:30
   condition:
-  - type: is_temperature
-    condition: device
-    device_id: 32b1896caaf2ef09416ece31de5874a1
-    entity_id: sensor.house_absolute_temperature
-    domain: sensor
-    below: 20
+  - condition: numeric_state
+    entity_id: sensor.house_absolute_outdoor_temperature
+    below: 10
   action:
   - service: cover.close_cover
     data:
