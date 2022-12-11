@@ -123,10 +123,10 @@ input_text:
   garden_bssid:
     initial: !secret garden_ap_bssid
 
-google:
-  client_id: !secret google_client_id
-  client_secret: !secret google_client_secret
-  calendar_access: read_only
+# google:
+#   client_id: !secret google_client_id
+#   client_secret: !secret google_client_secret
+#   calendar_access: read_only
 
 # Work tracking counters (see automations):
 counter:
