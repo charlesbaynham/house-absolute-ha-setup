@@ -175,19 +175,6 @@
     target:
       entity_id: input_boolean.office_motion_enabled
   mode: single
-- id: '1618440612170'
-  alias: Location ping
-  description: ''
-  trigger:
-  - platform: state
-    entity_id: person.gaby
-    to: home
-  condition: []
-  action:
-  - service: notify.mobile_app_charles_honor
-    data:
-      message: Gaby is home
-  mode: single
 - id: '1625175063754'
   alias: 'Copy office lights to lamp '
   description: ''
