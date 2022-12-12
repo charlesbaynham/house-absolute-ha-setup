@@ -122,7 +122,7 @@
         "domain": "tplink",
         "title": "Charles blanket",
         "data": {
-          "host": "10.0.0.106"
+          "host": "10.0.0.115"
         },
         "options": {},
         "pref_disable_new_entities": false,
