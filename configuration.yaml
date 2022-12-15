@@ -186,6 +186,10 @@ google_assistant:
       name: Cast home assistant
     cover.bedroom_blinds_window_covering:
       name: Bedroom blinds
+    switch.charles_blanket:
+      name: Charles blanket
+    switch.gaby_blanket:
+      name: Gaby blanket
     script.clean_the_kitchen:
       name: Clean the kitchen
 
@@ -197,7 +201,3 @@ google_assistant:
     # light.living_room:
     #   expose: false
     #   room: LIVING_ROOM
-
-spotcast:
-  sp_dc: !secret sp_dc
-  sp_key: !secret sp_key
