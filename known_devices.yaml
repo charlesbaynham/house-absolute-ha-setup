@@ -432,3 +432,10 @@ dc_a6_32_aa_30_0f:
   icon:
   picture:
   track: false
+
+googleminigarden:
+  name: GoogleMiniGarden
+  mac: 38:8B:59:A4:99:1F
+  icon:
+  picture:
+  track: false
