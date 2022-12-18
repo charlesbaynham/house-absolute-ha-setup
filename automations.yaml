@@ -1282,3 +1282,22 @@
       above: '1300'
     timeout: '7200'
   mode: single
+- id: '1671383047932'
+  alias: 'BUTTON: Play music in living room'
+  description: ''
+  trigger:
+  - device_id: cbcf800abd3ba2525fdfbff5bca4c794
+    domain: zha
+    platform: device
+    type: remote_button_double_press
+    subtype: turn_on
+  - device_id: cbcf800abd3ba2525fdfbff5bca4c794
+    domain: zha
+    platform: device
+    type: remote_button_double_press
+    subtype: turn_off
+  condition: []
+  action:
+  - service: script.play_jazz_in_living_room
+    data: {}
+  mode: single
