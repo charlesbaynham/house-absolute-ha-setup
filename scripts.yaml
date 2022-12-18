@@ -43,13 +43,47 @@ boost_heating_for_1h:
   mode: restart
   icon: mdi:radiator
 play_jazz_in_living_room:
-  alias: Play jazz in living room
+  alias: Play chill mix in living room
   sequence:
-  - service: spotcast.start
-    data:
-      search: Instrumental jazz
-      random_song: true
+  - if:
+    - condition: state
       entity_id: media_player.living_room_tv
-      force_playback: true
+      state: unavailable
+    then:
+    - service: media_player.play_media
+      target:
+        entity_id: media_player.mass_living_room_speaker
+      data:
+        media_content_id: media-source://mass/database://playlist/5
+        media_content_type: audio/flac
+      metadata:
+        title: Daily Mix 1
+        thumbnail: https://images.weserv.nl/?w=200&url=https://dailymix-images.scdn.co/v2/img/ab6761610000e5eb35dab4ff7bdc45ff91421b5b/1/en/large
+        media_class: playlist
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://mass
+        - media_content_type: music
+          media_content_id: media-source://mass/playlists
+    else:
+    - service: media_player.play_media
+      target:
+        entity_id: media_player.mass_living_room_tv
+      data:
+        media_content_id: media-source://mass/database://playlist/5
+        media_content_type: audio/flac
+      metadata:
+        title: Daily Mix 1
+        thumbnail: https://images.weserv.nl/?w=200&url=https://dailymix-images.scdn.co/v2/img/ab6761610000e5eb35dab4ff7bdc45ff91421b5b/1/en/large
+        media_class: playlist
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://mass
+        - media_content_type: music
+          media_content_id: media-source://mass/playlists
   mode: single
-  icon: mdi:saxophone
+  icon: mdi:music-accidental-flat
