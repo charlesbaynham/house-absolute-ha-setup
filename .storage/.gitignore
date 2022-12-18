@@ -1,8 +1,10 @@
 trace.*
-hacs.repositories
+hacs.*
 core.entity_registry
 core.restore_state
 core.device_registry
 hacs/*
 auth
 repairs.*
+http
+
