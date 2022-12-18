@@ -1,400 +1,404 @@
 {
-    "version": 1,
-    "minor_version": 1,
-    "key": "lovelace",
-    "data": {
-        "config": {
-            "title": "House Absolute",
-            "views": [
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace",
+  "data": {
+    "config": {
+      "title": "House Absolute",
+      "views": [
+        {
+          "path": "default_view",
+          "title": "Home",
+          "cards": [
+            {
+              "type": "entities",
+              "entities": [
                 {
-                    "path": "default_view",
-                    "title": "Home",
-                    "cards": [
-                        {
-                            "type": "entities",
-                            "entities": [
-                                {
-                                    "entity": "person.charles"
-                                },
-                                {
-                                    "entity": "person.gaby"
-                                },
-                                {
-                                    "entity": "person.harry"
-                                }
-                            ],
-                            "title": "Anyone home",
-                            "show_header_toggle": true
-                        },
-                        {
-                            "type": "entities",
-                            "entities": [
-                                {
-                                    "entity": "light.sitting_room"
-                                },
-                                {
-                                    "entity": "light.sitting_room_lamp"
-                                }
-                            ],
-                            "title": "Living Room"
-                        },
-                        {
-                            "type": "entities",
-                            "entities": [
-                                {
-                                    "entity": "light.office_lamp",
-                                    "name": "Lamp"
-                                },
-                                {
-                                    "entity": "light.office"
-                                },
-                                {
-                                    "entity": "binary_sensor.office_motion"
-                                }
-                            ],
-                            "title": "Office",
-                            "state_color": false,
-                            "footer": {
-                                "type": "buttons",
-                                "entities": [
-                                    {
-                                        "entity": "input_boolean.office_motion_enabled",
-                                        "name": "Motion control"
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            "type": "thermostat",
-                            "entity": "climate.house_absolute"
-                        },
-                        {
-                            "type": "history-graph",
-                            "entities": [
-                                {
-                                    "entity": "climate.house_absolute"
-                                },
-                                {
-                                    "entity": "sensor.house_absolute_outdoor_temperature"
-                                },
-                                {
-                                    "entity": "sensor.kitchen_motion_temperature"
-                                },
-                                {
-                                    "entity": "sensor.house_absolute_humidity"
-                                }
-                            ],
-                            "hours_to_show": 48,
-                            "refresh_interval": 0
-                        },
-                        {
-                            "type": "entities",
-                            "entities": [
-                                {
-                                    "entity": "switch.charles_blanket"
-                                },
-                                {
-                                    "entity": "switch.gaby_blanket"
-                                },
-                                {
-                                    "entity": "light.bedroom_1",
-                                    "name": "1"
-                                },
-                                {
-                                    "entity": "light.bedroom_2",
-                                    "name": "2"
-                                },
-                                {
-                                    "entity": "light.bedroom_3",
-                                    "name": "3"
-                                },
-                                {
-                                    "entity": "light.lamp"
-                                },
-                                {
-                                    "entity": "cover.bedroom_blinds_window_covering"
-                                }
-                            ],
-                            "title": "Bedroom",
-                            "footer": {
-                                "type": "buttons",
-                                "entities": [
-                                    {
-                                        "entity": "scene.bedroom_relaxed",
-                                        "name": "Relaxed"
-                                    },
-                                    {
-                                        "entity": "scene.sexy",
-                                        "name": "Sexy"
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            "type": "media-control",
-                            "entity": "media_player.living_room_tv"
-                        },
-                        {
-                            "type": "entities",
-                            "entities": [
-                                {
-                                    "entity": "light.kitchen"
-                                },
-                                {
-                                    "entity": "sensor.dishwasher_energy_power"
-                                },
-                                {
-                                    "entity": "sensor.dishwasher_energy_today"
-                                },
-                                {
-                                    "entity": "sensor.dishwasher_state"
-                                },
-                                {
-                                    "entity": "sensor.kitchen_motion_sensor_illuminance"
-                                },
-                                {
-                                    "entity": "binary_sensor.kitchen_motion_sensor_occupancy"
-                                },
-                                {
-                                    "entity": "sensor.kitchen_motion_temperature"
-                                }
-                            ],
-                            "title": "Kitchen"
-                        },
-                        {
-                            "type": "media-control",
-                            "entity": "media_player.living_room_speaker"
-                        },
-                        {
-                            "type": "entities",
-                            "entities": [
-                                {
-                                    "entity": "binary_sensor.charles_sleeping_bayesian"
-                                },
-                                {
-                                    "entity": "binary_sensor.gaby_sleeping_bayesian"
-                                },
-                                {
-                                    "entity": "binary_sensor.updater"
-                                }
-                            ],
-                            "title": "Binary Sensor",
-                            "state_color": true
-                        },
-                        {
-                            "type": "entities",
-                            "entities": [
-                                {
-                                    "entity": "sensor.house_absolute_outdoor_temperature"
-                                },
-                                {
-                                    "entity": "sensor.house_absolute_solar_percentage"
-                                },
-                                {
-                                    "entity": "sensor.house_absolute_weather_condition"
-                                },
-                                {
-                                    "entity": "sensor.hacs"
-                                }
-                            ],
-                            "title": "Sensor"
-                        },
-                        {
-                            "type": "weather-forecast",
-                            "entity": "weather.home",
-                            "show_forecast": false
-                        },
-                        {
-                            "type": "entities",
-                            "entities": [
-                                "input_boolean.away_mode_active"
-                            ]
-                        },
-                        {
-                            "type": "entities",
-                            "entities": [
-                                "vacuum.noonoo"
-                            ],
-                            "title": "Noonoo"
-                        },
-                        {
-                            "type": "entities",
-                            "entities": [
-                                {
-                                    "entity": "sensor.noonoo_last_clean_area",
-                                    "name": "Last Clean Area"
-                                },
-                                {
-                                    "entity": "sensor.noonoo_last_clean_duration",
-                                    "name": "Last Clean Duration"
-                                },
-                                {
-                                    "entity": "sensor.noonoo_last_clean_end",
-                                    "name": "Last Clean End"
-                                },
-                                {
-                                    "entity": "sensor.noonoo_last_clean_start",
-                                    "name": "Last Clean Start"
-                                }
-                            ],
-                            "title": "Noonoo"
-                        },
-                        {
-                            "type": "entities",
-                            "entities": [
-                                "automation.new_automation"
-                            ]
-                        },
-                        {
-                            "type": "entities",
-                            "entities": [
-                                {
-                                    "entity": "input_boolean.hot_water_tomorrow"
-                                },
-                                {
-                                    "entity": "switch.adaptive_lighting_use_flux"
-                                },
-                                {
-                                    "entity": "switch.adaptive_lighting_sleep_mode_use_flux"
-                                },
-                                {
-                                    "entity": "water_heater.hot_water"
-                                },
-                                {
-                                    "entity": "input_boolean.quiet_time"
-                                }
-                            ]
-                        },
-                        {
-                            "type": "custom:xiaomi-vacuum-map-card",
-                            "map_source": {
-                                "camera": "camera.noonoo_map"
-                            },
-                            "calibration_source": {
-                                "camera": true
-                            },
-                            "entity": "vacuum.noonoo",
-                            "map_locked": true,
-                            "vacuum_platform": "default",
-                            "map_modes": [
-                                {
-                                    "template": "vacuum_clean_zone_predefined",
-                                    "predefined_selections": [
-                                        {
-                                            "zones": [
-                                                [
-                                                    26210,
-                                                    29156,
-                                                    29137,
-                                                    31656
-                                                ]
-                                            ]
-                                        },
-                                        {
-                                            "zones": [
-                                                [
-                                                    20120,
-                                                    24060,
-                                                    25036,
-                                                    27844
-                                                ]
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "type": "media-control",
-                            "entity": "media_player.garden_speaker"
-                        },
-                        {
-                            "type": "entities",
-                            "entities": [
-                                {
-                                    "entity": "sensor.in_garden_charles"
-                                },
-                                {
-                                    "entity": "sensor.in_garden_gaby"
-                                },
-                                {
-                                    "entity": "light.garden_outside"
-                                }
-                            ],
-                            "title": "Garden"
-                        }
-                    ]
+                  "entity": "person.charles"
                 },
                 {
-                    "type": "panel",
-                    "title": "Map",
-                    "path": "map",
-                    "badges": [],
-                    "cards": [
-                        {
-                            "type": "map",
-                            "entities": [
-                                {
-                                    "entity": "person.charles"
-                                },
-                                {
-                                    "entity": "person.gaby"
-                                },
-                                {
-                                    "entity": "zone.imperial"
-                                },
-                                {
-                                    "entity": "zone.home"
-                                },
-                                {
-                                    "entity": "zone.band_practice"
-                                },
-                                {
-                                    "entity": "zone.central_london"
-                                },
-                                {
-                                    "entity": "zone.harris_westminster"
-                                },
-                                {
-                                    "entity": "zone.kingston"
-                                },
-                                {
-                                    "entity": "zone.norbiton_station"
-                                },
-                                {
-                                    "entity": "zone.npl"
-                                },
-                                {
-                                    "entity": "zone.ral"
-                                },
-                                {
-                                    "entity": "zone.stef_and_john_s"
-                                },
-                                {
-                                    "entity": "zone.wimbledon"
-                                },
-                                {
-                                    "entity": "zone.south_wales"
-                                }
-                            ],
-                            "hours_to_show": 12
-                        }
-                    ]
+                  "entity": "person.gaby"
                 },
                 {
-                    "theme": "Backend-selected",
-                    "title": "Improvements",
-                    "path": "improvements",
-                    "badges": [],
-                    "cards": [
-                        {
-                            "type": "markdown",
-                            "content": "* turn on garden light when close, so they're on before i get home\n* add location announcement to garden welcome\n* analyse travel times using new algorithm \n* detect humidiy spike from shower and turn off hot water\n* vibrate watch when gaby is close\n",
-                            "title": "To do list"
-                        }
-                    ]
+                  "entity": "person.harry"
                 }
-            ]
+              ],
+              "title": "Anyone home",
+              "show_header_toggle": true
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "light.sitting_room"
+                },
+                {
+                  "entity": "light.sitting_room_lamp"
+                }
+              ],
+              "title": "Living Room"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "light.office_lamp",
+                  "name": "Lamp"
+                },
+                {
+                  "entity": "light.office"
+                },
+                {
+                  "entity": "binary_sensor.office_motion"
+                }
+              ],
+              "title": "Office",
+              "state_color": false,
+              "footer": {
+                "type": "buttons",
+                "entities": [
+                  {
+                    "entity": "input_boolean.office_motion_enabled",
+                    "name": "Motion control"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "thermostat",
+              "entity": "climate.house_absolute"
+            },
+            {
+              "type": "history-graph",
+              "entities": [
+                {
+                  "entity": "climate.house_absolute"
+                },
+                {
+                  "entity": "sensor.house_absolute_outdoor_temperature"
+                },
+                {
+                  "entity": "sensor.kitchen_motion_temperature"
+                },
+                {
+                  "entity": "sensor.house_absolute_humidity"
+                }
+              ],
+              "hours_to_show": 48,
+              "refresh_interval": 0
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "switch.charles_blanket"
+                },
+                {
+                  "entity": "switch.gaby_blanket"
+                },
+                {
+                  "entity": "light.bedroom_1",
+                  "name": "1"
+                },
+                {
+                  "entity": "light.bedroom_2",
+                  "name": "2"
+                },
+                {
+                  "entity": "light.bedroom_3",
+                  "name": "3"
+                },
+                {
+                  "entity": "light.lamp"
+                },
+                {
+                  "entity": "cover.bedroom_blinds_window_covering"
+                }
+              ],
+              "title": "Bedroom",
+              "footer": {
+                "type": "buttons",
+                "entities": [
+                  {
+                    "entity": "scene.bedroom_relaxed",
+                    "name": "Relaxed"
+                  },
+                  {
+                    "entity": "scene.sexy",
+                    "name": "Sexy"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "media-control",
+              "entity": "media_player.living_room_tv"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "light.kitchen"
+                },
+                {
+                  "entity": "sensor.dishwasher_energy_power"
+                },
+                {
+                  "entity": "sensor.dishwasher_energy_today"
+                },
+                {
+                  "entity": "sensor.dishwasher_state"
+                },
+                {
+                  "entity": "sensor.kitchen_motion_sensor_illuminance"
+                },
+                {
+                  "entity": "binary_sensor.kitchen_motion_sensor_occupancy"
+                },
+                {
+                  "entity": "sensor.kitchen_motion_temperature"
+                }
+              ],
+              "title": "Kitchen"
+            },
+            {
+              "type": "media-control",
+              "entity": "media_player.living_room_speaker"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "binary_sensor.charles_sleeping_bayesian"
+                },
+                {
+                  "entity": "binary_sensor.gaby_sleeping_bayesian"
+                },
+                {
+                  "entity": "binary_sensor.updater"
+                }
+              ],
+              "title": "Binary Sensor",
+              "state_color": true
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "sensor.house_absolute_outdoor_temperature"
+                },
+                {
+                  "entity": "sensor.house_absolute_solar_percentage"
+                },
+                {
+                  "entity": "sensor.house_absolute_weather_condition"
+                },
+                {
+                  "entity": "sensor.hacs"
+                }
+              ],
+              "title": "Sensor"
+            },
+            {
+              "type": "weather-forecast",
+              "entity": "weather.home",
+              "show_forecast": false
+            },
+            {
+              "type": "entities",
+              "entities": [
+                "input_boolean.away_mode_active"
+              ]
+            },
+            {
+              "type": "entities",
+              "entities": [
+                "vacuum.noonoo"
+              ],
+              "title": "Noonoo"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "sensor.noonoo_last_clean_area",
+                  "name": "Last Clean Area"
+                },
+                {
+                  "entity": "sensor.noonoo_last_clean_duration",
+                  "name": "Last Clean Duration"
+                },
+                {
+                  "entity": "sensor.noonoo_last_clean_end",
+                  "name": "Last Clean End"
+                },
+                {
+                  "entity": "sensor.noonoo_last_clean_start",
+                  "name": "Last Clean Start"
+                }
+              ],
+              "title": "Noonoo"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                "automation.new_automation"
+              ]
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "input_boolean.hot_water_tomorrow"
+                },
+                {
+                  "entity": "switch.adaptive_lighting_use_flux"
+                },
+                {
+                  "entity": "switch.adaptive_lighting_sleep_mode_use_flux"
+                },
+                {
+                  "entity": "water_heater.hot_water"
+                },
+                {
+                  "entity": "input_boolean.quiet_time"
+                }
+              ]
+            },
+            {
+              "type": "custom:xiaomi-vacuum-map-card",
+              "map_source": {
+                "camera": "camera.noonoo_map"
+              },
+              "calibration_source": {
+                "camera": true
+              },
+              "entity": "vacuum.noonoo",
+              "map_locked": true,
+              "vacuum_platform": "default",
+              "map_modes": [
+                {
+                  "template": "vacuum_clean_zone_predefined",
+                  "predefined_selections": [
+                    {
+                      "zones": [
+                        [
+                          26210,
+                          29156,
+                          29137,
+                          31656
+                        ]
+                      ]
+                    },
+                    {
+                      "zones": [
+                        [
+                          20120,
+                          24060,
+                          25036,
+                          27844
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "media-control",
+              "entity": "media_player.garden_speaker"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "sensor.in_garden_charles"
+                },
+                {
+                  "entity": "sensor.in_garden_gaby"
+                },
+                {
+                  "entity": "light.garden_outside"
+                }
+              ],
+              "title": "Garden"
+            },
+            {
+              "type": "media-control",
+              "entity": "media_player.mass_bedroom_speaker"
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "title": "Map",
+          "path": "map",
+          "badges": [],
+          "cards": [
+            {
+              "type": "map",
+              "entities": [
+                {
+                  "entity": "person.charles"
+                },
+                {
+                  "entity": "person.gaby"
+                },
+                {
+                  "entity": "zone.imperial"
+                },
+                {
+                  "entity": "zone.home"
+                },
+                {
+                  "entity": "zone.band_practice"
+                },
+                {
+                  "entity": "zone.central_london"
+                },
+                {
+                  "entity": "zone.harris_westminster"
+                },
+                {
+                  "entity": "zone.kingston"
+                },
+                {
+                  "entity": "zone.norbiton_station"
+                },
+                {
+                  "entity": "zone.npl"
+                },
+                {
+                  "entity": "zone.ral"
+                },
+                {
+                  "entity": "zone.stef_and_john_s"
+                },
+                {
+                  "entity": "zone.wimbledon"
+                },
+                {
+                  "entity": "zone.south_wales"
+                }
+              ],
+              "hours_to_show": 12
+            }
+          ]
+        },
+        {
+          "theme": "Backend-selected",
+          "title": "Improvements",
+          "path": "improvements",
+          "badges": [],
+          "cards": [
+            {
+              "type": "markdown",
+              "content": "* turn on garden light when close, so they're on before i get home\n* add location announcement to garden welcome\n* analyse travel times using new algorithm \n* detect humidiy spike from shower and turn off hot water\n* vibrate watch when gaby is close\n",
+              "title": "To do list"
+            }
+          ]
         }
+      ]
     }
+  }
 }
