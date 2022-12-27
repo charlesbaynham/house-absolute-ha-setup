@@ -392,7 +392,7 @@
         "data": {
           "app_id": "io.homeassistant.companion.android",
           "app_name": "Home Assistant",
-          "app_version": "2022.11.0-full (2948)",
+          "app_version": "2022.12.0-full (3026)",
           "device_name": "It Harry",
           "manufacturer": "HMD Global",
           "model": "Nokia XR20",
@@ -620,6 +620,19 @@
         "pref_disable_polling": false,
         "source": "user",
         "unique_id": null,
+        "disabled_by": null
+      },
+      {
+        "entry_id": "951399a67fc0e075d746847f285bfeae",
+        "version": 1,
+        "domain": "bluetooth",
+        "title": "Bluetooth",
+        "data": {},
+        "options": {},
+        "pref_disable_new_entities": false,
+        "pref_disable_polling": false,
+        "source": "integration_discovery",
+        "unique_id": "DC:A6:32:AA:30:10",
         "disabled_by": null
       }
     ]
