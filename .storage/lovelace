@@ -393,7 +393,7 @@
           "cards": [
             {
               "type": "markdown",
-              "content": "* turn on garden light when close, so they're on before i get home\n* add location announcement to garden welcome\n* analyse travel times using new algorithm \n* detect humidiy spike from shower and turn off hot water\n* vibrate watch when gaby is close\n",
+              "content": "* turn on garden light when close, so they're on before i get home\n* add location announcement to garden welcome\n* analyse travel times using new algorithm \n* detect humidiy spike from shower and turn off hot water\n\n",
               "title": "To do list"
             }
           ]
