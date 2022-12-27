@@ -123,10 +123,10 @@ input_text:
   garden_bssid:
     initial: !secret garden_ap_bssid
 
-google:
-  client_id: !secret google_client_id
-  client_secret: !secret google_client_secret
-  calendar_access: read_only
+# google:
+#   client_id: !secret google_client_id
+#   client_secret: !secret google_client_secret
+#   calendar_access: read_only
 
 # Work tracking counters (see automations):
 counter:
@@ -186,10 +186,12 @@ google_assistant:
       name: Cast home assistant
     cover.bedroom_blinds_window_covering:
       name: Bedroom blinds
+    switch.charles_blanket:
+      name: Charles blanket
+    switch.gaby_blanket:
+      name: Gaby blanket
     script.clean_the_kitchen:
       name: Clean the kitchen
-    switch.charles_blanket:
-      name: Charles Blanket
 
     # light.kitchen:
     #   name: CUSTOM_NAME_FOR_GOOGLE_ASSISTANT
@@ -199,4 +201,3 @@ google_assistant:
     # light.living_room:
     #   expose: false
     #   room: LIVING_ROOM
-    
