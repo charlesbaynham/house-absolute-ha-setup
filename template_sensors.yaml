@@ -149,3 +149,5 @@
       unit_of_measurement: "m"
       state: >
         {{ 1000*distance("person.gaby", "person.charles") }}
+      device_class: distance
+      state_class: measurement
