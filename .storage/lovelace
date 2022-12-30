@@ -82,6 +82,9 @@
                 },
                 {
                   "entity": "sensor.house_absolute_humidity"
+                },
+                {
+                  "entity": "sensor.lumi_lumi_sensor_motion_aq2_device_temperature"
                 }
               ],
               "hours_to_show": 48,

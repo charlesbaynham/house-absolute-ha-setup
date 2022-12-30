@@ -634,6 +634,32 @@
         "source": "integration_discovery",
         "unique_id": "DC:A6:32:AA:30:10",
         "disabled_by": null
+      },
+      {
+        "entry_id": "b45940805d6ce7600f95682024e86bf9",
+        "version": 1,
+        "domain": "oralb",
+        "title": "Smart Series 9000 2A31",
+        "data": {},
+        "options": {},
+        "pref_disable_new_entities": false,
+        "pref_disable_polling": false,
+        "source": "bluetooth",
+        "unique_id": "10:CE:A9:1E:2A:31",
+        "disabled_by": null
+      },
+      {
+        "entry_id": "bf88f5545e85f9db1c6329f18f40e759",
+        "version": 1,
+        "domain": "ibeacon",
+        "title": "iBeacon Tracker",
+        "data": {},
+        "options": {},
+        "pref_disable_new_entities": false,
+        "pref_disable_polling": false,
+        "source": "bluetooth",
+        "unique_id": null,
+        "disabled_by": null
       }
     ]
   }

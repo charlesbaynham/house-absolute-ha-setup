@@ -860,7 +860,7 @@
   - type: motion
     platform: device
     device_id: 83a6afa7e4a5c030a42e638987c0666c
-    entity_id: binary_sensor.office_ias_zone
+    entity_id: binary_sensor.office_motion
     domain: binary_sensor
   condition:
   - condition: state
@@ -878,7 +878,11 @@
       entity_id: binary_sensor.office_occupancy
       domain: binary_sensor
     continue_on_timeout: true
-    timeout: '10000'
+    timeout:
+      hours: 0
+      minutes: 10
+      seconds: 0
+      milliseconds: 0
   - delay:
       hours: 0
       minutes: 2
