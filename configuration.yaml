@@ -55,6 +55,8 @@ device_tracker:
     interval_seconds: 20
     new_device_defaults:
       track_new_devices: false
+  - platform: bluetooth_tracker
+  - platform: bluetooth_le_tracker
 
 # Circadian lighting (see https://github.com/basnijholt/adaptive-lighting)
 adaptive_lighting:
