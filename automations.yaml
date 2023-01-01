@@ -21,15 +21,6 @@
   - service: script.cast_to_living_room_tv
     data: {}
   mode: single
-- id: '1609973083306'
-  alias: Zone Notification
-  description: Notify if Gaby leaves home
-  use_blueprint:
-    path: homeassistant/notify_leaving_zone.yaml
-    input:
-      person_entity: person.gaby
-      notify_device: 10e24cdea3aaf31ef94c59725b643354
-      zone_entity: zone.home
 - id: '1610050834159'
   alias: BLANKET Turn on Charles blanket
   description: Turn on Charles' blanket
