@@ -39,11 +39,6 @@
       prob_given_false: 0.10
       platform: "numeric_state"
       above: 80
-    - entity_id: "sensor.big_gaby_sleep_confidence"
-      prob_given_true: 0.10
-      prob_given_false: 0.90
-      platform: "numeric_state"
-      below: 20
 
     # weekday times:
     - platform: template
