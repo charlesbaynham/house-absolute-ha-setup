@@ -117,21 +117,6 @@
         "disabled_by": null
       },
       {
-        "entry_id": "5409023e17bb416c5c4cc32edaca8172",
-        "version": 1,
-        "domain": "tplink",
-        "title": "Charles blanket",
-        "data": {
-          "host": "10.0.0.115"
-        },
-        "options": {},
-        "pref_disable_new_entities": false,
-        "pref_disable_polling": false,
-        "source": "migration",
-        "unique_id": "b0:4e:26:48:87:a9",
-        "disabled_by": null
-      },
-      {
         "entry_id": "0cf86e1ac729070c427fcfcc3ea35a1b",
         "version": 1,
         "domain": "pyscript",
@@ -659,6 +644,21 @@
         "pref_disable_polling": false,
         "source": "user",
         "unique_id": "78:11:dc:7e:0f:39",
+        "disabled_by": null
+      },
+      {
+        "entry_id": "c985c886c7d98f8cbfdfaec5f9ee2bee",
+        "version": 1,
+        "domain": "tplink",
+        "title": "TP-LINK_Smart Plug_87A9 HS100(UK)",
+        "data": {
+          "host": "10.99.1.5"
+        },
+        "options": {},
+        "pref_disable_new_entities": false,
+        "pref_disable_polling": false,
+        "source": "user",
+        "unique_id": "b0:4e:26:48:87:a9",
         "disabled_by": null
       }
     ]
