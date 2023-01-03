@@ -640,14 +640,14 @@
         "disabled_by": null
       },
       {
-        "entry_id": "bd67046833524cd88280bf4d667e53c0",
+        "entry_id": "b3f92d0260eaa2eb94e486c027b608bf",
         "version": 1,
         "domain": "xiaomi_miio",
         "title": "Noonoo",
         "data": {
           "config_flow_device": "device",
-          "host": "10.0.99.1",
-          "token": "31444d6c374a3633757755525249396c",
+          "host": "10.99.1.2",
+          "token": "78794555564d3634554f5a3276686f63",
           "model": "rockrobo.vacuum.v1",
           "mac": "78:11:dc:7e:0f:39",
           "cloud_username": "bayners123@gmail.com",
