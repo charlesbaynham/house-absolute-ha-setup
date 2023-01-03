@@ -269,45 +269,6 @@
               ]
             },
             {
-              "type": "custom:xiaomi-vacuum-map-card",
-              "map_source": {
-                "camera": "camera.noonoo_map"
-              },
-              "calibration_source": {
-                "camera": true
-              },
-              "entity": "vacuum.noonoo",
-              "map_locked": true,
-              "vacuum_platform": "default",
-              "map_modes": [
-                {
-                  "template": "vacuum_clean_zone_predefined",
-                  "predefined_selections": [
-                    {
-                      "zones": [
-                        [
-                          26210,
-                          29156,
-                          29137,
-                          31656
-                        ]
-                      ]
-                    },
-                    {
-                      "zones": [
-                        [
-                          20120,
-                          24060,
-                          25036,
-                          27844
-                        ]
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
               "type": "media-control",
               "entity": "media_player.garden_speaker"
             },
