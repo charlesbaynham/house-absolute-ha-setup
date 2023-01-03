@@ -646,7 +646,7 @@
         "title": "Noonoo",
         "data": {
           "config_flow_device": "device",
-          "host": "10.0.1.4",
+          "host": "10.0.99.1",
           "token": "31444d6c374a3633757755525249396c",
           "model": "rockrobo.vacuum.v1",
           "mac": "78:11:dc:7e:0f:39",
