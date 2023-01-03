@@ -42,8 +42,11 @@ shell_command:
 
 # Use Lets Encrypt SSL certificates for HTTPS
 http:
-  ssl_certificate: /ssl/fullchain.pem
-  ssl_key: /ssl/privkey.pem
+  # ssl_certificate: /ssl/fullchain.pem
+  # ssl_key: /ssl/privkey.pem
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 172.30.33.0/24
 
 # Set up OpenWRT for tracking
 device_tracker:
