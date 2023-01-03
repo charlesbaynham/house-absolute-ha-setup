@@ -252,9 +252,15 @@
   - service: water_heater.set_operation_mode
     data:
       operation_mode: auto
+  - service: light.turn_off
+    data: {}
     target:
-      entity_id: water_heater.hot_water
-  - scene: scene.all_lights_off
+      area_id:
+      - bedroom
+      - garden
+      - kitchen
+      - living_room
+      - office
   mode: single
 - id: '1640185443869'
   alias: Turn on away mode after a day
