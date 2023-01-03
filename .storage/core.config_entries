@@ -434,28 +434,6 @@
         "disabled_by": null
       },
       {
-        "entry_id": "7f6d12b5a565b3890bba7443b1863305",
-        "version": 1,
-        "domain": "xiaomi_miio",
-        "title": "Noonoo",
-        "data": {
-          "config_flow_device": "device",
-          "host": "10.0.1.4",
-          "token": "31444d6c374a3633757755525249396c",
-          "model": "rockrobo.vacuum.v1",
-          "mac": "78:11:dc:7e:0f:39",
-          "cloud_username": "bayners123@gmail.com",
-          "cloud_password": "740485ab",
-          "cloud_country": "de"
-        },
-        "options": {},
-        "pref_disable_new_entities": false,
-        "pref_disable_polling": false,
-        "source": "user",
-        "unique_id": "78:11:dc:7e:0f:39",
-        "disabled_by": null
-      },
-      {
         "entry_id": "a59bd00cf55f8dbce53c0fdf87d49f0e",
         "version": 1,
         "domain": "wiz",
@@ -659,6 +637,28 @@
         "pref_disable_polling": false,
         "source": "bluetooth",
         "unique_id": null,
+        "disabled_by": null
+      },
+      {
+        "entry_id": "80476959e5005b3eb8f0fd3232611b4c",
+        "version": 1,
+        "domain": "xiaomi_miio",
+        "title": "Noonoo",
+        "data": {
+          "config_flow_device": "device",
+          "host": "10.0.1.4",
+          "token": "31444d6c374a3633757755525249396c",
+          "model": "rockrobo.vacuum.v1",
+          "mac": "78:11:dc:7e:0f:39",
+          "cloud_username": "bayners123@gmail.com",
+          "cloud_password": "740485ab",
+          "cloud_country": "sg"
+        },
+        "options": {},
+        "pref_disable_new_entities": false,
+        "pref_disable_polling": false,
+        "source": "user",
+        "unique_id": "78:11:dc:7e:0f:39",
         "disabled_by": null
       }
     ]
