@@ -1,1306 +1,1300 @@
-- id: "1609962176382"
+- id: '1609962176382'
   alias: Cast automatically
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id: media_player.living_room_tv
-      to: "off"
-      for:
-        hours: 0
-        minutes: 0
-        seconds: 15
+  - platform: state
+    entity_id: media_player.living_room_tv
+    to: 'off'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 15
   condition: []
   action:
-    - service: script.cast_to_living_room_tv
-      data: {}
-    - delay:
-        hours: 0
-        minutes: 0
-        seconds: 30
-        milliseconds: 0
-    - service: script.cast_to_living_room_tv
-      data: {}
+  - service: script.cast_to_living_room_tv
+    data: {}
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 30
+      milliseconds: 0
+  - service: script.cast_to_living_room_tv
+    data: {}
   mode: single
-- id: "1610050834159"
+- id: '1610050834159'
   alias: BLANKET Turn on Charles blanket
   description: Turn on Charles' blanket
   trigger:
-    - platform: time
-      at: "21:00:00"
+  - platform: time
+    at: '21:00:00'
   condition:
-    - condition: template
-      value_template: '{{distance("person.charles") < 100}}'
-    - type: is_temperature
-      condition: device
-      device_id: 32b1896caaf2ef09416ece31de5874a1
-      entity_id: sensor.house_absolute_temperature
-      domain: sensor
-      below: 21
+  - condition: template
+    value_template: '{{distance("person.charles") < 100}}'
+  - type: is_temperature
+    condition: device
+    device_id: 32b1896caaf2ef09416ece31de5874a1
+    entity_id: sensor.house_absolute_temperature
+    domain: sensor
+    below: 21
   action:
-    - type: turn_off
-      device_id: 114e22d1af178828cb508da883b67dd4
-      entity_id: switch.charles_blanket
-      domain: switch
-    - delay:
-        hours: 0
-        minutes: 0
-        seconds: 2
-        milliseconds: 0
-    - type: turn_on
-      device_id: 114e22d1af178828cb508da883b67dd4
-      entity_id: switch.charles_blanket
-      domain: switch
+  - type: turn_off
+    device_id: 114e22d1af178828cb508da883b67dd4
+    entity_id: switch.charles_blanket
+    domain: switch
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+  - type: turn_on
+    device_id: 114e22d1af178828cb508da883b67dd4
+    entity_id: switch.charles_blanket
+    domain: switch
   mode: single
-- id: "1610050834000"
+- id: '1610050834000'
   alias: BLANKET Keep Charles Blanket on
   description: Keep Charles' blanket on if Charles is home until 12
   trigger:
-    - platform: time_pattern
-      minutes: "45"
+  - platform: time_pattern
+    minutes: '45'
   condition:
-    - condition: zone
-      entity_id: person.charles
-      zone: zone.home
-    - condition: device
-      type: is_on
-      device_id: 114e22d1af178828cb508da883b67dd4
-      entity_id: switch.charles_blanket
-      domain: switch
-    - condition: or
-      conditions:
-        - condition: time
-          after: "12:00:00"
-        - condition: time
-          before: 00:01:00
-    - condition: state
-      entity_id: binary_sensor.charles_sleeping_bayesian
-      state: "off"
+  - condition: zone
+    entity_id: person.charles
+    zone: zone.home
+  - condition: device
+    type: is_on
+    device_id: 114e22d1af178828cb508da883b67dd4
+    entity_id: switch.charles_blanket
+    domain: switch
+  - condition: or
+    conditions:
+    - condition: time
+      after: '12:00:00'
+    - condition: time
+      before: 00:01:00
+  - condition: state
+    entity_id: binary_sensor.charles_sleeping_bayesian
+    state: 'off'
   action:
-    - type: turn_off
-      device_id: 114e22d1af178828cb508da883b67dd4
-      entity_id: switch.charles_blanket
-      domain: switch
-    - delay:
-        hours: 0
-        minutes: 0
-        seconds: 2
-        milliseconds: 0
-    - type: turn_on
-      device_id: 114e22d1af178828cb508da883b67dd4
-      entity_id: switch.charles_blanket
-      domain: switch
+  - type: turn_off
+    device_id: 114e22d1af178828cb508da883b67dd4
+    entity_id: switch.charles_blanket
+    domain: switch
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+  - type: turn_on
+    device_id: 114e22d1af178828cb508da883b67dd4
+    entity_id: switch.charles_blanket
+    domain: switch
   mode: single
-- id: "78687612387216"
+- id: '78687612387216'
   alias: Turn on Gaby blanket
   description: Turn on Gaby's blanket at 10pm
   trigger:
-    - platform: time
-      at: "22:00"
+  - platform: time
+    at: '22:00'
   condition:
-    - condition: zone
-      entity_id: person.gaby
-      zone: zone.home
+  - condition: zone
+    entity_id: person.gaby
+    zone: zone.home
   action:
-    - type: turn_off
-      device_id: a7c437c79cc44a2bf92675ba55644d5c
-      entity_id: switch.gaby_blanket
-      domain: switch
-    - delay:
-        hours: 0
-        minutes: 0
-        seconds: 2
-        milliseconds: 0
-    - type: turn_on
-      device_id: a7c437c79cc44a2bf92675ba55644d5c
-      entity_id: switch.gaby_blanket
-      domain: switch
+  - type: turn_off
+    device_id: a7c437c79cc44a2bf92675ba55644d5c
+    entity_id: switch.gaby_blanket
+    domain: switch
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+  - type: turn_on
+    device_id: a7c437c79cc44a2bf92675ba55644d5c
+    entity_id: switch.gaby_blanket
+    domain: switch
   mode: single
 - id: gitlabbackup
   alias: Back up config to gitlab
-  description:
-    Commits and pushes the /config directory to gitlab every 15 minutes,
+  description: Commits and pushes the /config directory to gitlab every 15 minutes,
     if changes have occured
   trigger:
-    - platform: time_pattern
-      minutes: /15
+  - platform: time_pattern
+    minutes: /15
   condition: []
   action:
-    - service: shell_command.backup_config
-      data: {}
+  - service: shell_command.backup_config
+    data: {}
   mode: single
-- id: "1610737920275"
+- id: '1610737920275'
   alias: LIGHTS Turn on living room lights when we come home
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id: group.any_home
-      to: home
+  - platform: state
+    entity_id: group.any_home
+    to: home
   condition:
-    - condition: sun
-      after: sunset
+  - condition: sun
+    after: sunset
   action:
-    - service: light.turn_on
-      data: {}
-      target:
-        area_id:
-          - living_room
+  - service: light.turn_on
+    data: {}
+    target:
+      area_id:
+      - living_room
   mode: single
-- id: "1610743960228"
-  alias: "LIGHTS Turn off the lights when we leave home "
-  description: ""
+- id: '1610743960228'
+  alias: 'LIGHTS Turn off the lights when we leave home '
+  description: ''
   trigger:
-    - platform: state
-      entity_id: group.any_home
-      from: home
+  - platform: state
+    entity_id: group.any_home
+    from: home
   condition: []
   action:
-    - service: light.turn_off
-      data: {}
-      target:
-        area_id:
-          - bedroom
-          - kitchen
-          - living_room
-          - office
-    - service: input_boolean.turn_on
-      data: {}
-      target:
-        entity_id: input_boolean.office_motion_enabled
+  - service: light.turn_off
+    data: {}
+    target:
+      area_id:
+      - bedroom
+      - kitchen
+      - living_room
+      - office
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.office_motion_enabled
   mode: single
-- id: "1625175063754"
-  alias: "Copy office lights to lamp "
-  description: ""
+- id: '1625175063754'
+  alias: 'Copy office lights to lamp '
+  description: ''
   trigger:
-    - platform: state
-      entity_id: light.office
-      to: "on"
-      from: unavailable
+  - platform: state
+    entity_id: light.office
+    to: 'on'
+    from: unavailable
   condition: []
   action:
-    - type: turn_on
-      device_id: 31ad1ae771c656caacded7bcba3b6433
-      entity_id: light.office_lamp
-      domain: light
-      brightness_pct: 100
+  - type: turn_on
+    device_id: 31ad1ae771c656caacded7bcba3b6433
+    entity_id: light.office_lamp
+    domain: light
+    brightness_pct: 100
   mode: single
-- id: "1625175510726"
+- id: '1625175510726'
   alias: Home Assistant Restart Notification
-  description: ""
+  description: ''
   use_blueprint:
     path: gregoryduckworth/restart_notification.yaml
     input:
       notification_message: Home Assistant has succesfully restarted!
       notify_device: 10e24cdea3aaf31ef94c59725b643354
-- id: "1632086778926"
-  alias: "Copy office lights to lamp  (off) "
-  description: ""
+- id: '1632086778926'
+  alias: 'Copy office lights to lamp  (off) '
+  description: ''
   trigger:
-    - platform: state
-      entity_id: light.office
-      from: "on"
-      to: unavailable
+  - platform: state
+    entity_id: light.office
+    from: 'on'
+    to: unavailable
   condition: []
   action:
-    - type: turn_off
-      device_id: 31ad1ae771c656caacded7bcba3b6433
-      entity_id: light.office_lamp
-      domain: light
+  - type: turn_off
+    device_id: 31ad1ae771c656caacded7bcba3b6433
+    entity_id: light.office_lamp
+    domain: light
   mode: single
-- id: "1633213244613"
+- id: '1633213244613'
   alias: Copy bedroom lights to lamp
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id: light.bedroom_1
-      to: "on"
-      from: unavailable
+  - platform: state
+    entity_id: light.bedroom_1
+    to: 'on'
+    from: unavailable
   condition: []
   action:
-    - type: turn_on
-      device_id: e82af499967b17e762f057ca3ce3fbda
-      entity_id: light.lamp
-      domain: light
-      brightness_pct: 100
+  - type: turn_on
+    device_id: e82af499967b17e762f057ca3ce3fbda
+    entity_id: light.lamp
+    domain: light
+    brightness_pct: 100
   mode: single
-- id: "1633213286816"
-  alias: "Copy bedroom lights to lamp (off) "
-  description: ""
+- id: '1633213286816'
+  alias: 'Copy bedroom lights to lamp (off) '
+  description: ''
   trigger:
-    - platform: state
-      entity_id: light.bedroom_1
-      to: unavailable
-      from: "on"
+  - platform: state
+    entity_id: light.bedroom_1
+    to: unavailable
+    from: 'on'
   condition: []
   action:
-    - type: turn_off
-      device_id: e82af499967b17e762f057ca3ce3fbda
-      entity_id: light.lamp
-      domain: light
+  - type: turn_off
+    device_id: e82af499967b17e762f057ca3ce3fbda
+    entity_id: light.lamp
+    domain: light
   mode: single
-- id: "1635532170556"
+- id: '1635532170556'
   alias: Reset at 4am
   description: Reset the heating and turn off the lights at 4am
   trigger:
-    - platform: time
-      at: 04:00
+  - platform: time
+    at: 04:00
   condition: []
   action:
-    - device_id: 32b1896caaf2ef09416ece31de5874a1
-      domain: climate
-      entity_id: climate.house_absolute
-      type: set_hvac_mode
-      hvac_mode: auto
-    - service: water_heater.set_operation_mode
-      data:
-        operation_mode: auto
-    - service: light.turn_off
-      data: {}
-      target:
-        area_id:
-          - bedroom
-          - garden
-          - kitchen
-          - living_room
-          - office
+  - device_id: 32b1896caaf2ef09416ece31de5874a1
+    domain: climate
+    entity_id: climate.house_absolute
+    type: set_hvac_mode
+    hvac_mode: auto
+  - service: water_heater.set_operation_mode
+    data:
+      operation_mode: auto
+  - service: light.turn_off
+    data: {}
+    target:
+      area_id:
+      - bedroom
+      - garden
+      - kitchen
+      - living_room
+      - office
   mode: single
-- id: "1640185443869"
+- id: '1640185443869'
   alias: Turn on away mode after a day
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id: group.any_home
-      for:
-        hours: 24
-        minutes: 0
-        seconds: 0
-      to: not_home
+  - platform: state
+    entity_id: group.any_home
+    for:
+      hours: 24
+      minutes: 0
+      seconds: 0
+    to: not_home
   condition: []
   action:
-    - service: input_boolean.turn_on
-      target:
-        entity_id: input_boolean.away_mode_active
-      data: {}
+  - service: input_boolean.turn_on
+    target:
+      entity_id: input_boolean.away_mode_active
+    data: {}
   mode: single
-- id: "1640185488128"
+- id: '1640185488128'
   alias: Turn off away mode when we come home
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id: group.any_home
-      for:
-        hours: 0
-        minutes: 0
-        seconds: 0
-      to: home
+  - platform: state
+    entity_id: group.any_home
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 0
+    to: home
   condition: []
   action:
-    - service: input_boolean.turn_off
-      target:
-        entity_id: input_boolean.away_mode_active
+  - service: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.away_mode_active
   mode: single
-- id: "1641310525501"
+- id: '1641310525501'
   alias: ANNOUNCE Dishwasher cycle
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id: sensor.dishwasher_state
-      for:
-        hours: 0
-        minutes: 2
-        seconds: 0
-      to: "off"
+  - platform: state
+    entity_id: sensor.dishwasher_state
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
+    to: 'off'
   condition:
-    - condition: state
-      entity_id: input_boolean.quiet_time
-      state: "off"
+  - condition: state
+    entity_id: input_boolean.quiet_time
+    state: 'off'
   action:
-    - service: tts.google_translate_say
-      data:
-        entity_id: media_player.living_room_speaker
-        message: The dishwasher has finished
-    - delay:
-        hours: 2
-        minutes: 0
-        seconds: 0
-        milliseconds: 0
+  - service: tts.google_translate_say
+    data:
+      entity_id: media_player.living_room_speaker
+      message: The dishwasher has finished
+  - delay:
+      hours: 2
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
   mode: single
-- id: "1641726635601"
-  alias: "VACUUM: Run the vacuum cleaner"
-  description:
-    Run the vacuum cleaner if it hasn't run in 24 hours and we're away
+- id: '1641726635601'
+  alias: 'VACUUM: Run the vacuum cleaner'
+  description: Run the vacuum cleaner if it hasn't run in 24 hours and we're away
     from home
   trigger:
-    - platform: time_pattern
-      minutes: /10
+  - platform: time_pattern
+    minutes: /10
   condition:
-    - condition: state
-      entity_id: group.any_home
-      for:
-        hours: 0
-        minutes: 30
-        seconds: 0
-      state: not_home
-    - condition: template
-      value_template:
-        "{{ \n  now() - timedelta(hours = 20)\n  >\n  as_datetime(states('sensor.noonoo_last_clean_end'))\nand\n
-        \ is_state('vacuum.noonoo', 'docked')\n}}"
-    - condition: state
-      entity_id: input_boolean.quiet_time
-      state: "off"
+  - condition: state
+    entity_id: group.any_home
+    for:
+      hours: 0
+      minutes: 30
+      seconds: 0
+    state: not_home
+  - condition: template
+    value_template: "{{ \n  now() - timedelta(hours = 20)\n  >\n  as_datetime(states('sensor.noonoo_last_clean_end'))\nand\n
+      \ is_state('vacuum.noonoo', 'docked')\n}}"
+  - condition: state
+    entity_id: input_boolean.quiet_time
+    state: 'off'
   action:
-    - device_id: ff72e33712aea3043f148cb5cdc99614
-      domain: vacuum
-      entity_id: vacuum.noonoo
-      type: clean
+  - device_id: ff72e33712aea3043f148cb5cdc99614
+    domain: vacuum
+    entity_id: vacuum.noonoo
+    type: clean
   mode: single
-- id: "1641890479079"
+- id: '1641890479079'
   alias: Increment gaby work counter
-  description: ""
+  description: ''
   trigger:
-    - platform: zone
-      entity_id: person.gaby
-      zone: zone.harris_westminster
-      event: enter
+  - platform: zone
+    entity_id: person.gaby
+    zone: zone.harris_westminster
+    event: enter
   condition: []
   action:
-    - service: counter.increment
-      target:
-        entity_id: counter.gaby_trips_to_work_today
+  - service: counter.increment
+    target:
+      entity_id: counter.gaby_trips_to_work_today
   mode: single
 - id: gabywimb
   alias: Increment gaby Wimbledon counter
-  description: ""
+  description: ''
   trigger:
-    - platform: zone
-      entity_id: person.gaby
-      zone: zone.wimbledon
-      event: enter
+  - platform: zone
+    entity_id: person.gaby
+    zone: zone.wimbledon
+    event: enter
   condition: []
   action:
-    - service: counter.increment
-      target:
-        entity_id: counter.gaby_trips_via_wimbledon_today
+  - service: counter.increment
+    target:
+      entity_id: counter.gaby_trips_via_wimbledon_today
   mode: single
 - id: charleswimb
   alias: Increment Charles Wimbledon counter
-  description: ""
+  description: ''
   trigger:
-    - platform: zone
-      entity_id: person.charles
-      zone: zone.wimbledon
-      event: enter
+  - platform: zone
+    entity_id: person.charles
+    zone: zone.wimbledon
+    event: enter
   condition: []
   action:
-    - service: counter.increment
-      target:
-        entity_id: counter.charles_trips_via_wimbledon_today
+  - service: counter.increment
+    target:
+      entity_id: counter.charles_trips_via_wimbledon_today
   mode: single
-- id: "1641890601494"
+- id: '1641890601494'
   alias: Increment charles work counter
-  description: ""
+  description: ''
   trigger:
-    - platform: zone
-      entity_id: person.charles
-      zone: zone.imperial
-      event: enter
+  - platform: zone
+    entity_id: person.charles
+    zone: zone.imperial
+    event: enter
   condition: []
   action:
-    - service: counter.increment
-      target:
-        entity_id: counter.charles_trips_to_work_today
+  - service: counter.increment
+    target:
+      entity_id: counter.charles_trips_to_work_today
   mode: single
-- id: "1641929437788"
+- id: '1641929437788'
   alias: Reset counters at midnight
-  description: ""
+  description: ''
   trigger:
-    - platform: time
-      at: 00:00
+  - platform: time
+    at: 00:00
   condition: []
   action:
-    - service: counter.reset
-      target:
-        entity_id:
-          - counter.charles_trips_to_work_today
-          - counter.gaby_trips_to_work_today
-          - counter.charles_trips_via_wimbledon_today
-          - counter.gaby_trips_via_wimbledon_today
+  - service: counter.reset
+    target:
+      entity_id:
+      - counter.charles_trips_to_work_today
+      - counter.gaby_trips_to_work_today
+      - counter.charles_trips_via_wimbledon_today
+      - counter.gaby_trips_via_wimbledon_today
   mode: single
 - id: charlescredit
   alias: Credit Charles for cycling to work
-  description: ""
+  description: ''
   trigger:
-    - platform: zone
-      entity_id: person.charles
-      zone: zone.home
-      event: enter
+  - platform: zone
+    entity_id: person.charles
+    zone: zone.home
+    event: enter
   condition:
-    - condition: numeric_state
-      entity_id: counter.charles_trips_to_work_today
-      above: "0"
-    - condition: numeric_state
-      entity_id: counter.charles_trips_via_wimbledon_today
-      below: "2"
+  - condition: numeric_state
+    entity_id: counter.charles_trips_to_work_today
+    above: '0'
+  - condition: numeric_state
+    entity_id: counter.charles_trips_via_wimbledon_today
+    below: '2'
   action:
-    - service: counter.increment
-      target:
-        entity_id: counter.charles_number_saved_train_journeys
-    - condition: numeric_state
-      entity_id: counter.charles_trips_via_wimbledon_today
-      below: "1"
-    - service: counter.increment
-      target:
-        entity_id: counter.charles_number_saved_train_journeys
+  - service: counter.increment
+    target:
+      entity_id: counter.charles_number_saved_train_journeys
+  - condition: numeric_state
+    entity_id: counter.charles_trips_via_wimbledon_today
+    below: '1'
+  - service: counter.increment
+    target:
+      entity_id: counter.charles_number_saved_train_journeys
   mode: single
 - id: gabycredit
   alias: Credit Gaby for cycling to work
-  description: ""
+  description: ''
   trigger:
-    - platform: zone
-      entity_id: person.gaby
-      zone: zone.home
-      event: enter
+  - platform: zone
+    entity_id: person.gaby
+    zone: zone.home
+    event: enter
   condition:
-    - condition: numeric_state
-      entity_id: counter.gaby_trips_to_work_today
-      above: "0"
-    - condition: numeric_state
-      entity_id: counter.gaby_trips_via_wimbledon_today
-      below: "2"
+  - condition: numeric_state
+    entity_id: counter.gaby_trips_to_work_today
+    above: '0'
+  - condition: numeric_state
+    entity_id: counter.gaby_trips_via_wimbledon_today
+    below: '2'
   action:
-    - service: counter.increment
-      target:
-        entity_id: counter.gaby_number_saved_train_journeys
-    - condition: numeric_state
-      entity_id: counter.gaby_trips_via_wimbledon_today
-      below: "1"
-    - service: counter.increment
-      target:
-        entity_id: counter.gaby_number_saved_train_journeys
+  - service: counter.increment
+    target:
+      entity_id: counter.gaby_number_saved_train_journeys
+  - condition: numeric_state
+    entity_id: counter.gaby_trips_via_wimbledon_today
+    below: '1'
+  - service: counter.increment
+    target:
+      entity_id: counter.gaby_number_saved_train_journeys
   mode: single
-- id: "1642345578220"
-  alias: "HOT WATER: turn on"
+- id: '1642345578220'
+  alias: 'HOT WATER: turn on'
   description: Turn on the hot water if exception requested
   trigger:
-    - platform: time
-      at: 04:10:00
+  - platform: time
+    at: 04:10:00
   condition:
-    - condition: state
-      entity_id: input_boolean.hot_water_tomorrow
-      state: "on"
+  - condition: state
+    entity_id: input_boolean.hot_water_tomorrow
+    state: 'on'
   action:
-    - service: water_heater.set_operation_mode
-      data:
-        operation_mode: heat
+  - service: water_heater.set_operation_mode
+    data:
+      operation_mode: heat
   mode: single
-- id: "1642345641070"
-  alias: "HOT WATER: turn off"
+- id: '1642345641070'
+  alias: 'HOT WATER: turn off'
   description: Turn off the hot water if exception requested
   trigger:
-    - platform: time
-      at: 09:00
-    - platform: state
-      entity_id: group.any_home
-      to: not_home
+  - platform: time
+    at: 09:00
+  - platform: state
+    entity_id: group.any_home
+    to: not_home
   condition:
-    - condition: state
+  - condition: state
+    entity_id: input_boolean.hot_water_tomorrow
+    state: 'on'
+  action:
+  - service: water_heater.set_operation_mode
+    data:
+      operation_mode: auto
+  - service: input_boolean.turn_off
+    target:
       entity_id: input_boolean.hot_water_tomorrow
-      state: "on"
-  action:
-    - service: water_heater.set_operation_mode
-      data:
-        operation_mode: auto
-    - service: input_boolean.turn_off
-      target:
-        entity_id: input_boolean.hot_water_tomorrow
   mode: single
-- id: "1642499646405"
+- id: '1642499646405'
   alias: NOTIFY if someone at home
-  description: ""
+  description: ''
   trigger:
-    - type: occupied
-      platform: device
-      device_id: b7b1b7ffa3b966e2f138dc9be5050777
-      entity_id: binary_sensor.kitchen_motion_sensor_occupancy
-      domain: binary_sensor
-    - type: occupied
-      platform: device
-      device_id: 83a6afa7e4a5c030a42e638987c0666c
-      entity_id: binary_sensor.office_occupancy
-      domain: binary_sensor
+  - type: occupied
+    platform: device
+    device_id: b7b1b7ffa3b966e2f138dc9be5050777
+    entity_id: binary_sensor.kitchen_motion_sensor_occupancy
+    domain: binary_sensor
+  - type: occupied
+    platform: device
+    device_id: 83a6afa7e4a5c030a42e638987c0666c
+    entity_id: binary_sensor.office_occupancy
+    domain: binary_sensor
   condition:
-    - condition: state
-      entity_id: group.any_home
-      state: not_home
+  - condition: state
+    entity_id: group.any_home
+    state: not_home
   action:
-    - service: notify.mobile_app_big_gaby
-      data:
-        message: Someone is home
-        title: Motion detected
-    - service: notify.mobile_app_charles_pixel
-      data:
-        message: Someone is home
-        title: Motion detected
-    - delay:
-        hours: 1
-        minutes: 0
-        seconds: 0
-        milliseconds: 0
+  - service: notify.mobile_app_big_gaby
+    data:
+      message: Someone is home
+      title: Motion detected
+  - service: notify.mobile_app_charles_pixel
+    data:
+      message: Someone is home
+      title: Motion detected
+  - delay:
+      hours: 1
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
   mode: single
-- id: "1644435549527"
-  alias: "ANNOUNCE: State change"
-  description: ""
+- id: '1644435549527'
+  alias: 'ANNOUNCE: State change'
+  description: ''
   trigger:
-    - platform: state
+  - platform: state
+    entity_id: person.gaby
+  condition:
+  - condition: not
+    conditions:
+    - condition: state
       entity_id: person.gaby
-  condition:
-    - condition: not
-      conditions:
-        - condition: state
-          entity_id: person.gaby
-          state: home
-    - condition: template
-      value_template: "{{trigger.from_state.state != trigger.to_state.state}}"
-    - condition: state
-      entity_id: binary_sensor.charles_sleeping_bayesian
-      state: "off"
+      state: home
+  - condition: template
+    value_template: '{{trigger.from_state.state != trigger.to_state.state}}'
+  - condition: state
+    entity_id: binary_sensor.charles_sleeping_bayesian
+    state: 'off'
   action:
-    - service: tts.google_translate_say
-      data:
-        entity_id: media_player.living_room_speaker
-        message: Gaby left {{trigger.from_state.state}} and is now at {{trigger.to_state.state}}
+  - service: tts.google_translate_say
+    data:
+      entity_id: media_player.living_room_speaker
+      message: Gaby left {{trigger.from_state.state}} and is now at {{trigger.to_state.state}}
   mode: single
-- id: "1646346256635"
-  alias: "TEMPERATURE: Reset high"
-  description: ""
+- id: '1646346256635'
+  alias: 'TEMPERATURE: Reset high'
+  description: ''
   trigger:
-    - platform: template
-      value_template:
-        '{{state_attr("climate.house_absolute", "temperature") > 20.0
-        }}'
+  - platform: template
+    value_template: '{{state_attr("climate.house_absolute", "temperature") > 20.0
+      }}'
   condition: []
   action:
-    - delay:
-        hours: 0
-        minutes: 5
-        seconds: 0
-        milliseconds: 0
-    - service: climate.set_temperature
-      data:
-        temperature: 20
-      target:
-        area_id: house_absolute
+  - delay:
+      hours: 0
+      minutes: 5
+      seconds: 0
+      milliseconds: 0
+  - service: climate.set_temperature
+    data:
+      temperature: 20
+    target:
+      area_id: house_absolute
   mode: single
-- id: "1648623157497"
+- id: '1648623157497'
   alias: LIGHTS kitchen motion
-  description: ""
+  description: ''
   trigger:
-    - type: occupied
+  - type: occupied
+    platform: device
+    device_id: b7b1b7ffa3b966e2f138dc9be5050777
+    entity_id: binary_sensor.kitchen_motion_sensor_occupancy
+    domain: binary_sensor
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 0bd6ffc11a39064f15b71cef66219578
+    entity_id: light.kitchen
+    domain: light
+  - wait_for_trigger:
+    - type: not_occupied
       platform: device
       device_id: b7b1b7ffa3b966e2f138dc9be5050777
       entity_id: binary_sensor.kitchen_motion_sensor_occupancy
       domain: binary_sensor
-  condition: []
-  action:
-    - type: turn_on
-      device_id: 0bd6ffc11a39064f15b71cef66219578
-      entity_id: light.kitchen
-      domain: light
-    - wait_for_trigger:
-        - type: not_occupied
-          platform: device
-          device_id: b7b1b7ffa3b966e2f138dc9be5050777
-          entity_id: binary_sensor.kitchen_motion_sensor_occupancy
-          domain: binary_sensor
-      continue_on_timeout: true
-      timeout: "10000"
-    - delay:
-        hours: 0
-        minutes: 2
-        seconds: 0
-        milliseconds: 0
-    - type: turn_off
-      device_id: 0bd6ffc11a39064f15b71cef66219578
-      entity_id: light.kitchen
-      domain: light
+    continue_on_timeout: true
+    timeout: '10000'
+  - delay:
+      hours: 0
+      minutes: 2
+      seconds: 0
+      milliseconds: 0
+  - type: turn_off
+    device_id: 0bd6ffc11a39064f15b71cef66219578
+    entity_id: light.kitchen
+    domain: light
   mode: restart
-- id: "1648623700269"
+- id: '1648623700269'
   alias: LIGHTS bedroom switch on
-  description: ""
+  description: ''
   trigger:
-    - device_id: a67d053900624a172b342f462714474b
-      domain: zha
-      platform: device
-      type: remote_button_short_press
-      subtype: turn_on
+  - device_id: a67d053900624a172b342f462714474b
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: turn_on
   condition: []
   action:
-    - service: light.turn_on
-      data: {}
-      target:
-        area_id: bedroom
+  - service: light.turn_on
+    data: {}
+    target:
+      area_id: bedroom
   mode: single
-- id: "1648624326824"
+- id: '1648624326824'
   alias: LIGHTS bedroom switch off
-  description: ""
+  description: ''
   trigger:
-    - device_id: a67d053900624a172b342f462714474b
-      domain: zha
-      platform: device
-      type: remote_button_short_press
-      subtype: turn_off
+  - device_id: a67d053900624a172b342f462714474b
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: turn_off
   condition: []
   action:
-    - service: light.turn_off
-      data: {}
-      target:
-        area_id: bedroom
+  - service: light.turn_off
+    data: {}
+    target:
+      area_id: bedroom
   mode: single
-- id: "1648756054523"
+- id: '1648756054523'
   alias: LIGHTS living room switch
-  description: ""
+  description: ''
   use_blueprint:
     path: vanstinator/zha-philips-hue-dimmer-switch-rwl020-rwl021.yaml
     input:
       remote: cbcf800abd3ba2525fdfbff5bca4c794
       light:
         area_id:
-          - living_room
+        - living_room
       brightness: 100
-- id: "1650359767117"
-  alias: "LIGHTS bedroom switch curtains up "
-  description: ""
+- id: '1650359767117'
+  alias: 'LIGHTS bedroom switch curtains up '
+  description: ''
   trigger:
-    - device_id: a67d053900624a172b342f462714474b
-      domain: zha
-      platform: device
-      type: remote_button_short_press
-      subtype: dim_up
+  - device_id: a67d053900624a172b342f462714474b
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: dim_up
   condition: []
   action:
+  - device_id: 05e7e67963dde2059de0f6e9f2ec02ad
+    domain: cover
+    entity_id: cover.bedroom_blinds_window_covering
+    type: set_position
+    position: 100
+  mode: single
+- id: '1650359787446'
+  alias: LIGHTS bedroom switch curtains down
+  description: ''
+  trigger:
+  - device_id: a67d053900624a172b342f462714474b
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: dim_down
+  condition: []
+  action:
+  - device_id: 05e7e67963dde2059de0f6e9f2ec02ad
+    domain: cover
+    entity_id: cover.bedroom_blinds_window_covering
+    type: set_position
+    position: 0
+  mode: single
+- id: '1650366731175'
+  alias: 'LIGHTS: Office button and controls'
+  description: 'Single press = toggle lights
+
+    Long press = toggle motion sensor mode
+
+    Double press = unused'
+  use_blueprint:
+    path: garykrige/sonoff_switch.yaml
+    input:
+      sonoff_button: e74f6609b4c7ac897366531a40e25436
+      toggle_action:
+      - type: toggle
+        device_id: 6c66890cea366444cbfd5fd9f23e0ad0
+        entity_id: light.office
+        domain: light
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 0
+          milliseconds: 500
+      - choose:
+        - conditions:
+          - condition: device
+            type: is_off
+            device_id: 6c66890cea366444cbfd5fd9f23e0ad0
+            entity_id: light.office
+            domain: light
+          sequence:
+          - type: turn_off
+            device_id: 546f0863910d005d1729ba6fd4471bbc
+            entity_id: light.office_lamp
+            domain: light
+        - conditions:
+          - condition: device
+            type: is_on
+            device_id: 6c66890cea366444cbfd5fd9f23e0ad0
+            entity_id: light.office
+            domain: light
+          sequence:
+          - type: turn_on
+            device_id: 546f0863910d005d1729ba6fd4471bbc
+            entity_id: light.office_lamp
+            domain: light
+        default:
+        - type: toggle
+          device_id: 546f0863910d005d1729ba6fd4471bbc
+          entity_id: light.office_lamp
+          domain: light
+      off_action:
+      - service: input_boolean.toggle
+        data: {}
+        target:
+          entity_id: input_boolean.office_motion_enabled
+      - choose:
+        - conditions:
+          - condition: state
+            entity_id: input_boolean.office_motion_enabled
+            state: 'off'
+          sequence:
+          - repeat:
+              count: 2
+              sequence:
+              - service: light.toggle
+                data:
+                  transition: 0
+                target:
+                  device_id: 546f0863910d005d1729ba6fd4471bbc
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 0
+                  milliseconds: 500
+        - conditions:
+          - condition: state
+            entity_id: input_boolean.office_motion_enabled
+            state: 'on'
+          sequence:
+          - repeat:
+              count: 6
+              sequence:
+              - service: light.toggle
+                data:
+                  transition: 0
+                target:
+                  device_id: 546f0863910d005d1729ba6fd4471bbc
+              - delay:
+                  hours: 0
+                  minutes: 0
+                  seconds: 0
+                  milliseconds: 250
+        default: []
+- id: '1650388868703'
+  alias: 'BLINDS: Close at sundown'
+  description: Close all shutters at sundown if we are home
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: 00:30
+  condition:
+  - condition: numeric_state
+    entity_id: sensor.house_absolute_temperature
+    below: 18
+  action:
+  - service: cover.close_cover
+    data:
+      entity_id: all
+  mode: single
+- id: '1650538419852'
+  alias: 'LIGHTS: Bedroom aux button'
+  description: ''
+  use_blueprint:
+    path: charles/ikea_switch.yaml
+    input:
+      IKEA_button: ccf90f865b5b2f7e0eb757d71be19506
+      up_action:
+      - device_id: 05e7e67963dde2059de0f6e9f2ec02ad
+        domain: cover
+        entity_id: cover.bedroom_blinds_window_covering
+        type: set_position
+        position: 100
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 10
+          milliseconds: 0
+      - if:
+        - condition: sun
+          before: sunrise
+          before_offset: 00:45:00
+        then:
+        - service: light.turn_on
+          data: {}
+          target:
+            area_id: bedroom
+      down_action:
+      - service: scene.turn_on
+        target:
+          entity_id: scene.bedroom_lights_off
+        metadata: {}
+      - device_id: 05e7e67963dde2059de0f6e9f2ec02ad
+        domain: cover
+        entity_id: cover.bedroom_blinds_window_covering
+        type: set_position
+        position: 0
+      down_stop_action:
+      - service: scene.turn_on
+        target:
+          entity_id: scene.bedroom_relaxed
+        metadata: {}
+- id: '1651179847004'
+  alias: LIGHTS office motion
+  description: ''
+  trigger:
+  - type: motion
+    platform: device
+    device_id: 83a6afa7e4a5c030a42e638987c0666c
+    entity_id: binary_sensor.office_motion
+    domain: binary_sensor
+  condition:
+  - condition: state
+    entity_id: input_boolean.office_motion_enabled
+    state: 'on'
+  action:
+  - service: light.turn_on
+    data: {}
+    target:
+      area_id: office
+  - wait_for_trigger:
+    - type: not_occupied
+      platform: device
+      device_id: 83a6afa7e4a5c030a42e638987c0666c
+      entity_id: binary_sensor.office_occupancy
+      domain: binary_sensor
+    continue_on_timeout: true
+    timeout:
+      hours: 0
+      minutes: 10
+      seconds: 0
+      milliseconds: 0
+  - delay:
+      hours: 0
+      minutes: 2
+      seconds: 0
+      milliseconds: 0
+  - condition: or
+    conditions:
+    - condition: device
+      type: is_on
+      device_id: 546f0863910d005d1729ba6fd4471bbc
+      entity_id: light.office_lamp
+      domain: light
+    - condition: device
+      type: is_on
+      device_id: 6c66890cea366444cbfd5fd9f23e0ad0
+      entity_id: light.office
+      domain: light
+  - condition: state
+    entity_id: input_boolean.office_motion_enabled
+    state: 'on'
+  - service: light.turn_off
+    data: {}
+    target:
+      area_id: office
+  mode: restart
+- id: '1651488353879'
+  alias: 'BOOLEANS: Quiet hours on'
+  description: ''
+  trigger:
+  - platform: time
+    at: '22:00:00'
+  condition: []
+  action:
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.quiet_time
+  mode: single
+- id: '1651488410050'
+  alias: 'BOOLEANS: Quiet hours off'
+  description: ''
+  trigger:
+  - platform: time
+    at: 09:00:00
+  condition: []
+  action:
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.quiet_time
+  mode: single
+- id: '1651687246008'
+  alias: 'LIGHTS: Living room switch cast aux function'
+  description: ''
+  trigger:
+  - device_id: cbcf800abd3ba2525fdfbff5bca4c794
+    domain: zha
+    platform: device
+    type: remote_button_triple_press
+    subtype: turn_off
+  - device_id: cbcf800abd3ba2525fdfbff5bca4c794
+    domain: zha
+    platform: device
+    type: remote_button_triple_press
+    subtype: turn_on
+  condition: []
+  action:
+  - service: script.cast_to_living_room_tv
+    data: {}
+  mode: single
+- id: '1652036134118'
+  alias: 'BICYCLE_COUNTER: Monthly resets'
+  description: ''
+  trigger:
+  - platform: time
+    at: 00:01:00
+  condition:
+  - condition: template
+    value_template: '{{ (now().strftime("%d") | int) == 1 }}'
+  action:
+  - event: RESET_BICYCLE_MONTHLY_COUNTS
+    event_data: {}
+  mode: single
+- id: garden_return_gaby
+  alias: 'ANNOUNCE: Garden return (Gaby)'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.in_garden_gaby
+    to: 'True'
+  condition:
+  - condition: time
+    after: '12:00:00'
+    weekday:
+    - fri
+    - thu
+    - wed
+    - tue
+    - mon
+    - sat
+    - sun
+  - condition: state
+    entity_id: sensor.in_garden_charles
+    state: 'False'
+  action:
+  - service: media_player.volume_set
+    data:
+      volume_level: 1
+    target:
+      device_id: 0c17fcfd238e76dc1acccb8efb6eeaa8
+  - service: tts.google_translate_say
+    data:
+      entity_id: media_player.garden_speaker
+      message: Hi gaby, welcome back to your garden paradise. Woop woop woop woop.
+        You have saved {{states('sensor.gaby_total_saved_this_month')|int}} pounds
+        this month, and a total of {{states('sensor.gaby_total_saved_via_ebike')|int}}}}
+        pounds altogether. You go Tiger. Rarh!
+  - delay:
+      hours: 12
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  mode: single
+  max_exceeded: silent
+- id: garden_return_charles
+  alias: 'ANNOUNCE: Garden return (Charles)'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.in_garden_charles
+    to: 'True'
+  condition:
+  - condition: time
+    after: '12:00:00'
+    weekday:
+    - fri
+    - thu
+    - wed
+    - tue
+    - mon
+  action:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: sensor.in_garden_gaby
+        state: 'False'
+      sequence:
+      - service: media_player.volume_set
+        data:
+          volume_level: 1
+        target:
+          entity_id: media_player.garden_speaker
+    default: []
+  - service: tts.google_translate_say
+    data:
+      entity_id: media_player.garden_speaker
+      message: Welcome back Charles. You have saved {{states('sensor.charles_total_saved_this_month')|int}}
+        pounds this month by cycling, and a total of {{states('sensor.charles_total_saved_via_ebike')|int}}}}
+        pounds altogether.
+  - delay:
+      hours: 12
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  mode: single
+  max_exceeded: silent
+- id: '1658046384740'
+  alias: 'BLINDS: close blinds in heat'
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sun.sun
+    attribute: azimuth
+    above: '155'
+  condition:
+  - condition: numeric_state
+    entity_id: weather.home
+    attribute: temperature
+    above: '26'
+  action:
+  - device_id: 05e7e67963dde2059de0f6e9f2ec02ad
+    domain: cover
+    entity_id: cover.bedroom_blinds_window_covering
+    type: set_position
+    position: 0
+  mode: single
+- id: '1658568543937'
+  alias: 'AWAY: Blinds with sun in away mode'
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunrise
+    offset: '2'
+  - platform: sun
+    event: sunset
+    offset: 0
+  condition:
+  - condition: state
+    entity_id: input_boolean.away_mode_active
+    state: 'on'
+  action:
+  - choose:
+    - conditions:
+      - condition: time
+        after: '12:00:00'
+      sequence:
+      - device_id: 05e7e67963dde2059de0f6e9f2ec02ad
+        domain: cover
+        entity_id: cover.bedroom_blinds_window_covering
+        type: set_position
+        position: 0
+    default:
     - device_id: 05e7e67963dde2059de0f6e9f2ec02ad
       domain: cover
       entity_id: cover.bedroom_blinds_window_covering
       type: set_position
       position: 100
   mode: single
-- id: "1650359787446"
-  alias: LIGHTS bedroom switch curtains down
-  description: ""
+- id: '1661683329883'
+  alias: 'ONEOFF: Announce wakeup'
+  description: ''
   trigger:
-    - device_id: a67d053900624a172b342f462714474b
-      domain: zha
-      platform: device
-      type: remote_button_short_press
-      subtype: dim_down
+  - platform: state
+    entity_id:
+    - binary_sensor.gaby_sleeping_bayesian
+    to: 'off'
   condition: []
   action:
-    - device_id: 05e7e67963dde2059de0f6e9f2ec02ad
-      domain: cover
-      entity_id: cover.bedroom_blinds_window_covering
-      type: set_position
-      position: 0
+  - service: media_player.play_media
+    target:
+      entity_id: media_player.garden_speaker
+    data:
+      media_content_id: media-source://tts/google_translate?message=Gaby+is+awake
+      media_content_type: provider
+    metadata:
+      title: Gaby is awake
+      thumbnail: https://brands.home-assistant.io/_/google_translate/logo.png
+      media_class: app
+      children_media_class:
+      navigateIds:
+      - {}
+      - media_content_type: app
+        media_content_id: media-source://tts
+      - media_content_type: provider
+        media_content_id: media-source://tts/google_translate?message=Gaby+is+awake
+  - service: automation.turn_off
+    data:
+      stop_actions: false
+    target:
+      entity_id: automation.oneoff_announce_wakeup
   mode: single
-- id: "1650366731175"
-  alias: "LIGHTS: Office button and controls"
-  description: "Single press = toggle lights
-
-    Long press = toggle motion sensor mode
-
-    Double press = unused"
-  use_blueprint:
-    path: garykrige/sonoff_switch.yaml
-    input:
-      sonoff_button: e74f6609b4c7ac897366531a40e25436
-      toggle_action:
-        - type: toggle
-          device_id: 6c66890cea366444cbfd5fd9f23e0ad0
-          entity_id: light.office
-          domain: light
-        - delay:
-            hours: 0
-            minutes: 0
-            seconds: 0
-            milliseconds: 500
-        - choose:
-            - conditions:
-                - condition: device
-                  type: is_off
-                  device_id: 6c66890cea366444cbfd5fd9f23e0ad0
-                  entity_id: light.office
-                  domain: light
-              sequence:
-                - type: turn_off
-                  device_id: 546f0863910d005d1729ba6fd4471bbc
-                  entity_id: light.office_lamp
-                  domain: light
-            - conditions:
-                - condition: device
-                  type: is_on
-                  device_id: 6c66890cea366444cbfd5fd9f23e0ad0
-                  entity_id: light.office
-                  domain: light
-              sequence:
-                - type: turn_on
-                  device_id: 546f0863910d005d1729ba6fd4471bbc
-                  entity_id: light.office_lamp
-                  domain: light
-          default:
-            - type: toggle
-              device_id: 546f0863910d005d1729ba6fd4471bbc
-              entity_id: light.office_lamp
-              domain: light
-      off_action:
-        - service: input_boolean.toggle
-          data: {}
-          target:
-            entity_id: input_boolean.office_motion_enabled
-        - choose:
-            - conditions:
-                - condition: state
-                  entity_id: input_boolean.office_motion_enabled
-                  state: "off"
-              sequence:
-                - repeat:
-                    count: 2
-                    sequence:
-                      - service: light.toggle
-                        data:
-                          transition: 0
-                        target:
-                          device_id: 546f0863910d005d1729ba6fd4471bbc
-                      - delay:
-                          hours: 0
-                          minutes: 0
-                          seconds: 0
-                          milliseconds: 500
-            - conditions:
-                - condition: state
-                  entity_id: input_boolean.office_motion_enabled
-                  state: "on"
-              sequence:
-                - repeat:
-                    count: 6
-                    sequence:
-                      - service: light.toggle
-                        data:
-                          transition: 0
-                        target:
-                          device_id: 546f0863910d005d1729ba6fd4471bbc
-                      - delay:
-                          hours: 0
-                          minutes: 0
-                          seconds: 0
-                          milliseconds: 250
-          default: []
-- id: "1650388868703"
-  alias: "BLINDS: Close at sundown"
-  description: Close all shutters at sundown if we are home
+- id: '1662309759018'
+  alias: LIGHTS garden motion on
+  description: ''
   trigger:
-    - platform: sun
-      event: sunset
-      offset: 00:30
+  - platform: state
+    entity_id:
+    - sensor.in_garden_charles
+    to: 'True'
+  - platform: state
+    entity_id:
+    - sensor.in_garden_gaby
+    to: 'True'
+  - platform: sun
+    event: sunset
+    offset: 0
   condition:
-    - condition: numeric_state
-      entity_id: sensor.house_absolute_outdoor_temperature
-      below: 10
-  action:
-    - service: cover.close_cover
-      data:
-        entity_id: all
-  mode: single
-- id: "1650538419852"
-  alias: "LIGHTS: Bedroom aux button"
-  description: ""
-  use_blueprint:
-    path: charles/ikea_switch.yaml
-    input:
-      IKEA_button: ccf90f865b5b2f7e0eb757d71be19506
-      up_action:
-        - device_id: 05e7e67963dde2059de0f6e9f2ec02ad
-          domain: cover
-          entity_id: cover.bedroom_blinds_window_covering
-          type: set_position
-          position: 100
-        - delay:
-            hours: 0
-            minutes: 0
-            seconds: 10
-            milliseconds: 0
-        - if:
-            - condition: sun
-              before: sunrise
-              before_offset: 00:45:00
-          then:
-            - service: light.turn_on
-              data: {}
-              target:
-                area_id: bedroom
-      down_action:
-        - service: scene.turn_on
-          target:
-            entity_id: scene.bedroom_lights_off
-          metadata: {}
-        - device_id: 05e7e67963dde2059de0f6e9f2ec02ad
-          domain: cover
-          entity_id: cover.bedroom_blinds_window_covering
-          type: set_position
-          position: 0
-      down_stop_action:
-        - service: scene.turn_on
-          target:
-            entity_id: scene.bedroom_relaxed
-          metadata: {}
-- id: "1651179847004"
-  alias: LIGHTS office motion
-  description: ""
-  trigger:
-    - type: motion
-      platform: device
-      device_id: 83a6afa7e4a5c030a42e638987c0666c
-      entity_id: binary_sensor.office_motion
-      domain: binary_sensor
-  condition:
-    - condition: state
-      entity_id: input_boolean.office_motion_enabled
-      state: "on"
-  action:
-    - service: light.turn_on
-      data: {}
-      target:
-        area_id: office
-    - wait_for_trigger:
-        - type: not_occupied
-          platform: device
-          device_id: 83a6afa7e4a5c030a42e638987c0666c
-          entity_id: binary_sensor.office_occupancy
-          domain: binary_sensor
-      continue_on_timeout: true
-      timeout:
-        hours: 0
-        minutes: 10
-        seconds: 0
-        milliseconds: 0
-    - delay:
-        hours: 0
-        minutes: 2
-        seconds: 0
-        milliseconds: 0
-    - condition: or
-      conditions:
-        - condition: device
-          type: is_on
-          device_id: 546f0863910d005d1729ba6fd4471bbc
-          entity_id: light.office_lamp
-          domain: light
-        - condition: device
-          type: is_on
-          device_id: 6c66890cea366444cbfd5fd9f23e0ad0
-          entity_id: light.office
-          domain: light
-    - condition: state
-      entity_id: input_boolean.office_motion_enabled
-      state: "on"
-    - service: light.turn_off
-      data: {}
-      target:
-        area_id: office
-  mode: restart
-- id: "1651488353879"
-  alias: "BOOLEANS: Quiet hours on"
-  description: ""
-  trigger:
-    - platform: time
-      at: "22:00:00"
-  condition: []
-  action:
-    - service: input_boolean.turn_on
-      data: {}
-      target:
-        entity_id: input_boolean.quiet_time
-  mode: single
-- id: "1651488410050"
-  alias: "BOOLEANS: Quiet hours off"
-  description: ""
-  trigger:
-    - platform: time
-      at: 09:00:00
-  condition: []
-  action:
-    - service: input_boolean.turn_off
-      data: {}
-      target:
-        entity_id: input_boolean.quiet_time
-  mode: single
-- id: "1651687246008"
-  alias: "LIGHTS: Living room switch cast aux function"
-  description: ""
-  trigger:
-    - device_id: cbcf800abd3ba2525fdfbff5bca4c794
-      domain: zha
-      platform: device
-      type: remote_button_triple_press
-      subtype: turn_off
-    - device_id: cbcf800abd3ba2525fdfbff5bca4c794
-      domain: zha
-      platform: device
-      type: remote_button_triple_press
-      subtype: turn_on
-  condition: []
-  action:
-    - service: script.cast_to_living_room_tv
-      data: {}
-  mode: single
-- id: "1652036134118"
-  alias: "BICYCLE_COUNTER: Monthly resets"
-  description: ""
-  trigger:
-    - platform: time
-      at: 00:01:00
-  condition:
-    - condition: template
-      value_template: '{{ (now().strftime("%d") | int) == 1 }}'
-  action:
-    - event: RESET_BICYCLE_MONTHLY_COUNTS
-      event_data: {}
-  mode: single
-- id: garden_return_gaby
-  alias: "ANNOUNCE: Garden return (Gaby)"
-  description: ""
-  trigger:
-    - platform: state
-      entity_id:
-        - sensor.in_garden_gaby
-      to: "True"
-  condition:
-    - condition: time
-      after: "12:00:00"
-      weekday:
-        - fri
-        - thu
-        - wed
-        - tue
-        - mon
-        - sat
-        - sun
+  - condition: sun
+    after: sunset
+  - condition: or
+    conditions:
     - condition: state
       entity_id: sensor.in_garden_charles
-      state: "False"
-  action:
-    - service: media_player.volume_set
-      data:
-        volume_level: 1
-      target:
-        device_id: 0c17fcfd238e76dc1acccb8efb6eeaa8
-    - service: tts.google_translate_say
-      data:
-        entity_id: media_player.garden_speaker
-        message:
-          Hi gaby, welcome back to your garden paradise. Woop woop woop woop.
-          You have saved {{states('sensor.gaby_total_saved_this_month')|int}} pounds
-          this month, and a total of {{states('sensor.gaby_total_saved_via_ebike')|int}}}}
-          pounds altogether. You go Tiger. Rarh!
-    - delay:
-        hours: 12
-        minutes: 0
-        seconds: 0
-        milliseconds: 0
-  mode: single
-  max_exceeded: silent
-- id: garden_return_charles
-  alias: "ANNOUNCE: Garden return (Charles)"
-  description: ""
-  trigger:
-    - platform: state
-      entity_id:
-        - sensor.in_garden_charles
-      to: "True"
-  condition:
-    - condition: time
-      after: "12:00:00"
-      weekday:
-        - fri
-        - thu
-        - wed
-        - tue
-        - mon
-  action:
-    - choose:
-        - conditions:
-            - condition: state
-              entity_id: sensor.in_garden_gaby
-              state: "False"
-          sequence:
-            - service: media_player.volume_set
-              data:
-                volume_level: 1
-              target:
-                entity_id: media_player.garden_speaker
-      default: []
-    - service: tts.google_translate_say
-      data:
-        entity_id: media_player.garden_speaker
-        message:
-          Welcome back Charles. You have saved {{states('sensor.charles_total_saved_this_month')|int}}
-          pounds this month by cycling, and a total of {{states('sensor.charles_total_saved_via_ebike')|int}}}}
-          pounds altogether.
-    - delay:
-        hours: 12
-        minutes: 0
-        seconds: 0
-        milliseconds: 0
-  mode: single
-  max_exceeded: silent
-- id: "1658046384740"
-  alias: "BLINDS: close blinds in heat"
-  description: ""
-  trigger:
-    - platform: numeric_state
-      entity_id: sun.sun
-      attribute: azimuth
-      above: "155"
-  condition:
-    - condition: numeric_state
-      entity_id: weather.home
-      attribute: temperature
-      above: "26"
-  action:
-    - device_id: 05e7e67963dde2059de0f6e9f2ec02ad
-      domain: cover
-      entity_id: cover.bedroom_blinds_window_covering
-      type: set_position
-      position: 0
-  mode: single
-- id: "1658568543937"
-  alias: "AWAY: Blinds with sun in away mode"
-  description: ""
-  trigger:
-    - platform: sun
-      event: sunrise
-      offset: "2"
-    - platform: sun
-      event: sunset
-      offset: 0
-  condition:
+      state: 'True'
     - condition: state
-      entity_id: input_boolean.away_mode_active
-      state: "on"
+      entity_id: sensor.in_garden_gaby
+      state: 'True'
   action:
-    - choose:
-        - conditions:
-            - condition: time
-              after: "12:00:00"
-          sequence:
-            - device_id: 05e7e67963dde2059de0f6e9f2ec02ad
-              domain: cover
-              entity_id: cover.bedroom_blinds_window_covering
-              type: set_position
-              position: 0
-      default:
-        - device_id: 05e7e67963dde2059de0f6e9f2ec02ad
-          domain: cover
-          entity_id: cover.bedroom_blinds_window_covering
-          type: set_position
-          position: 100
-  mode: single
-- id: "1661683329883"
-  alias: "ONEOFF: Announce wakeup"
-  description: ""
-  trigger:
-    - platform: state
-      entity_id:
-        - binary_sensor.gaby_sleeping_bayesian
-      to: "off"
-  condition: []
-  action:
-    - service: media_player.play_media
-      target:
-        entity_id: media_player.garden_speaker
-      data:
-        media_content_id: media-source://tts/google_translate?message=Gaby+is+awake
-        media_content_type: provider
-      metadata:
-        title: Gaby is awake
-        thumbnail: https://brands.home-assistant.io/_/google_translate/logo.png
-        media_class: app
-        children_media_class:
-        navigateIds:
-          - {}
-          - media_content_type: app
-            media_content_id: media-source://tts
-          - media_content_type: provider
-            media_content_id: media-source://tts/google_translate?message=Gaby+is+awake
-    - service: automation.turn_off
-      data:
-        stop_actions: false
-      target:
-        entity_id: automation.oneoff_announce_wakeup
-  mode: single
-- id: "1662309759018"
-  alias: LIGHTS garden motion on
-  description: ""
-  trigger:
-    - platform: state
-      entity_id:
-        - sensor.in_garden_charles
-      to: "True"
-    - platform: state
-      entity_id:
-        - sensor.in_garden_gaby
-      to: "True"
-    - platform: sun
-      event: sunset
-      offset: 0
-  condition:
-    - condition: sun
-      after: sunset
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: sensor.in_garden_charles
-          state: "True"
-        - condition: state
-          entity_id: sensor.in_garden_gaby
-          state: "True"
-  action:
-    - service: light.turn_on
-      data: {}
-      target:
-        area_id: garden
+  - service: light.turn_on
+    data: {}
+    target:
+      area_id: garden
   mode: restart
-- id: "1662309947272"
+- id: '1662309947272'
   alias: LIGHTS garden motion off
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id:
-        - sensor.in_garden_charles
-      to: "False"
-    - platform: state
-      entity_id:
-        - sensor.in_garden_gaby
-      to: "False"
+  - platform: state
+    entity_id:
+    - sensor.in_garden_charles
+    to: 'False'
+  - platform: state
+    entity_id:
+    - sensor.in_garden_gaby
+    to: 'False'
   condition:
-    - condition: and
-      conditions:
-        - condition: state
-          entity_id: sensor.in_garden_charles
-          state: "False"
-        - condition: state
-          entity_id: sensor.in_garden_gaby
-          state: "False"
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: sensor.in_garden_charles
+      state: 'False'
+    - condition: state
+      entity_id: sensor.in_garden_gaby
+      state: 'False'
   action:
-    - service: light.turn_off
-      data: {}
-      target:
-        area_id: garden
+  - service: light.turn_off
+    data: {}
+    target:
+      area_id: garden
   mode: single
-- id: "1667512402105"
+- id: '1667512402105'
   alias: BLANKET Turn on Gaby blanket
-  description: ""
+  description: ''
   trigger:
-    - platform: time
-      at: "22:10:00"
+  - platform: time
+    at: '22:10:00'
   condition:
-    - condition: template
-      value_template: '{{distance("person.gaby") < 20}}'
-    - type: is_temperature
-      condition: device
-      device_id: 32b1896caaf2ef09416ece31de5874a1
-      entity_id: sensor.house_absolute_temperature
-      domain: sensor
-      below: 21
+  - condition: template
+    value_template: '{{distance("person.gaby") < 20}}'
+  - type: is_temperature
+    condition: device
+    device_id: 32b1896caaf2ef09416ece31de5874a1
+    entity_id: sensor.house_absolute_temperature
+    domain: sensor
+    below: 21
   action:
-    - type: turn_off
-      device_id: a7c437c79cc44a2bf92675ba55644d5c
-      entity_id: switch.gaby_blanket
-      domain: switch
-    - delay:
-        hours: 0
-        minutes: 0
-        seconds: 2
-        milliseconds: 0
-    - type: turn_on
-      device_id: a7c437c79cc44a2bf92675ba55644d5c
-      entity_id: switch.gaby_blanket
-      domain: switch
+  - type: turn_off
+    device_id: a7c437c79cc44a2bf92675ba55644d5c
+    entity_id: switch.gaby_blanket
+    domain: switch
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+  - type: turn_on
+    device_id: a7c437c79cc44a2bf92675ba55644d5c
+    entity_id: switch.gaby_blanket
+    domain: switch
   mode: single
-- id: "1669474125088"
-  alias: "HEATING: Reset if no one home"
-  description: ""
+- id: '1669474125088'
+  alias: 'HEATING: Reset if no one home'
+  description: ''
   trigger:
-    - platform: state
-      entity_id:
-        - group.any_home
-      to: not_home
+  - platform: state
+    entity_id:
+    - group.any_home
+    to: not_home
   condition: []
   action:
-    - device_id: 32b1896caaf2ef09416ece31de5874a1
-      domain: climate
-      entity_id: climate.house_absolute
-      type: set_hvac_mode
-      hvac_mode: auto
+  - device_id: 32b1896caaf2ef09416ece31de5874a1
+    domain: climate
+    entity_id: climate.house_absolute
+    type: set_hvac_mode
+    hvac_mode: auto
   mode: single
-- id: "1669556007713"
-  alias: "BUTTON: Gaby coffee button"
-  description: "Single press = Toggle lights
+- id: '1669556007713'
+  alias: 'BUTTON: Gaby coffee button'
+  description: 'Single press = Toggle lights
 
     Long press = x
 
-    Double press = Request coffee"
+    Double press = Request coffee'
   use_blueprint:
     path: garykrige/sonoff_switch.yaml
     input:
       sonoff_button: d27a2225a709c190ca0b2115ddd2fc91
       toggle_action:
-        - service: light.toggle
-          data: {}
-          target:
-            area_id: bedroom
+      - service: light.toggle
+        data: {}
+        target:
+          area_id: bedroom
       off_action: []
       on_action:
-        - service: tts.google_translate_say
-          data:
-            entity_id: media_player.living_room_speaker
-            message: Your loving girlfriend kindly requests a coffee.
-- id: "1669557382694"
-  alias: "NOTIFY: Lovers are close"
-  description: ""
+      - service: tts.google_translate_say
+        data:
+          entity_id: media_player.living_room_speaker
+          message: Your loving girlfriend kindly requests a coffee.
+- id: '1669557382694'
+  alias: 'NOTIFY: Lovers are close'
+  description: ''
   trigger:
+  - platform: numeric_state
+    entity_id: sensor.distance_between_lovers
+    below: '1000'
+  condition: []
+  action:
+  - service: notify.mobile_app_charles_pixel
+    data:
+      message: Gaby is within 1km
+      title: Gaby incoming!
+  - service: notify.mobile_app_big_gaby
+    data:
+      message: Charles is within 1km
+      title: Charles incoming!
+  - wait_for_trigger:
     - platform: numeric_state
       entity_id: sensor.distance_between_lovers
-      below: "1000"
-  condition: []
-  action:
-    - service: notify.mobile_app_charles_pixel
-      data:
-        message: Gaby is within 1km
-        title: Gaby incoming!
-    - service: notify.mobile_app_big_gaby
-      data:
-        message: Charles is within 1km
-        title: Charles incoming!
-    - wait_for_trigger:
-        - platform: numeric_state
-          entity_id: sensor.distance_between_lovers
-          above: "1300"
-      timeout: "7200"
+      above: '1300'
+    timeout: '7200'
   mode: single
-- id: "1671383047932"
-  alias: "BUTTON: Play music in living room"
-  description: ""
+- id: '1671383047932'
+  alias: 'BUTTON: Play music in living room'
+  description: ''
   trigger:
-    - device_id: cbcf800abd3ba2525fdfbff5bca4c794
-      domain: zha
-      platform: device
-      type: remote_button_double_press
-      subtype: turn_on
-    - device_id: cbcf800abd3ba2525fdfbff5bca4c794
-      domain: zha
-      platform: device
-      type: remote_button_double_press
-      subtype: turn_off
+  - device_id: cbcf800abd3ba2525fdfbff5bca4c794
+    domain: zha
+    platform: device
+    type: remote_button_double_press
+    subtype: turn_on
+  - device_id: cbcf800abd3ba2525fdfbff5bca4c794
+    domain: zha
+    platform: device
+    type: remote_button_double_press
+    subtype: turn_off
   condition: []
   action:
-    - service: script.play_jazz_in_living_room
-      data: {}
+  - service: script.play_jazz_in_living_room
+    data: {}
   mode: single
