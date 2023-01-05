@@ -572,7 +572,10 @@
   trigger:
   - platform: template
     value_template: '{{state_attr("climate.house_absolute", "temperature") > 20.0
-      }}'
+
+      and
+
+      states("climate.house_absolute") == "heat" }}'
   condition: []
   action:
   - delay:
