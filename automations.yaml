@@ -1136,17 +1136,15 @@
   alias: LIGHTS garden motion on
   description: ''
   trigger:
-  - platform: state
-    entity_id:
-    - sensor.in_garden_charles
-    to: 'True'
-  - platform: state
-    entity_id:
-    - sensor.in_garden_gaby
-    to: 'True'
   - platform: sun
     event: sunset
     offset: 0
+  - platform: template
+    value_template: "{{\n  (\n    distance(\"person.charles\", \"zone.home\") < 0.2\n
+      \   and\n    is_state(\"person.charles\", \"not_home\")\n  )\n  or\n  states(\"sensor.in_garden_charles\")\n}}"
+  - platform: template
+    value_template: "{{\n  (\n    distance(\"person.gaby\", \"zone.home\") < 0.2\n
+      \   and\n    is_state(\"person.gaby\", \"not_home\")\n  )\n  or\n  states(\"sensor.in_garden_gaby\")\n}}"
   condition:
   - condition: sun
     after: sunset
