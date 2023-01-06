@@ -801,7 +801,7 @@
   condition:
   - condition: numeric_state
     entity_id: sensor.house_absolute_temperature
-    below: 18
+    below: 23
   action:
   - service: cover.close_cover
     data:
