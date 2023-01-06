@@ -1139,6 +1139,7 @@
   - platform: sun
     event: sunset
     offset: 0
+    id: sunset
   - platform: template
     value_template: "{{\n  (\n    distance(\"person.charles\", \"zone.home\") < 0.2\n
       \   and\n    is_state(\"person.charles\", \"not_home\")\n  )\n  or\n  states(\"sensor.in_garden_charles\")\n}}"
@@ -1150,12 +1151,18 @@
     after: sunset
   - condition: or
     conditions:
-    - condition: state
-      entity_id: sensor.in_garden_charles
-      state: 'True'
-    - condition: state
-      entity_id: sensor.in_garden_gaby
-      state: 'True'
+    - condition: not
+      conditions:
+      - condition: trigger
+        id: sunset
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: sensor.in_garden_charles
+        state: 'True'
+      - condition: state
+        entity_id: sensor.in_garden_gaby
+        state: 'True'
   action:
   - service: light.turn_on
     data: {}
@@ -1166,28 +1173,34 @@
   alias: LIGHTS garden motion off
   description: ''
   trigger:
-  - platform: state
-    entity_id:
-    - sensor.in_garden_charles
-    to: 'False'
-  - platform: state
-    entity_id:
-    - sensor.in_garden_gaby
-    to: 'False'
-  condition:
-  - condition: and
-    conditions:
-    - condition: state
-      entity_id: sensor.in_garden_charles
-      state: 'False'
-    - condition: state
-      entity_id: sensor.in_garden_gaby
-      state: 'False'
+  - platform: template
+    value_template: "{{\nnot bool (\n  (\n    distance(\"person.charles\", \"zone.home\")
+      < 0.2\n    and\n    is_state(\"person.charles\", \"not_home\")\n  )\n  or\n
+      \ states(\"sensor.in_garden_charles\")\n)\n}}"
+  - platform: template
+    value_template: "{{\nnot bool (\n  (\n    distance(\"person.gaby\", \"zone.home\")
+      < 0.2\n    and\n    is_state(\"person.gaby\", \"not_home\")\n  )\n  or\n  states(\"sensor.in_garden_gaby\")\n)\n}}"
+  condition: []
   action:
-  - service: light.turn_off
-    data: {}
-    target:
-      area_id: garden
+  - delay:
+      hours: 0
+      minutes: 5
+      seconds: 0
+      milliseconds: 0
+  - if:
+    - condition: and
+      conditions:
+      - condition: state
+        entity_id: sensor.in_garden_charles
+        state: 'False'
+      - condition: state
+        entity_id: sensor.in_garden_gaby
+        state: 'False'
+    then:
+    - service: light.turn_off
+      data: {}
+      target:
+        area_id: garden
   mode: single
 - id: '1667512402105'
   alias: BLANKET Turn on Gaby blanket
