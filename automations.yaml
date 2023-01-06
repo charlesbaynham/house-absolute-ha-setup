@@ -993,10 +993,11 @@
   - service: tts.google_translate_say
     data:
       entity_id: media_player.garden_speaker
-      message: Hi gaby, welcome back to your garden paradise. Woop woop woop woop.
+      message: Hi Gaby, welcome back to your garden paradise. Woop woop woop woop.
         You have saved {{states('sensor.gaby_total_saved_this_month')|int}} pounds
-        this month, and a total of {{states('sensor.gaby_total_saved_via_ebike')|int}}}}
-        pounds altogether. You go Tiger. Rarh!
+        this month, and a total of {{states('sensor.gaby_total_saved_via_ebike')|int}}
+        pounds altogether. You go Tiger. Rarh! Charles is at {{states("person.charles")}}
+        and has been for {{ relative_time(states.person.charles.last_changed) }}.
   - delay:
       hours: 12
       minutes: 0
@@ -1038,8 +1039,9 @@
     data:
       entity_id: media_player.garden_speaker
       message: Welcome back Charles. You have saved {{states('sensor.charles_total_saved_this_month')|int}}
-        pounds this month by cycling, and a total of {{states('sensor.charles_total_saved_via_ebike')|int}}}}
-        pounds altogether.
+        pounds this month by cycling, and a total of {{states('sensor.charles_total_saved_via_ebike')|int}}
+        pounds altogether. Gaby is at {{states("person.gaby")}} and has been for {{
+        relative_time(states.person.gaby.last_changed) }}.
   - delay:
       hours: 12
       minutes: 0
