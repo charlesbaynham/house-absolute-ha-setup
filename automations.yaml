@@ -488,6 +488,8 @@
   - service: water_heater.set_operation_mode
     data:
       operation_mode: heat
+    target:
+      entity_id: water_heater.hot_water
   mode: single
 - id: '1642345641070'
   alias: 'HOT WATER: turn off'
@@ -506,9 +508,12 @@
   - service: water_heater.set_operation_mode
     data:
       operation_mode: auto
+    target:
+      entity_id: water_heater.hot_water
   - service: input_boolean.turn_off
     target:
       entity_id: input_boolean.hot_water_tomorrow
+    data: {}
   mode: single
 - id: '1642499646405'
   alias: NOTIFY if someone at home
