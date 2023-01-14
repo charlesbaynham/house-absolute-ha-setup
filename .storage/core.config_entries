@@ -338,7 +338,7 @@
         "domain": "dlna_dmr",
         "title": "XBOXONE",
         "data": {
-          "url": "http://10.0.0.135:2869/upnphost/udhisapi.dll?content=uuid:44fdc9d9-b36d-439b-96d7-c466a364fca5",
+          "url": "http://10.0.0.141:2869/upnphost/udhisapi.dll?content=uuid:44fdc9d9-b36d-439b-96d7-c466a364fca5",
           "device_id": "uuid:44fdc9d9-b36d-439b-96d7-c466a364fca5",
           "type": "urn:schemas-upnp-org:device:MediaRenderer:1"
         },
