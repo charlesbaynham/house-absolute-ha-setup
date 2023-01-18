@@ -533,6 +533,11 @@
   - condition: state
     entity_id: group.any_home
     state: not_home
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: vacuum.noonoo
+      state: cleaning
   action:
   - service: notify.mobile_app_big_gaby
     data:
