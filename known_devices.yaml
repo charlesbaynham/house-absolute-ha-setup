@@ -446,3 +446,10 @@ googleminigarden:
   icon:
   picture:
   track: false
+
+android_tv:
+  name: Android TV
+  mac: BT_DC:72:23:1D:10:07
+  icon:
+  picture:
+  track: false

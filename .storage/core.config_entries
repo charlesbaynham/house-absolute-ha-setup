@@ -136,12 +136,14 @@
         "entry_id": "4032417f034d0fe8e08104ec73284cdf",
         "version": 1,
         "domain": "mqtt",
-        "title": "Mosquitto broker",
+        "title": "core-mosquitto",
         "data": {
           "broker": "core-mosquitto",
           "port": 1883,
-          "username": "homeassistant",
-          "password": "re8fahkojethohCeevee8goGh6iRee9aetozae8oxaer9cheeJohgaak6Oolawei",
+          "username": "mqttuser",
+          "password": "hdr6fbjde667ye4fvi86",
+          "discovery": true,
+          "discovery_prefix": "homeassistant",
           "birth_message": {
             "topic": "homeassistant/status",
             "payload": "online",
@@ -153,9 +155,7 @@
             "payload": "offline",
             "qos": 0,
             "retain": false
-          },
-          "discovery": true,
-          "discovery_prefix": "homeassistant"
+          }
         },
         "options": {},
         "pref_disable_new_entities": false,
