@@ -453,3 +453,10 @@ android_tv:
   icon:
   picture:
   track: false
+
+sids_macbook_pro_2:
+  name: Sid’s MacBook Pro (2)
+  mac: BT_6C:96:CF:DE:BA:F4
+  icon:
+  picture:
+  track: false
