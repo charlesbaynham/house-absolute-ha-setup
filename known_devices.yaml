@@ -460,3 +460,10 @@ sids_macbook_pro_2:
   icon:
   picture:
   track: false
+
+oppo_a15:
+  name: OPPO A15
+  mac: BT_24:06:AA:5F:E9:4E
+  icon:
+  picture:
+  track: false
