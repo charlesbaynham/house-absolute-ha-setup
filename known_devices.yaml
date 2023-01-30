@@ -488,3 +488,10 @@ dc_68_eb_c1_53_44:
   icon:
   picture:
   track: false
+
+echo_dot_nba:
+  name: Echo Dot-NBA
+  mac: BT_00:FC:8B:72:A6:82
+  icon:
+  picture:
+  track: false
