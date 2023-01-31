@@ -500,7 +500,7 @@
         "data": {
           "app_id": "io.homeassistant.companion.android",
           "app_name": "Home Assistant",
-          "app_version": "2022.12.0-full (3026)",
+          "app_version": "2023.1.1-full (3124)",
           "device_name": "Charles Pixel",
           "manufacturer": "Google",
           "model": "Pixel 6",
