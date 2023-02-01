@@ -502,3 +502,10 @@ intuos_bt_s:
   icon:
   picture:
   track: false
+
+sids_trackpad:
+  name: Sid’s Trackpad
+  mac: BT_A0:78:17:E1:F6:7F
+  icon:
+  picture:
+  track: false
