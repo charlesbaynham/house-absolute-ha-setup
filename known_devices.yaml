@@ -495,3 +495,10 @@ echo_dot_nba:
   icon:
   picture:
   track: false
+
+intuos_bt_s:
+  name: Intuos BT S
+  mac: BT_E0:9F:2A:13:9D:38
+  icon:
+  picture:
+  track: false
