@@ -509,3 +509,10 @@ sids_trackpad:
   icon:
   picture:
   track: false
+
+ewa_audio_a103:
+  name: EWA Audio A103
+  mac: BT_30:22:00:00:12:F0
+  icon:
+  picture:
+  track: false
