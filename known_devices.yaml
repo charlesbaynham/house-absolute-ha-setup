@@ -516,3 +516,10 @@ ewa_audio_a103:
   icon:
   picture:
   track: false
+
+g3:
+  name: G3
+  mac: BT_00:02:5B:02:24:6A
+  icon:
+  picture:
+  track: false
