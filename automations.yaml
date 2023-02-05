@@ -69,7 +69,7 @@
   - condition: or
     conditions:
     - condition: time
-      after: '12:00:00'
+      after: 09:00:00
     - condition: time
       before: 00:04:00
   - condition: state
@@ -1323,4 +1323,17 @@
   action:
   - service: script.play_jazz_in_living_room
     data: {}
+  mode: single
+- id: '1675635845781'
+  alias: 'BLANKET: Turn off '
+  description: ''
+  trigger:
+  - platform: time
+    at: 04:00:00
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 114e22d1af178828cb508da883b67dd4
+    entity_id: switch.charles_blanket
+    domain: switch
   mode: single
