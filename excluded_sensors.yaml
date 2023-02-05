@@ -122,3 +122,15 @@
   - sensor.big_gaby_wifi_link_speed
   - sensor.big_gaby_wifi_signal_strength
   - sensor.time
+
+# domains:
+#   - automation
+#   - updater
+# entity_globs:
+#   - sensor.weather_*
+# entities:
+#   - sun.sun # Don't record sun data
+#   - sensor.last_boot # Comes from 'systemmonitor' sensor platform
+#   - sensor.date
+# event_types:
+#   - call_service # Don't record service calls
