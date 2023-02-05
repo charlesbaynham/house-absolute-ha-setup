@@ -34,6 +34,9 @@
                 },
                 {
                   "entity": "light.sitting_room_lamp"
+                },
+                {
+                  "entity": "script.play_jazz_in_living_room"
                 }
               ],
               "title": "Living Room"
