@@ -835,15 +835,6 @@
           minutes: 0
           seconds: 10
           milliseconds: 0
-      - if:
-        - condition: sun
-          before: sunrise
-          before_offset: 00:45:00
-        then:
-        - service: light.turn_on
-          data: {}
-          target:
-            area_id: bedroom
       down_action:
       - service: scene.turn_on
         target:
