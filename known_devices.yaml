@@ -524,15 +524,15 @@ g3:
   picture:
   track: false
 
-gabriela_s_z_fold3:
-  name: Gabriela's Z Fold3
+gaby_phone_bt:
+  name: Gabriela's Z Fold3 BT
   mac: BT_C8:BD:4D:34:88:62
   icon:
   picture:
   track: true
 
 charles_phone_bt:
-  name: Charles Pixel 6
+  name: Charles Pixel 6 BT
   mac: BT_DC:E5:5B:28:3C:A9
   icon:
   picture:
