@@ -529,18 +529,18 @@ gabriela_s_z_fold3:
   mac: BT_C8:BD:4D:34:88:62
   icon:
   picture:
-  track: false
+  track: true
 
-pixel_6:
-  name: Pixel 6
+charles_phone_bt:
+  name: Charles Pixel 6
   mac: BT_DC:E5:5B:28:3C:A9
   icon:
   picture:
-  track: false
+  track: true
 
 z8:
   name: Z8
   mac: BT_11:11:22:33:35:37
   icon:
   picture:
-  track: false
+  track: true
