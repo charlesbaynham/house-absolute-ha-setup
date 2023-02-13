@@ -544,3 +544,10 @@ z8:
   icon:
   picture:
   track: true
+
+b1400_zeus_2:
+  name: B1400 ZEUS 2
+  mac: BT_00:00:00:5F:2A:72
+  icon:
+  picture:
+  track: false
