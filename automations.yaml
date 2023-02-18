@@ -249,6 +249,8 @@
   - service: water_heater.set_operation_mode
     data:
       operation_mode: auto
+    target:
+      entity_id: water_heater.hot_water
   - service: light.turn_off
     data: {}
     target:
