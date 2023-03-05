@@ -360,7 +360,7 @@
           "cards": [
             {
               "type": "markdown",
-              "content": "* analyse travel times using new algorithm \n* detect humidiy spike from shower and turn off hot water\n\n",
+              "content": "* analyse travel times using new algorithm \n* detect humidiy spike from shower and turn off hot water\n* don't dim living room lights so much\n",
               "title": "To do list"
             }
           ]
