@@ -632,6 +632,26 @@
         "source": "user",
         "unique_id": "b0:4e:26:48:87:a9",
         "disabled_by": null
+      },
+      {
+        "entry_id": "393c90737c81a6278c00eee894856b18",
+        "version": 3,
+        "domain": "zha",
+        "title": "",
+        "data": {
+          "device": {
+            "path": "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+            "flow_control": null,
+            "baudrate": 115200
+          },
+          "radio_type": "znp"
+        },
+        "options": {},
+        "pref_disable_new_entities": false,
+        "pref_disable_polling": false,
+        "source": "user",
+        "unique_id": null,
+        "disabled_by": null
       }
     ]
   }
