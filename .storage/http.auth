@@ -1,8 +1,8 @@
 {
-    "version": 1,
-    "minor_version": 1,
-    "key": "http.auth",
-    "data": {
-        "content_user": "70908b578da64238b549fd8f5a000e80"
-    }
+  "version": 1,
+  "minor_version": 1,
+  "key": "http.auth",
+  "data": {
+    "content_user": "1f46ef44e52f4a92aa0a989d887161aa"
+  }
 }
