@@ -1,39 +1,39 @@
 {
-    "version": 2,
-    "minor_version": 1,
-    "key": "person",
-    "data": {
-        "items": [
-            {
-                "name": "Gaby",
-                "device_trackers": [
-                    "device_tracker.big_gaby"
-                ],
-                "user_id": "c873e03487b74d51af018f5997973da4",
-                "picture": "/api/image/serve/4878c59d5cc89ae8d9c6bc3087047031/512x512",
-                "id": "gaby"
-            },
-            {
-                "name": "Charles",
-                "device_trackers": [
-                    "device_tracker.charlesphone",
-                    "device_tracker.work_laptop",
-                    "device_tracker.charles_pixel"
-                ],
-                "user_id": null,
-                "picture": "/api/image/serve/28ccb9a52a7c45e7392989d2ee01535a/512x512",
-                "id": "charles"
-            },
-            {
-                "name": "Harry",
-                "device_trackers": [
-                    "device_tracker.harryphone",
-                    "device_tracker.it_harry"
-                ],
-                "user_id": "bc52505700644536b1c56004c20b9d8f",
-                "picture": "/api/image/serve/87aab34880911ea399fd78c9377d58a5/512x512",
-                "id": "harry"
-            }
-        ]
-    }
+  "version": 2,
+  "minor_version": 1,
+  "key": "person",
+  "data": {
+    "items": [
+      {
+        "name": "Gaby",
+        "device_trackers": [
+          "device_tracker.big_gaby"
+        ],
+        "user_id": "c873e03487b74d51af018f5997973da4",
+        "picture": "/api/image/serve/4878c59d5cc89ae8d9c6bc3087047031/512x512",
+        "id": "gaby"
+      },
+      {
+        "name": "Charles",
+        "device_trackers": [
+          "device_tracker.charlesphone",
+          "device_tracker.work_laptop",
+          "device_tracker.charles_pixel"
+        ],
+        "user_id": null,
+        "picture": "/api/image/serve/28ccb9a52a7c45e7392989d2ee01535a/512x512",
+        "id": "charles"
+      },
+      {
+        "name": "Harry",
+        "device_trackers": [
+          "device_tracker.harryphone",
+          "device_tracker.it_harry"
+        ],
+        "user_id": "bc52505700644536b1c56004c20b9d8f",
+        "picture": "/api/image/serve/87aab34880911ea399fd78c9377d58a5/512x512",
+        "id": "harry"
+      }
+    ]
+  }
 }
