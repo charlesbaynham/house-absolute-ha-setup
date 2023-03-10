@@ -269,34 +269,6 @@
         "disabled_by": null
       },
       {
-        "entry_id": "d731c290d33ec24f344fcbf2781d1784",
-        "version": 3,
-        "domain": "zha",
-        "title": "USB Serial, s/n: n/a",
-        "data": {
-          "radio_type": "znp",
-          "device": {
-            "path": "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
-            "flow_control": null,
-            "baudrate": 115200
-          }
-        },
-        "options": {
-          "custom_configuration": {
-            "zha_options": {
-              "consider_unavailable_mains": 3600,
-              "consider_unavailable_battery": 21600,
-              "enable_identify_on_join": true
-            }
-          }
-        },
-        "pref_disable_new_entities": false,
-        "pref_disable_polling": false,
-        "source": "user",
-        "unique_id": null,
-        "disabled_by": null
-      },
-      {
         "entry_id": "6e094ce26f2f5fe7656993f6fd05f4ca",
         "version": 1,
         "domain": "sun",
