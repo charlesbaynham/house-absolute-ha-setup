@@ -1,13 +1,14 @@
 {
-    "version": 1,
-    "minor_version": 1,
-    "key": "mobile_app",
-    "data": {
-        "deleted_ids": [
-            "b1f46493e4be16c7480d921010db41963d5654999a46d134513474fe6d751d4f",
-            "47d2f766509b2e2df69f2f2b27f5a6b090c420bb8af00a267e8abf3fc4c2455e",
-            "9b9e3f3066a3b4296bd35d15fb8929b87b7dcc8969d66663e6a0200542a96f20",
-            "80db6ea6b9d65cf76249cfd63168ed50f8253402cb3f23bc51832bed60a50fac"
-        ]
-    }
+  "version": 1,
+  "minor_version": 1,
+  "key": "mobile_app",
+  "data": {
+    "deleted_ids": [
+      "b1f46493e4be16c7480d921010db41963d5654999a46d134513474fe6d751d4f",
+      "47d2f766509b2e2df69f2f2b27f5a6b090c420bb8af00a267e8abf3fc4c2455e",
+      "9b9e3f3066a3b4296bd35d15fb8929b87b7dcc8969d66663e6a0200542a96f20",
+      "80db6ea6b9d65cf76249cfd63168ed50f8253402cb3f23bc51832bed60a50fac",
+      "e6aa8f99f81c4178cdce742a79294d24e80a05ee9c03045517d9530e7a7cc9fe"
+    ]
+  }
 }

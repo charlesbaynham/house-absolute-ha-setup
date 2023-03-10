@@ -473,37 +473,6 @@
         "disabled_by": null
       },
       {
-        "entry_id": "566d6505a64bc15eaaec336591dbdb95",
-        "version": 1,
-        "domain": "mobile_app",
-        "title": "Charles Pixel",
-        "data": {
-          "app_id": "io.homeassistant.companion.android",
-          "app_name": "Home Assistant",
-          "app_version": "2023.1.1-full (3124)",
-          "device_name": "Charles Pixel",
-          "manufacturer": "Google",
-          "model": "Pixel 6",
-          "os_name": "Android",
-          "os_version": "33",
-          "supports_encryption": false,
-          "app_data": {
-            "push_websocket_channel": true,
-            "push_url": "https://mobile-apps.home-assistant.io/api/sendPush/android/v1",
-            "push_token": "fEcwfMXqSbuzjA5SBTMCvc:APA91bFjZtFmc44O2muX5-aRCXUhGBxlptCpy5j2m_jIWCKHr0cFkzg7cZ4rmEslr8-ZQEByvz12-xGrtduA20ZurPuxm7xrBNZXpNFekOa9wpuvnaPRo445fHuFdUDQ4mTBx0YXbGEU"
-          },
-          "device_id": "9658fda12408b7b6",
-          "webhook_id": "e6aa8f99f81c4178cdce742a79294d24e80a05ee9c03045517d9530e7a7cc9fe",
-          "user_id": "3479089a9a2a4a3da12564b3fbb1f34b"
-        },
-        "options": {},
-        "pref_disable_new_entities": false,
-        "pref_disable_polling": false,
-        "source": "registration",
-        "unique_id": "io.homeassistant.companion.android-9658fda12408b7b6",
-        "disabled_by": null
-      },
-      {
         "entry_id": "856e4eaa8e8a8a2d1c38d5a34c251b83",
         "version": 1,
         "domain": "raspberry_pi",
@@ -659,6 +628,37 @@
         "pref_disable_polling": false,
         "source": "user",
         "unique_id": null,
+        "disabled_by": null
+      },
+      {
+        "entry_id": "62889b21db629ab72885e5bd324adf2f",
+        "version": 1,
+        "domain": "mobile_app",
+        "title": "Pixel 6",
+        "data": {
+          "app_id": "io.homeassistant.companion.android",
+          "app_name": "Home Assistant",
+          "app_version": "2023.1.1-full (3124)",
+          "device_name": "Pixel 6",
+          "manufacturer": "Google",
+          "model": "Pixel 6",
+          "os_name": "Android",
+          "os_version": "33",
+          "supports_encryption": false,
+          "app_data": {
+            "push_websocket_channel": true,
+            "push_url": "https://mobile-apps.home-assistant.io/api/sendPush/android/v1",
+            "push_token": "fEcwfMXqSbuzjA5SBTMCvc:APA91bFjZtFmc44O2muX5-aRCXUhGBxlptCpy5j2m_jIWCKHr0cFkzg7cZ4rmEslr8-ZQEByvz12-xGrtduA20ZurPuxm7xrBNZXpNFekOa9wpuvnaPRo445fHuFdUDQ4mTBx0YXbGEU"
+          },
+          "device_id": "9658fda12408b7b6",
+          "webhook_id": "dd55959fdc997eec64b15f711b119098ecea794d41d780e25b06f7d2ec1be766",
+          "user_id": "74ef69aa07704486909c4b4410a0c66d"
+        },
+        "options": {},
+        "pref_disable_new_entities": false,
+        "pref_disable_polling": false,
+        "source": "registration",
+        "unique_id": "io.homeassistant.companion.android-9658fda12408b7b6",
         "disabled_by": null
       }
     ]

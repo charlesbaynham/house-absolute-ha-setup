@@ -718,12 +718,12 @@
   use_blueprint:
     path: garykrige/sonoff_switch.yaml
     input:
-      sonoff_button: e74f6609b4c7ac897366531a40e25436
+      sonoff_button: d10ab8f3f54aa3b00e09615e27dace30
       toggle_action:
-      - type: toggle
-        device_id: 6c66890cea366444cbfd5fd9f23e0ad0
-        entity_id: light.office
-        domain: light
+      - service: light.toggle
+        data: {}
+        target:
+          area_id: office
       - delay:
           hours: 0
           minutes: 0
@@ -733,28 +733,28 @@
         - conditions:
           - condition: device
             type: is_off
-            device_id: 6c66890cea366444cbfd5fd9f23e0ad0
+            device_id: 51e97188c25c927fdffa4901073731f8
             entity_id: light.office
             domain: light
           sequence:
           - type: turn_off
-            device_id: 546f0863910d005d1729ba6fd4471bbc
+            device_id: 9f060ec66b772283af89985149d94e65
             entity_id: light.office_lamp
             domain: light
         - conditions:
           - condition: device
             type: is_on
-            device_id: 6c66890cea366444cbfd5fd9f23e0ad0
+            device_id: 51e97188c25c927fdffa4901073731f8
             entity_id: light.office
             domain: light
           sequence:
           - type: turn_on
-            device_id: 546f0863910d005d1729ba6fd4471bbc
+            device_id: 9f060ec66b772283af89985149d94e65
             entity_id: light.office_lamp
             domain: light
         default:
         - type: toggle
-          device_id: 546f0863910d005d1729ba6fd4471bbc
+          device_id: 9f060ec66b772283af89985149d94e65
           entity_id: light.office_lamp
           domain: light
       off_action:
@@ -775,7 +775,7 @@
                 data:
                   transition: 0
                 target:
-                  device_id: 546f0863910d005d1729ba6fd4471bbc
+                  area_id: office
               - delay:
                   hours: 0
                   minutes: 0
@@ -793,7 +793,7 @@
                 data:
                   transition: 0
                 target:
-                  device_id: 546f0863910d005d1729ba6fd4471bbc
+                  area_id: office
               - delay:
                   hours: 0
                   minutes: 0
@@ -855,7 +855,7 @@
   trigger:
   - type: motion
     platform: device
-    device_id: 83a6afa7e4a5c030a42e638987c0666c
+    device_id: f16dee304b0797349a174d4e5fb962b4
     entity_id: binary_sensor.office_motion
     domain: binary_sensor
   condition:
@@ -1327,3 +1327,12 @@
     entity_id: switch.charles_blanket
     domain: switch
   mode: single
+- id: '1678479367368'
+  alias: 'LIGHTS: Bedroom switch'
+  description: ''
+  use_blueprint:
+    path: vanstinator/zha-philips-hue-dimmer-switch-rwl020-rwl021.yaml
+    input:
+      remote: b54454c568f0586422ac20ed7a7aafe8
+      light:
+        area_id: bedroom
