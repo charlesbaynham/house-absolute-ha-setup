@@ -10,9 +10,17 @@
         "domain": "met",
         "title": "Home",
         "data": {
-          "track_home": true
+          "name": "Home",
+          "latitude": 51.4097548340808,
+          "longitude": -0.28015941381454473,
+          "elevation": 0
         },
-        "options": {},
+        "options": {
+          "name": "Home",
+          "latitude": 51.4097548340808,
+          "longitude": -0.28015941381454473,
+          "elevation": 0
+        },
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "onboarding",

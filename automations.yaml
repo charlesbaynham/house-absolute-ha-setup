@@ -669,7 +669,7 @@
   use_blueprint:
     path: vanstinator/zha-philips-hue-dimmer-switch-rwl020-rwl021.yaml
     input:
-      remote: cbcf800abd3ba2525fdfbff5bca4c794
+      remote: 555f8030f8d33be003240c549a60197b
       light:
         area_id:
         - living_room
