@@ -17,7 +17,8 @@
         "name": "Charles",
         "device_trackers": [
           "device_tracker.charlesphone",
-          "device_tracker.work_laptop"
+          "device_tracker.work_laptop",
+          "device_tracker.charles_pixel"
         ],
         "user_id": null,
         "picture": "/api/image/serve/28ccb9a52a7c45e7392989d2ee01535a/512x512",
