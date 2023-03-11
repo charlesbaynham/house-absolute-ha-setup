@@ -427,37 +427,6 @@
         "disabled_by": null
       },
       {
-        "entry_id": "f18339642adb90d925e048ca5228758e",
-        "version": 1,
-        "domain": "mobile_app",
-        "title": "big gaby",
-        "data": {
-          "app_id": "io.homeassistant.companion.android",
-          "app_name": "Home Assistant",
-          "app_version": "2023.1.1-full (3124)",
-          "device_name": "big gaby",
-          "manufacturer": "samsung",
-          "model": "SM-F926B",
-          "os_name": "Android",
-          "os_version": "33",
-          "supports_encryption": false,
-          "app_data": {
-            "push_websocket_channel": true,
-            "push_url": "https://mobile-apps.home-assistant.io/api/sendPush/android/v1",
-            "push_token": "cVNJtDDRQA217avAtv3wv1:APA91bFq7mX5_V7mesDLpNDB3q93EeYG67j-Zt7rmxhRVg2dfEPzAYUrXTMn7WBJbw-eELVbACGR3zcYgJpiiNR3zGdzbfUvfgXMul6CA0SJEGKMmesrZXK4X_PGwCE7hI0D_Q68xhlg"
-          },
-          "device_id": "6043417f8ab5f4a4",
-          "webhook_id": "6fe95e899cf4f1287d96f424e503bdd8b46ae1f9d14c59e4a37dad4b935cdd22",
-          "user_id": "c873e03487b74d51af018f5997973da4"
-        },
-        "options": {},
-        "pref_disable_new_entities": false,
-        "pref_disable_polling": false,
-        "source": "registration",
-        "unique_id": "io.homeassistant.companion.android-6043417f8ab5f4a4",
-        "disabled_by": null
-      },
-      {
         "entry_id": "d036b5cb4dfd028a4aa5f66f56425835",
         "version": 1,
         "domain": "wiz",
@@ -659,6 +628,37 @@
         "pref_disable_polling": false,
         "source": "registration",
         "unique_id": "io.homeassistant.companion.android-9658fda12408b7b6",
+        "disabled_by": null
+      },
+      {
+        "entry_id": "41ed3e4fc7996ef117ae133926d42645",
+        "version": 1,
+        "domain": "mobile_app",
+        "title": "big gaby",
+        "data": {
+          "app_id": "io.homeassistant.companion.android",
+          "app_name": "Home Assistant",
+          "app_version": "2023.1.1-full (3124)",
+          "device_name": "big gaby",
+          "manufacturer": "samsung",
+          "model": "SM-F926B",
+          "os_name": "Android",
+          "os_version": "33",
+          "supports_encryption": false,
+          "app_data": {
+            "push_websocket_channel": true,
+            "push_url": "https://mobile-apps.home-assistant.io/api/sendPush/android/v1",
+            "push_token": "cVNJtDDRQA217avAtv3wv1:APA91bFq7mX5_V7mesDLpNDB3q93EeYG67j-Zt7rmxhRVg2dfEPzAYUrXTMn7WBJbw-eELVbACGR3zcYgJpiiNR3zGdzbfUvfgXMul6CA0SJEGKMmesrZXK4X_PGwCE7hI0D_Q68xhlg"
+          },
+          "device_id": "6043417f8ab5f4a4",
+          "webhook_id": "31210ff6639f9352b7d1e76396bdee864ea954a8870b81a6283380951f5455e0",
+          "user_id": "b6fcbd89502c4203beab436d40b9d7fb"
+        },
+        "options": {},
+        "pref_disable_new_entities": false,
+        "pref_disable_polling": false,
+        "source": "registration",
+        "unique_id": "io.homeassistant.companion.android-6043417f8ab5f4a4",
         "disabled_by": null
       }
     ]
