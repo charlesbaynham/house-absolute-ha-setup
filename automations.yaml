@@ -822,9 +822,9 @@
   use_blueprint:
     path: charles/ikea_switch.yaml
     input:
-      IKEA_button: ccf90f865b5b2f7e0eb757d71be19506
+      IKEA_button: 0e533d1eb80b6fa72e9a9a9f508b3f83
       up_action:
-      - device_id: 05e7e67963dde2059de0f6e9f2ec02ad
+      - device_id: c8ea3a77b666c3de7756f054742e6b13
         domain: cover
         entity_id: cover.bedroom_blinds_window_covering
         type: set_position
@@ -839,7 +839,7 @@
         target:
           entity_id: scene.bedroom_lights_off
         metadata: {}
-      - device_id: 05e7e67963dde2059de0f6e9f2ec02ad
+      - device_id: c8ea3a77b666c3de7756f054742e6b13
         domain: cover
         entity_id: cover.bedroom_blinds_window_covering
         type: set_position
