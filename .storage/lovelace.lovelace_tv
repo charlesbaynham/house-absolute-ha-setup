@@ -91,17 +91,16 @@
               "initial_view": "listWeek"
             },
             {
+              "show_current": true,
+              "show_forecast": true,
               "type": "weather-forecast",
-              "entity": "weather.home"
+              "entity": "weather.forecast_home"
             },
             {
-              "type": "media-control",
-              "entity": "media_player.garden_speaker"
-            },
-            {
+              "show_current": false,
+              "show_forecast": true,
               "type": "weather-forecast",
-              "entity": "weather.home_hourly",
-              "show_current": false
+              "entity": "weather.forecast_home_hourly"
             }
           ]
         }

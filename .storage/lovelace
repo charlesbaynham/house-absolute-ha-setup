@@ -179,9 +179,6 @@
                 },
                 {
                   "entity": "binary_sensor.gaby_sleeping_bayesian"
-                },
-                {
-                  "entity": "binary_sensor.updater"
                 }
               ],
               "title": "Binary Sensor",
@@ -206,9 +203,10 @@
               "title": "Sensor"
             },
             {
+              "show_current": true,
+              "show_forecast": true,
               "type": "weather-forecast",
-              "entity": "weather.home",
-              "show_forecast": false
+              "entity": "weather.forecast_home"
             },
             {
               "type": "entities",

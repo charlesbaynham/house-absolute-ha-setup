@@ -8,6 +8,9 @@
       "number_format": "language",
       "time_format": "language",
       "first_weekday": "language"
+    },
+    "core": {
+      "showAdvanced": true
     }
   }
 }
