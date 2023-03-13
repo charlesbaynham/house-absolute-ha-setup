@@ -1,162 +1,171 @@
 {
-    "version": 1,
-    "minor_version": 1,
-    "key": "zone",
-    "data": {
-        "items": [
-            {
-                "name": "NPL",
-                "icon": "mdi:death-star",
-                "latitude": 51.42308224840318,
-                "longitude": -0.33920288085937506,
-                "passive": false,
-                "radius": 1297.8384690984813,
-                "id": "npl"
-            },
-            {
-                "name": "Harris Westminster",
-                "icon": "mdi:school",
-                "latitude": 51.49964001328813,
-                "longitude": -0.13121366500854495,
-                "passive": false,
-                "radius": 424.773884882377,
-                "id": "harris_westminster"
-            },
-            {
-                "name": "Imperial",
-                "icon": "mdi:book",
-                "latitude": 51.49760383858964,
-                "longitude": -0.17703422927297652,
-                "passive": false,
-                "radius": 542.1583110079672,
-                "id": "imperial"
-            },
-            {
-                "name": "South Wales",
-                "icon": "mdi:map-marker",
-                "latitude": 51.68868440703754,
-                "longitude": -3.7554720696061854,
-                "passive": false,
-                "radius": 97059.57325556962,
-                "id": "south_wales"
-            },
-            {
-                "name": "Wimbledon",
-                "icon": "mdi:map-marker",
-                "latitude": 51.42083431163785,
-                "longitude": -0.20624845172278583,
-                "passive": false,
-                "radius": 1307.4682373767155,
-                "id": "wimbledon"
-            },
-            {
-                "name": "Stef and John's",
-                "latitude": 51.58733641545695,
-                "longitude": -0.1423502770888652,
-                "passive": false,
-                "radius": 520.2086448485236,
-                "icon": "mdi:party-popper",
-                "id": "stef_and_john_s"
-            },
-            {
-                "name": "RAL",
-                "latitude": 51.596237409906585,
-                "longitude": -1.2964853423181921,
-                "passive": false,
-                "radius": 4654.68864992652,
-                "icon": "mdi:atom",
-                "id": "ral"
-            },
-            {
-                "name": "Band practice",
-                "latitude": 51.446440244396825,
-                "longitude": -0.19100540611430852,
-                "passive": false,
-                "radius": 212.0,
-                "icon": "mdi:music",
-                "id": "band_practice"
-            },
-            {
-                "name": "Central london",
-                "latitude": 51.5025965483269,
-                "longitude": -0.14892736118973018,
-                "passive": false,
-                "radius": 7836.761390911504,
-                "icon": "mdi:city-variant",
-                "id": "central_london"
-            },
-            {
-                "name": "Norbiton station",
-                "latitude": 51.4122205994721,
-                "longitude": -0.28428005341060386,
-                "passive": false,
-                "radius": 119.36824425515127,
-                "icon": "mdi:map-marker",
-                "id": "norbiton_station"
-            },
-            {
-                "name": "Kingston",
-                "latitude": 51.41052841155328,
-                "longitude": -0.30595373464090253,
-                "passive": false,
-                "radius": 681.0766106247142,
-                "icon": "mdi:crown",
-                "id": "kingston"
-            },
-            {
-                "latitude": 51.791364782351245,
-                "longitude": -2.735340155847961,
-                "name": "Wonastow Mill",
-                "icon": "mdi:heart",
-                "passive": false,
-                "radius": 994.0,
-                "id": "mum"
-            },
-            {
-                "latitude": 51.499585747110174,
-                "longitude": -0.13204246759414676,
-                "name": "The Sanctuary",
-                "icon": "mdi:glass-mug-variant",
-                "passive": false,
-                "radius": 34.5302142381635,
-                "id": "the_sanctuary"
-            },
-            {
-                "latitude": 52.21444440293361,
-                "longitude": 0.11281462825766476,
-                "name": "Cambridge ",
-                "passive": false,
-                "radius": 14929.0,
-                "icon": "mdi:castle",
-                "id": "cambridge"
-            },
-            {
-                "latitude": 19.0759761,
-                "longitude": -98.218829,
-                "name": "Puebla",
-                "passive": false,
-                "radius": 18211.0,
-                "icon": "mdi:taco",
-                "id": "puebla"
-            },
-            {
-                "latitude": 51.5596149,
-                "longitude": -0.281528,
-                "name": "Ines house",
-                "icon": "mdi:map-marker",
-                "passive": false,
-                "radius": 254.0,
-                "id": "ines_house"
-            },
-            {
-                "latitude": 51.433089577209515,
-                "longitude": -0.15451669692993167,
-                "name": "Gaby Betts' house",
-                "icon": "mdi:map-marker",
-                "passive": false,
-                "radius": 119.0,
-                "id": "gaby_betts_house"
-            }
-        ]
-    }
+  "version": 1,
+  "minor_version": 1,
+  "key": "zone",
+  "data": {
+    "items": [
+      {
+        "name": "NPL",
+        "icon": "mdi:death-star",
+        "latitude": 51.42308224840318,
+        "longitude": -0.33920288085937506,
+        "passive": false,
+        "radius": 1297.8384690984813,
+        "id": "npl"
+      },
+      {
+        "name": "Harris Westminster",
+        "icon": "mdi:school",
+        "latitude": 51.49964001328813,
+        "longitude": -0.13121366500854495,
+        "passive": false,
+        "radius": 424.773884882377,
+        "id": "harris_westminster"
+      },
+      {
+        "name": "Imperial",
+        "icon": "mdi:book",
+        "latitude": 51.49760383858964,
+        "longitude": -0.17703422927297652,
+        "passive": false,
+        "radius": 542.1583110079672,
+        "id": "imperial"
+      },
+      {
+        "name": "South Wales",
+        "icon": "mdi:map-marker",
+        "latitude": 51.68868440703754,
+        "longitude": -3.7554720696061854,
+        "passive": false,
+        "radius": 97059.57325556962,
+        "id": "south_wales"
+      },
+      {
+        "name": "Wimbledon",
+        "icon": "mdi:map-marker",
+        "latitude": 51.42083431163785,
+        "longitude": -0.20624845172278583,
+        "passive": false,
+        "radius": 1307.4682373767155,
+        "id": "wimbledon"
+      },
+      {
+        "name": "Stef and John's",
+        "latitude": 51.58733641545695,
+        "longitude": -0.1423502770888652,
+        "passive": false,
+        "radius": 520.2086448485236,
+        "icon": "mdi:party-popper",
+        "id": "stef_and_john_s"
+      },
+      {
+        "name": "RAL",
+        "latitude": 51.596237409906585,
+        "longitude": -1.2964853423181921,
+        "passive": false,
+        "radius": 4654.68864992652,
+        "icon": "mdi:atom",
+        "id": "ral"
+      },
+      {
+        "name": "Band practice",
+        "latitude": 51.446440244396825,
+        "longitude": -0.19100540611430852,
+        "passive": false,
+        "radius": 212.0,
+        "icon": "mdi:music",
+        "id": "band_practice"
+      },
+      {
+        "name": "Central london",
+        "latitude": 51.5025965483269,
+        "longitude": -0.14892736118973018,
+        "passive": false,
+        "radius": 7836.761390911504,
+        "icon": "mdi:city-variant",
+        "id": "central_london"
+      },
+      {
+        "name": "Norbiton station",
+        "latitude": 51.4122205994721,
+        "longitude": -0.28428005341060386,
+        "passive": false,
+        "radius": 119.36824425515127,
+        "icon": "mdi:map-marker",
+        "id": "norbiton_station"
+      },
+      {
+        "name": "Kingston",
+        "latitude": 51.41052841155328,
+        "longitude": -0.30595373464090253,
+        "passive": false,
+        "radius": 681.0766106247142,
+        "icon": "mdi:crown",
+        "id": "kingston"
+      },
+      {
+        "latitude": 51.791364782351245,
+        "longitude": -2.735340155847961,
+        "name": "Wonastow Mill",
+        "icon": "mdi:heart",
+        "passive": false,
+        "radius": 994.0,
+        "id": "mum"
+      },
+      {
+        "latitude": 51.499585747110174,
+        "longitude": -0.13204246759414676,
+        "name": "The Sanctuary",
+        "icon": "mdi:glass-mug-variant",
+        "passive": false,
+        "radius": 34.5302142381635,
+        "id": "the_sanctuary"
+      },
+      {
+        "latitude": 52.21444440293361,
+        "longitude": 0.11281462825766476,
+        "name": "Cambridge ",
+        "passive": false,
+        "radius": 14929.0,
+        "icon": "mdi:castle",
+        "id": "cambridge"
+      },
+      {
+        "latitude": 19.0759761,
+        "longitude": -98.218829,
+        "name": "Puebla",
+        "passive": false,
+        "radius": 18211.0,
+        "icon": "mdi:taco",
+        "id": "puebla"
+      },
+      {
+        "latitude": 51.5596149,
+        "longitude": -0.281528,
+        "name": "Ines house",
+        "icon": "mdi:map-marker",
+        "passive": false,
+        "radius": 254.0,
+        "id": "ines_house"
+      },
+      {
+        "latitude": 51.433089577209515,
+        "longitude": -0.15451669692993167,
+        "name": "Gaby Betts' house",
+        "icon": "mdi:map-marker",
+        "passive": false,
+        "radius": 119.0,
+        "id": "gaby_betts_house"
+      },
+      {
+        "latitude": 46.23110496445602,
+        "longitude": 6.108459128885159,
+        "name": "CERN",
+        "icon": "mdi:map-marker",
+        "passive": false,
+        "radius": 1252.0,
+        "id": "cern"
+      }
+    ]
+  }
 }
