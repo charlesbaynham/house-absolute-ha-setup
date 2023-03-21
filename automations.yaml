@@ -822,7 +822,7 @@
   use_blueprint:
     path: charles/ikea_switch.yaml
     input:
-      IKEA_button: 0e533d1eb80b6fa72e9a9a9f508b3f83
+      IKEA_button: ccf90f865b5b2f7e0eb757d71be19506
       up_action:
       - device_id: c8ea3a77b666c3de7756f054742e6b13
         domain: cover
@@ -1333,9 +1333,10 @@
   use_blueprint:
     path: vanstinator/zha-philips-hue-dimmer-switch-rwl020-rwl021.yaml
     input:
-      remote: b54454c568f0586422ac20ed7a7aafe8
+      remote: a67d053900624a172b342f462714474b
       light:
         area_id: bedroom
+      force_brightness: true
 - id: '1679356399201'
   alias: 'LIGHTS: Living room motion'
   description: ''
