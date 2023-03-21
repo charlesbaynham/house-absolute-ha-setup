@@ -37,6 +37,9 @@
                 },
                 {
                   "entity": "script.play_jazz_in_living_room"
+                },
+                {
+                  "entity": "binary_sensor.precense_sensor_occupancy"
                 }
               ],
               "title": "Living Room"

@@ -1336,3 +1336,19 @@
       remote: b54454c568f0586422ac20ed7a7aafe8
       light:
         area_id: bedroom
+- id: '1679356399201'
+  alias: 'LIGHTS: Living room motion'
+  description: ''
+  use_blueprint:
+    path: WizBangCrash/occupancy-response-sml001.yaml
+    input:
+      occupancy_entity: binary_sensor.precense_sensor_occupancy
+      ieee_id: f4:b3:b1:ff:fe:20:15:f7
+      illuminance_entity: sensor.kitchen_motion_sensor_illuminance
+      light_entity:
+      - light.sitting_room_lamp
+      - light.sitting_room
+      daytime_brightness: 100
+      nighttime_brightness: 40
+      media_entity:
+        entity_id: media_player.living_room_tv
