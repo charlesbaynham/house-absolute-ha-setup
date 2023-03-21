@@ -669,11 +669,12 @@
   use_blueprint:
     path: vanstinator/zha-philips-hue-dimmer-switch-rwl020-rwl021.yaml
     input:
-      remote: 555f8030f8d33be003240c549a60197b
+      remote: cbcf800abd3ba2525fdfbff5bca4c794
       light:
         area_id:
         - living_room
       brightness: 100
+      force_brightness: true
 - id: '1650359767117'
   alias: 'LIGHTS bedroom switch curtains up '
   description: ''
@@ -1337,19 +1338,39 @@
       light:
         area_id: bedroom
       force_brightness: true
-- id: '1679356399201'
+- id: '1679428302854'
   alias: 'LIGHTS: Living room motion'
   description: ''
-  use_blueprint:
-    path: WizBangCrash/occupancy-response-sml001.yaml
-    input:
-      occupancy_entity: binary_sensor.precense_sensor_occupancy
-      ieee_id: f4:b3:b1:ff:fe:20:15:f7
-      illuminance_entity: sensor.kitchen_motion_sensor_illuminance
-      light_entity:
-      - light.sitting_room_lamp
-      - light.sitting_room
-      daytime_brightness: 100
-      nighttime_brightness: 40
-      media_entity:
-        entity_id: media_player.living_room_tv
+  trigger:
+  - type: occupied
+    platform: device
+    device_id: cfe709dcee711d93dc60523c850d460d
+    entity_id: binary_sensor.precense_sensor_occupancy
+    domain: binary_sensor
+  condition: []
+  action:
+  - service: light.turn_on
+    data: {}
+    target:
+      area_id: living_room
+  - wait_for_trigger:
+    - type: not_occupied
+      platform: device
+      device_id: cfe709dcee711d93dc60523c850d460d
+      entity_id: binary_sensor.precense_sensor_occupancy
+      domain: binary_sensor
+      for:
+        hours: 0
+        minutes: 5
+        seconds: 0
+    continue_on_timeout: true
+    timeout:
+      hours: 12
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  - service: light.turn_off
+    data: {}
+    target:
+      area_id: living_room
+  mode: restart
