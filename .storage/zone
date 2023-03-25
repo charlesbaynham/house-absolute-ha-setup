@@ -122,11 +122,11 @@
         "id": "the_sanctuary"
       },
       {
-        "latitude": 52.21444440293361,
-        "longitude": 0.11281462825766476,
+        "latitude": 52.207045627921595,
+        "longitude": 0.12875321051096122,
         "name": "Cambridge ",
         "passive": false,
-        "radius": 14929.0,
+        "radius": 6761.0,
         "icon": "mdi:castle",
         "id": "cambridge"
       },
@@ -165,6 +165,15 @@
         "passive": false,
         "radius": 1252.0,
         "id": "cern"
+      },
+      {
+        "latitude": 51.75448296283835,
+        "longitude": -1.260373739514318,
+        "name": "Oxford ",
+        "passive": false,
+        "radius": 5257.0,
+        "icon": "mdi:chess-rook",
+        "id": "oxford"
       }
     ]
   }
