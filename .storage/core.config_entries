@@ -404,7 +404,7 @@
         "domain": "wiz",
         "title": "Garden outside light",
         "data": {
-          "host": "10.0.2.101"
+          "host": "10.0.2.1"
         },
         "options": {},
         "pref_disable_new_entities": false,
@@ -432,7 +432,7 @@
         "domain": "wiz",
         "title": "WiZ Tunable White B75E40 (10.1.99.1)",
         "data": {
-          "host": "10.0.2.101"
+          "host": "192.168.0.100"
         },
         "options": {},
         "pref_disable_new_entities": false,
