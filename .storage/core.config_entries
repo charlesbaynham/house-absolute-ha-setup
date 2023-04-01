@@ -404,7 +404,7 @@
         "domain": "wiz",
         "title": "Garden outside light",
         "data": {
-          "host": "10.0.2.1"
+          "host": "10.0.2.101"
         },
         "options": {},
         "pref_disable_new_entities": false,
