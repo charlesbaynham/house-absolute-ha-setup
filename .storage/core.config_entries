@@ -399,21 +399,6 @@
         "disabled_by": null
       },
       {
-        "entry_id": "a59bd00cf55f8dbce53c0fdf87d49f0e",
-        "version": 1,
-        "domain": "wiz",
-        "title": "Garden outside light",
-        "data": {
-          "host": "10.0.2.1"
-        },
-        "options": {},
-        "pref_disable_new_entities": false,
-        "pref_disable_polling": false,
-        "source": "user",
-        "unique_id": "d8a0113fdee2",
-        "disabled_by": null
-      },
-      {
         "entry_id": "0c7972a37eb9248999f667ddb8e8a9ec",
         "version": 1,
         "domain": "radio_browser",
@@ -432,7 +417,7 @@
         "domain": "wiz",
         "title": "WiZ Tunable White B75E40 (10.1.99.1)",
         "data": {
-          "host": "192.168.0.101"
+          "host": "192.168.0.100"
         },
         "options": {},
         "pref_disable_new_entities": false,
@@ -659,6 +644,21 @@
         "pref_disable_polling": false,
         "source": "registration",
         "unique_id": "io.homeassistant.companion.android-9658fda12408b7b6",
+        "disabled_by": null
+      },
+      {
+        "entry_id": "705a785cd995fede893f69d1d3259f54",
+        "version": 1,
+        "domain": "wiz",
+        "title": "WiZ Tunable White 3FDEE2",
+        "data": {
+          "host": "10.0.2.1"
+        },
+        "options": {},
+        "pref_disable_new_entities": false,
+        "pref_disable_polling": false,
+        "source": "user",
+        "unique_id": "d8a0113fdee2",
         "disabled_by": null
       }
     ]
