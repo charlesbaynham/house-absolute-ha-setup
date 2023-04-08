@@ -1376,3 +1376,22 @@
     target:
       area_id: living_room
   mode: restart
+- id: '1680945656033'
+  alias: 'ONEOFF: ping on interactive '
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.big_gaby_interactive
+  condition: []
+  action:
+  - device_id: 06885cd2a393d2fe726c48db55d8c3c4
+    domain: mobile_app
+    type: notify
+    message: 'Gaby interactive '
+  - service: automation.turn_off
+    data:
+      stop_actions: false
+    target:
+      entity_id: automation.oneoff_ping_on_interactive
+  mode: single
