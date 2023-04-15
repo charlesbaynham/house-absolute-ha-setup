@@ -572,3 +572,24 @@ c6_7c_e2_29_30_1f:
   icon:
   picture:
   track: false
+
+22_bb_9f_76_61_db:
+  name: 22_bb_9f_76_61_db
+  mac: 22:BB:9F:76:61:DB
+  icon:
+  picture:
+  track: false
+
+62_16_a2_2c_32_c0:
+  name: 62_16_a2_2c_32_c0
+  mac: 62:16:A2:2C:32:C0
+  icon:
+  picture:
+  track: false
+
+gardenbulb:
+  name: GardenBulb
+  mac: D8:A0:11:3F:DE:E2
+  icon:
+  picture:
+  track: false
