@@ -1363,7 +1363,7 @@
       domain: binary_sensor
       for:
         hours: 0
-        minutes: 5
+        minutes: 10
         seconds: 0
     continue_on_timeout: true
     timeout:
