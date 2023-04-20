@@ -42,7 +42,16 @@
                   "entity": "binary_sensor.precense_sensor_occupancy"
                 }
               ],
-              "title": "Living Room"
+              "title": "Living Room",
+              "footer": {
+                "type": "buttons",
+                "entities": [
+                  {
+                    "entity": "input_boolean.living_room_motion_enabled",
+                    "name": "Motion control"
+                  }
+                ]
+              }
             },
             {
               "type": "entities",
@@ -361,7 +370,7 @@
           "cards": [
             {
               "type": "markdown",
-              "content": "* analyse travel times using new algorithm \n* detect humidiy spike from shower and turn off hot water\n* don't dim living room lights so much\n",
+              "content": "* analyse travel times using new algorithm \n* detect humidiy spike from shower and turn off hot water\n* don't dim living room lights so much\n* add living room motion override\n\n",
               "title": "To do list"
             }
           ]

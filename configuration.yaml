@@ -123,6 +123,8 @@ input_boolean:
     name: Request hot water tomorrow
   office_motion_enabled:
     name: Office lights controlled by motion
+  living_room_motion_enabled:
+    name: Living room lights controlled by motion
   quiet_time:
     name: Quiet times of the day
 
