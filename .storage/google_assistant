@@ -3,6 +3,10 @@
   "minor_version": 1,
   "key": "google_assistant",
   "data": {
-    "agent_user_ids": {}
+    "agent_user_ids": {
+      "29f0c878229944e5afb109373660cb8d": {
+        "local_webhook_id": "3e3f38a9a82204788141a849a3de929b97eaeaf12ea91576d95ecdddd15641ac"
+      }
+    }
   }
 }
