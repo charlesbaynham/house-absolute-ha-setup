@@ -25,14 +25,14 @@
         "id": "charles"
       },
       {
-        "name": "Harry",
+        "name": "Haraldo",
         "device_trackers": [
-          "device_tracker.harryphone",
-          "device_tracker.it_harry"
+          "device_tracker.it_harry",
+          "device_tracker.harryphone"
         ],
-        "user_id": "bc52505700644536b1c56004c20b9d8f",
-        "picture": "/api/image/serve/87aab34880911ea399fd78c9377d58a5/512x512",
-        "id": "harry"
+        "user_id": "b1cefd842d824024961af118876bead8",
+        "picture": null,
+        "id": "haraldo"
       }
     ]
   }

@@ -350,37 +350,6 @@
         "disabled_by": "user"
       },
       {
-        "entry_id": "50931622d105784d7ed199df3de88a42",
-        "version": 1,
-        "domain": "mobile_app",
-        "title": "It Harry",
-        "data": {
-          "app_id": "io.homeassistant.companion.android",
-          "app_name": "Home Assistant",
-          "app_version": "2023.1.1-full (3124)",
-          "device_name": "It Harry",
-          "manufacturer": "HMD Global",
-          "model": "Nokia XR20",
-          "os_name": "Android",
-          "os_version": "33",
-          "supports_encryption": false,
-          "app_data": {
-            "push_websocket_channel": true,
-            "push_url": "https://mobile-apps.home-assistant.io/api/sendPush/android/v1",
-            "push_token": "dIF1RSa8ShOSEoHrgi32Hw:APA91bFOAaRCj6pVWwGA9-saoBRdGA62YylSj0kJBJWVn96qQCXqsA_CeGwWeRcgbtRDHELy9Biq9e8idzTd0Awh-oWHZlZ-nR23nzd0pT6TxZJrX9aUcNHAZCKWAtOde3wg1Srq8WFk"
-          },
-          "device_id": "24c0d35b8ac97e6b",
-          "webhook_id": "85dd75680d3f1b400ab98b9f4003ad6a5e3d94921875ad471bf9d9d9ea75453d",
-          "user_id": "bc52505700644536b1c56004c20b9d8f"
-        },
-        "options": {},
-        "pref_disable_new_entities": false,
-        "pref_disable_polling": false,
-        "source": "registration",
-        "unique_id": "io.homeassistant.companion.android-24c0d35b8ac97e6b",
-        "disabled_by": null
-      },
-      {
         "entry_id": "85a71064e02b8f3bc35a7fa2f9061952",
         "version": 1,
         "domain": "grocy",
@@ -659,6 +628,37 @@
         "pref_disable_polling": false,
         "source": "user",
         "unique_id": "d8a0113fdee2",
+        "disabled_by": null
+      },
+      {
+        "entry_id": "274916f97f9bae40e803fde046d7bbe4",
+        "version": 1,
+        "domain": "mobile_app",
+        "title": "It Harry",
+        "data": {
+          "app_id": "io.homeassistant.companion.android",
+          "app_name": "Home Assistant",
+          "app_version": "2023.3.0-full (3260)",
+          "device_name": "It Harry",
+          "manufacturer": "HMD Global",
+          "model": "Nokia XR20",
+          "os_name": "Android",
+          "os_version": "33",
+          "supports_encryption": false,
+          "app_data": {
+            "push_websocket_channel": true,
+            "push_url": "https://mobile-apps.home-assistant.io/api/sendPush/android/v1",
+            "push_token": "dIF1RSa8ShOSEoHrgi32Hw:APA91bFOAaRCj6pVWwGA9-saoBRdGA62YylSj0kJBJWVn96qQCXqsA_CeGwWeRcgbtRDHELy9Biq9e8idzTd0Awh-oWHZlZ-nR23nzd0pT6TxZJrX9aUcNHAZCKWAtOde3wg1Srq8WFk"
+          },
+          "device_id": "24c0d35b8ac97e6b",
+          "webhook_id": "e86a5b26510b8a5cdb467ab3df97869678c6ec00a881b7b2d4a275c50a8c389f",
+          "user_id": "b1cefd842d824024961af118876bead8"
+        },
+        "options": {},
+        "pref_disable_new_entities": false,
+        "pref_disable_polling": false,
+        "source": "registration",
+        "unique_id": "io.homeassistant.companion.android-24c0d35b8ac97e6b",
         "disabled_by": null
       }
     ]
