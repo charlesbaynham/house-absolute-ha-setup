@@ -185,8 +185,6 @@ google_assistant:
     light.lamp:
       name: Bedroom lamp
       room: Bedroom
-    switch.adaptive_lighting_use_flux:
-      name: Flux
     input_boolean.hot_water_tomorrow:
       name: Hot water tomorrow
     water_heater.hot_water:
