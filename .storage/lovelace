@@ -310,6 +310,17 @@
           "type": "panel",
           "title": "Map",
           "path": "map",
+          "visible": [
+            {
+              "user": "29f0c878229944e5afb109373660cb8d"
+            },
+            {
+              "user": "f897c31ab0764cfea5f55934b0a98d09"
+            },
+            {
+              "user": "b1cefd842d824024961af118876bead8"
+            }
+          ],
           "badges": [],
           "cards": [
             {
