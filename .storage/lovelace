@@ -367,6 +367,9 @@
                 },
                 {
                   "entity": "zone.south_wales"
+                },
+                {
+                  "entity": "person.haraldo"
                 }
               ],
               "hours_to_show": 12
