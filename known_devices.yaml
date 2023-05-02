@@ -600,3 +600,10 @@ d6_cf_00_0a_68_49:
   icon:
   picture:
   track: false
+
+moto_e_6_plus:
+  name: moto e(6) plus
+  mac: BT_F8:1F:32:36:19:A0
+  icon:
+  picture:
+  track: false
