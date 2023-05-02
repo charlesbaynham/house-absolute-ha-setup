@@ -370,6 +370,9 @@
                 },
                 {
                   "entity": "person.haraldo"
+                },
+                {
+                  "entity": "zone.harry_s_house"
                 }
               ],
               "hours_to_show": 12

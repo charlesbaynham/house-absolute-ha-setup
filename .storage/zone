@@ -183,6 +183,15 @@
         "radius": 900.0,
         "icon": "mdi:train",
         "id": "vauxhall"
+      },
+      {
+        "latitude": 50.753231899269856,
+        "longitude": -1.66229605177741,
+        "name": "Harry's house",
+        "icon": "mdi:map-marker",
+        "passive": false,
+        "radius": 100.0,
+        "id": "harry_s_house"
       }
     ]
   }
