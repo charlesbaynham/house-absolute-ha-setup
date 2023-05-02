@@ -192,6 +192,15 @@
         "passive": false,
         "radius": 100.0,
         "id": "harry_s_house"
+      },
+      {
+        "latitude": 50.8040206,
+        "longitude": -1.5718358,
+        "name": "Baynhams Brewery ",
+        "passive": false,
+        "radius": 205.0,
+        "icon": "mdi:glass-mug",
+        "id": "baynhams_brewery"
       }
     ]
   }

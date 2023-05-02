@@ -373,6 +373,9 @@
                 },
                 {
                   "entity": "zone.harry_s_house"
+                },
+                {
+                  "entity": "zone.baynhams_brewery"
                 }
               ],
               "hours_to_show": 12
