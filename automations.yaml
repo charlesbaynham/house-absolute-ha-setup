@@ -494,8 +494,6 @@
   alias: 'HOT WATER: turn off'
   description: Turn off the hot water if exception requested
   trigger:
-  - platform: time
-    at: 09:00
   - platform: state
     entity_id: group.any_home
     to: not_home
