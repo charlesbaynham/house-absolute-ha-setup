@@ -1273,6 +1273,10 @@
         data:
           entity_id: media_player.living_room_speaker
           message: Your loving girlfriend kindly requests a coffee.
+      - service: tts.google_translate_say
+        data:
+          entity_id: media_player.garden_speaker
+          message: Your loving girlfriend kindly requests a coffee.
 - id: '1669557382694'
   alias: 'NOTIFY: Lovers are close'
   description: ''
@@ -1401,4 +1405,8 @@
       stop_actions: false
     target:
       entity_id: automation.oneoff_ping_on_interactive
+  - service: tts.google_translate_say
+    data:
+      entity_id: media_player.garden_speaker
+      message: Gaby is interactive
   mode: single
