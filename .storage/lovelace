@@ -390,7 +390,7 @@
           "cards": [
             {
               "type": "markdown",
-              "content": "* analyse travel times using new algorithm \n* detect humidiy spike from shower and turn off hot water\n* don't dim living room lights so much\n* add living room motion override\n\n",
+              "content": "* analyse travel times using new algorithm \n* detect humidiy spike from shower and turn off hot water\n* don't dim living room lights so much\n* add living room motion override\n* gaby wants a leaving work announcement \n",
               "title": "To do list"
             }
           ]
