@@ -376,6 +376,9 @@
                 },
                 {
                   "entity": "zone.baynhams_brewery"
+                },
+                {
+                  "entity": "zone.vauxhall"
                 }
               ],
               "hours_to_show": 12

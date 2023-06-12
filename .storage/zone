@@ -176,11 +176,11 @@
         "id": "oxford"
       },
       {
-        "latitude": 51.48721141081606,
-        "longitude": -0.12243619590809332,
+        "latitude": 51.48584788551944,
+        "longitude": -0.12180645128174741,
         "name": "Vauxhall ",
         "passive": false,
-        "radius": 900.0,
+        "radius": 368.0,
         "icon": "mdi:train",
         "id": "vauxhall"
       },
