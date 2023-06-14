@@ -621,7 +621,7 @@
         "domain": "wiz",
         "title": "WiZ Tunable White 3FDEE2",
         "data": {
-          "host": "10.2.1.3"
+          "host": "10.0.0.109"
         },
         "options": {},
         "pref_disable_new_entities": false,
