@@ -162,6 +162,11 @@
     data: {}
     target:
       entity_id: input_boolean.office_motion_enabled
+  - service: switch.turn_off
+    data: {}
+    target:
+      area_id:
+      - bedroom
   mode: single
 - id: '1625175063754'
   alias: 'Copy office lights to lamp '
