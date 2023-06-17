@@ -296,6 +296,12 @@
                 },
                 {
                   "entity": "light.garden_outside"
+                },
+                {
+                  "entity": "switch.garden_fairy_lights"
+                },
+                {
+                  "entity": "input_boolean.fairy_lights_overridden"
                 }
               ],
               "title": "Garden"

@@ -265,6 +265,10 @@
       - kitchen
       - living_room
       - office
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.fairy_lights_overridden
   mode: single
 - id: '1640185443869'
   alias: Turn on away mode after a day
@@ -1418,3 +1422,26 @@
       entity_id: media_player.garden_speaker
       message: Gaby is interactive
   mode: single
+- id: '1687034933138'
+  alias: 'LIGHTS: Turn off fairy lights after 2h'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - switch.garden_fairy_lights
+    to: 'on'
+  condition: []
+  action:
+  - delay:
+      hours: 2
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  - condition: state
+    entity_id: input_boolean.fairy_lights_overridden
+    state: 'off'
+  - type: turn_off
+    device_id: c0b33fdcfde5a1181042be269dc69666
+    entity_id: switch.garden_fairy_lights
+    domain: switch
+  mode: restart

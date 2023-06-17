@@ -16,7 +16,7 @@ recorder:
   commit_interval: 60
   exclude:
     entities: !include excluded_sensors.yaml
-    
+
 history:
   include:
     domains:
@@ -25,7 +25,7 @@ history:
       - person
       - climate
       - vacuum
-    entities: 
+    entities:
       - sensor.in_garden_gaby
       - sensor.in_garden_charles
 
@@ -127,6 +127,8 @@ input_boolean:
     name: Living room lights controlled by motion
   quiet_time:
     name: Quiet times of the day
+  fairy_lights_overridden:
+    name: Allow unlimited fairy lights
 
 input_text:
   garden_bssid:
