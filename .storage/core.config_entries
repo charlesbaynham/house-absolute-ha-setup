@@ -676,6 +676,22 @@
         "source": "user",
         "unique_id": "bayners123@gmail.com",
         "disabled_by": null
+      },
+      {
+        "entry_id": "36847f2610691f859a217cd7b6fb7d88",
+        "version": 1,
+        "domain": "switch_as_x",
+        "title": "Garden fairy lights",
+        "data": {},
+        "options": {
+          "entity_id": "switch.garden_fairy_lights",
+          "target_domain": "light"
+        },
+        "pref_disable_new_entities": false,
+        "pref_disable_polling": false,
+        "source": "user",
+        "unique_id": null,
+        "disabled_by": null
       }
     ]
   }
