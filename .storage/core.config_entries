@@ -662,21 +662,19 @@
         "disabled_by": null
       },
       {
-        "entry_id": "8b54c24018982f7e683c78ef3690795f",
+        "entry_id": "625476874474a71956797fa8d2e83d1d",
         "version": 1,
         "domain": "sonoff",
-        "title": "fgvhbjnk",
+        "title": "bayners123@gmail.com",
         "data": {
-          "username": "fgvhbjnk"
+          "username": "bayners123@gmail.com",
+          "password": "IliWM,M08"
         },
-        "options": {
-          "mode": "local",
-          "debug": false
-        },
+        "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "user",
-        "unique_id": "fgvhbjnk",
+        "unique_id": "bayners123@gmail.com",
         "disabled_by": null
       }
     ]

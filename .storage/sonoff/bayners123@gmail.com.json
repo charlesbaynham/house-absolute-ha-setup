@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "sonoff/bayners123@gmail.com.json",
+  "data": [
+    {
+      "name": "Garden fairy lights",
+      "deviceid": "10010cd8c1",
+      "apikey": "75e6b32d-57c0-43a8-a1cb-2997bc0beea3",
+      "extra": {
+        "uiid": 1,
+        "description": "20201116003",
+        "brandId": "5c4c1aee3a7d24c7100be054",
+        "apmac": "d0:27:02:19:ae:d3",
+        "mac": "d0:27:02:19:ae:d2",
+        "ui": "单通道插座",
+        "modelInfo": "5c700f76cc248c47441fd234",
+        "model": "PSF-B01-GL",
+        "manufacturer": "深圳松诺技术有限公司",
+        "chipid": "002BB06D",
+        "staMac": "C4:DD:57:2B:B0:6D"
+      },
+      "brandName": "SONOFF",
+      "brandLogo": "https://eu-ota.coolkit.cc/logo/q62PevoglDNmwUJ9oPE7kRrpt1nL1CoA.png",
+      "showBrand": true,
+      "productModel": "BASICR2",
+      "tags": {
+        "m_eea3_": "on",
+        "m_eea3_bayn": "on"
+      },
+      "devConfig": {},
+      "settings": {
+        "opsNotify": 0,
+        "opsHistory": 1,
+        "alarmNotify": 1,
+        "wxAlarmNotify": 0,
+        "wxOpsNotify": 0,
+        "wxDoorbellNotify": 0,
+        "appDoorbellNotify": 1
+      },
+      "devGroups": [],
+      "family": {
+        "familyid": "648e074282cc6900083f6c73",
+        "index": 0,
+        "members": []
+      },
+      "shareTo": [],
+      "devicekey": "355ad96e-e81a-4527-befc-5313ce71c59d",
+      "online": true,
+      "params": {
+        "bindInfos": {},
+        "version": 8,
+        "only_device": {
+          "ota": "success"
+        },
+        "sledOnline": "on",
+        "ssid": "Lan of the free",
+        "bssid": "7c:8b:ca:3e:54:a8",
+        "switch": "off",
+        "fwVersion": "3.5.0",
+        "rssi": -56,
+        "staMac": "C4:DD:57:2B:B0:6D",
+        "startup": "off",
+        "init": 1,
+        "pulse": "off",
+        "pulseWidth": 4000
+      },
+      "denyFeatures": [
+        "extSwitchMode"
+      ],
+      "isSupportGroup": true,
+      "isSupportedOnMP": true,
+      "isSupportChannelSplit": false,
+      "wxModelId": "05Gkq9_vqnmgylS_2UvXCQ",
+      "deviceFeature": {}
+    }
+  ]
+}
