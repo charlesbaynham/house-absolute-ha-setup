@@ -647,18 +647,36 @@
         "disabled_by": null
       },
       {
-        "entry_id": "8d8de35d3166c058fa92d2cdce84912b",
+        "entry_id": "1a397e37506ed87ad591371f6b2b21c6",
         "version": 1,
         "domain": "wiz",
         "title": "WiZ Tunable White 3FDEE2",
         "data": {
-          "host": "10.2.1.3"
+          "host": "10.2.99.3"
         },
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "user",
         "unique_id": "d8a0113fdee2",
+        "disabled_by": null
+      },
+      {
+        "entry_id": "8b54c24018982f7e683c78ef3690795f",
+        "version": 1,
+        "domain": "sonoff",
+        "title": "fgvhbjnk",
+        "data": {
+          "username": "fgvhbjnk"
+        },
+        "options": {
+          "mode": "local",
+          "debug": false
+        },
+        "pref_disable_new_entities": false,
+        "pref_disable_polling": false,
+        "source": "user",
+        "unique_id": "fgvhbjnk",
         "disabled_by": null
       }
     ]
