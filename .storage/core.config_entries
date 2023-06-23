@@ -662,7 +662,7 @@
         "disabled_by": null
       },
       {
-        "entry_id": "625476874474a71956797fa8d2e83d1d",
+        "entry_id": "9c2c745da1a3096e73756837ee1a9ff8",
         "version": 1,
         "domain": "sonoff",
         "title": "bayners123@gmail.com",
@@ -675,22 +675,6 @@
         "pref_disable_polling": false,
         "source": "user",
         "unique_id": "bayners123@gmail.com",
-        "disabled_by": null
-      },
-      {
-        "entry_id": "36847f2610691f859a217cd7b6fb7d88",
-        "version": 1,
-        "domain": "switch_as_x",
-        "title": "Garden fairy lights",
-        "data": {},
-        "options": {
-          "entity_id": "switch.garden_fairy_lights",
-          "target_domain": "light"
-        },
-        "pref_disable_new_entities": false,
-        "pref_disable_polling": false,
-        "source": "user",
-        "unique_id": null,
         "disabled_by": null
       }
     ]
