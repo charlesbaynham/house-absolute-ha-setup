@@ -176,14 +176,14 @@ google_assistant:
   project_id: house-absolute
   service_account: !include secret_files/google_service_account.json
   report_state: true
-  expose_by_default: true
+  expose_by_default: false
   exposed_domains:
     - climate
     - vacuum
     - light
     - cover
     - script
-    - fan
+    - switch
   entity_config:
     light.lamp:
       name: Bedroom lamp
@@ -203,6 +203,8 @@ google_assistant:
       name: Gaby blanket
     script.clean_the_kitchen:
       name: Clean the kitchen
+    switch.fan:
+      name: Bedroom fan
 
     # light.kitchen:
     #   name: CUSTOM_NAME_FOR_GOOGLE_ASSISTANT
