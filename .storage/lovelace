@@ -109,7 +109,7 @@
               "type": "entities",
               "entities": [
                 {
-                  "entity": "switch.charles_blanket"
+                  "entity": "fan.bedroom_fan"
                 },
                 {
                   "entity": "switch.gaby_blanket"

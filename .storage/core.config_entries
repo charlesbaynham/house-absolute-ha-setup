@@ -676,6 +676,22 @@
         "source": "user",
         "unique_id": "bayners123@gmail.com",
         "disabled_by": null
+      },
+      {
+        "entry_id": "4ece33eff155277d1a14a83efd6f73b4",
+        "version": 1,
+        "domain": "switch_as_x",
+        "title": "Bedroom fan",
+        "data": {},
+        "options": {
+          "entity_id": "switch.fan",
+          "target_domain": "fan"
+        },
+        "pref_disable_new_entities": false,
+        "pref_disable_polling": false,
+        "source": "user",
+        "unique_id": null,
+        "disabled_by": null
       }
     ]
   }

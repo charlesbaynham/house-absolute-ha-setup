@@ -183,6 +183,7 @@ google_assistant:
     - light
     - cover
     - script
+    - fan
   entity_config:
     light.lamp:
       name: Bedroom lamp
