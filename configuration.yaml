@@ -196,11 +196,9 @@ google_assistant:
     water_heater.hot_water:
       name: Hot water
     script.cast_to_living_room_tv:
-      name: Cast home assistant
+      name: Cast home assistant to tv
     cover.bedroom_blinds_window_covering:
       name: Bedroom blinds
-    switch.charles_blanket:
-      name: Charles blanket
     switch.gaby_blanket:
       name: Gaby blanket
     script.clean_the_kitchen:
