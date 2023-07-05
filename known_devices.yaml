@@ -614,3 +614,10 @@ moto_e_6_plus:
   icon:
   picture:
   track: false
+
+p3:
+  name: P3
+  mac: BT_2C:E2:D0:B6:FC:8F
+  icon:
+  picture:
+  track: false
