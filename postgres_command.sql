@@ -24,7 +24,9 @@ attributes_id integer,
 context_id character varying(36) COLLATE pg_catalog."default",  
 context_user_id character varying(36) COLLATE pg_catalog."default",  
 context_parent_id character varying(36) COLLATE pg_catalog."default",  
-origin_idx smallint 
+origin_idx smallint,
+last_updated_ts float,
+last_changed_ts float
 );
 
 -- Analytics state attributes table 
