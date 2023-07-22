@@ -46,7 +46,7 @@
       },
       "shareTo": [],
       "devicekey": "355ad96e-e81a-4527-befc-5313ce71c59d",
-      "online": false,
+      "online": true,
       "params": {
         "bindInfos": {},
         "version": 8,
@@ -58,7 +58,7 @@
         "bssid": "7c:8b:ca:3e:54:a8",
         "switch": "off",
         "fwVersion": "3.5.0",
-        "rssi": -58,
+        "rssi": -61,
         "staMac": "C4:DD:57:2B:B0:6D",
         "startup": "off",
         "init": 1,

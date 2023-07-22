@@ -143,3 +143,31 @@ homeassistant_wifi:
   icon:
   picture:
   track: false
+
+gardenbulb:
+  name: GardenBulb
+  mac: D8:A0:11:3F:DE:E2
+  icon:
+  picture:
+  track: false
+
+gardenchromecast:
+  name: GardenChromecast
+  mac: B0:E4:D5:AD:B1:09
+  icon:
+  picture:
+  track: false
+
+gardenfairy:
+  name: gardenfairy
+  mac: C4:DD:57:2B:B0:6D
+  icon:
+  picture:
+  track: false
+
+googleminigarden:
+  name: GoogleMiniGarden
+  mac: 38:8B:59:A4:99:1F
+  icon:
+  picture:
+  track: false

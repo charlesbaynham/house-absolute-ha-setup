@@ -95,12 +95,6 @@
               "show_forecast": true,
               "type": "weather-forecast",
               "entity": "weather.forecast_home"
-            },
-            {
-              "show_current": false,
-              "show_forecast": true,
-              "type": "weather-forecast",
-              "entity": "weather.forecast_home_hourly"
             }
           ]
         }
