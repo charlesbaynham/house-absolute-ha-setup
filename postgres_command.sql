@@ -18,15 +18,15 @@ state character varying(255) COLLATE pg_catalog."default",
 attributes text COLLATE pg_catalog."default",  
 event_id integer,  
 last_changed timestamp with time zone,  
+last_changed_ts float,
 last_updated timestamp with time zone,  
-old_state_id integer,  
-attributes_id integer,  
+last_updated_ts float,
+old_state_id integer,
+attributes_id integer,
 context_id character varying(36) COLLATE pg_catalog."default",  
 context_user_id character varying(36) COLLATE pg_catalog."default",  
 context_parent_id character varying(36) COLLATE pg_catalog."default",  
-origin_idx smallint,
-last_updated_ts float,
-last_changed_ts float
+origin_idx smallint
 );
 
 -- Analytics state attributes table 
