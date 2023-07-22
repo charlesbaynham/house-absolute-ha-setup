@@ -5,7 +5,7 @@
 -- 2. Archive attributes too
 
 -- This SQL file will set up the required tables. It's only needed if you make a new database from
--- scratch, in which case these command should be run manually in the database query interface.
+-- scratch, in which case these commands should be run manually in the database query interface.
 -- Otherwise, the functions etc persist so this is just stored for reference. 
 
 -- *** TABLES ***
