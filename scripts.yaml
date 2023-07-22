@@ -91,3 +91,16 @@ play_jazz_in_living_room:
           media_content_id: media-source://mass/playlists
   mode: single
   icon: mdi:music-accidental-flat
+set_train_journeys:
+  alias: Set train journeys
+  sequence:
+  - service: counter.reset
+    data: {}
+    target:
+      entity_id: counter.gaby_number_saved_train_journeys
+  - service: counter.configure
+    data:
+      value: 443
+    target:
+      entity_id: counter.gaby_number_saved_train_journeys
+  mode: single
