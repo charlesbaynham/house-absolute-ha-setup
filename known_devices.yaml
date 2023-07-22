@@ -52,3 +52,10 @@ z8:
   icon:
   picture:
   track: true
+
+p3:
+  name: P3
+  mac: BT_2C:E2:D0:B6:FC:8F
+  icon:
+  picture:
+  track: false
