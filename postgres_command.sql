@@ -5,7 +5,7 @@
 -- 2. Archive attributes too
 
 -- This SQL file will set up the required tables. It's only needed if you make a new database from
--- scratch, in which case these command should be run manually in the database query interface.
+-- scratch, in which case these commands should be run manually in the database query interface.
 -- Otherwise, the functions etc persist so this is just stored for reference. 
 
 -- *** TABLES ***
@@ -24,7 +24,9 @@ attributes_id integer,
 context_id character varying(36) COLLATE pg_catalog."default",  
 context_user_id character varying(36) COLLATE pg_catalog."default",  
 context_parent_id character varying(36) COLLATE pg_catalog."default",  
-origin_idx smallint 
+origin_idx smallint,
+last_updated_ts float,
+last_changed_ts float
 );
 
 -- Analytics state attributes table 
