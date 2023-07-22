@@ -384,9 +384,9 @@
         "entry_id": "d036b5cb4dfd028a4aa5f66f56425835",
         "version": 1,
         "domain": "wiz",
-        "title": "WiZ Tunable White B75E40 (10.1.99.1)",
+        "title": "WiZ Tunable White B75E40 (10.0.99.3)",
         "data": {
-          "host": "192.168.0.100"
+          "host": "10.0.99.3"
         },
         "options": {},
         "pref_disable_new_entities": false,
@@ -652,7 +652,7 @@
         "domain": "wiz",
         "title": "WiZ Tunable White 3FDEE2",
         "data": {
-          "host": "10.2.99.3"
+          "host": "10.0.99.3"
         },
         "options": {},
         "pref_disable_new_entities": false,
