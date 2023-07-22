@@ -59,3 +59,10 @@ p3:
   icon:
   picture:
   track: false
+
+uk_4k_android_tv:
+  name: UK 4K Android TV
+  mac: BT_DC:72:23:1D:10:07
+  icon:
+  picture:
+  track: false
