@@ -53,6 +53,13 @@ z8:
   picture:
   track: true
 
+gardenfairy:
+  name: gardenfairy
+  mac: C4:DD:57:2B:B0:6D
+  icon:
+  picture:
+  track: true
+
 p3:
   name: P3
   mac: BT_2C:E2:D0:B6:FC:8F
@@ -154,13 +161,6 @@ gardenbulb:
 gardenchromecast:
   name: GardenChromecast
   mac: B0:E4:D5:AD:B1:09
-  icon:
-  picture:
-  track: false
-
-gardenfairy:
-  name: gardenfairy
-  mac: C4:DD:57:2B:B0:6D
   icon:
   picture:
   track: false
