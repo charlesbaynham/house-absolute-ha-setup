@@ -9,8 +9,8 @@ pyscript:
   hass_is_global: false
 
 recorder:
-  #db_url: !secret psql_string
-  #db_retry_wait: 15 # Wait 15 seconds before retrying
+  db_url: !secret psql_string
+  db_retry_wait: 15 # Wait 15 seconds before retrying
   purge_keep_days: 150
   auto_purge: true
   commit_interval: 60
