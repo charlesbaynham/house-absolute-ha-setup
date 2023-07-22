@@ -97,10 +97,10 @@ set_train_journeys:
   - service: counter.reset
     data: {}
     target:
-      entity_id: counter.charles_number_saved_train_journeys
+      entity_id: counter.gaby_number_saved_train_journeys
   - service: counter.configure
     data:
-      value: 355
+      value: 443
     target:
-      entity_id: counter.charles_number_saved_train_journeys
+      entity_id: counter.gaby_number_saved_train_journeys
   mode: single
