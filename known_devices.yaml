@@ -66,3 +66,80 @@ uk_4k_android_tv:
   icon:
   picture:
   track: false
+
+20_df_b9_0a_12_08:
+  name: 20_df_b9_0a_12_08
+  mac: 20:DF:B9:0A:12:08
+  icon:
+  picture:
+  track: false
+
+30_fd_38_79_93_35:
+  name: 30_fd_38_79_93_35
+  mac: 30:FD:38:79:93:35
+  icon:
+  picture:
+  track: false
+
+7c_2e_bd_3f_7a_b0:
+  name: 7c_2e_bd_3f_7a_b0
+  mac: 7C:2E:BD:3F:7A:B0
+  icon:
+  picture:
+  track: false
+
+roborock:
+  name: roborock
+  mac: 78:11:DC:7E:0F:39
+  icon:
+  picture:
+  track: false
+
+zbook:
+  name: ZBook
+  mac: 70:9C:D1:A2:23:AD
+  icon:
+  picture:
+  track: false
+
+cblanket:
+  name: CBlanket
+  mac: B0:4E:26:48:87:A9
+  icon:
+  picture:
+  track: false
+
+homeassistant:
+  name: homeassistant
+  mac: DC:A6:32:AA:30:0E
+  icon:
+  picture:
+  track: false
+
+office_wired:
+  name: office-wired
+  mac: 00:E0:4C:36:08:C4
+  icon:
+  picture:
+  track: false
+
+ec_e5_12_00_fe_11:
+  name: ec_e5_12_00_fe_11
+  mac: EC:E5:12:00:FE:11
+  icon:
+  picture:
+  track: false
+
+gblanket:
+  name: GBlanket
+  mac: 4C:EB:D6:0F:F1:D5
+  icon:
+  picture:
+  track: false
+
+homeassistant_wifi:
+  name: homeassistant_wifi
+  mac: DC:A6:32:AA:30:0F
+  icon:
+  picture:
+  track: false
