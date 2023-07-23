@@ -399,7 +399,7 @@
           "cards": [
             {
               "type": "markdown",
-              "content": "* analyse travel times using new algorithm \n* detect humidiy spike from shower and turn off hot water\n* don't dim living room lights so much\n* add living room motion override\n* gaby wants a leaving work announcement \n* Reinstate garden VLAN (?) and use to detect garden presense\n",
+              "content": "* analyse travel times using new algorithm \n* detect humidiy spike from shower and turn off hot water\n* don't dim living room lights so much\n* add living room motion override\n* gaby wants a leaving work announcement \n* Reinstate garden VLAN (?) and use to detect garden presense\n* Addon to automatically back up postgres\n",
               "title": "To do list"
             }
           ]
