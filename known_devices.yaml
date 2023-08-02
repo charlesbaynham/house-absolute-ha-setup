@@ -185,3 +185,10 @@ f0_6e_0b_3f_8a_bd:
   icon:
   picture:
   track: false
+
+bv7100:
+  name: BV7100
+  mac: BT_EA:5C:46:61:8C:49
+  icon:
+  picture:
+  track: false
