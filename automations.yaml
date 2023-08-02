@@ -863,10 +863,10 @@
   alias: LIGHTS office motion
   description: ''
   trigger:
-  - type: motion
+  - type: occupied
     platform: device
-    device_id: f16dee304b0797349a174d4e5fb962b4
-    entity_id: binary_sensor.office_motion
+    device_id: 83a6afa7e4a5c030a42e638987c0666c
+    entity_id: binary_sensor.office_occupancy
     domain: binary_sensor
   condition:
   - condition: state
@@ -883,12 +883,6 @@
       device_id: 83a6afa7e4a5c030a42e638987c0666c
       entity_id: binary_sensor.office_occupancy
       domain: binary_sensor
-    continue_on_timeout: true
-    timeout:
-      hours: 0
-      minutes: 10
-      seconds: 0
-      milliseconds: 0
   - delay:
       hours: 0
       minutes: 2
@@ -913,7 +907,7 @@
     data: {}
     target:
       area_id: office
-  mode: restart
+  mode: single
 - id: '1651488353879'
   alias: 'BOOLEANS: Quiet hours on'
   description: ''
