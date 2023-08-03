@@ -25,9 +25,7 @@ history:
       - person
       - climate
       - vacuum
-    entities:
-      - sensor.in_garden_gaby
-      - sensor.in_garden_charles
+      - sensor
 
 # Text to speech
 tts:

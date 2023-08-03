@@ -60,6 +60,13 @@ gardenfairy:
   picture:
   track: true
 
+charles_iphone:
+  name: Charles iPhone
+  mac: A4:31:35:E2:AE:40
+  icon:
+  picture:
+  track: true
+
 p3:
   name: P3
   mac: BT_2C:E2:D0:B6:FC:8F
@@ -189,13 +196,6 @@ f0_6e_0b_3f_8a_bd:
 bv7100:
   name: BV7100
   mac: BT_EA:5C:46:61:8C:49
-  icon:
-  picture:
-  track: false
-
-a4_31_35_e2_ae_40:
-  name: a4_31_35_e2_ae_40
-  mac: A4:31:35:E2:AE:40
   icon:
   picture:
   track: false
