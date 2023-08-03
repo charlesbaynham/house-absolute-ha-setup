@@ -694,7 +694,7 @@
           "app_version": "2023.4 (2023.460)",
           "app_id": "io.robbie.HomeAssistant",
           "manufacturer": "Apple",
-          "os_version": "12.1.2",
+          "os_version": "12.5.7",
           "supports_encryption": true,
           "device_id": "0BAFCF1A-1E72-419D-9556-4ACF4BF6B587",
           "webhook_id": "c1ed48891abe313c11a60e9d133c50501da03ccd679b1835e6252bfc2bd9d38e",
