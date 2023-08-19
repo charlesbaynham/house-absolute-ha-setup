@@ -234,3 +234,10 @@ d6_cf_00_0a_68_49:
   icon:
   picture:
   track: false
+
+pixel_5:
+  name: Pixel 5
+  mac: BT_60:B7:6E:09:2A:D2
+  icon:
+  picture:
+  track: false
