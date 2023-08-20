@@ -1437,6 +1437,6 @@
     state: 'off'
   - type: turn_off
     device_id: c0b33fdcfde5a1181042be269dc69666
-    entity_id: switch.gardenfairy
+    entity_id: switch.garden_fairy_lights
     domain: switch
   mode: restart
