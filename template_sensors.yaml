@@ -134,6 +134,8 @@
       state: >
         {{
           states('sensor.charles_pixel_wifi_bssid') ==
+          states('input_text.garden_bssid') or
+          states('sensor.charles_pixel_5_wifi_bssid') ==
           states('input_text.garden_bssid')
         }}
     - name: In garden Gaby
