@@ -720,14 +720,14 @@
           "app_version": "2023.8.2-full (10992)",
           "device_name": "Charles Pixel 5",
           "manufacturer": "Google",
-          "model": "Pixel 5",
+          "model": "Pixel 6",
           "os_name": "Android",
           "os_version": "33",
           "supports_encryption": false,
           "app_data": {
             "push_websocket_channel": true,
             "push_url": "https://mobile-apps.home-assistant.io/api/sendPush/android/v1",
-            "push_token": "fevibtW3QXmbQSXIylvjGe:APA91bGerTb1EpUV1qcL9d_sR6emtMfhj4FLNKHmAOuYrNYGbDY8-ZSbm4SZTt9lq1fwDQqSTdGE9U7mF5xkUgII-VoPoZEJBlDcxk951Gh72Nwt6yYj2sWqxEK09F3BE_8H1luRR2X0"
+            "push_token": "cTLOarU_R3SFktM6hFngE6:APA91bGKxPR8HX95XIJmoLfsFpUGdYRyWQsZZeKttHloQKAAUdmNZ8IIJA9ZH54VijgyVlowZvyaenoNiMqds55U9_2Lrr2EJljGwf6joMIdOsVCg8PD3hgH_pzYLjzHNX6Db4jGhciY"
           },
           "device_id": "2ebe6e3758d9fdbe",
           "webhook_id": "296c675b7065d0e53d48ef39aa822f195bc08c37470ca6411b6c39503e66965a",
