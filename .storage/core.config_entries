@@ -755,6 +755,37 @@
         "source": "user",
         "unique_id": null,
         "disabled_by": null
+      },
+      {
+        "entry_id": "2596dcd0d30810b35e3b6d019f06e178",
+        "version": 1,
+        "domain": "mobile_app",
+        "title": "Charles phone",
+        "data": {
+          "app_id": "io.homeassistant.companion.android",
+          "app_name": "Home Assistant",
+          "app_version": "2023.8.2-full (10992)",
+          "device_name": "Charles phone",
+          "manufacturer": "Google",
+          "model": "Pixel 6",
+          "os_name": "Android",
+          "os_version": "33",
+          "supports_encryption": false,
+          "app_data": {
+            "push_websocket_channel": true,
+            "push_url": "https://mobile-apps.home-assistant.io/api/sendPush/android/v1",
+            "push_token": "cTLOarU_R3SFktM6hFngE6:APA91bGKxPR8HX95XIJmoLfsFpUGdYRyWQsZZeKttHloQKAAUdmNZ8IIJA9ZH54VijgyVlowZvyaenoNiMqds55U9_2Lrr2EJljGwf6joMIdOsVCg8PD3hgH_pzYLjzHNX6Db4jGhciY"
+          },
+          "device_id": "e42c6689612275e3",
+          "webhook_id": "e9edbffd528bc559da29e84a1b78d80ee9f1ac738b9261bc6cec92f2262cec9c",
+          "user_id": "29f0c878229944e5afb109373660cb8d"
+        },
+        "options": {},
+        "pref_disable_new_entities": false,
+        "pref_disable_polling": false,
+        "source": "registration",
+        "unique_id": "io.homeassistant.companion.android-e42c6689612275e3",
+        "disabled_by": null
       }
     ]
   }
