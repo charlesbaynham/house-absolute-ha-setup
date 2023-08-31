@@ -907,7 +907,7 @@
     data: {}
     target:
       area_id: office
-  mode: single
+  mode: restart
 - id: '1651488353879'
   alias: 'BOOLEANS: Quiet hours on'
   description: ''
