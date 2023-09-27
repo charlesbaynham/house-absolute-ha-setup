@@ -489,9 +489,14 @@
   - platform: time
     at: 04:10:00
   condition:
-  - condition: state
-    entity_id: input_boolean.hot_water_tomorrow
-    state: 'on'
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: input_boolean.hot_water_tomorrow
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.hot_water_every_day
+      state: 'on'
   action:
   - service: water_heater.set_operation_mode
     data:
@@ -728,7 +733,7 @@
   use_blueprint:
     path: garykrige/sonoff_switch.yaml
     input:
-      sonoff_button: d10ab8f3f54aa3b00e09615e27dace30
+      sonoff_button: e74f6609b4c7ac897366531a40e25436
       toggle_action:
       - service: light.toggle
         data: {}

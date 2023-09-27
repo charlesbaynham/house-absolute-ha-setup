@@ -662,22 +662,6 @@
         "disabled_by": null
       },
       {
-        "entry_id": "9c2c745da1a3096e73756837ee1a9ff8",
-        "version": 1,
-        "domain": "sonoff",
-        "title": "bayners123@gmail.com",
-        "data": {
-          "username": "bayners123@gmail.com",
-          "password": "IliWM,M08"
-        },
-        "options": {},
-        "pref_disable_new_entities": false,
-        "pref_disable_polling": false,
-        "source": "user",
-        "unique_id": "bayners123@gmail.com",
-        "disabled_by": null
-      },
-      {
         "entry_id": "44c8fa9ed09b19c1dc6a0fa85f23354e",
         "version": 1,
         "domain": "mobile_app",
