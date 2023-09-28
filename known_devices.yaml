@@ -283,3 +283,10 @@ f4_30_8b_35_02_9a:
   icon:
   picture:
   track: false
+
+wf_1000xm4:
+  name: WF-1000XM4
+  mac: BT_88:C9:E8:CB:26:E4
+  icon:
+  picture:
+  track: false
