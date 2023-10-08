@@ -290,3 +290,10 @@ wf_1000xm4:
   icon:
   picture:
   track: false
+
+mk66_id_c8a5:
+  name: MK66(ID-C8A5)
+  mac: BT_78:02:B7:08:C8:A5
+  icon:
+  picture:
+  track: false
