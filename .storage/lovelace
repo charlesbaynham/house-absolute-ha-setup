@@ -109,10 +109,10 @@
               "type": "entities",
               "entities": [
                 {
-                  "entity": "switch.fan"
+                  "entity": "switch.gaby_blanket"
                 },
                 {
-                  "entity": "switch.gaby_blanket"
+                  "entity": "switch.charles_blanket"
                 },
                 {
                   "entity": "light.bedroom_1",
@@ -128,9 +128,6 @@
                 },
                 {
                   "entity": "light.lamp"
-                },
-                {
-                  "entity": "cover.bedroom_blinds_window_covering"
                 }
               ],
               "title": "Bedroom",
