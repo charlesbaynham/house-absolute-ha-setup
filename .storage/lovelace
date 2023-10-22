@@ -396,7 +396,7 @@
           "cards": [
             {
               "type": "markdown",
-              "content": "* analyse travel times using new algorithm \n* detect humidiy spike from shower and turn off hot water\n* don't dim living room lights so much\n* add living room motion override\n* gaby wants a leaving work announcement \n* Reinstate garden VLAN (?) and use to detect garden presense\n* Addon to automatically back up postgres\n",
+              "content": "* analyse travel times using new algorithm \n* detect humidiy spike from shower and turn off hot water\n* don't dim living room lights so much\n* Reinstate garden VLAN (?) and use to detect garden presense\n* Addon to automatically back up postgres\n* Convert cloudflare ddns from docker compose to addon\n* Train AI on fitbit sleep data",
               "title": "To do list"
             }
           ]
