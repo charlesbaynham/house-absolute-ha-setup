@@ -131,6 +131,9 @@
                 },
                 {
                   "entity": "cover.bedroom_blinds_window_covering"
+                },
+                {
+                  "entity": "light.bedroom_lamp_2"
                 }
               ],
               "title": "Bedroom",

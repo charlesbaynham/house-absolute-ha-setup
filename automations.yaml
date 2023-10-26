@@ -850,15 +850,15 @@
           seconds: 10
           milliseconds: 0
       down_action:
-      - service: scene.turn_on
-        target:
-          entity_id: scene.bedroom_lights_off
-        metadata: {}
       - device_id: c8ea3a77b666c3de7756f054742e6b13
         domain: cover
         entity_id: cover.bedroom_blinds_window_covering
         type: set_position
         position: 0
+      - service: light.turn_off
+        data: {}
+        target:
+          area_id: bedroom
       down_stop_action:
       - service: scene.turn_on
         target:
@@ -893,18 +893,6 @@
       minutes: 2
       seconds: 0
       milliseconds: 0
-  - condition: or
-    conditions:
-    - condition: device
-      type: is_on
-      device_id: 546f0863910d005d1729ba6fd4471bbc
-      entity_id: light.office_lamp
-      domain: light
-    - condition: device
-      type: is_on
-      device_id: 6c66890cea366444cbfd5fd9f23e0ad0
-      entity_id: light.office
-      domain: light
   - condition: state
     entity_id: input_boolean.office_motion_enabled
     state: 'on'
