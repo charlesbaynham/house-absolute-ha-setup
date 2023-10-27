@@ -201,6 +201,15 @@
         "radius": 205.0,
         "icon": "mdi:glass-mug",
         "id": "baynhams_brewery"
+      },
+      {
+        "latitude": 51.44579944523204,
+        "longitude": -0.15814304351806643,
+        "name": "Rob's house",
+        "passive": false,
+        "radius": 227.0,
+        "icon": "mdi:pirate",
+        "id": "rob_s_house"
       }
     ]
   }
