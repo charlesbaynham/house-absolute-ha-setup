@@ -304,3 +304,10 @@ mk66_id_c8a5:
   icon:
   picture:
   track: false
+
+oppo_reno5_z:
+  name: OPPO Reno5 Z
+  mac: BT_60:07:C4:8C:D2:3E
+  icon:
+  picture:
+  track: false
