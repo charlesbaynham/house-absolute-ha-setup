@@ -210,6 +210,15 @@
         "radius": 227.0,
         "icon": "mdi:pirate",
         "id": "rob_s_house"
+      },
+      {
+        "latitude": 51.46813807105124,
+        "longitude": -0.10050773620605469,
+        "name": "The Doghouse",
+        "icon": "mdi:dog",
+        "passive": false,
+        "radius": 98.0,
+        "id": "the_doghouse"
       }
     ]
   }
