@@ -318,3 +318,10 @@ f8_c3_9e_30_dc_e8:
   icon:
   picture:
   track: false
+
+oneplus_9_pro_5g:
+  name: OnePlus 9 Pro 5G
+  mac: BT_D0:49:7C:28:9E:DE
+  icon:
+  picture:
+  track: false
