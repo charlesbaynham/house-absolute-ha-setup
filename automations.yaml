@@ -1275,7 +1275,7 @@
       - service: tts.google_translate_say
         data:
           entity_id: media_player.garden_speaker
-          message: Your loving girlfriend kindly requests a coffee.
+          message: Your loving boyfriend kindly requests a coffee.
 - id: '1669557382694'
   alias: 'NOTIFY: Lovers are close'
   description: ''
