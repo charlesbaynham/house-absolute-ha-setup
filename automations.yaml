@@ -1115,11 +1115,11 @@
     offset: 0
     id: sunset
   - platform: template
-    value_template: "{{\n  (\n    distance(\"person.charles\", \"zone.home\") < 0.5\n
+    value_template: "{{\n  (\n    distance(\"person.charles\", \"zone.home\") < 1\n
       \   and\n    is_state(\"person.charles\", \"not_home\")\n  )\n  or\n  states(\"sensor.in_garden_charles\")\n}}"
   - platform: template
-    value_template: "{{\n  (\n    distance(\"person.gaby\", \"zone.home\") < 0.5\n
-      \   and\n    is_state(\"person.gaby\", \"not_home\")\n  )\n  or\n  states(\"sensor.in_garden_gaby\")\n}}"
+    value_template: "{{\n  (\n    distance(\"person.gaby\", \"zone.home\") < 1\n    and\n
+      \   is_state(\"person.gaby\", \"not_home\")\n  )\n  or\n  states(\"sensor.in_garden_gaby\")\n}}"
   condition:
   - condition: sun
     after: sunset
