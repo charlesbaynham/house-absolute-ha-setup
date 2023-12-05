@@ -1243,14 +1243,24 @@
           area_id: bedroom
       off_action: []
       on_action:
-      - service: tts.google_translate_say
-        data:
-          entity_id: media_player.living_room_speaker
-          message: Your loving girlfriend kindly requests a coffee.
-      - service: tts.google_translate_say
-        data:
-          entity_id: media_player.garden_speaker
-          message: Your loving boyfriend kindly requests a coffee.
+      - if:
+        - condition: device
+          device_id: 05e7e67963dde2059de0f6e9f2ec02ad
+          domain: cover
+          entity_id: cover.bedroom_blinds_window_covering
+          type: is_open
+        then:
+        - device_id: 05e7e67963dde2059de0f6e9f2ec02ad
+          domain: cover
+          entity_id: cover.bedroom_blinds_window_covering
+          type: set_position
+          position: 0
+        else:
+        - device_id: 05e7e67963dde2059de0f6e9f2ec02ad
+          domain: cover
+          entity_id: cover.bedroom_blinds_window_covering
+          type: set_position
+          position: 100
 - id: '1669557382694'
   alias: 'NOTIFY: Lovers are close'
   description: ''
