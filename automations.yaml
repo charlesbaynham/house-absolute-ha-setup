@@ -565,7 +565,7 @@
       message: '{{trigger.from_state.state}} to {{trigger.to_state.state}}'
   mode: single
 - id: '1646346256635'
-  alias: 'TEMPERATURE: Reset high'
+  alias: 'HEATING: Reset high'
   description: ''
   trigger:
   - platform: template
