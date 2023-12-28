@@ -219,6 +219,15 @@
         "passive": false,
         "radius": 98.0,
         "id": "the_doghouse"
+      },
+      {
+        "latitude": 51.47075730156874,
+        "longitude": -0.4553853120302254,
+        "name": "Heathrow",
+        "passive": false,
+        "radius": 3538.0,
+        "icon": "mdi:airport",
+        "id": "heathrow"
       }
     ]
   }
