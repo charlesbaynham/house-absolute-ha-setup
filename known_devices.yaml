@@ -451,3 +451,10 @@ sids_macbook_pro_2:
   icon:
   picture:
   track: false
+
+jo_s_phone:
+  name: Jo's Phone
+  mac: BT_E4:FD:A1:DD:F6:3A
+  icon:
+  picture:
+  track: false
