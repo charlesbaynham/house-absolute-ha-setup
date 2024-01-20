@@ -458,3 +458,10 @@ jo_s_phone:
   icon:
   picture:
   track: false
+
+ipad:
+  name: iPad
+  mac: BT_74:73:B4:8D:63:E6
+  icon:
+  picture:
+  track: false
