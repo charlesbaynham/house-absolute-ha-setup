@@ -770,6 +770,26 @@
         "source": "registration",
         "unique_id": "io.homeassistant.companion.android-e42c6689612275e3",
         "disabled_by": null
+      },
+      {
+        "entry_id": "f612c04553e3c3de361a8028fdc8f099",
+        "version": 1,
+        "domain": "upnp",
+        "title": "TD-W9960",
+        "data": {
+          "udn": "uuid:9f0865b3-f5da-4ad5-85b7-aglora",
+          "st": "urn:schemas-upnp-org:device:InternetGatewayDevice:1",
+          "original_udn": "uuid:9f0865b3-f5da-4ad5-85b7-aglora",
+          "location": "http://10.0.1.1:1900/aglora/gatedesc.xml",
+          "mac_address": null,
+          "host": "10.0.1.1"
+        },
+        "options": {},
+        "pref_disable_new_entities": false,
+        "pref_disable_polling": false,
+        "source": "ssdp",
+        "unique_id": "uuid:9f0865b3-f5da-4ad5-85b7-aglora::urn:schemas-upnp-org:device:InternetGatewayDevice:1",
+        "disabled_by": null
       }
     ]
   }
