@@ -465,3 +465,10 @@ ipad:
   icon:
   picture:
   track: false
+
+ipad_2:
+  name: iPad (2)
+  mac: BT_AC:CF:5C:4C:63:01
+  icon:
+  picture:
+  track: false
