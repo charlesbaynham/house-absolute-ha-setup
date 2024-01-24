@@ -228,6 +228,15 @@
         "radius": 3538.0,
         "icon": "mdi:airport",
         "id": "heathrow"
+      },
+      {
+        "latitude": 51.46575867386702,
+        "longitude": -0.15723109245300296,
+        "name": "The Godhouse",
+        "icon": "mdi:church-outline",
+        "passive": false,
+        "radius": 177.44537770021188,
+        "id": "the_godhouse"
       }
     ]
   }
