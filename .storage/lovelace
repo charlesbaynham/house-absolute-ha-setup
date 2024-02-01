@@ -328,6 +328,9 @@
             },
             {
               "user": "b1cefd842d824024961af118876bead8"
+            },
+            {
+              "user": "59ea86915a25492d83b5112881ed3356"
             }
           ],
           "badges": [],
@@ -388,6 +391,9 @@
                 },
                 {
                   "entity": "zone.vauxhall"
+                },
+                {
+                  "entity": "person.georgie"
                 }
               ],
               "hours_to_show": 12

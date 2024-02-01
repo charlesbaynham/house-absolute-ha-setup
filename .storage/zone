@@ -34,10 +34,10 @@
       {
         "name": "South Wales",
         "icon": "mdi:map-marker",
-        "latitude": 51.68868440703754,
-        "longitude": -3.7554720696061854,
+        "latitude": 51.87519894770395,
+        "longitude": -3.514705739443525,
         "passive": false,
-        "radius": 97059.57325556962,
+        "radius": 62014.0,
         "id": "south_wales"
       },
       {

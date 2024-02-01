@@ -34,8 +34,17 @@
           "device_tracker.harryphone"
         ],
         "user_id": "b1cefd842d824024961af118876bead8",
-        "picture": null,
+        "picture": "/api/image/serve/94b6bfe1aee22a3ccaebe3c1e4930bfd/512x512",
         "id": "haraldo"
+      },
+      {
+        "name": "Georgie",
+        "device_trackers": [
+          "device_tracker.nokia_xr20"
+        ],
+        "user_id": "59ea86915a25492d83b5112881ed3356",
+        "picture": null,
+        "id": "georgie"
       }
     ]
   }
