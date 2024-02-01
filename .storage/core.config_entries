@@ -623,7 +623,7 @@
         "data": {
           "app_id": "io.homeassistant.companion.android",
           "app_name": "Home Assistant",
-          "app_version": "2023.12.4-full (11898)",
+          "app_version": "2024.1.5-full (12102)",
           "device_name": "It Harry",
           "manufacturer": "HMD Global",
           "model": "Nokia XR20",
@@ -748,7 +748,7 @@
         "data": {
           "app_id": "io.homeassistant.companion.android",
           "app_name": "Home Assistant",
-          "app_version": "2023.12.4-full (11898)",
+          "app_version": "2024.1.5-full (12102)",
           "device_name": "Charles phone",
           "manufacturer": "Google",
           "model": "Pixel 6",
