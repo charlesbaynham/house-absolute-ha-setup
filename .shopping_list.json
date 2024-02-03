@@ -33,5 +33,10 @@
     "name": "Train AI on fitbit sleep data",
     "id": "087e635bb0424aa3ac91d37e14d5cf93",
     "complete": false
+  },
+  {
+    "name": "Can I use WiFi discovery frames to do device tracking? I.e. devices which aren't on the WiFi yet. ",
+    "id": "b71eceb81e2e460caef95867c945ccac",
+    "complete": false
   }
 ]
