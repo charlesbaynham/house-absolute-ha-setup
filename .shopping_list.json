@@ -1,0 +1,37 @@
+[
+  {
+    "name": "analyse travel times using new algorithm",
+    "id": "bc30775d94b8459cb7f577c75b2e5f25",
+    "complete": false
+  },
+  {
+    "name": "detect humidiy spike from shower and turn off hot water",
+    "id": "b4f0a4409c9b442b93a197e26060fb9d",
+    "complete": false
+  },
+  {
+    "name": "don't dim living room lights so much",
+    "id": "1d1cc7e4d9024495bf5a607c0703e978",
+    "complete": false
+  },
+  {
+    "name": "Reinstate garden VLAN (?) and use to detect garden presense",
+    "id": "041d5aaea68244c19686445128cf2451",
+    "complete": false
+  },
+  {
+    "name": "Addon to automatically back up postgres",
+    "id": "2168fa85ed5d4d0d924f3b6cbc6758ba",
+    "complete": false
+  },
+  {
+    "name": "Convert cloudflare ddns from docker compose to addon",
+    "id": "dfc90add828449429828d58524e9f582",
+    "complete": false
+  },
+  {
+    "name": "Train AI on fitbit sleep data",
+    "id": "087e635bb0424aa3ac91d37e14d5cf93",
+    "complete": false
+  }
+]
