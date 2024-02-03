@@ -21,6 +21,9 @@
                 },
                 {
                   "entity": "person.haraldo"
+                },
+                {
+                  "entity": "person.georgie"
                 }
               ],
               "title": "Anyone home",
