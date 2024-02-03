@@ -237,6 +237,15 @@
         "radius": 223.0,
         "icon": "mdi:lighthouse",
         "id": "harry_s_house"
+      },
+      {
+        "latitude": 51.3450798,
+        "longitude": -2.7794314,
+        "name": "Casa de georgie",
+        "passive": false,
+        "radius": 263.0,
+        "icon": "mdi:cat",
+        "id": "casa_de_georgie"
       }
     ]
   }
