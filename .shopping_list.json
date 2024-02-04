@@ -38,5 +38,10 @@
     "name": "Can I use WiFi discovery frames to do device tracking? I.e. devices which aren't on the WiFi yet. ",
     "id": "b71eceb81e2e460caef95867c945ccac",
     "complete": false
+  },
+  {
+    "name": "Urgent: fix states_archive after dB update ",
+    "id": "2caaf89f3cf849149b03b1fc69b91343",
+    "complete": false
   }
 ]
