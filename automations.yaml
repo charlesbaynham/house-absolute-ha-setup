@@ -1270,10 +1270,10 @@
     below: '1000'
   condition: []
   action:
-  - service: notify.mobile_app_charles_pixel
+  - service: notify.mobile_app_charles_phone
     data:
-      message: Gaby is within 1km
-      title: Gaby incoming!
+      message: Gaby is close!
+      title: Gaby 1km
   - service: notify.mobile_app_big_gaby
     data:
       message: Charles is within 1km
