@@ -397,9 +397,15 @@
                 },
                 {
                   "entity": "person.georgie"
+                },
+                {
+                  "entity": "zone.mum"
+                },
+                {
+                  "entity": "zone.casa_de_georgie"
                 }
               ],
-              "hours_to_show": 12
+              "hours_to_show": 24
             }
           ]
         },
