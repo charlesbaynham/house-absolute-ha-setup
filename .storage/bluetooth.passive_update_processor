@@ -16,75 +16,37 @@
           "time___": {
             "key": "time",
             "device_class": "duration",
-            "entity_registry_enabled_default": null,
-            "entity_registry_visible_default": null,
-            "force_update": null,
-            "has_entity_name": null,
-            "name": null,
             "native_unit_of_measurement": "s",
             "state_class": "total_increasing"
           },
           "sector___": {
             "key": "sector",
-            "entity_category": "diagnostic",
-            "entity_registry_enabled_default": null,
-            "entity_registry_visible_default": null,
-            "force_update": null,
-            "has_entity_name": null,
-            "name": null
+            "entity_category": "diagnostic"
           },
           "number_of_sectors___": {
             "key": "number_of_sectors",
-            "entity_category": "diagnostic",
-            "entity_registry_enabled_default": null,
-            "entity_registry_visible_default": null,
-            "force_update": null,
-            "has_entity_name": null,
-            "name": null
+            "entity_category": "diagnostic"
           },
           "sector_timer___": {
             "key": "sector_timer",
             "entity_category": "diagnostic",
-            "entity_registry_enabled_default": false,
-            "entity_registry_visible_default": null,
-            "force_update": null,
-            "has_entity_name": null,
-            "name": null
+            "entity_registry_enabled_default": false
           },
           "toothbrush_state___": {
-            "key": "toothbrush_state",
-            "entity_registry_enabled_default": null,
-            "entity_registry_visible_default": null,
-            "force_update": null,
-            "has_entity_name": null,
-            "name": null
+            "key": "toothbrush_state"
           },
           "pressure___": {
-            "key": "pressure",
-            "entity_registry_enabled_default": null,
-            "entity_registry_visible_default": null,
-            "force_update": null,
-            "has_entity_name": null,
-            "name": null
+            "key": "pressure"
           },
           "mode___": {
             "key": "mode",
-            "entity_category": "diagnostic",
-            "entity_registry_enabled_default": null,
-            "entity_registry_visible_default": null,
-            "force_update": null,
-            "has_entity_name": null,
-            "name": null
+            "entity_category": "diagnostic"
           },
           "signal_strength___": {
             "key": "signal_strength",
             "device_class": "signal_strength",
             "entity_category": "diagnostic",
             "entity_registry_enabled_default": false,
-            "entity_registry_visible_default": null,
-            "force_update": null,
-            "has_entity_name": null,
-            "name": null,
             "native_unit_of_measurement": "dBm",
             "state_class": "measurement"
           }
@@ -100,14 +62,14 @@
           "signal_strength___": "Signal Strength"
         },
         "entity_data": {
-          "time___": 65,
+          "time___": 81,
           "sector___": "sector 3",
           "number_of_sectors___": 4,
-          "sector_timer___": 16,
-          "toothbrush_state___": "idle",
+          "sector_timer___": 70,
+          "toothbrush_state___": "running",
           "pressure___": "normal",
           "mode___": "turbo",
-          "signal_strength___": -62
+          "signal_strength___": -65
         }
       }
     }
