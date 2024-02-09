@@ -873,6 +873,26 @@
         "source": "user",
         "unique_id": "shopping_list",
         "disabled_by": null
+      },
+      {
+        "entry_id": "e24141631a68049e6d6c2e7247024478",
+        "version": 1,
+        "minor_version": 1,
+        "domain": "cloudflare",
+        "title": "houseabsolute.co.uk",
+        "data": {
+          "api_token": "Vg9TTMT99DsBw1Pt65TzJdk5uqo4IOi8MhZArfWh",
+          "zone": "houseabsolute.co.uk",
+          "records": [
+            "automation.houseabsolute.co.uk"
+          ]
+        },
+        "options": {},
+        "pref_disable_new_entities": false,
+        "pref_disable_polling": false,
+        "source": "user",
+        "unique_id": "houseabsolute.co.uk",
+        "disabled_by": null
       }
     ]
   }
