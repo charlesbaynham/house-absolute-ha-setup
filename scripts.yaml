@@ -12,12 +12,13 @@ clean_the_kitchen:
   sequence:
   - service: xiaomi_miio.vacuum_clean_zone
     data:
-      zone:
-      - - 26210
-        - 29156
-        - 29137
-        - 31656
       repeats: 2
+      zone:
+      - - 29590
+        - 21131
+        - 31712
+        - 24276
+    target:
       entity_id: vacuum.noonoo
   mode: single
   icon: mdi:countertop
@@ -91,3 +92,18 @@ play_jazz_in_living_room:
           media_content_id: media-source://mass/playlists
   mode: single
   icon: mdi:music-accidental-flat
+clean_the_living_room:
+  alias: Clean the living room
+  sequence:
+  - service: xiaomi_miio.vacuum_clean_zone
+    data:
+      repeats: 2
+      zone:
+      - - 24526
+        - 24695
+        - 28650
+        - 28958
+    target:
+      entity_id: vacuum.noonoo
+  mode: single
+  icon: mdi:sofa

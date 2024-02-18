@@ -60,7 +60,7 @@
               "type": "entities",
               "entities": [
                 {
-                  "entity": "light.office_lamp",
+                  "entity": "light.lamp",
                   "name": "Lamp"
                 },
                 {
@@ -155,10 +155,6 @@
               }
             },
             {
-              "type": "media-control",
-              "entity": "media_player.living_room_tv"
-            },
-            {
               "type": "entities",
               "entities": [
                 {
@@ -184,10 +180,6 @@
                 }
               ],
               "title": "Kitchen"
-            },
-            {
-              "type": "media-control",
-              "entity": "media_player.mass_living_room_speaker"
             },
             {
               "type": "entities",
@@ -235,13 +227,6 @@
             {
               "type": "entities",
               "entities": [
-                "vacuum.noonoo"
-              ],
-              "title": "Noonoo"
-            },
-            {
-              "type": "entities",
-              "entities": [
                 {
                   "entity": "sensor.noonoo_last_clean_area",
                   "name": "Last Clean Area"
@@ -257,6 +242,9 @@
                 {
                   "entity": "sensor.noonoo_last_clean_start",
                   "name": "Last Clean Start"
+                },
+                {
+                  "entity": "vacuum.noonoo"
                 }
               ],
               "title": "Noonoo"
@@ -288,10 +276,6 @@
               ]
             },
             {
-              "type": "media-control",
-              "entity": "media_player.garden_speaker"
-            },
-            {
               "type": "entities",
               "entities": [
                 {
@@ -314,10 +298,6 @@
             },
             {
               "type": "media-control",
-              "entity": "media_player.mass_bedroom_speaker"
-            },
-            {
-              "type": "media-control",
               "entity": "media_player.office_tv_2"
             },
             {
@@ -331,415 +311,6 @@
               "entity": "vacuum.noonoo",
               "vacuum_platform": "humbertogontijo/homeassistant-roborock",
               "map_locked": true,
-              "icons": [
-                {
-                  "icon": "mdi:play",
-                  "conditions": [
-                    {
-                      "entity": "vacuum.noonoo",
-                      "value_not": "cleaning"
-                    },
-                    {
-                      "entity": "vacuum.noonoo",
-                      "value_not": "error"
-                    },
-                    {
-                      "entity": "vacuum.noonoo",
-                      "value_not": "returning"
-                    }
-                  ],
-                  "tooltip": "Start",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "vacuum.start",
-                    "service_data": {
-                      "entity_id": "vacuum.noonoo"
-                    }
-                  }
-                },
-                {
-                  "icon": "mdi:pause",
-                  "conditions": [
-                    {
-                      "entity": "vacuum.noonoo",
-                      "value_not": "docked"
-                    },
-                    {
-                      "entity": "vacuum.noonoo",
-                      "value_not": "idle"
-                    },
-                    {
-                      "entity": "vacuum.noonoo",
-                      "value_not": "error"
-                    },
-                    {
-                      "entity": "vacuum.noonoo",
-                      "value_not": "paused"
-                    }
-                  ],
-                  "tooltip": "Pause",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "vacuum.pause",
-                    "service_data": {
-                      "entity_id": "vacuum.noonoo"
-                    }
-                  }
-                },
-                {
-                  "icon": "mdi:stop",
-                  "conditions": [
-                    {
-                      "entity": "vacuum.noonoo",
-                      "value_not": "docked"
-                    },
-                    {
-                      "entity": "vacuum.noonoo",
-                      "value_not": "idle"
-                    },
-                    {
-                      "entity": "vacuum.noonoo",
-                      "value_not": "error"
-                    },
-                    {
-                      "entity": "vacuum.noonoo",
-                      "value_not": "paused"
-                    }
-                  ],
-                  "tooltip": "Stop",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "vacuum.stop",
-                    "service_data": {
-                      "entity_id": "vacuum.noonoo"
-                    }
-                  }
-                },
-                {
-                  "icon": "mdi:home-map-marker",
-                  "conditions": [
-                    {
-                      "entity": "vacuum.noonoo",
-                      "value_not": "docked"
-                    },
-                    {
-                      "entity": "vacuum.noonoo",
-                      "value_not": "returning"
-                    }
-                  ],
-                  "tooltip": "Return to base",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "vacuum.return_to_base",
-                    "service_data": {
-                      "entity_id": "vacuum.noonoo"
-                    }
-                  }
-                },
-                {
-                  "icon": "mdi:target-variant",
-                  "conditions": [
-                    {
-                      "entity": "vacuum.noonoo",
-                      "value_not": "docked"
-                    },
-                    {
-                      "entity": "vacuum.noonoo",
-                      "value_not": "error"
-                    },
-                    {
-                      "entity": "vacuum.noonoo",
-                      "value_not": "cleaning"
-                    },
-                    {
-                      "entity": "vacuum.noonoo",
-                      "value_not": "returning"
-                    }
-                  ],
-                  "tooltip": "Clean spot",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "vacuum.clean_spot",
-                    "service_data": {
-                      "entity_id": "vacuum.noonoo"
-                    }
-                  }
-                },
-                {
-                  "icon": "mdi:map-marker",
-                  "tooltip": "Locate",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "vacuum.locate",
-                    "service_data": {
-                      "entity_id": "vacuum.noonoo"
-                    }
-                  }
-                },
-                {
-                  "menu_id": "fan_speed",
-                  "icon": "mdi:fan-remove",
-                  "label": "Silent",
-                  "conditions": [
-                    {
-                      "entity": "vacuum.noonoo",
-                      "attribute": "fan_speed",
-                      "value": "Silent"
-                    }
-                  ],
-                  "tooltip": "Change fan speed",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "vacuum.set_fan_speed",
-                    "service_data": {
-                      "entity_id": "vacuum.noonoo",
-                      "fan_speed": "Silent"
-                    }
-                  }
-                },
-                {
-                  "menu_id": "fan_speed",
-                  "icon": "mdi:fan-speed-1",
-                  "label": "Standard",
-                  "conditions": [
-                    {
-                      "entity": "vacuum.noonoo",
-                      "attribute": "fan_speed",
-                      "value": "Standard"
-                    }
-                  ],
-                  "tooltip": "Change fan speed",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "vacuum.set_fan_speed",
-                    "service_data": {
-                      "entity_id": "vacuum.noonoo",
-                      "fan_speed": "Standard"
-                    }
-                  }
-                },
-                {
-                  "menu_id": "fan_speed",
-                  "icon": "mdi:fan-speed-2",
-                  "label": "Medium",
-                  "conditions": [
-                    {
-                      "entity": "vacuum.noonoo",
-                      "attribute": "fan_speed",
-                      "value": "Medium"
-                    }
-                  ],
-                  "tooltip": "Change fan speed",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "vacuum.set_fan_speed",
-                    "service_data": {
-                      "entity_id": "vacuum.noonoo",
-                      "fan_speed": "Medium"
-                    }
-                  }
-                },
-                {
-                  "menu_id": "fan_speed",
-                  "icon": "mdi:fan-speed-3",
-                  "label": "Turbo",
-                  "conditions": [
-                    {
-                      "entity": "vacuum.noonoo",
-                      "attribute": "fan_speed",
-                      "value": "Turbo"
-                    }
-                  ],
-                  "tooltip": "Change fan speed",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "vacuum.set_fan_speed",
-                    "service_data": {
-                      "entity_id": "vacuum.noonoo",
-                      "fan_speed": "Turbo"
-                    }
-                  }
-                },
-                {
-                  "icon": "mdi:fan-alert",
-                  "conditions": [
-                    {
-                      "entity": "vacuum.noonoo",
-                      "attribute": "fan_speed",
-                      "value_not": "Silent"
-                    },
-                    {
-                      "entity": "vacuum.noonoo",
-                      "attribute": "fan_speed",
-                      "value_not": "Standard"
-                    },
-                    {
-                      "entity": "vacuum.noonoo",
-                      "attribute": "fan_speed",
-                      "value_not": "Medium"
-                    },
-                    {
-                      "entity": "vacuum.noonoo",
-                      "attribute": "fan_speed",
-                      "value_not": "Turbo"
-                    }
-                  ],
-                  "tooltip": "Change fan speed",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "vacuum.set_fan_speed",
-                    "service_data": {
-                      "entity_id": "vacuum.noonoo",
-                      "fan_speed": "Silent"
-                    }
-                  }
-                }
-              ],
-              "tiles": [
-                {
-                  "tile_id": "status",
-                  "entity": "vacuum.noonoo",
-                  "label": "Status",
-                  "attribute": "status",
-                  "icon": "mdi:robot-vacuum",
-                  "translations": {
-                    "starting": "Starting",
-                    "charger disconnected": "Charger disconnected",
-                    "idle": "Idle",
-                    "remote control active": "Remote control active",
-                    "cleaning": "Cleaning",
-                    "returning home": "Returning home",
-                    "manual mode": "Manual mode",
-                    "charging": "Charging",
-                    "charging problem": "Charging problem",
-                    "paused": "Paused",
-                    "spot cleaning": "Spot cleaning",
-                    "error": "Error",
-                    "shutting down": "Shutting down",
-                    "updating": "Updating",
-                    "docking": "Docking",
-                    "going to target": "Going to target",
-                    "zoned cleaning": "Zoned cleaning",
-                    "segment cleaning": "Segment cleaning",
-                    "emptying the bin": "Emptying the bin",
-                    "charging complete": "Charging complete",
-                    "device offline": "Device offline"
-                  }
-                },
-                {
-                  "tile_id": "battery_level",
-                  "entity": "vacuum.noonoo",
-                  "label": "Battery",
-                  "attribute": "battery_level",
-                  "icon_source": "vacuum.noonoo.attributes.battery_icon",
-                  "unit": "%"
-                },
-                {
-                  "tile_id": "fan_speed",
-                  "entity": "vacuum.noonoo",
-                  "label": "Fan speed",
-                  "attribute": "fan_speed",
-                  "icon": "mdi:fan",
-                  "translations": {
-                    "silent": "Silent",
-                    "standard": "Standard",
-                    "medium": "Medium",
-                    "turbo": "Turbo",
-                    "auto": "Auto",
-                    "gentle": "Gentle"
-                  }
-                },
-                {
-                  "tile_id": "sensor_dirty_left",
-                  "label": "Sensors left",
-                  "unit": "h",
-                  "multiplier": 0.0002777777777777778,
-                  "hold_action": {
-                    "action": "call-service",
-                    "service": "vacuum.send_command",
-                    "confirmation": {},
-                    "service_data": {
-                      "command": "reset_consumable",
-                      "params": "sensor_dirty_time",
-                      "entity_id": "vacuum.noonoo"
-                    }
-                  },
-                  "entity": "sensor.noonoo_sensor_dirty_left",
-                  "icon": "mdi:eye-outline",
-                  "precision": 0,
-                  "translations": {}
-                },
-                {
-                  "tile_id": "filter_left",
-                  "label": "Filter left",
-                  "unit": "h",
-                  "multiplier": 0.0002777777777777778,
-                  "hold_action": {
-                    "action": "call-service",
-                    "service": "vacuum.send_command",
-                    "confirmation": {},
-                    "service_data": {
-                      "command": "reset_consumable",
-                      "params": "filter_work_time",
-                      "entity_id": "vacuum.noonoo"
-                    }
-                  },
-                  "entity": "sensor.noonoo_filter_left",
-                  "icon": "mdi:air-filter",
-                  "precision": 0,
-                  "translations": {}
-                },
-                {
-                  "tile_id": "main_brush_left",
-                  "label": "Main brush left",
-                  "unit": "h",
-                  "multiplier": 0.0002777777777777778,
-                  "hold_action": {
-                    "action": "call-service",
-                    "service": "vacuum.send_command",
-                    "confirmation": {},
-                    "service_data": {
-                      "command": "reset_consumable",
-                      "params": "main_brush_work_time",
-                      "entity_id": "vacuum.noonoo"
-                    }
-                  },
-                  "entity": "sensor.noonoo_main_brush_left",
-                  "icon": "mdi:brush",
-                  "precision": 0,
-                  "translations": {}
-                },
-                {
-                  "tile_id": "side_brush_left",
-                  "label": "Side brush left",
-                  "unit": "h",
-                  "multiplier": 0.0002777777777777778,
-                  "hold_action": {
-                    "action": "call-service",
-                    "service": "vacuum.send_command",
-                    "confirmation": {},
-                    "service_data": {
-                      "command": "reset_consumable",
-                      "params": "side_brush_work_time",
-                      "entity_id": "vacuum.noonoo"
-                    }
-                  },
-                  "entity": "sensor.noonoo_side_brush_left",
-                  "icon": "mdi:brush",
-                  "precision": 0,
-                  "translations": {}
-                },
-                {
-                  "tile_id": "cleaning_time",
-                  "label": "Cleaning time",
-                  "unit": "min",
-                  "multiplier": 0.016667,
-                  "entity": "sensor.noonoo_current_clean_duration",
-                  "icon": "mdi:timer-sand",
-                  "precision": 0,
-                  "translations": {}
-                }
-              ],
               "map_modes": [
                 {
                   "template": "vacuum_clean_segment",
@@ -748,108 +319,52 @@
                       "id": 14,
                       "outline": [
                         [
-                          24341,
-                          24627,
-                          28463,
-                          29013
+                          24607,
+                          24540
+                        ],
+                        [
+                          28464,
+                          24540
+                        ],
+                        [
+                          28464,
+                          28837
+                        ],
+                        [
+                          24607,
+                          28837
                         ]
                       ],
-                      "label": {
-                        "text": "Living room",
-                        "x": 22932,
-                        "y": 30339,
-                        "offset_y": 35
-                      },
                       "icon": {
                         "name": "mdi:sofa",
-                        "x": 22932,
-                        "y": 30339
+                        "x": 26600,
+                        "y": 26000
                       }
-                    }
-                  ]
-                },
-                {
-                  "name": "Zone cleanup",
-                  "icon": "mdi:select-drag",
-                  "run_immediately": false,
-                  "coordinates_rounding": true,
-                  "coordinates_to_meters_divider": 1000,
-                  "selection_type": "MANUAL_RECTANGLE",
-                  "max_selections": 5,
-                  "repeats_type": "EXTERNAL",
-                  "max_repeats": 3,
-                  "service_call_schema": {
-                    "service": "roborock.vacuum_clean_zone",
-                    "service_data": {
-                      "zone": "[[selection]]",
-                      "repeats": "[[repeats]]",
-                      "entity_id": "[[entity_id]]"
-                    }
-                  },
-                  "predefined_selections": [],
-                  "variables": {}
-                },
-                {
-                  "name": "Pin & Go",
-                  "icon": "mdi:map-marker-plus",
-                  "run_immediately": false,
-                  "coordinates_rounding": true,
-                  "coordinates_to_meters_divider": 1000,
-                  "selection_type": "MANUAL_POINT",
-                  "max_selections": 999,
-                  "repeats_type": "NONE",
-                  "max_repeats": 1,
-                  "service_call_schema": {
-                    "service": "roborock.vacuum_goto",
-                    "service_data": {
-                      "x_coord": "[[point_x]]",
-                      "y_coord": "[[point_y]]",
-                      "entity_id": "[[entity_id]]"
-                    }
-                  },
-                  "predefined_selections": [],
-                  "variables": {}
-                }
-              ],
-              "additional_presets": []
-            },
-            {
-              "type": "custom:xiaomi-vacuum-map-card",
-              "map_source": {
-                "camera": "camera.noonoo_map"
-              },
-              "calibration_source": {
-                "camera": true
-              },
-              "entity": "vacuum.noonoo",
-              "vacuum_platform": "humbertogontijo/homeassistant-roborock",
-              "map_locked": true,
-              "map_modes": [
-                {
-                  "template": "vacuum_clean_segment",
-                  "predefined_selections": [
+                    },
                     {
-                      "id": 14,
+                      "id": 15,
                       "outline": [
                         [
-                          24607,
-                          24540
+                          29613,
+                          21154
                         ],
                         [
-                          28464,
-                          24540
+                          31821,
+                          21154
                         ],
                         [
-                          28464,
-                          28837
+                          31821,
+                          24804
                         ],
                         [
-                          24607,
-                          28837
+                          29613,
+                          24804
                         ]
                       ],
                       "icon": {
-                        "name": "mdi:sofa"
+                        "name": "mdi:kettle",
+                        "x": 30700,
+                        "y": 23000
                       }
                     }
                   ]
