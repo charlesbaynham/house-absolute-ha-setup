@@ -1,19 +1,19 @@
 {
-    "version": 1,
-    "minor_version": 1,
-    "key": "lovelace_resources",
-    "data": {
-        "items": [
-            {
-                "url": "/hacsfiles/lovelace-home-feed-card/lovelace-home-feed-card.js?hacstag=174016256063",
-                "type": "module",
-                "id": "92d74383e1dd47a18f69a16afc6d7833"
-            },
-            {
-                "url": "/hacsfiles/lovelace-xiaomi-vacuum-map-card/xiaomi-vacuum-map-card.js?hacstag=193372044209",
-                "type": "module",
-                "id": "a0e3d60eff36416da570467c52da817f"
-            }
-        ]
-    }
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace_resources",
+  "data": {
+    "items": [
+      {
+        "url": "/hacsfiles/lovelace-home-feed-card/lovelace-home-feed-card.js?hacstag=174016256063",
+        "type": "module",
+        "id": "92d74383e1dd47a18f69a16afc6d7833"
+      },
+      {
+        "url": "/hacsfiles/lovelace-xiaomi-vacuum-map-card/xiaomi-vacuum-map-card.js?hacstag=193372044222",
+        "type": "module",
+        "id": "a0e3d60eff36416da570467c52da817f"
+      }
+    ]
+  }
 }
