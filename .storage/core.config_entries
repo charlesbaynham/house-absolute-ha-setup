@@ -886,7 +886,7 @@
         "domain": "androidtv_remote",
         "title": "Office TV",
         "data": {
-          "host": "10.0.0.100",
+          "host": "10.0.0.213",
           "name": "Office TV",
           "mac": "3C:31:74:1A:81:BB"
         },
