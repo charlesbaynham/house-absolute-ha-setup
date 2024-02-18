@@ -1,19 +1,19 @@
 {
   "domain": "grocy",
   "name": "Grocy",
-  "documentation": "https://github.com/custom-components/grocy",
-  "issue_tracker": "https://github.com/custom-components/grocy/issues",
-  "dependencies": [
-    "http"
-  ],
-  "config_flow": true,
   "codeowners": [
     "@SebRut",
     "@isabellaalstrom"
   ],
-  "requirements": [
-    "pygrocy==1.3.0"
+  "config_flow": true,
+  "dependencies": [
+    "http"
   ],
-  "version": "4.4.0",
-  "iot_class": "local_polling"
+  "documentation": "https://github.com/custom-components/grocy",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/custom-components/grocy/issues",
+  "requirements": [
+    "pygrocy==2.0.0"
+  ],
+  "version": "v4.11.1"
 }
