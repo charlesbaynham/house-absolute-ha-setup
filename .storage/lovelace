@@ -315,6 +315,10 @@
             {
               "type": "media-control",
               "entity": "media_player.mass_bedroom_speaker"
+            },
+            {
+              "type": "media-control",
+              "entity": "media_player.office_tv_2"
             }
           ]
         },
