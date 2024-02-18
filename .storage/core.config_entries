@@ -858,6 +858,26 @@
         "source": "user",
         "unique_id": "houseabsolute.co.uk",
         "disabled_by": null
+      },
+      {
+        "entry_id": "9c9b31fca41dd40bb7acbe88b3e858a7",
+        "version": 1,
+        "minor_version": 1,
+        "domain": "mass",
+        "title": "Music Assistant",
+        "data": {
+          "url": "http://172.30.32.1:8095",
+          "use_addon": false,
+          "integration_created_addon": false,
+          "openai_agent_id": "homeassistant",
+          "expose_players_assist": true
+        },
+        "options": {},
+        "pref_disable_new_entities": false,
+        "pref_disable_polling": false,
+        "source": "zeroconf",
+        "unique_id": "252bda3d29ae44cd867b296ae70b8ef7",
+        "disabled_by": null
       }
     ]
   }
