@@ -366,25 +366,6 @@
         "disabled_by": "user"
       },
       {
-        "entry_id": "85a71064e02b8f3bc35a7fa2f9061952",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "grocy",
-        "title": "Grocy",
-        "data": {
-          "url": "https://127.0.0.1",
-          "api_key": "jP9vaJA28oqvMyCAiezBkRO2OlWUNB3jk3ubv4hlY0N6gaCbiq",
-          "port": 9192,
-          "verify_ssl": false
-        },
-        "options": {},
-        "pref_disable_new_entities": false,
-        "pref_disable_polling": false,
-        "source": "user",
-        "unique_id": null,
-        "disabled_by": null
-      },
-      {
         "entry_id": "0c7972a37eb9248999f667ddb8e8a9ec",
         "version": 1,
         "minor_version": 1,
@@ -484,29 +465,6 @@
         "pref_disable_polling": false,
         "source": "bluetooth",
         "unique_id": null,
-        "disabled_by": null
-      },
-      {
-        "entry_id": "b3f92d0260eaa2eb94e486c027b608bf",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "xiaomi_miio",
-        "title": "Noonoo",
-        "data": {
-          "config_flow_device": "device",
-          "host": "10.99.1.2",
-          "token": "78794555564d3634554f5a3276686f63",
-          "model": "rockrobo.vacuum.v1",
-          "mac": "78:11:dc:7e:0f:39",
-          "cloud_username": "bayners123@gmail.com",
-          "cloud_password": "740485ab",
-          "cloud_country": "sg"
-        },
-        "options": {},
-        "pref_disable_new_entities": false,
-        "pref_disable_polling": false,
-        "source": "user",
-        "unique_id": "78:11:dc:7e:0f:39",
         "disabled_by": null
       },
       {
@@ -770,27 +728,6 @@
         "pref_disable_polling": false,
         "source": "registration",
         "unique_id": "io.homeassistant.companion.android-e42c6689612275e3",
-        "disabled_by": null
-      },
-      {
-        "entry_id": "f612c04553e3c3de361a8028fdc8f099",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "upnp",
-        "title": "TD-W9960",
-        "data": {
-          "udn": "uuid:9f0865b3-f5da-4ad5-85b7-aglora",
-          "st": "urn:schemas-upnp-org:device:InternetGatewayDevice:1",
-          "original_udn": "uuid:9f0865b3-f5da-4ad5-85b7-aglora",
-          "location": "http://10.0.1.1:1900/aglora/gatedesc.xml",
-          "mac_address": "ac:15:a2:23:6e:b6",
-          "host": "10.0.1.1"
-        },
-        "options": {},
-        "pref_disable_new_entities": false,
-        "pref_disable_polling": false,
-        "source": "ssdp",
-        "unique_id": "uuid:9f0865b3-f5da-4ad5-85b7-aglora::urn:schemas-upnp-org:device:InternetGatewayDevice:1",
         "disabled_by": null
       },
       {
