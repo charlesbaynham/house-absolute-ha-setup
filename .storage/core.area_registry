@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "minor_version": 5,
+  "minor_version": 3,
   "key": "core.area_registry",
   "data": {
     "areas": [
