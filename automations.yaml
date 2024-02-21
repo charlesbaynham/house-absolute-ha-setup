@@ -1181,7 +1181,7 @@
   description: ''
   trigger:
   - platform: time
-    at: '22:10:00'
+    at: '22:00:00'
   condition:
   - condition: template
     value_template: '{{distance("person.gaby") < 20}}'
