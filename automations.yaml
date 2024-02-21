@@ -60,8 +60,8 @@
   condition:
   - condition: device
     type: is_on
-    device_id: a7c437c79cc44a2bf92675ba55644d5c
-    entity_id: switch.gaby_blanket
+    device_id: 114e22d1af178828cb508da883b67dd4
+    entity_id: bc0f5b65af2477998d546197b0469c9d
     domain: switch
   - condition: or
     conditions:
@@ -74,8 +74,8 @@
     state: 'off'
   action:
   - type: turn_off
-    device_id: a7c437c79cc44a2bf92675ba55644d5c
-    entity_id: switch.gaby_blanket
+    device_id: 114e22d1af178828cb508da883b67dd4
+    entity_id: bc0f5b65af2477998d546197b0469c9d
     domain: switch
   - delay:
       hours: 0
@@ -83,8 +83,8 @@
       seconds: 2
       milliseconds: 0
   - type: turn_on
-    device_id: a7c437c79cc44a2bf92675ba55644d5c
-    entity_id: switch.gaby_blanket
+    device_id: 114e22d1af178828cb508da883b67dd4
+    entity_id: bc0f5b65af2477998d546197b0469c9d
     domain: switch
   mode: single
 - id: gitlabbackup
