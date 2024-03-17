@@ -256,6 +256,13 @@
             "should_expose": false
           }
         }
+      },
+      "sensor.gaby_blanket_drawing_power": {
+        "assistants": {
+          "conversation": {
+            "should_expose": false
+          }
+        }
       }
     }
   }

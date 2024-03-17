@@ -1406,8 +1406,27 @@
     subtype: button
   condition: []
   action:
-  - type: toggle
-    device_id: a7c437c79cc44a2bf92675ba55644d5c
-    entity_id: 62d4b211f8fb7482d44fbf834d9f354b
-    domain: switch
+  - if:
+    - condition: state
+      entity_id: sensor.gaby_blanket_drawing_power
+      state: 'True'
+    then:
+    - type: turn_off
+      device_id: a7c437c79cc44a2bf92675ba55644d5c
+      entity_id: 62d4b211f8fb7482d44fbf834d9f354b
+      domain: switch
+    else:
+    - type: turn_off
+      device_id: a7c437c79cc44a2bf92675ba55644d5c
+      entity_id: 62d4b211f8fb7482d44fbf834d9f354b
+      domain: switch
+    - delay:
+        hours: 0
+        minutes: 0
+        seconds: 1
+        milliseconds: 0
+    - type: turn_on
+      device_id: a7c437c79cc44a2bf92675ba55644d5c
+      entity_id: 62d4b211f8fb7482d44fbf834d9f354b
+      domain: switch
   mode: single

@@ -153,3 +153,10 @@
         {{ 1000*distance("person.gaby", "person.charles") }}
       device_class: distance
       state_class: measurement
+
+# Check if Gaby's blanket is actually on or not based on its power draw
+- sensor:
+    - name: Gaby blanket drawing power
+      state: >
+        {{ states("sensor.gaby_blanket_energy_power")|float > 10 }}
+      state_class: measurement

@@ -68,6 +68,12 @@
                 },
                 {
                   "entity": "binary_sensor.office_motion"
+                },
+                {
+                  "entity": "switch.gaby_blanket"
+                },
+                {
+                  "entity": "sensor.gaby_blanket_drawing_power"
                 }
               ],
               "title": "Office",
