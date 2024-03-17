@@ -212,3 +212,35 @@ google_assistant:
     # light.living_room:
     #   expose: false
     #   room: LIVING_ROOM
+
+
+influxdb:
+  api_version: 1
+  host: localhost
+  database: homeassistant
+  username: !secret influx_user
+  password: !secret influx_password
+  max_retries: 3
+  port: 8086
+  # ssl: false
+  # token: GENERATED_AUTH_TOKEN
+  # organization: RANDOM_16_DIGIT_HEX_ID
+  # bucket: BUCKET_NAME
+  # tags:
+  #   source: HA
+  # tags_attributes:
+  #   - friendly_name
+  # default_measurement: units
+  # exclude:
+  #   entities:
+  #     - zone.home
+  #   domains:
+  #     - persistent_notification
+  #     - person
+  # include:
+  #   domains:
+  #     - sensor
+  #     - binary_sensor
+  #     - sun
+  #   entities:
+  #     - weather.home
