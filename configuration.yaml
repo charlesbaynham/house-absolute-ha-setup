@@ -9,11 +9,6 @@ pyscript:
   hass_is_global: false
 
 recorder:
-  #  db_url: !secret psql_string
-  #db_retry_wait: 15 # Wait 15 seconds before retrying
-  #purge_keep_days: 150
-  #auto_purge: true
-  #commit_interval: 60
   exclude:
     entities: !include excluded_sensors.yaml
 
@@ -222,18 +217,18 @@ influxdb:
   password: !secret influx_password
   max_retries: 3
   port: 8086
+  precision: ms
   # ssl: false
   # token: GENERATED_AUTH_TOKEN
   # organization: RANDOM_16_DIGIT_HEX_ID
   # bucket: BUCKET_NAME
-  # tags:
-  #   source: HA
-  # tags_attributes:
-  #   - friendly_name
+  tags:
+    source: HA
+  tags_attributes:
+    - friendly_name
   # default_measurement: units
-  # exclude:
-  #   entities:
-  #     - zone.home
+  exclude:
+    entities: !include excluded_sensors.yaml
   #   domains:
   #     - persistent_notification
   #     - person
