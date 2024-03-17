@@ -1,15 +1,17 @@
 - sensor:
     - name: Gaby sleep probability
       state: >
-        {{ (100 * state_attr('binary_sensor.gaby_sleeping_bayesian', 'probability')|float)|int }}%
+        {{ (100 * state_attr('binary_sensor.gaby_sleeping_bayesian', 'probability')|float) }}
       icon: mdi:sleep
       state_class: measurement
+      unit_of_measurement: "%"
 - sensor:
     - name: Charles sleep probability
       state: >
-        {{ (100 * state_attr('binary_sensor.charles_sleeping_bayesian', 'probability')|float)|int }}%
+        {{ (100 * state_attr('binary_sensor.charles_sleeping_bayesian', 'probability')|float) }}
       icon: mdi:sleep
       state_class: measurement
+      unit_of_measurement: "%"
 # - sensor:
 #     - name: Gaby sleep state
 #       state: >

@@ -47,6 +47,11 @@
   {
     "name": "gaby button: 1 click main lights toggle, 2 lamp, 3 blanket, long coffee",
     "id": "3efe630eb6594c9e9a557d4e154da680",
+    "complete": true
+  },
+  {
+    "name": "detect blanket current draw",
+    "id": "bc812b37147e41b28b365282537db808",
     "complete": false
   }
 ]

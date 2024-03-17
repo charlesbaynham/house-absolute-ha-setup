@@ -12,8 +12,8 @@
       prob_given_false: 0.5
       platform: "template"
       value_template: '{{ states("person.gaby") != "home" }}'
-    - entity_id: "light.bedroom_1"
-      prob_given_true: 0.01
+    - entity_id: "light.office"
+      prob_given_true: 0.001
       prob_given_false: 0.1
       platform: "state"
       to_state: "on"
