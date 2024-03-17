@@ -22,12 +22,12 @@
   {
     "name": "Addon to automatically back up postgres",
     "id": "2168fa85ed5d4d0d924f3b6cbc6758ba",
-    "complete": false
+    "complete": true
   },
   {
     "name": "Convert cloudflare ddns from docker compose to addon",
     "id": "dfc90add828449429828d58524e9f582",
-    "complete": false
+    "complete": true
   },
   {
     "name": "Train AI on fitbit sleep data",
@@ -42,6 +42,6 @@
   {
     "name": "Urgent: fix states_archive after dB update ",
     "id": "2caaf89f3cf849149b03b1fc69b91343",
-    "complete": false
+    "complete": true
   }
 ]
