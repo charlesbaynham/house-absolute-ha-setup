@@ -43,5 +43,10 @@
     "name": "Urgent: fix states_archive after dB update ",
     "id": "2caaf89f3cf849149b03b1fc69b91343",
     "complete": true
+  },
+  {
+    "name": "gaby button: 1 click main lights toggle, 2 lamp, 3 blanket, long coffee",
+    "id": "3efe630eb6594c9e9a557d4e154da680",
+    "complete": false
   }
 ]
