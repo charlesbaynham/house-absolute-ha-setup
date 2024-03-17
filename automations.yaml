@@ -1430,3 +1430,40 @@
       entity_id: 62d4b211f8fb7482d44fbf834d9f354b
       domain: switch
   mode: single
+- id: '1710693041067'
+  alias: 'TV: Turn off office lights when TV starts playing'
+  description: ''
+  trigger:
+  - platform: device
+    device_id: 7879c631ca472a7c5eabe2032d350a0c
+    domain: media_player
+    entity_id: b80b6e678b13ae5d84aacc5946c16279
+    type: playing
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 3
+  condition: []
+  action:
+  - service: light.turn_off
+    metadata: {}
+    data: {}
+    target:
+      area_id: office
+  mode: single
+- id: '1710693092388'
+  alias: 'TV: Turn on lamp when tv is paused'
+  description: ''
+  trigger:
+  - platform: device
+    device_id: 7879c631ca472a7c5eabe2032d350a0c
+    domain: media_player
+    entity_id: b80b6e678b13ae5d84aacc5946c16279
+    type: turned_off
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 6e6fa35e4fa380e4ae4f0516ef5fb037
+    entity_id: 0531f535af823ee9eba6eeb860023d37
+    domain: light
+  mode: single
