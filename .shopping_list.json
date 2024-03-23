@@ -52,6 +52,6 @@
   {
     "name": "detect blanket current draw",
     "id": "bc812b37147e41b28b365282537db808",
-    "complete": false
+    "complete": true
   }
 ]
