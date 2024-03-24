@@ -1450,6 +1450,11 @@
     data: {}
     target:
       area_id: office
+  - service: input_boolean.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.office_motion_enabled
   mode: single
 - id: '1710693092388'
   alias: 'TV: Turn on lamp when tv is paused'
