@@ -62,14 +62,14 @@
           "signal_strength___": "Signal Strength"
         },
         "entity_data": {
-          "time___": 27,
-          "sector___": "sector 1",
+          "time___": 78,
+          "sector___": "sector 3",
           "number_of_sectors___": 4,
-          "sector_timer___": 90,
+          "sector_timer___": 60,
           "toothbrush_state___": "running",
           "pressure___": "normal",
           "mode___": "daily clean",
-          "signal_strength___": -68
+          "signal_strength___": -80
         }
       }
     }
