@@ -13,3 +13,5 @@ secret_files/
 *.db-journal
 zigbee.db
 *.db
+
+.storage/bluetooth.passive_update_processor
