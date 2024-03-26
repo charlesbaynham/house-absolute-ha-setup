@@ -1472,3 +1472,18 @@
     entity_id: 0531f535af823ee9eba6eeb860023d37
     domain: light
   mode: single
+- id: '1711473280992'
+  alias: 'LIGHTS: Enable office motion sensor when Gaby leaves'
+  description: ''
+  trigger:
+  - platform: zone
+    entity_id: person.gaby
+    zone: zone.home
+    event: leave
+  condition: []
+  action:
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.office_motion_enabled
+  mode: single
