@@ -118,9 +118,6 @@
               "type": "entities",
               "entities": [
                 {
-                  "entity": "switch.gaby_blanket"
-                },
-                {
                   "entity": "switch.charles_blanket"
                 },
                 {
