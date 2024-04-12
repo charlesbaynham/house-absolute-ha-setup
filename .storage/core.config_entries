@@ -579,7 +579,7 @@
         "domain": "wiz",
         "title": "WiZ Tunable White 3FDEE2",
         "data": {
-          "host": "10.0.10.35"
+          "host": "10.0.99.3"
         },
         "options": {},
         "pref_disable_new_entities": false,
