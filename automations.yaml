@@ -1498,5 +1498,10 @@
     - sensor.distance_between_lovers
     below: 100000
   condition: []
-  action: []
+  action:
+  - service: tts.google_translate_say
+    data:
+      cache: false
+      entity_id: media_player.bedroom_speaker
+      message: Gaby has landed!
   mode: single
