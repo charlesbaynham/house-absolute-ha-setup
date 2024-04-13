@@ -1496,12 +1496,18 @@
   - platform: numeric_state
     entity_id:
     - sensor.distance_between_lovers
-    below: 100000
+    below: 10000
   condition: []
   action:
   - service: tts.google_translate_say
     data:
       cache: false
       entity_id: media_player.bedroom_speaker
-      message: Gaby has landed!
+      message: Gaby is 10km away.
+  - service: automation.turn_off
+    metadata: {}
+    data:
+      stop_actions: false
+    target:
+      entity_id: automation.oneoff_gaby_has_landed
   mode: single
