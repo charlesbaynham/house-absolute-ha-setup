@@ -1489,3 +1489,14 @@
     target:
       entity_id: input_boolean.office_motion_enabled
   mode: single
+- id: '1713025773048'
+  alias: 'ONEOFF: Gaby has landed'
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id:
+    - sensor.distance_between_lovers
+    below: 100000
+  condition: []
+  action: []
+  mode: single
