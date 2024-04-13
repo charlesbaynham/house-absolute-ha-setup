@@ -424,6 +424,8 @@
   - platform: state
     entity_id: group.any_home
     to: not_home
+  - platform: time
+    at: '18:00:00'
   condition:
   - condition: state
     entity_id: input_boolean.hot_water_tomorrow
