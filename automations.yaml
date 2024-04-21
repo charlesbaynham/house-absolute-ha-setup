@@ -535,10 +535,10 @@
   alias: LIGHTS kitchen motion
   description: ''
   trigger:
-  - type: occupied
+  - type: motion
     platform: device
     device_id: b7b1b7ffa3b966e2f138dc9be5050777
-    entity_id: binary_sensor.kitchen_motion_sensor_occupancy
+    entity_id: 02ec23b3647f2444decd61b57b981e64
     domain: binary_sensor
   condition: []
   action:
