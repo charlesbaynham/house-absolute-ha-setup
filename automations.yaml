@@ -455,6 +455,10 @@
     device_id: 83a6afa7e4a5c030a42e638987c0666c
     entity_id: binary_sensor.office_occupancy
     domain: binary_sensor
+  - platform: state
+    entity_id:
+    - binary_sensor.precense_sensor_occupancy
+    to: 'on'
   condition:
   - condition: state
     entity_id: group.any_home
@@ -469,10 +473,10 @@
     data:
       message: Someone is home
       title: Motion detected
-  - service: notify.mobile_app_charles_pixel
+  - service: notify.mobile_app_charles_phone
     data:
       message: Someone is home
-      title: Motion detected
+      title: Someone is home
   - delay:
       hours: 1
       minutes: 0
