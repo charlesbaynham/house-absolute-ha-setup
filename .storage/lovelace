@@ -161,15 +161,6 @@
                   "entity": "light.kitchen"
                 },
                 {
-                  "entity": "sensor.dishwasher_energy_power"
-                },
-                {
-                  "entity": "sensor.dishwasher_energy_today"
-                },
-                {
-                  "entity": "sensor.dishwasher_state"
-                },
-                {
                   "entity": "sensor.kitchen_motion_sensor_illuminance"
                 },
                 {
