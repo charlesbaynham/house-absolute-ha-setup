@@ -1471,7 +1471,10 @@
     domain: media_player
     entity_id: b80b6e678b13ae5d84aacc5946c16279
     type: turned_off
-  condition: []
+  condition:
+  - condition: state
+    entity_id: input_boolean.quiet_time
+    state: 'off'
   action:
   - type: turn_on
     device_id: 6e6fa35e4fa380e4ae4f0516ef5fb037
