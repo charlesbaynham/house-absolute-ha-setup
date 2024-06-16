@@ -65,30 +65,30 @@
       prob_given_true: 0.9
       prob_given_false: 0.2
 
-    # On weekends, move back by an hour and be less sure
+    # On weekends, move back and be less sure
     - platform: template
       value_template: >
         {{
           now().weekday() >= 6
           and
-          today_at("11:00") < now()
+          today_at("13:00") < now()
           and
-          now() < today_at("23:00")
+          now() < today_at("23:59")
         }}
-      prob_given_true: 0.2
-      prob_given_false: 0.7
+      prob_given_true: 0.4
+      prob_given_false: 0.6
     - platform: template
       value_template: >
         {{
           now().weekday() >= 6
           and not (
-            today_at("11:00") < now()
+            today_at("13:00") < now()
             and
-            now() < today_at("23:00")
+            now() < today_at("23:59")
           )
         }}
-      prob_given_true: 0.8
-      prob_given_false: 0.3
+      prob_given_true: 0.6
+      prob_given_false: 0.4
 
 - platform: bayesian
   prior: 0.33
