@@ -263,6 +263,13 @@
             "should_expose": false
           }
         }
+      },
+      "sensor.time_since_last_gaby_unlock": {
+        "assistants": {
+          "conversation": {
+            "should_expose": false
+          }
+        }
       }
     }
   }

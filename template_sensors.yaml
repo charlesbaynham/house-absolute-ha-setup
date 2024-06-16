@@ -160,3 +160,21 @@
       state: >
         {{ states("sensor.gaby_blanket_energy_power")|float > 10 }}
       state_class: measurement
+      
+- sensor:
+    - name: Time since last Gaby unlock
+      state_class: measurement
+      unit_of_measurement: "s"
+      state: >
+        {% set locked_state = states.binary_sensor.big_gaby_device_locked %}
+        {% set is_locked = locked_state and locked_state.state == 'on' %}
+        {% set bump = now() %}
+        {% if not is_locked %}
+        0
+        {% else %}
+        {{
+            as_timestamp(now())
+            - as_timestamp(locked_state.last_changed)
+        }}
+        {% endif %}
+
