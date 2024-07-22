@@ -361,6 +361,10 @@
                   ]
                 }
               ]
+            },
+            {
+              "type": "media-control",
+              "entity": "media_player.garden_speaker"
             }
           ]
         },
