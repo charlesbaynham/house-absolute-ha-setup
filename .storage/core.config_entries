@@ -1,21 +1,22 @@
 {
   "version": 1,
-  "minor_version": 1,
+  "minor_version": 3,
   "key": "core.config_entries",
   "data": {
     "entries": [
       {
-        "entry_id": "a6de78aaf8b8888cdd375cd1bb50012d",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "met",
-        "title": "Home",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {
           "name": "Home",
           "latitude": 51.4097548340808,
           "longitude": -0.28015941381454473,
           "elevation": 0
         },
+        "disabled_by": null,
+        "domain": "met",
+        "entry_id": "a6de78aaf8b8888cdd375cd1bb50012d",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {
           "name": "Home",
           "latitude": 51.4097548340808,
@@ -25,69 +26,77 @@
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "onboarding",
+        "title": "Home",
         "unique_id": null,
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "8213506eda0de67995ff5dcb8d3b21eb",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "rpi_power",
-        "title": "Raspberry Pi Power Supply Checker",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {},
+        "disabled_by": null,
+        "domain": "rpi_power",
+        "entry_id": "8213506eda0de67995ff5dcb8d3b21eb",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "onboarding",
+        "title": "Raspberry Pi Power Supply Checker",
         "unique_id": null,
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "1cc5e943127cfe8ea9dfb80ae831822a",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "cast",
-        "title": "Google Cast",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {
           "user_id": "83182181914149e6b08a5cd893b5d1c0",
           "known_hosts": [],
           "ignore_cec": [],
           "uuid": []
         },
+        "disabled_by": null,
+        "domain": "cast",
+        "entry_id": "1cc5e943127cfe8ea9dfb80ae831822a",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "zeroconf",
+        "title": "Google Cast",
         "unique_id": "cast",
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "ae6e77ea631884645bd06d73ad705117",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "hacs",
-        "title": "",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {
           "token": "7f0ae6d1f5717be8032906d72949a55a7132cf37"
         },
+        "disabled_by": null,
+        "domain": "hacs",
+        "entry_id": "ae6e77ea631884645bd06d73ad705117",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "user",
+        "title": "",
         "unique_id": null,
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "66d7def7ce257d41e00e5df0b1882027",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "hue",
-        "title": "Philips hue",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {
           "host": "192.168.1.197",
           "api_key": "g8hLWUHYGlz7jfqAIpu4FYPMVbO3hSbtmYwa8hwC",
           "api_version": 2
         },
+        "disabled_by": "user",
+        "domain": "hue",
+        "entry_id": "66d7def7ce257d41e00e5df0b1882027",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {
           "allow_hue_groups": false,
           "allow_unreachable": false
@@ -95,65 +104,68 @@
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "user",
+        "title": "Philips hue",
         "unique_id": "001788631df6",
-        "disabled_by": "user"
+        "version": 1
       },
       {
-        "entry_id": "86c53d41594d469224bbefaed2e29b5b",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "tado",
-        "title": "House Absolute",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {
           "username": "bayners123@gmail.com",
           "password": "NgBin45t8Nyw"
         },
+        "disabled_by": null,
+        "domain": "tado",
+        "entry_id": "86c53d41594d469224bbefaed2e29b5b",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {
           "fallback": "NEXT_TIME_BLOCK"
         },
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "user",
+        "title": "House Absolute",
         "unique_id": "79023",
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "0aaf46cefe88a07539cfa72bc22ff098",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "hassio",
-        "title": "Supervisor",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {},
+        "disabled_by": null,
+        "domain": "hassio",
+        "entry_id": "0aaf46cefe88a07539cfa72bc22ff098",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "system",
+        "title": "Supervisor",
         "unique_id": "hassio",
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "0cf86e1ac729070c427fcfcc3ea35a1b",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "pyscript",
-        "title": "pyscript",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {
           "allow_all_imports": true,
           "hass_is_global": false
         },
+        "disabled_by": null,
+        "domain": "pyscript",
+        "entry_id": "0cf86e1ac729070c427fcfcc3ea35a1b",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "import",
+        "title": "pyscript",
         "unique_id": "pyscript",
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "4032417f034d0fe8e08104ec73284cdf",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "mqtt",
-        "title": "core-mosquitto",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {
           "broker": "core-mosquitto",
           "port": 1883,
@@ -174,35 +186,39 @@
             "retain": false
           }
         },
+        "disabled_by": null,
+        "domain": "mqtt",
+        "entry_id": "4032417f034d0fe8e08104ec73284cdf",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "hassio",
+        "title": "core-mosquitto",
         "unique_id": null,
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "38ee90615fbafe7923188f2155ecd14c",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "tasmota",
-        "title": "Tasmota",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {
           "discovery_prefix": "tasmota/discovery"
         },
+        "disabled_by": null,
+        "domain": "tasmota",
+        "entry_id": "38ee90615fbafe7923188f2155ecd14c",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "mqtt",
+        "title": "Tasmota",
         "unique_id": "tasmota",
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "6bcc503d41e0f0d3c696caefacfbaabd",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "adaptive_lighting",
-        "title": "Use flux",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {
           "name": "Use flux",
           "lights": [
@@ -253,33 +269,37 @@
           "sunset_offset": 0.0,
           "separate_turn_on_commands": false
         },
+        "disabled_by": null,
+        "domain": "adaptive_lighting",
+        "entry_id": "6bcc503d41e0f0d3c696caefacfbaabd",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "import",
+        "title": "Use flux",
         "unique_id": "Use flux",
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "6e094ce26f2f5fe7656993f6fd05f4ca",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "sun",
-        "title": "Sun",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {},
+        "disabled_by": null,
+        "domain": "sun",
+        "entry_id": "6e094ce26f2f5fe7656993f6fd05f4ca",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "import",
+        "title": "Sun",
         "unique_id": null,
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "f35ff8b9a30c5b2588d498542a3744f5",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "google",
-        "title": "Configuration.yaml",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {
           "auth_implementation": "device_auth",
           "token": {
@@ -291,38 +311,42 @@
             "expires_at": 1670770687.3891077
           }
         },
+        "disabled_by": null,
+        "domain": "google",
+        "entry_id": "f35ff8b9a30c5b2588d498542a3744f5",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "import",
+        "title": "Configuration.yaml",
         "unique_id": null,
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "e2020d28df536928fd1271a2e968181f",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "dlna_dmr",
-        "title": "XBOXONE",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {
           "url": "http://[fe80::e9ef:daf:3754:31ed%2]:2869/upnphost/udhisapi.dll?content=uuid:44fdc9d9-b36d-439b-96d7-c466a364fca5",
           "device_id": "uuid:44fdc9d9-b36d-439b-96d7-c466a364fca5",
           "type": "urn:schemas-upnp-org:device:MediaRenderer:1",
           "mac": "f0:6e:0b:3f:8a:bd"
         },
+        "disabled_by": null,
+        "domain": "dlna_dmr",
+        "entry_id": "e2020d28df536928fd1271a2e968181f",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "ssdp",
+        "title": "XBOXONE",
         "unique_id": "uuid:44fdc9d9-b36d-439b-96d7-c466a364fca5",
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "6714e4487aec2a41d05a8d979ad05046",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "adguard",
-        "title": "AdGuard Home",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {
           "host": "127.0.0.1",
           "port": 45158,
@@ -331,137 +355,155 @@
           "username": null,
           "verify_ssl": true
         },
+        "disabled_by": "user",
+        "domain": "adguard",
+        "entry_id": "6714e4487aec2a41d05a8d979ad05046",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "hassio",
+        "title": "AdGuard Home",
         "unique_id": null,
-        "disabled_by": "user"
+        "version": 1
       },
       {
-        "entry_id": "0c7972a37eb9248999f667ddb8e8a9ec",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "radio_browser",
-        "title": "Radio Browser",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {},
+        "disabled_by": null,
+        "domain": "radio_browser",
+        "entry_id": "0c7972a37eb9248999f667ddb8e8a9ec",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "user",
+        "title": "Radio Browser",
         "unique_id": null,
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "d036b5cb4dfd028a4aa5f66f56425835",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "wiz",
-        "title": "WiZ Tunable White B75E40 (10.0.99.3)",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {
           "host": "10.0.99.3"
         },
+        "disabled_by": null,
+        "domain": "wiz",
+        "entry_id": "d036b5cb4dfd028a4aa5f66f56425835",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "ignore",
+        "title": "WiZ Tunable White B75E40 (10.0.99.3)",
         "unique_id": "28ee52b75e40",
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "856e4eaa8e8a8a2d1c38d5a34c251b83",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "raspberry_pi",
-        "title": "Raspberry Pi",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {},
+        "disabled_by": null,
+        "domain": "raspberry_pi",
+        "entry_id": "856e4eaa8e8a8a2d1c38d5a34c251b83",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "system",
+        "title": "Raspberry Pi",
         "unique_id": null,
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "c66f6b37602e09dd04599096d2c69b1c",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "google_assistant",
-        "title": "house-absolute",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {
           "project_id": "house-absolute"
         },
+        "disabled_by": null,
+        "domain": "google_assistant",
+        "entry_id": "c66f6b37602e09dd04599096d2c69b1c",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "import",
+        "title": "house-absolute",
         "unique_id": "house-absolute",
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "951399a67fc0e075d746847f285bfeae",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "bluetooth",
-        "title": "Bluetooth",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {},
+        "disabled_by": null,
+        "domain": "bluetooth",
+        "entry_id": "951399a67fc0e075d746847f285bfeae",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "integration_discovery",
+        "title": "Bluetooth",
         "unique_id": "DC:A6:32:AA:30:10",
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "b45940805d6ce7600f95682024e86bf9",
-        "version": 1,
-        "minor_version": 1,
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "data": {},
+        "disabled_by": null,
         "domain": "oralb",
+        "entry_id": "b45940805d6ce7600f95682024e86bf9",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "options": {},
+        "pref_disable_new_entities": false,
+        "pref_disable_polling": false,
+        "source": "bluetooth",
         "title": "Smart Series 9000 2A31",
-        "data": {},
-        "options": {},
-        "pref_disable_new_entities": false,
-        "pref_disable_polling": false,
-        "source": "bluetooth",
         "unique_id": "10:CE:A9:1E:2A:31",
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "bf88f5545e85f9db1c6329f18f40e759",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "ibeacon",
-        "title": "iBeacon Tracker",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {},
+        "disabled_by": null,
+        "domain": "ibeacon",
+        "entry_id": "bf88f5545e85f9db1c6329f18f40e759",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "bluetooth",
+        "title": "iBeacon Tracker",
         "unique_id": null,
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "c985c886c7d98f8cbfdfaec5f9ee2bee",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "tplink",
-        "title": "TP-LINK_Smart Plug_87A9 HS100(UK)",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {
           "host": "10.99.1.5"
         },
+        "disabled_by": null,
+        "domain": "tplink",
+        "entry_id": "c985c886c7d98f8cbfdfaec5f9ee2bee",
+        "minor_version": 4,
+        "modified_at": "2024-09-13T22:11:09.748242+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "user",
+        "title": "TP-LINK_Smart Plug_87A9 HS100(UK)",
         "unique_id": "b0:4e:26:48:87:a9",
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "393c90737c81a6278c00eee894856b18",
-        "version": 4,
-        "minor_version": 1,
-        "domain": "zha",
-        "title": "",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {
           "device": {
             "path": "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
@@ -470,19 +512,21 @@
           },
           "radio_type": "znp"
         },
+        "disabled_by": null,
+        "domain": "zha",
+        "entry_id": "393c90737c81a6278c00eee894856b18",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "user",
+        "title": "",
         "unique_id": null,
-        "disabled_by": null
+        "version": 4
       },
       {
-        "entry_id": "df3200b93b536ad2844d44744cf40d08",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "mobile_app",
-        "title": "big gaby",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {
           "app_id": "io.homeassistant.companion.android",
           "app_name": "Home Assistant",
@@ -502,19 +546,21 @@
           "webhook_id": "d46d2b62451a730cafbe646bd1253fd19e1153e64badc003c2e3f53a98dad390",
           "user_id": "f897c31ab0764cfea5f55934b0a98d09"
         },
+        "disabled_by": null,
+        "domain": "mobile_app",
+        "entry_id": "df3200b93b536ad2844d44744cf40d08",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "registration",
+        "title": "big gaby",
         "unique_id": "io.homeassistant.companion.android-6043417f8ab5f4a4",
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "2884b4ccee1efb1ee02f5048d2425c89",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "mobile_app",
-        "title": "Charles pixel",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {
           "app_id": "io.homeassistant.companion.android",
           "app_name": "Home Assistant",
@@ -534,19 +580,21 @@
           "webhook_id": "5df740c0fa5900819f33325de6b8cfb2de5f734dd1c59703a35db31ae45a2c14",
           "user_id": "29f0c878229944e5afb109373660cb8d"
         },
+        "disabled_by": null,
+        "domain": "mobile_app",
+        "entry_id": "2884b4ccee1efb1ee02f5048d2425c89",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "registration",
+        "title": "Charles pixel",
         "unique_id": "io.homeassistant.companion.android-9658fda12408b7b6",
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "274916f97f9bae40e803fde046d7bbe4",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "mobile_app",
-        "title": "It Harry",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {
           "app_id": "io.homeassistant.companion.android",
           "app_name": "Home Assistant",
@@ -566,35 +614,39 @@
           "webhook_id": "e86a5b26510b8a5cdb467ab3df97869678c6ec00a881b7b2d4a275c50a8c389f",
           "user_id": "b1cefd842d824024961af118876bead8"
         },
+        "disabled_by": null,
+        "domain": "mobile_app",
+        "entry_id": "274916f97f9bae40e803fde046d7bbe4",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "registration",
+        "title": "It Harry",
         "unique_id": "io.homeassistant.companion.android-24c0d35b8ac97e6b",
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "1a397e37506ed87ad591371f6b2b21c6",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "wiz",
-        "title": "WiZ Tunable White 3FDEE2",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {
           "host": "10.0.99.3"
         },
+        "disabled_by": null,
+        "domain": "wiz",
+        "entry_id": "1a397e37506ed87ad591371f6b2b21c6",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "user",
+        "title": "WiZ Tunable White 3FDEE2",
         "unique_id": "d8a0113fdee2",
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "44c8fa9ed09b19c1dc6a0fa85f23354e",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "mobile_app",
-        "title": "Charles’s iPhone",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {
           "model": "iPhone6,2",
           "app_data": {
@@ -615,19 +667,21 @@
           "user_id": "29f0c878229944e5afb109373660cb8d",
           "no_legacy_encryption": true
         },
+        "disabled_by": null,
+        "domain": "mobile_app",
+        "entry_id": "44c8fa9ed09b19c1dc6a0fa85f23354e",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "registration",
+        "title": "Charles’s iPhone",
         "unique_id": "io.robbie.HomeAssistant-0BAFCF1A-1E72-419D-9556-4ACF4BF6B587",
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "83b99c1a2071bee07f5e0163a0f4241a",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "mobile_app",
-        "title": "Charles Pixel 5",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {
           "app_id": "io.homeassistant.companion.android",
           "app_name": "Home Assistant",
@@ -647,36 +701,41 @@
           "webhook_id": "296c675b7065d0e53d48ef39aa822f195bc08c37470ca6411b6c39503e66965a",
           "user_id": "29f0c878229944e5afb109373660cb8d"
         },
+        "disabled_by": null,
+        "domain": "mobile_app",
+        "entry_id": "83b99c1a2071bee07f5e0163a0f4241a",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "registration",
+        "title": "Charles Pixel 5",
         "unique_id": "io.homeassistant.companion.android-2ebe6e3758d9fdbe",
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "9481b303e1a70b2113ee03dae540ec49",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "switch_as_x",
-        "title": "Garden fairy lights",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {},
+        "disabled_by": null,
+        "domain": "switch_as_x",
+        "entry_id": "9481b303e1a70b2113ee03dae540ec49",
+        "minor_version": 2,
+        "modified_at": "2024-09-13T22:11:38.877871+00:00",
         "options": {
           "entity_id": "switch.garden_fairy_lights",
-          "target_domain": "light"
+          "target_domain": "light",
+          "invert": false
         },
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "user",
+        "title": "Garden fairy lights",
         "unique_id": null,
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "2596dcd0d30810b35e3b6d019f06e178",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "mobile_app",
-        "title": "Charles phone",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {
           "app_id": "io.homeassistant.companion.android",
           "app_name": "Home Assistant",
@@ -696,19 +755,21 @@
           "webhook_id": "e9edbffd528bc559da29e84a1b78d80ee9f1ac738b9261bc6cec92f2262cec9c",
           "user_id": "29f0c878229944e5afb109373660cb8d"
         },
+        "disabled_by": null,
+        "domain": "mobile_app",
+        "entry_id": "2596dcd0d30810b35e3b6d019f06e178",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "registration",
+        "title": "Charles phone",
         "unique_id": "io.homeassistant.companion.android-e42c6689612275e3",
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "59970cf5b606eab0bcc8af4bea841d2e",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "mobile_app",
-        "title": "Nokia XR20",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {
           "app_id": "io.homeassistant.companion.android",
           "app_name": "Home Assistant",
@@ -728,33 +789,37 @@
           "webhook_id": "a1cf6d40d17929496148b81b737a011ac1d095abc3f45017da40ccd7411d75ae",
           "user_id": "59ea86915a25492d83b5112881ed3356"
         },
+        "disabled_by": null,
+        "domain": "mobile_app",
+        "entry_id": "59970cf5b606eab0bcc8af4bea841d2e",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "registration",
+        "title": "Nokia XR20",
         "unique_id": "io.homeassistant.companion.android-ce84fab7ff95e0bc",
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "b2bce6121997211e8a17ea974fed56ea",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "shopping_list",
-        "title": "Shopping list",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {},
+        "disabled_by": null,
+        "domain": "shopping_list",
+        "entry_id": "b2bce6121997211e8a17ea974fed56ea",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "user",
+        "title": "Shopping list",
         "unique_id": "shopping_list",
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "e24141631a68049e6d6c2e7247024478",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "cloudflare",
-        "title": "houseabsolute.co.uk",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {
           "api_token": "Vg9TTMT99DsBw1Pt65TzJdk5uqo4IOi8MhZArfWh",
           "zone": "houseabsolute.co.uk",
@@ -762,19 +827,21 @@
             "automation.houseabsolute.co.uk"
           ]
         },
+        "disabled_by": null,
+        "domain": "cloudflare",
+        "entry_id": "e24141631a68049e6d6c2e7247024478",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "user",
+        "title": "houseabsolute.co.uk",
         "unique_id": "houseabsolute.co.uk",
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "9c9b31fca41dd40bb7acbe88b3e858a7",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "mass",
-        "title": "Music Assistant",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {
           "url": "http://172.30.32.1:8095",
           "use_addon": false,
@@ -782,37 +849,41 @@
           "openai_agent_id": "homeassistant",
           "expose_players_assist": true
         },
+        "disabled_by": null,
+        "domain": "mass",
+        "entry_id": "9c9b31fca41dd40bb7acbe88b3e858a7",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "zeroconf",
+        "title": "Music Assistant",
         "unique_id": "252bda3d29ae44cd867b296ae70b8ef7",
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "197704834e74c06f52fe184999927374",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "androidtv_remote",
-        "title": "Office TV",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {
           "host": "192.168.1.189",
           "name": "Office TV",
           "mac": "3C:31:74:1A:81:BB"
         },
+        "disabled_by": null,
+        "domain": "androidtv_remote",
+        "entry_id": "197704834e74c06f52fe184999927374",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "zeroconf",
+        "title": "Office TV",
         "unique_id": "3c:31:74:1a:81:bb",
-        "disabled_by": null
+        "version": 1
       },
       {
-        "entry_id": "1649bcd67ef0e94810a523e44b5eb4c0",
-        "version": 1,
-        "minor_version": 1,
-        "domain": "xiaomi_miio",
-        "title": "Noonoo",
+        "created_at": "1970-01-01T00:00:00+00:00",
         "data": {
           "config_flow_device": "device",
           "host": "10.99.1.2",
@@ -823,12 +894,18 @@
           "cloud_password": "740485ab",
           "cloud_country": "sg"
         },
+        "disabled_by": null,
+        "domain": "xiaomi_miio",
+        "entry_id": "1649bcd67ef0e94810a523e44b5eb4c0",
+        "minor_version": 1,
+        "modified_at": "1970-01-01T00:00:00+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
         "source": "user",
+        "title": "Noonoo",
         "unique_id": "78:11:dc:7e:0f:39",
-        "disabled_by": null
+        "version": 1
       }
     ]
   }

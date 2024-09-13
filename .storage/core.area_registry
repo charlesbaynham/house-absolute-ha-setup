@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "minor_version": 3,
+  "minor_version": 7,
   "key": "core.area_registry",
   "data": {
     "areas": [
@@ -10,7 +10,10 @@
         "picture": null,
         "aliases": [],
         "icon": null,
-        "floor_id": null
+        "floor_id": null,
+        "labels": [],
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "name": "Kitchen",
@@ -18,7 +21,10 @@
         "picture": null,
         "aliases": [],
         "icon": null,
-        "floor_id": null
+        "floor_id": null,
+        "labels": [],
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "name": "Bedroom",
@@ -26,7 +32,10 @@
         "picture": null,
         "aliases": [],
         "icon": null,
-        "floor_id": null
+        "floor_id": null,
+        "labels": [],
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "name": "Office",
@@ -34,7 +43,10 @@
         "picture": null,
         "aliases": [],
         "icon": null,
-        "floor_id": null
+        "floor_id": null,
+        "labels": [],
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "name": "House Absolute",
@@ -42,7 +54,10 @@
         "picture": null,
         "aliases": [],
         "icon": null,
-        "floor_id": null
+        "floor_id": null,
+        "labels": [],
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "name": "Hot Water",
@@ -50,7 +65,10 @@
         "picture": null,
         "aliases": [],
         "icon": null,
-        "floor_id": null
+        "floor_id": null,
+        "labels": [],
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "name": "Garden",
@@ -58,7 +76,10 @@
         "picture": null,
         "aliases": [],
         "icon": null,
-        "floor_id": null
+        "floor_id": null,
+        "labels": [],
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       }
     ]
   }

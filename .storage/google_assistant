@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "minor_version": 1,
+  "minor_version": 2,
   "key": "google_assistant",
   "data": {
     "agent_user_ids": {
