@@ -13,6 +13,12 @@
             {
               "type": "entities",
               "entities": [
+                "script.turn_off_all_lights"
+              ]
+            },
+            {
+              "type": "entities",
+              "entities": [
                 {
                   "entity": "person.charles"
                 },

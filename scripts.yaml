@@ -107,3 +107,18 @@ clean_the_living_room:
       entity_id: vacuum.noonoo
   mode: single
   icon: mdi:sofa
+turn_off_all_lights:
+  alias: Turn off all lights
+  sequence:
+  - action: light.turn_off
+    metadata: {}
+    data: {}
+    target:
+      area_id:
+      - bedroom
+      - garden
+      - kitchen
+      - living_room
+      - office
+  description: ''
+  icon: mdi:power
