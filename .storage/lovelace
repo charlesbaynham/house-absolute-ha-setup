@@ -173,7 +173,7 @@
                   "entity": "binary_sensor.kitchen_motion_sensor_occupancy"
                 },
                 {
-                  "entity": "sensor.kitchen_motion_temperature"
+                  "entity": "sensor.kitchen_motion_sensor_temperature"
                 }
               ],
               "title": "Kitchen"
