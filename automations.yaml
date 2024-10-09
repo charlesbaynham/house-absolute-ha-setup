@@ -535,10 +535,10 @@
   alias: LIGHTS kitchen motion
   description: ''
   trigger:
-  - type: motion
+  - type: occupied
     platform: device
     device_id: b7b1b7ffa3b966e2f138dc9be5050777
-    entity_id: 02ec23b3647f2444decd61b57b981e64
+    entity_id: 895bc7d4ff374561796a53b88b6952c7
     domain: binary_sensor
   condition: []
   action:
@@ -547,16 +547,16 @@
     entity_id: light.kitchen
     domain: light
   - wait_for_trigger:
-    - type: no_motion
+    - type: not_occupied
       platform: device
       device_id: b7b1b7ffa3b966e2f138dc9be5050777
-      entity_id: 02ec23b3647f2444decd61b57b981e64
+      entity_id: 895bc7d4ff374561796a53b88b6952c7
       domain: binary_sensor
     continue_on_timeout: true
     timeout: '10000'
   - delay:
       hours: 0
-      minutes: 5
+      minutes: 3
       seconds: 0
       milliseconds: 0
   - type: turn_off
