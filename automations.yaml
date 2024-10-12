@@ -513,7 +513,7 @@
   description: ''
   trigger:
   - platform: template
-    value_template: '{{state_attr("climate.house_absolute", "temperature") > 20.0
+    value_template: '{{state_attr("climate.house_absolute", "temperature") > 21.0
 
       and
 
@@ -525,11 +525,11 @@
       minutes: 5
       seconds: 0
       milliseconds: 0
-  - service: climate.set_temperature
-    data:
-      temperature: 20
+  - data:
+      temperature: 21
     target:
       area_id: house_absolute
+    action: climate.set_temperature
   mode: single
 - id: '1648623157497'
   alias: LIGHTS kitchen motion
