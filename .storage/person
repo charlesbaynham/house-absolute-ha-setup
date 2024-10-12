@@ -31,7 +31,8 @@
         "name": "Haraldo",
         "device_trackers": [
           "device_tracker.it_harry",
-          "device_tracker.harryphone"
+          "device_tracker.harryphone",
+          "device_tracker.device_name"
         ],
         "user_id": "b1cefd842d824024961af118876bead8",
         "picture": "/api/image/serve/94b6bfe1aee22a3ccaebe3c1e4930bfd/512x512",
