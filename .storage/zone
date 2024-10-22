@@ -246,6 +246,15 @@
         "radius": 263.0,
         "icon": "mdi:cat",
         "id": "casa_de_georgie"
+      },
+      {
+        "id": "rancho_colorado",
+        "latitude": 19.0758944,
+        "longitude": -98.2187825,
+        "name": "Rancho colorado",
+        "icon": "mdi:account-cowboy-hat",
+        "passive": false,
+        "radius": 203.0
       }
     ]
   }

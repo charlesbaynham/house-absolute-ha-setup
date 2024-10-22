@@ -739,7 +739,7 @@
         "data": {
           "app_id": "io.homeassistant.companion.android",
           "app_name": "Home Assistant",
-          "app_version": "2024.9.4-full (13806)",
+          "app_version": "2024.10.3-full (14058)",
           "device_name": "Charles phone",
           "manufacturer": "Google",
           "model": "Pixel 6",
@@ -759,7 +759,7 @@
         "domain": "mobile_app",
         "entry_id": "2596dcd0d30810b35e3b6d019f06e178",
         "minor_version": 1,
-        "modified_at": "2024-10-03T23:03:53.570447+00:00",
+        "modified_at": "2024-10-22T23:42:52.943738+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
