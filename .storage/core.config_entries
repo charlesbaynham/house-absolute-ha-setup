@@ -912,12 +912,12 @@
         "data": {
           "app_id": "io.homeassistant.companion.android",
           "app_name": "Home Assistant",
-          "app_version": "2024.9.4-full (13806)",
+          "app_version": "2024.10.3-full (14058)",
           "device_name": "device name",
           "manufacturer": "Google",
           "model": "Pixel 5",
           "os_name": "Android",
-          "os_version": "33",
+          "os_version": "34",
           "supports_encryption": false,
           "app_data": {
             "push_websocket_channel": true,
@@ -932,7 +932,7 @@
         "domain": "mobile_app",
         "entry_id": "01JA1E1Q8VYCQCTMCP4ZRHKVGZ",
         "minor_version": 1,
-        "modified_at": "2024-10-12T22:37:07.739326+00:00",
+        "modified_at": "2024-11-30T20:57:10.780391+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
