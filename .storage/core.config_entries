@@ -530,7 +530,7 @@
         "data": {
           "app_id": "io.homeassistant.companion.android",
           "app_name": "Home Assistant",
-          "app_version": "2024.10.3-full (14058)",
+          "app_version": "2024.12.1-full (14604)",
           "device_name": "big gaby",
           "manufacturer": "samsung",
           "model": "SM-F926B",
@@ -550,7 +550,7 @@
         "domain": "mobile_app",
         "entry_id": "df3200b93b536ad2844d44744cf40d08",
         "minor_version": 1,
-        "modified_at": "2024-11-19T20:15:24.929332+00:00",
+        "modified_at": "2024-12-12T14:37:01.852718+00:00",
         "options": {},
         "pref_disable_new_entities": false,
         "pref_disable_polling": false,
