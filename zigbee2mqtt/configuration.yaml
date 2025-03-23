@@ -1,0 +1,63 @@
+version: 4
+homeassistant:
+  enabled: true
+advanced:
+  network_key:
+    - 189
+    - 66
+    - 143
+    - 213
+    - 56
+    - 203
+    - 233
+    - 66
+    - 249
+    - 176
+    - 65
+    - 63
+    - 31
+    - 244
+    - 203
+    - 95
+  pan_id: 38536
+  ext_pan_id:
+    - 121
+    - 118
+    - 213
+    - 107
+    - 114
+    - 198
+    - 226
+    - 248
+mqtt:
+  server: mqtt://core-mosquitto:1883
+  user: addons
+  password: Aith2UKa8chah4oodaSie5az9quieBeR8rieSooz8riepie7ooMoo5eeyee6Dahz
+frontend:
+  enabled: true
+  port: 8099
+serial:
+  port: /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0
+  adapter: zstack
+devices:
+  '0x0017880104238bf3':
+    friendly_name: Living room hue lamp
+  '0x0017880102183ab2':
+    friendly_name: Hue dimmer switch 1
+  '0xd44867fffe0179c9':
+    friendly_name: TRV Living room
+  '0xd44867fffe05f511':
+    friendly_name: TRV Master Bedroom
+  '0x54ef441000d6f1b9':
+    friendly_name: Living room light switch
+  '0x086bd7fffe5b8135':
+    friendly_name: Kitchen surface lights
+  '0x00158d0007efe860':
+    friendly_name: Motion sensor kitchen
+  '0x00178801082b1230':
+    friendly_name: Bedroom lamp
+  '0x0cae5ffffed0e07e':
+    friendly_name: TRV Bedroom
+  '0x00124b0024fc163b':
+    friendly_name: 'MB button '
+groups: {}

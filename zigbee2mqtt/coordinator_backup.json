@@ -1,0 +1,177 @@
+{
+  "metadata": {
+    "format": "zigpy/open-coordinator-backup",
+    "version": 1,
+    "source": "zigbee-herdsman@3.2.7",
+    "internal": {
+      "date": "2025-03-22T18:05:49.711Z",
+      "znpVersion": 1
+    }
+  },
+  "stack_specific": {
+    "zstack": {
+      "tclk_seed": "fe870dae11614bbcc6003ee63edcd16b"
+    }
+  },
+  "coordinator_ieee": "00124b00238db14c",
+  "pan_id": "9688",
+  "extended_pan_id": "7976d56b72c6e2f8",
+  "nwk_update_id": 0,
+  "security_level": 5,
+  "channel": 11,
+  "channel_mask": [
+    11
+  ],
+  "network_key": {
+    "key": "bd428fd538cbe942f9b0413f1ff4cb5f",
+    "sequence_number": 0,
+    "frame_counter": 153403
+  },
+  "devices": [
+    {
+      "nwk_address": "7348",
+      "ieee_address": "0017880104238bf3",
+      "is_child": false,
+      "link_key": {
+        "key": "fe2532654a34d100cd6d1dd8d0e3e987",
+        "rx_counter": 0,
+        "tx_counter": 33
+      }
+    },
+    {
+      "nwk_address": "80a1",
+      "ieee_address": "00158d000293215a",
+      "is_child": false
+    },
+    {
+      "nwk_address": "b56b",
+      "ieee_address": "0017880102b0c013",
+      "is_child": false
+    },
+    {
+      "nwk_address": "4972",
+      "ieee_address": "0017880102b85304",
+      "is_child": false
+    },
+    {
+      "nwk_address": "5af",
+      "ieee_address": "0017880102dfb182",
+      "is_child": false
+    },
+    {
+      "nwk_address": "ab8c",
+      "ieee_address": "00178801082b1230",
+      "is_child": false,
+      "link_key": {
+        "key": "7baeed083f6e29dce179d58f0c260661",
+        "rx_counter": 0,
+        "tx_counter": 0
+      }
+    },
+    {
+      "nwk_address": "103a",
+      "ieee_address": "0017880106f61e30",
+      "is_child": false
+    },
+    {
+      "nwk_address": "6c0f",
+      "ieee_address": "00178801082af4a5",
+      "is_child": false
+    },
+    {
+      "nwk_address": "c58f",
+      "ieee_address": "0017880102183ab2",
+      "is_child": false,
+      "link_key": {
+        "key": "743a26e43f54c66b4cbd15ac10e95cbc",
+        "rx_counter": 0,
+        "tx_counter": 33
+      }
+    },
+    {
+      "nwk_address": "af1f",
+      "ieee_address": "f4b3b1fffe2015f7",
+      "is_child": false
+    },
+    {
+      "nwk_address": "7ab",
+      "ieee_address": "0017880106e8d51d",
+      "is_child": false
+    },
+    {
+      "nwk_address": "2df7",
+      "ieee_address": "60a423fffe035e5d",
+      "is_child": false
+    },
+    {
+      "nwk_address": "8878",
+      "ieee_address": "00124b0024fc163b",
+      "is_child": false,
+      "link_key": {
+        "key": "3b281a1adc9a79febc1b52356100aec6",
+        "rx_counter": 0,
+        "tx_counter": 0
+      }
+    },
+    {
+      "nwk_address": "c37",
+      "ieee_address": "cc86ecfffe1b2efb",
+      "is_child": false
+    },
+    {
+      "nwk_address": "1ecf",
+      "ieee_address": "0c4314fffe0d6431",
+      "is_child": false
+    },
+    {
+      "nwk_address": "eafe",
+      "ieee_address": "00158d0007efe860",
+      "is_child": true,
+      "link_key": {
+        "key": "9e6fe2a911ec5ebca6e8d1e13e51c46b",
+        "rx_counter": 0,
+        "tx_counter": 11
+      }
+    },
+    {
+      "nwk_address": "b25c",
+      "ieee_address": "00124b002510a7c7",
+      "is_child": false
+    },
+    {
+      "nwk_address": "66c7",
+      "ieee_address": "d44867fffe0179c9",
+      "is_child": false
+    },
+    {
+      "nwk_address": "8867",
+      "ieee_address": "d44867fffe05f511",
+      "is_child": false
+    },
+    {
+      "nwk_address": "3278",
+      "ieee_address": "54ef441000d6f1b9",
+      "is_child": true,
+      "link_key": {
+        "key": "7ff1e8e62e983e3f4776dbae0125a4e8",
+        "rx_counter": 0,
+        "tx_counter": 22
+      }
+    },
+    {
+      "nwk_address": "36e6",
+      "ieee_address": "086bd7fffe5b8135",
+      "is_child": false,
+      "link_key": {
+        "key": "b28cf5ef9e9cd7ce35bfbdc0230600f6",
+        "rx_counter": 0,
+        "tx_counter": 0
+      }
+    },
+    {
+      "nwk_address": "feba",
+      "ieee_address": "0cae5ffffed0e07e",
+      "is_child": false
+    }
+  ]
+}

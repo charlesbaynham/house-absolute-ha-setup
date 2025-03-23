@@ -1,0 +1,6 @@
+.cloud
+.storage
+deps
+*.log
+*.log.*
+*.db

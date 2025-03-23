@@ -1,0 +1,81 @@
+- id: '1742124552238'
+  alias: Living room lights copy main
+  description: ''
+  triggers:
+  - type: changed_states
+    device_id: b44f30835f4c82fab781ed7ca5d3c901
+    entity_id: edf7f349dea2fb4c1bfd054dcf148065
+    domain: light
+    trigger: device
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 1
+  conditions: []
+  actions:
+  - if:
+    - condition: device
+      type: is_off
+      device_id: b44f30835f4c82fab781ed7ca5d3c901
+      entity_id: edf7f349dea2fb4c1bfd054dcf148065
+      domain: light
+    then:
+    - action: light.turn_off
+      metadata: {}
+      data: {}
+      target:
+        area_id: living_room
+    else:
+    - action: light.turn_on
+      metadata: {}
+      data: {}
+      target:
+        area_id: living_room
+  mode: restart
+- id: '1742126819014'
+  alias: Bedroom dimmer switch
+  description: ''
+  use_blueprint:
+    path: patpac9/Hue_Dimmer_Switch_Easy_Custom_Buttons.yaml
+    input:
+      controller: Hue dimmer switch 1
+      on_released:
+      - action: light.turn_on
+        metadata: {}
+        data: {}
+        target:
+          area_id: bedroom
+      off_released:
+      - action: light.turn_off
+        metadata: {}
+        data: {}
+        target:
+          area_id: bedroom
+- id: '1742137223032'
+  alias: Kitchen motion
+  description: ''
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.motion_sensor_kitchen_occupancy
+      light_target:
+        area_id: kitchen
+      no_motion_wait: 120
+- id: '1742427173714'
+  alias: MB lights toggle button
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: 6f77d089f5a9df1cc0de6508043e5ff0
+    type: action
+    subtype: single
+    metadata: {}
+    trigger: device
+  conditions: []
+  actions:
+  - action: light.toggle
+    metadata: {}
+    data: {}
+    target:
+      area_id: master_bedroom
+  mode: single
