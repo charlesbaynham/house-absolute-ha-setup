@@ -1,0 +1,178 @@
+book_scene_and_sound:
+  sequence:
+  - action: media_player.media_pause
+    metadata: {}
+    data: {}
+    target:
+      device_id: 40761869dfab7340bc5b2482008c0d65
+  - action: scene.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: scene.spot_1
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - action: media_player.play_media
+    metadata: {}
+    data:
+      media_content_id: media-source://media_source/local/router_usb/TheAmulet.mp3
+      media_content_type: audio/mpeg
+    target:
+      device_id: 80c4bf997ceffa999f7db19331dd7300
+  alias: Book scene and sound
+  description: ''
+pause_mode_start:
+  sequence:
+  - action: media_player.media_pause
+    metadata: {}
+    data: {}
+    target:
+      device_id: 40761869dfab7340bc5b2482008c0d65
+  - action: scene.turn_on
+    metadata: {}
+    data:
+      transition: 3
+    target:
+      entity_id: scene.pause_mode
+  - action: media_player.play_media
+    metadata: {}
+    data:
+      media_content_id: media-source://media_source/local/router_usb/tibetan_bowls.mp3
+      media_content_type: audio/mpeg
+    target:
+      device_id: 80c4bf997ceffa999f7db19331dd7300
+  alias: Pause mode start
+  description: ''
+return_from_alt_modes:
+  sequence:
+  - action: scene.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: scene.normal
+  - action: media_player.media_pause
+    metadata: {}
+    data: {}
+    target:
+      entity_id: media_player.living_room_speaker
+  - action: media_player.volume_set
+    metadata: {}
+    data:
+      volume_level: 1
+    target:
+      entity_id: media_player.living_room_speaker
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - action: media_player.media_play
+    metadata: {}
+    data: {}
+    target:
+      device_id: 40761869dfab7340bc5b2482008c0d65
+  alias: Return from alt modes
+  description: ''
+steph_scene_and_sound:
+  sequence:
+  - action: media_player.media_pause
+    metadata: {}
+    data: {}
+    target:
+      device_id: 40761869dfab7340bc5b2482008c0d65
+  - action: scene.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: scene.spot_2
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 1
+      milliseconds: 500
+  - action: media_player.play_media
+    metadata: {}
+    data:
+      media_content_id: media-source://media_source/local/router_usb/confrontation.mp3
+      media_content_type: audio/mpeg
+    target:
+      device_id: 80c4bf997ceffa999f7db19331dd7300
+  alias: Steph scene and sound
+  description: ''
+police_mode_2:
+  sequence:
+  - action: media_player.media_pause
+    metadata: {}
+    data: {}
+    target:
+      device_id: 40761869dfab7340bc5b2482008c0d65
+  - action: media_player.volume_set
+    metadata: {}
+    data:
+      volume_level: 0.25
+    target:
+      entity_id: media_player.living_room_speaker
+  - action: media_player.play_media
+    metadata: {}
+    data:
+      media_content_id: media-source://media_source/local/router_usb/siren.mp3
+      media_content_type: audio/mpeg
+    target:
+      device_id: 80c4bf997ceffa999f7db19331dd7300
+  - action: light.turn_off
+    metadata: {}
+    data: {}
+    target:
+      device_id: 2ef729c99b7c21fffe4e2415bf8d861c
+  - repeat:
+      sequence:
+      - action: light.turn_on
+        metadata: {}
+        data:
+          rgb_color:
+          - 226
+          - 36
+          - 0
+        target:
+          label_id: colour
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 1
+          milliseconds: 0
+      - action: light.turn_on
+        metadata: {}
+        data:
+          rgb_color:
+          - 0
+          - 97
+          - 254
+        target:
+          label_id: colour
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 1
+          milliseconds: 0
+      while:
+      - condition: state
+        entity_id: input_boolean.police_mode
+        state: 'on'
+  - action: light.turn_on
+    metadata: {}
+    data:
+      effect: stop_effect
+    target:
+      area_id: living_room
+  - action: scene.turn_on
+    metadata: {}
+    data:
+      transition: 3
+    target:
+      entity_id: scene.normal
+  mode: restart
+  alias: Police mode
+  description: ''

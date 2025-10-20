@@ -2,23 +2,24 @@
   alias: Living room lights copy main
   description: ''
   triggers:
-  - type: changed_states
+  - domain: mqtt
     device_id: b44f30835f4c82fab781ed7ca5d3c901
-    entity_id: edf7f349dea2fb4c1bfd054dcf148065
-    domain: light
+    type: action
+    subtype: single_left
     trigger: device
-    for:
+  conditions: []
+  actions:
+  - delay:
       hours: 0
       minutes: 0
       seconds: 1
-  conditions: []
-  actions:
+      milliseconds: 0
   - if:
     - condition: device
       type: is_off
       device_id: b44f30835f4c82fab781ed7ca5d3c901
-      entity_id: edf7f349dea2fb4c1bfd054dcf148065
-      domain: light
+      entity_id: 2171f345562f270f7e227a2561c88b8b
+      domain: switch
     then:
     - action: light.turn_off
       metadata: {}
@@ -51,31 +52,487 @@
         data: {}
         target:
           area_id: bedroom
+      up_released:
+      - action: light.turn_on
+        metadata: {}
+        data: {}
+        target:
+          device_id: 4e798fe039ef3b748b3e8c867f3fcb68
+      down_released:
+      - action: light.turn_off
+        metadata: {}
+        data: {}
+        target:
+          device_id: 4e798fe039ef3b748b3e8c867f3fcb68
 - id: '1742137223032'
   alias: Kitchen motion
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id: binary_sensor.motion_sensor_kitchen_occupancy
+    from: 'off'
+    to: 'on'
+  - trigger: state
+    entity_id:
+    - input_boolean.kitchen_motion_enabled
+    to: 'on'
+  conditions:
+  - condition: state
+    entity_id: input_boolean.kitchen_motion_enabled
+    state: 'on'
+  - condition: state
+    entity_id: binary_sensor.motion_sensor_kitchen_occupancy
+    state: 'on'
+  actions:
+  - alias: Turn on the light
+    action: light.turn_on
+    target:
+      area_id: kitchen
+    data: {}
+  - alias: Wait until there is no motion from device
+    wait_for_trigger:
+      trigger: state
+      entity_id: binary_sensor.motion_sensor_kitchen_occupancy
+      from: 'on'
+      to: 'off'
+  - alias: Wait the number of seconds that has been set
+    delay: 120
+  - alias: Turn off the light
+    action: light.turn_off
+    target:
+      area_id: kitchen
+    data: {}
+  mode: restart
+  max_exceeded: silent
+- id: '1745325342231'
+  alias: Kitchen motion controlled by switch
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: bb9532358b487e4b89cfe0e3b76b91e0
+    type: action
+    subtype: single_left
+    trigger: device
+  conditions: []
+  actions:
+  - action: input_boolean.toggle
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.kitchen_motion_enabled
+  mode: single
+- id: '1745327309760'
+  alias: Kitchen switch update with motion state
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - input_boolean.kitchen_motion_enabled
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+  conditions: []
+  actions:
+  - if:
+    - condition: state
+      entity_id: input_boolean.kitchen_motion_enabled
+      state: 'on'
+    then:
+    - type: turn_on
+      device_id: bb9532358b487e4b89cfe0e3b76b91e0
+      entity_id: 8afbce029373c30cdf50bb2f317faee5
+      domain: switch
+    else:
+    - type: turn_off
+      device_id: bb9532358b487e4b89cfe0e3b76b91e0
+      entity_id: 8afbce029373c30cdf50bb2f317faee5
+      domain: switch
+  mode: restart
+- id: '1745327896846'
+  alias: Kitchen button controls surface lights
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: bb9532358b487e4b89cfe0e3b76b91e0
+    type: action
+    subtype: single_right
+    trigger: device
+  conditions: []
+  actions:
+  - if:
+    - condition: device
+      type: is_on
+      device_id: bb9532358b487e4b89cfe0e3b76b91e0
+      entity_id: 81a39d335fe37927b2849f2eef94b6ed
+      domain: light
+    then:
+    - type: turn_on
+      device_id: f4b4e900064fe24bcc24ab77d53af88a
+      entity_id: 97c5afcebb430bd9c36137a010c70301
+      domain: switch
+    else:
+    - type: turn_off
+      device_id: f4b4e900064fe24bcc24ab77d53af88a
+      entity_id: 97c5afcebb430bd9c36137a010c70301
+      domain: switch
+  mode: single
+- id: '1745601597457'
+  alias: Living room motion
   description: ''
   use_blueprint:
     path: homeassistant/motion_light.yaml
     input:
-      motion_entity: binary_sensor.motion_sensor_kitchen_occupancy
+      motion_entity: binary_sensor.living_room_motion_occupancy
       light_target:
-        area_id: kitchen
-      no_motion_wait: 120
-- id: '1742427173714'
-  alias: MB lights toggle button
-  description: ''
+        area_id: living_room
+      no_motion_wait: 600
+- id: '1745709642332'
+  alias: Living room cosy button
+  description: Toggle the room light between cosy mode and off
   triggers:
   - domain: mqtt
-    device_id: 6f77d089f5a9df1cc0de6508043e5ff0
+    device_id: d74916d94f1f149b3d2eec73d3b68b7f
     type: action
     subtype: single
     metadata: {}
     trigger: device
+  actions:
+  - if:
+    - condition: or
+      conditions:
+      - condition: device
+        type: is_on
+        device_id: b44f30835f4c82fab781ed7ca5d3c901
+        entity_id: edf7f349dea2fb4c1bfd054dcf148065
+        domain: light
+      - condition: device
+        type: is_off
+        device_id: f0a6cf6431c075871af92e7708dbd126
+        entity_id: 27e923bbfc801cbab9cb2ec23df1e461
+        domain: light
+    then:
+    - action: scene.turn_on
+      metadata: {}
+      data: {}
+      target:
+        entity_id: scene.living_room_cosy
+    else:
+    - action: light.turn_off
+      metadata: {}
+      data: {}
+      target:
+        area_id: living_room
+  mode: single
+- id: '1746979953148'
+  alias: Button lights
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: b44f30835f4c82fab781ed7ca5d3c901
+    type: action
+    subtype: single_left
+    trigger: device
   conditions: []
   actions:
-  - action: light.toggle
+  - if:
+    - condition: device
+      type: is_off
+      device_id: 4dedaae4021e5ec3092e730d6136679c
+      entity_id: f2c1f12762cb37adc81dfb5a252f243c
+      domain: light
+    then:
+    - action: light.turn_on
+      metadata: {}
+      data: {}
+      target:
+        area_id: living_room
+    else:
+    - action: light.turn_off
+      metadata: {}
+      data: {}
+      target:
+        area_id: living_room
+  mode: single
+- id: '1746980670569'
+  alias: Police mode
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - input_boolean.police_mode
+    to:
+  conditions: []
+  actions:
+  - if:
+    - condition: state
+      entity_id: input_boolean.police_mode
+      state: 'on'
+    then:
+    - action: script.turn_on
+      metadata: {}
+      data: {}
+      target:
+        entity_id: script.police_mode
+    else:
+    - action: script.turn_on
+      metadata: {}
+      data: {}
+      target:
+        entity_id: script.return_from_alt_modes
+  mode: restart
+- id: '1746992430731'
+  alias: Test audio
+  description: ''
+  triggers: []
+  conditions: []
+  actions:
+  - action: media_player.play_media
+    target:
+      entity_id: media_player.living_room_speaker
+    data:
+      media_content_id: media-source://media_source/local/router_usb/pianoloops.mp3
+      media_content_type: audio/mpeg
+    metadata:
+      title: pianoloops.mp3
+      thumbnail:
+      media_class: music
+      children_media_class:
+      navigateIds:
+      - {}
+      - media_content_type: app
+        media_content_id: media-source://media_source
+      - media_content_type: ''
+        media_content_id: media-source://media_source/local/router_usb
+  mode: single
+- id: '1747489461847'
+  alias: Pause mode toggle
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - input_boolean.pause_mode
+  conditions: []
+  actions:
+  - if:
+    - condition: state
+      entity_id: input_boolean.pause_mode
+      state: 'on'
+    then:
+    - action: script.turn_on
+      metadata: {}
+      data: {}
+      target:
+        entity_id: script.pause_mode_start
+    else:
+    - action: script.turn_on
+      metadata: {}
+      data: {}
+      target:
+        entity_id: script.return_from_alt_modes
+  mode: single
+- id: '1747489979778'
+  alias: Trigger amulet automation
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - input_button.trigger_amulet_speech
+  conditions: []
+  actions:
+  - action: script.turn_on
     metadata: {}
     data: {}
     target:
-      area_id: master_bedroom
+      entity_id: script.book_scene_and_sound
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+  - wait_for_trigger:
+    - trigger: state
+      entity_id:
+      - media_player.living_room_speaker
+      to: idle
+  - action: script.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: script.return_from_alt_modes
+  mode: single
+- id: '1747494144986'
+  alias: Game switch
+  description: ''
+  use_blueprint:
+    path: patpac9/Hue_Dimmer_Switch_Easy_Custom_Buttons.yaml
+    input:
+      controller: Game switch
+      on_released:
+      - action: input_boolean.toggle
+        metadata: {}
+        data: {}
+        target:
+          entity_id: input_boolean.pause_mode
+      down_released:
+      - action: input_boolean.toggle
+        metadata: {}
+        data: {}
+        target:
+          entity_id: input_boolean.police_mode
+      up_released:
+      - action: input_button.press
+        metadata: {}
+        data: {}
+        target:
+          entity_id: input_button.trigger_amulet_speech
+      off_released:
+      - action: input_boolean.toggle
+        metadata: {}
+        data: {}
+        target:
+          entity_id: input_boolean.steph_mode
+- id: '1747495450830'
+  alias: Steph mode automation
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - input_boolean.steph_mode
+  conditions: []
+  actions:
+  - if:
+    - condition: state
+      entity_id: input_boolean.steph_mode
+      state: 'on'
+    then:
+    - action: script.turn_on
+      metadata: {}
+      data: {}
+      target:
+        entity_id: script.steph_scene_and_sound
+    else:
+    - action: script.turn_on
+      metadata: {}
+      data: {}
+      target:
+        entity_id: script.return_from_alt_modes
+  mode: single
+- id: '1748385723267'
+  alias: Master bedroom light dimmer switch
+  description: ''
+  use_blueprint:
+    path: patpac9/Hue_Dimmer_Switch_Easy_Custom_Buttons.yaml
+    input:
+      controller: Master bedroom wireless switch
+      up_released:
+      - action: cover.open_cover
+        metadata: {}
+        data: {}
+        target:
+          area_id: master_bedroom
+      on_released:
+      - action: light.turn_on
+        metadata: {}
+        data: {}
+        target:
+          area_id: master_bedroom
+      off_released:
+      - action: light.turn_off
+        metadata: {}
+        data: {}
+        target:
+          area_id: master_bedroom
+      down_released:
+      - action: cover.close_cover
+        metadata: {}
+        data: {}
+        target:
+          area_id: master_bedroom
+      on_hold_released:
+      - action: scene.turn_on
+        metadata: {}
+        data:
+          transition: 3
+        target:
+          entity_id: scene.master_bedroom_chill
+- id: gardenlightsmotinoandsun
+  alias: Turn on living room light when garden motion and sun is down
+  description: Triggers on motion or sunset, checks both motion and sun conditions
+  triggers:
+  - entity_id:
+    - binary_sensor.garden_motion_occupancy
+    to: 'on'
+    trigger: state
+  - event: sunset
+    trigger: sun
+  conditions:
+  - condition: state
+    entity_id: binary_sensor.garden_motion_occupancy
+    state: 'on'
+  - condition: sun
+    after: sunset
+  actions:
+  - target:
+      area_id: garden
+    action: light.turn_on
+    data: {}
+  - wait_for_trigger:
+    - entity_id:
+      - binary_sensor.garden_motion_occupancy
+      to: 'off'
+      for:
+        hours: 0
+        minutes: 5
+        seconds: 0
+      trigger: state
+    timeout: 02:00:00
+    continue_on_timeout: true
+  - target:
+      area_id: garden
+    action: light.turn_off
+    data: {}
+  mode: restart
+- id: '1753619524254'
+  alias: Turn on / off lights when no one is home
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.anyone_home
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+  conditions: []
+  actions:
+  - if:
+    - condition: state
+      entity_id: binary_sensor.anyone_home
+      state: 'off'
+    then:
+    - action: light.turn_off
+      metadata: {}
+      data: {}
+      target:
+        area_id:
+        - bedroom
+        - garden
+        - hallway
+        - master_bedroom
+        - kitchen
+        - living_room
+  mode: restart
+- id: '1760784792347'
+  alias: Restart let's encrypt daily
+  description: ''
+  triggers:
+  - trigger: time
+    at: 02:00:00
+  conditions: []
+  actions:
+  - action: hassio.addon_restart
+    metadata: {}
+    data:
+      addon: core_letsencrypt
   mode: single

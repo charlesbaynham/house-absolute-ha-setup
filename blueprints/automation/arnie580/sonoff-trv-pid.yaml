@@ -1,0 +1,49 @@
+blueprint:
+  name: Sonoff TRV PID
+  description: Automation to enable PID control of Sonoff TRV in conjuction with Smart
+    Thermostat PID (available from HACS)
+  domain: automation
+  input:
+    thermostat_value:
+      name: Thermostat Value
+      selector:
+        entity:
+          filter:
+          - domain:
+            - input_number
+          multiple: false
+    max_valve_opening:
+      name: Max Valve Opening Position
+      selector:
+        entity:
+          filter:
+          - domain:
+            - number
+          multiple: false
+    max_valve_closing:
+      name: Max Valve Closing Position
+      selector:
+        entity:
+          filter:
+          - domain:
+            - number
+          multiple: false
+  source_url: https://github.com/arnie580/hass-blueprints/blob/main/sonoff-trv-pid.yaml
+variables:
+  thermostat_value: !input thermostat_value
+triggers:
+  trigger: state
+  entity_id: !input thermostat_value
+actions:
+- action: number.set_value
+  data:
+    value: '{{100.0-states(thermostat_value)| float}}'
+  target:
+    entity_id: !input max_valve_closing
+- action: number.set_value
+  data:
+    value: "{% if (states(thermostat_value) | float + 5) < 100 %}\n    {{states(thermostat_value)|
+      float+5}} \n{% else %}\n    100\n{% endif %}"
+  target:
+    entity_id: !input max_valve_opening
+mode: single
