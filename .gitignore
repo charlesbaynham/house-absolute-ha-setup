@@ -6,3 +6,4 @@ deps
 *.db
 *.db-shm
 *.db-wal
+.ha_run.lock
