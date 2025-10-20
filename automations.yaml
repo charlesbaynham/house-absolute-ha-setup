@@ -536,3 +536,19 @@
     data:
       addon: core_letsencrypt
   mode: single
+- id: '1729425600000'
+  alias: Turn off all lights when everyone leaves
+  description: Automatically turn off all lights when no one is home
+  triggers:
+  - trigger: state
+    entity_id: binary_sensor.anyone_home
+    from: 'on'
+    to: 'off'
+  conditions: []
+  actions:
+  - action: light.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: all
+  mode: single
