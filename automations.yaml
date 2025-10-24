@@ -576,5 +576,17 @@
     metadata: {}
     data:
       level: warning
-      message: Webhoko received
+      message: Webhook received
+  mode: single
+- id: '1729776000000'
+  alias: Auto-commit configuration changes
+  description: Automatically commit and push HA configuration changes every 30 minutes
+  triggers:
+  - trigger: time_pattern
+    minutes: /30
+  conditions: []
+  actions:
+  - action: shell_command.git_commit_push
+    metadata: {}
+    data: {}
   mode: single

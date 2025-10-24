@@ -10,6 +10,13 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 
+# Shell commands for git operations
+shell_command:
+  git_commit_push: >
+    cd ~/config &&
+    git add . &&
+    git commit -m "Auto-commit: $(date '+%Y-%m-%d %H:%M:%S')" &&
+    git push || true
 
 # for nginx reverse proxy
 http:
