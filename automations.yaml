@@ -494,7 +494,7 @@
     data: {}
   mode: restart
 - id: '1753619524254'
-  alias: Turn on / off lights when no one is home
+  alias: Turn off lights when no one is home
   description: ''
   triggers:
   - trigger: state
@@ -516,12 +516,12 @@
       data: {}
       target:
         area_id:
+        - living_room
         - bedroom
         - garden
         - hallway
-        - master_bedroom
         - kitchen
-        - living_room
+        - master_bedroom
   mode: restart
 - id: '1760784792347'
   alias: Restart let's encrypt daily
@@ -550,5 +550,31 @@
     metadata: {}
     data: {}
     target:
-      entity_id: all
+      area_id:
+      - master_bedroom
+      - kitchen
+      - hallway
+      - living_room
+      - bedroom
+      - garden
+  mode: single
+- id: '1761159741785'
+  alias: Test webhook
+  description: ''
+  triggers:
+  - trigger: webhook
+    allowed_methods:
+    - GET
+    - POST
+    - PUT
+    - HEAD
+    local_only: false
+    webhook_id: -DFbdbwjvwFBn3QN3n0z_w_LI
+  conditions: []
+  actions:
+  - action: system_log.write
+    metadata: {}
+    data:
+      level: warning
+      message: Webhoko received
   mode: single
