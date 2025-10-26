@@ -11,6 +11,7 @@ blueprint:
           filter:
           - domain:
             - input_number
+          reorder: false
           multiple: false
     max_valve_opening:
       name: Max Valve Opening Position
@@ -19,6 +20,7 @@ blueprint:
           filter:
           - domain:
             - number
+          reorder: false
           multiple: false
     max_valve_closing:
       name: Max Valve Closing Position
@@ -27,6 +29,7 @@ blueprint:
           filter:
           - domain:
             - number
+          reorder: false
           multiple: false
   source_url: https://github.com/arnie580/hass-blueprints/blob/main/sonoff-trv-pid.yaml
 variables:

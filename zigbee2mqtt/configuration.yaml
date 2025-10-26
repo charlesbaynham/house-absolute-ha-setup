@@ -58,8 +58,6 @@ devices:
     friendly_name: Bedroom lamp
   '0x0cae5ffffed0e07e':
     friendly_name: TRV Bedroom
-  '0x00124b0024fc163b':
-    friendly_name: 'MB button '
   '0x54ef441000cf4915':
     friendly_name: Kitchen main lights
   '0x00158d0009777b8d':
@@ -68,8 +66,6 @@ devices:
     friendly_name: Sensor master bedroom
   '0x54ef441000d7004f':
     friendly_name: Bedroom main lights
-  '0x00158d008b85bf55':
-    friendly_name: Book sensor
   '0x00158d0007e7513c':
     friendly_name: Hallway motion
   '0x00124b002510a7c7':
@@ -88,4 +84,6 @@ devices:
     friendly_name: Hall light 1
   '0x001788010d716464':
     friendly_name: Hall light 2
+  '0x00158d008b85bf55':
+    friendly_name: Front door sensor
 groups: {}

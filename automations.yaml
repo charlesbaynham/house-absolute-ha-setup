@@ -414,7 +414,7 @@
   description: Automatically commit and push HA configuration changes every 30 minutes
   triggers:
   - trigger: time_pattern
-    minutes: /30
+    minutes: /5
   conditions: []
   actions:
   - action: shell_command.git_commit_push
@@ -426,7 +426,8 @@
   description: ''
   triggers:
   - trigger: state
-    entity_id: binary_sensor.motion_sensor_hallway_occupancy
+    entity_id:
+    - binary_sensor.hallway_motion_occupancy
     from: 'off'
     to: 'on'
   - trigger: state
@@ -438,7 +439,7 @@
     entity_id: input_boolean.hallway_motion_enabled
     state: 'on'
   - condition: state
-    entity_id: binary_sensor.motion_sensor_hallway_occupancy
+    entity_id: binary_sensor.hallway_motion_occupancy
     state: 'on'
   actions:
   - alias: Turn on the light
@@ -453,7 +454,11 @@
       from: 'on'
       to: 'off'
   - alias: Wait the number of seconds that has been set
-    delay: 120
+    delay:
+      hours: 0
+      minutes: 0
+      seconds: 30
+      milliseconds: 0
   - alias: Turn off the light
     action: light.turn_off
     target:
@@ -461,3 +466,12 @@
     data: {}
   mode: restart
   max_exceeded: silent
+- id: '1761479998275'
+  alias: Master bedroom sync temperature to TRV
+  description: ''
+  use_blueprint:
+    path: photomoose/sonoff-trvzb-external-temperature-sensor-calibration.yaml
+    input:
+      external_temperature_sensor: sensor.sensor_master_bedroom_temperature
+      trv_external_temperature_input:
+      - number.trv_master_bedroom_external_temperature_input
