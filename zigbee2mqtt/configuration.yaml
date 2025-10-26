@@ -71,7 +71,7 @@ devices:
   '0x00158d008b85bf55':
     friendly_name: Book sensor
   '0x00158d0007e7513c':
-    friendly_name: Garden motion
+    friendly_name: Hallway motion
   '0x00124b002510a7c7':
     friendly_name: Living room cosy button
   '0xa4c138cd1dd895d1':
@@ -86,4 +86,6 @@ devices:
     friendly_name: Master bedroom blinds
   '0x00178801082af4a5':
     friendly_name: Hall light 1
+  '0x001788010d716464':
+    friendly_name: Hall light 2
 groups: {}
