@@ -179,7 +179,7 @@ Per `.gitignore`:
 ## When Making Changes
 
 - **Adding automations**: Append to `automations.yaml` with unique ID (timestamp-based)
-- **New devices**: Add to `zigbee2mqtt/configuration.yaml` under `devices:` with friendly names
+- **New devices**: Will be added by home assistant to `zigbee2mqtt/configuration.yaml` under `devices:` with friendly names. Do not modify this section - it's controlled by Home Assistant. 
 - **Template sensors**: Add to `template_sensors.yaml` following existing sensor structure
 - **Custom component changes**: Modify Python files but maintain async patterns and manifest.json version
 
@@ -217,13 +217,16 @@ Per `.gitignore`:
       device_class: occupancy
 ```
 
-### Adding a Zigbee Device
+### Zigbee Devices
 
+Will be added by Home Assistant automatically. Example entry:
 ```yaml
-# Add to zigbee2mqtt/configuration.yaml under devices:
+# In zigbee2mqtt/configuration.yaml under devices:
 '0x00158d0001234567':
   friendly_name: 'kitchen_motion_sensor'
 ```
+
+Do not add these yourself: this section is managed by Home Assistant and lists the devices available via Zigbee2MQTT.
 
 ## Troubleshooting
 
