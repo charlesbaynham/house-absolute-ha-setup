@@ -31,3 +31,12 @@ http:
     - 172.30.33.0/24
 
 template: !include template_sensors.yaml
+
+influxdb:
+  host: a0d7b954-influxdb
+  port: 8086
+  database: homeassistant
+  username: homeassistant
+  password: homeassistant
+  max_retries: 3
+  default_measurement: state
