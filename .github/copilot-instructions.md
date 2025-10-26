@@ -198,9 +198,11 @@ Per `.gitignore`:
       offset: '-00:30:00'
   conditions: []
   actions:
-    - target:
+    - action: light.turn_on
+      metadata: {}
+      data: {}
+      target:
         entity_id: light.kitchen_lights
-      action: light.turn_on
   mode: single
 ```
 
