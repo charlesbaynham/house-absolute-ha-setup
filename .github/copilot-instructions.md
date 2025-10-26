@@ -110,6 +110,21 @@ Use Jinja2 templates for computed states (see `template_sensors.yaml`):
 - **Testing**: Changes are validated by restarting Home Assistant (not done from this repo)
 - **Validation**: Home Assistant checks YAML syntax on startup
 
+### Local YAML Validation
+
+Before committing changes, validate YAML syntax locally:
+
+```bash
+# Validate YAML syntax with yamllint (if available)
+yamllint *.yaml
+
+# Note: Standard Python YAML parsing won't work due to Home Assistant-specific tags
+# Home Assistant uses custom tags like !include, !secret, !include_dir_merge_named
+# Only Home Assistant itself can fully validate these files
+```
+
+**Note**: `yamllint` checks syntax and style but not Home Assistant-specific semantics. Full validation requires Home Assistant restart.
+
 ### Configuration Changes
 
 1. Edit YAML files directly
@@ -132,6 +147,19 @@ Per `.gitignore`:
 - Excludes runtime files: `*.db`, `*.log`, `.storage/`, `.cloud/`
 - Version control includes: YAML configs, custom components, blueprints
 
+### Security Best Practices
+
+**Secrets Management**:
+- Never commit secrets to `secrets.yaml` 
+- Use `!secret` directive in YAML files to reference values from `secrets.yaml`
+- Example in configuration: `api_key: !secret openweather_api_key`
+- The `secrets.yaml` file is git-ignored - document required secret keys separately
+
+**Sensitive Data**:
+- Device IDs and area names are safe to commit
+- Don't commit: API keys, passwords, tokens, location coordinates
+- Review diffs before committing to catch accidental secret exposure
+
 ## Critical Files Reference
 
 - **`configuration.yaml`**: Root config with integration settings and includes
@@ -151,6 +179,68 @@ Per `.gitignore`:
 ## When Making Changes
 
 - **Adding automations**: Append to `automations.yaml` with unique ID (timestamp-based)
-- **New devices**: Add to `zigbee2mqtt/configuration.yaml` under `devices:` with friendly names
+- **New devices**: Will be added by home assistant to `zigbee2mqtt/configuration.yaml` under `devices:` with friendly names. Do not modify this section - it's controlled by Home Assistant. 
 - **Template sensors**: Add to `template_sensors.yaml` following existing sensor structure
 - **Custom component changes**: Modify Python files but maintain async patterns and manifest.json version
+
+## Common Tasks Examples
+
+### Adding a New Automation
+
+```yaml
+# Append to automations.yaml
+- id: '1698765432123'  # Use current timestamp
+  alias: Turn on kitchen lights at sunset
+  description: ''
+  triggers:
+    - platform: sun
+      event: sunset
+      offset: '-00:30:00'
+  conditions: []
+  actions:
+    - action: light.turn_on
+      metadata: {}
+      data: {}
+      target:
+        entity_id: light.kitchen_lights
+  mode: single
+```
+
+### Adding a Template Sensor
+
+```yaml
+# Add to template_sensors.yaml
+- binary_sensor:
+    - name: "Kitchen Occupied"
+      state: >
+        {{ is_state('binary_sensor.motion_sensor_kitchen_occupancy', 'on') }}
+      device_class: occupancy
+```
+
+### Zigbee Devices
+
+Will be added by Home Assistant automatically. Example entry:
+```yaml
+# In zigbee2mqtt/configuration.yaml under devices:
+'0x00158d0001234567':
+  friendly_name: 'kitchen_motion_sensor'
+```
+
+Do not add these yourself: this section is managed by Home Assistant and lists the devices available via Zigbee2MQTT.
+
+## Troubleshooting
+
+**YAML Syntax Errors**:
+- Check indentation (must be 2 spaces, never tabs)
+- Verify quotes around special characters
+- Use `yamllint` to identify issues
+
+**Automation Not Triggering**:
+- Verify entity_id exists and is correct format (domain.name)
+- Check trigger conditions are met
+- Review Home Assistant logs for errors
+
+**Device Not Found**:
+- Confirm device is in `zigbee2mqtt/configuration.yaml` with correct friendly_name
+- Verify entity_id matches pattern: `<domain>.<friendly_name>_<attribute>`
+- Check Home Assistant has discovered the Zigbee2MQTT device
