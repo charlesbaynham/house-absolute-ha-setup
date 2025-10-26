@@ -10,6 +10,12 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 
+# Input boolean helpers
+input_boolean:
+  hallway_motion_enabled:
+    name: Hallway Motion Enabled
+    icon: mdi:motion-sensor
+
 # Shell commands for git operations
 shell_command:
   git_commit_push: >
