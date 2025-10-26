@@ -445,7 +445,7 @@
   - condition: or
     conditions:
     - condition: state
-      entity_id: binary_sensor.motion_sensor_hallway_occupancy
+      entity_id: binary_sensor.hallway_motion_occupancy
       state: 'on'
     - condition: state
       entity_id: binary_sensor.front_door_sensor_contact
@@ -459,13 +459,20 @@
   - alias: Wait until there is no motion or door is closed
     wait_for_trigger:
     - trigger: state
-      entity_id: binary_sensor.motion_sensor_hallway_occupancy
+      entity_id:
+      - binary_sensor.hallway_motion_occupancy
       from: 'on'
       to: 'off'
     - trigger: state
       entity_id: binary_sensor.front_door_sensor_contact
       from: 'on'
       to: 'off'
+    timeout:
+      hours: 0
+      minutes: 10
+      seconds: 0
+      milliseconds: 0
+    continue_on_timeout: true
   - alias: Wait the number of seconds that has been set
     delay:
       hours: 0
