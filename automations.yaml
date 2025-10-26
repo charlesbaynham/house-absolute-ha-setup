@@ -599,6 +599,10 @@
     from: 'off'
     to: 'on'
   - trigger: state
+    entity_id: binary_sensor.front_door_sensor_contact
+    from: 'off'
+    to: 'on'
+  - trigger: state
     entity_id:
     - input_boolean.hallway_motion_enabled
     to: 'on'
@@ -606,19 +610,28 @@
   - condition: state
     entity_id: input_boolean.hallway_motion_enabled
     state: 'on'
-  - condition: state
-    entity_id: binary_sensor.motion_sensor_hallway_occupancy
-    state: 'on'
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: binary_sensor.motion_sensor_hallway_occupancy
+      state: 'on'
+    - condition: state
+      entity_id: binary_sensor.front_door_sensor_contact
+      state: 'on'
   actions:
   - alias: Turn on the light
     action: light.turn_on
     target:
       area_id: hallway
     data: {}
-  - alias: Wait until there is no motion from device
+  - alias: Wait until there is no motion or door is closed
     wait_for_trigger:
-      trigger: state
+    - trigger: state
       entity_id: binary_sensor.motion_sensor_hallway_occupancy
+      from: 'on'
+      to: 'off'
+    - trigger: state
+      entity_id: binary_sensor.front_door_sensor_contact
       from: 'on'
       to: 'off'
   - alias: Wait the number of seconds that has been set
