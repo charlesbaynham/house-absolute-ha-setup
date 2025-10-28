@@ -487,7 +487,7 @@
   mode: restart
   max_exceeded: silent
 - id: '1761479998275'
-  alias: Master bedroom sync temperature to TRV
+  alias: Sync master bedroom TRV with external sensor
   description: ''
   use_blueprint:
     path: photomoose/sonoff-trvzb-external-temperature-sensor-calibration.yaml
