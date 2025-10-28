@@ -513,3 +513,14 @@
       thermostat_value: input_number.living_room_trv_ctl
       max_valve_opening: number.trv_living_room_valve_opening_degree
       max_valve_closing: number.trv_living_room_valve_closing_degree
+- id: '1761691019774'
+  alias: Living room TRV - sync valve with helper
+  description: 'Copy the settings from the 0 - 100 helper to the TRV valve position.
+    This will be controlled by a PID controller from Smart thermostat (PID) - see
+    the YAML. '
+  use_blueprint:
+    path: arnie580/sonoff-trv-pid.yaml
+    input:
+      thermostat_value: input_number.living_room_trv_valve_position
+      max_valve_opening: number.trv_living_room_valve_opening_degree
+      max_valve_closing: number.trv_living_room_valve_closing_degree
