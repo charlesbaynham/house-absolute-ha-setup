@@ -20,6 +20,7 @@ input_boolean:
 shell_command:
   git_commit_push: >
     cd ~/config &&
+    git pull &&
     git add . &&
     git commit -m "Auto-commit: $(date '+%Y-%m-%d %H:%M:%S')" &&
     git push || true

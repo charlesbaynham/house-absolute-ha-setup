@@ -68,12 +68,8 @@ devices:
     friendly_name: Bedroom main lights
   '0x00158d0007e7513c':
     friendly_name: Hallway motion
-  '0x00124b002510a7c7':
-    friendly_name: Living room cosy button
   '0xa4c138cd1dd895d1':
     friendly_name: Living room lamp 1
-  '0xa4c138e687f60469':
-    friendly_name: Living room lamp tall
   '0xa4c138e23c9ad56f':
     friendly_name: Master bedroom lamp
   '0x0017880106e8d51d':
@@ -86,4 +82,8 @@ devices:
     friendly_name: Hall light 2
   '0x00158d008b85bf55':
     friendly_name: Front door sensor
+  '0x001788010d7411be':
+    friendly_name: Living room lamp tall
+  '0x00124b0024fc163b':
+    friendly_name: '0x00124b0024fc163b'
 groups: {}

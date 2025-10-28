@@ -495,3 +495,21 @@
       external_temperature_sensor: sensor.sensor_master_bedroom_temperature
       trv_external_temperature_input:
       - number.trv_master_bedroom_external_temperature_input
+- id: '1761512302799'
+  alias: Sync living room TRV with external sensor
+  description: ''
+  use_blueprint:
+    path: photomoose/sonoff-trvzb-external-temperature-sensor-calibration.yaml
+    input:
+      external_temperature_sensor: sensor.sensor_living_room_temperature
+      trv_external_temperature_input:
+      - number.trv_living_room_external_temperature_input
+- id: '1761688803047'
+  alias: 'Sonoff TRV PID - living room '
+  description: ''
+  use_blueprint:
+    path: arnie580/sonoff-trv-pid.yaml
+    input:
+      thermostat_value: input_number.living_room_trv_ctl
+      max_valve_opening: number.trv_living_room_valve_opening_degree
+      max_valve_closing: number.trv_living_room_valve_closing_degree
