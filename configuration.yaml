@@ -10,11 +10,20 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 
-# Input boolean helpers
+# Helpers
 input_boolean:
   hallway_motion_enabled:
     name: Hallway Motion Enabled
     icon: mdi:motion-sensor
+
+# Numeric helper for TRV valve positions, from 0 to 100
+input_number:
+  living_room_trv_valve_position:
+    name: Living room TRV Valve Position
+    initial: 0
+    min: 0
+    max: 100
+    step: 1
 
 # Shell commands for git operations
 shell_command:
@@ -41,3 +50,5 @@ influxdb:
   password: homeassistant
   max_retries: 3
   default_measurement: state
+
+climate: !include climate.yaml
