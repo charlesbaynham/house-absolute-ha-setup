@@ -524,3 +524,19 @@
       thermostat_value: input_number.living_room_trv_valve_position
       max_valve_opening: number.trv_living_room_valve_opening_degree
       max_valve_closing: number.trv_living_room_valve_closing_degree
+- id: '1762027680021'
+  alias: Flash living room lights when Gaby gets home
+  description: Flash the living room lights when Gaby arrives home
+  triggers:
+  - trigger: state
+    entity_id: person.gaby
+    to: home
+  conditions: []
+  actions:
+  - action: light.turn_on
+    metadata: {}
+    data:
+      flash: short
+    target:
+      area_id: living_room
+  mode: single
