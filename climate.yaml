@@ -14,3 +14,20 @@
   ki: 0.01 # Initial setting, is modified using the UI
   kd: 2000 # Initial setting, is modified using the UI
   pwm: 0 # Set this to zero because we use a numeric input
+
+# Master bedroom TRV PID controller
+- platform: smart_thermostat
+  name: Master bedroom TRV PID controller
+  unique_id: trv_pid_master_bedroom # Id of the climate entity created
+  heater: input_number.master_bedroom_trv_valve_position # The numeric helper you created
+  target_sensor: sensor.sensor_master_bedroom_temperature # A temperature entity used as the environment temp.
+  min_temp: 7
+  max_temp: 28
+  ac_mode: False
+  target_temp: 19 # Initial setting, is modified using the UI
+  keep_alive:
+    seconds: 60
+  kp: 60 # Initial setting, is modified using the UI
+  ki: 0.01 # Initial setting, is modified using the UI
+  kd: 2000 # Initial setting, is modified using the UI
+  pwm: 0 # Set this to zero because we use a numeric input

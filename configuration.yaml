@@ -24,6 +24,12 @@ input_number:
     min: 0
     max: 100
     step: 1
+  master_bedroom_trv_valve_position:
+    name: Master bedroom TRV Valve Position
+    initial: 0
+    min: 0
+    max: 100
+    step: 1
 
 # Shell commands for git operations
 shell_command:
