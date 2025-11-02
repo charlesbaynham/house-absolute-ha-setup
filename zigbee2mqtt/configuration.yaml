@@ -84,6 +84,8 @@ devices:
     friendly_name: Front door sensor
   '0x001788010d7411be':
     friendly_name: Living room lamp tall
-  '0x00124b0024fc163b':
-    friendly_name: '0x00124b0024fc163b'
+  '0x00124b002510a7c7':
+    friendly_name: Cosy button
 groups: {}
+availability:
+  enabled: true

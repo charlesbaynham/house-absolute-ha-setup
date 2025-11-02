@@ -29,7 +29,19 @@
     else:
     - action: light.turn_on
       metadata: {}
-      data: {}
+      data:
+        effect: stop_hue_effect
+      target:
+        area_id: living_room
+    - delay:
+        hours: 0
+        minutes: 0
+        seconds: 1
+        milliseconds: 0
+    - action: light.turn_on
+      metadata: {}
+      data:
+        effect: stop_effect
       target:
         area_id: living_room
   mode: restart
@@ -177,16 +189,6 @@
       entity_id: 97c5afcebb430bd9c36137a010c70301
       domain: switch
   mode: single
-- id: '1745601597457'
-  alias: Living room motion
-  description: ''
-  use_blueprint:
-    path: homeassistant/motion_light.yaml
-    input:
-      motion_entity: binary_sensor.living_room_motion_occupancy
-      light_target:
-        area_id: living_room
-      no_motion_wait: 600
 - id: '1745709642332'
   alias: Living room cosy button
   description: Toggle the room light between cosy mode and off
@@ -195,7 +197,6 @@
     device_id: d74916d94f1f149b3d2eec73d3b68b7f
     type: action
     subtype: single
-    metadata: {}
     trigger: device
   actions:
   - if:
@@ -204,17 +205,18 @@
       - condition: device
         type: is_on
         device_id: b44f30835f4c82fab781ed7ca5d3c901
-        entity_id: edf7f349dea2fb4c1bfd054dcf148065
+        entity_id: 50a81e844d29005a81f8f93a9c3f2572
         domain: light
       - condition: device
         type: is_off
-        device_id: f0a6cf6431c075871af92e7708dbd126
-        entity_id: 27e923bbfc801cbab9cb2ec23df1e461
+        device_id: 3347d22c9d7e7a4461d273a892cd2fca
+        entity_id: 716fb4b36b4f199e124d8edf555abb7d
         domain: light
     then:
     - action: scene.turn_on
       metadata: {}
-      data: {}
+      data:
+        transition: 3
       target:
         entity_id: scene.living_room_cosy
     else:
@@ -223,56 +225,6 @@
       data: {}
       target:
         area_id: living_room
-  mode: single
-- id: '1746992430731'
-  alias: Test audio
-  description: ''
-  triggers: []
-  conditions: []
-  actions:
-  - action: media_player.play_media
-    target:
-      entity_id: media_player.living_room_speaker
-    data:
-      media_content_id: media-source://media_source/local/router_usb/pianoloops.mp3
-      media_content_type: audio/mpeg
-    metadata:
-      title: pianoloops.mp3
-      thumbnail:
-      media_class: music
-      children_media_class:
-      navigateIds:
-      - {}
-      - media_content_type: app
-        media_content_id: media-source://media_source
-      - media_content_type: ''
-        media_content_id: media-source://media_source/local/router_usb
-  mode: single
-- id: '1747495450830'
-  alias: Steph mode automation
-  description: ''
-  triggers:
-  - trigger: state
-    entity_id:
-    - input_boolean.steph_mode
-  conditions: []
-  actions:
-  - if:
-    - condition: state
-      entity_id: input_boolean.steph_mode
-      state: 'on'
-    then:
-    - action: script.turn_on
-      metadata: {}
-      data: {}
-      target:
-        entity_id: script.steph_scene_and_sound
-    else:
-    - action: script.turn_on
-      metadata: {}
-      data: {}
-      target:
-        entity_id: script.return_from_alt_modes
   mode: single
 - id: '1748385723267'
   alias: Master bedroom light dimmer switch
@@ -389,26 +341,6 @@
       - bedroom
       - garden
   mode: single
-- id: '1761159741785'
-  alias: Test webhook
-  description: ''
-  triggers:
-  - trigger: webhook
-    allowed_methods:
-    - GET
-    - POST
-    - PUT
-    - HEAD
-    local_only: false
-    webhook_id: -DFbdbwjvwFBn3QN3n0z_w_LI
-  conditions: []
-  actions:
-  - action: system_log.write
-    metadata: {}
-    data:
-      level: warning
-      message: Webhook received
-  mode: single
 - id: '1729776000000'
   alias: Auto-commit configuration changes
   description: Automatically commit and push HA configuration changes every 30 minutes
@@ -504,15 +436,6 @@
       external_temperature_sensor: sensor.sensor_living_room_temperature
       trv_external_temperature_input:
       - number.trv_living_room_external_temperature_input
-- id: '1761688803047'
-  alias: 'Sonoff TRV PID - living room '
-  description: ''
-  use_blueprint:
-    path: arnie580/sonoff-trv-pid.yaml
-    input:
-      thermostat_value: input_number.living_room_trv_ctl
-      max_valve_opening: number.trv_living_room_valve_opening_degree
-      max_valve_closing: number.trv_living_room_valve_closing_degree
 - id: '1761691019774'
   alias: Living room TRV - sync valve with helper
   description: 'Copy the settings from the 0 - 100 helper to the TRV valve position.
@@ -524,3 +447,59 @@
       thermostat_value: input_number.living_room_trv_valve_position
       max_valve_opening: number.trv_living_room_valve_opening_degree
       max_valve_closing: number.trv_living_room_valve_closing_degree
+- id: '1762091898797'
+  alias: Cosy button long press
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: d74916d94f1f149b3d2eec73d3b68b7f
+    type: action
+    subtype: long
+    trigger: device
+  conditions: []
+  actions:
+  - action: light.turn_on
+    metadata: {}
+    data:
+      effect: Stop_hue_effect
+    target:
+      area_id: living_room
+  mode: single
+- id: '1762099115353'
+  alias: Bedroom lights copy main
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: 0dac4ca1d28c7cdb4a3517b64d5aaa21
+    type: action
+    subtype: single
+    trigger: device
+  conditions: []
+  actions:
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 0
+      milliseconds: 300
+  - if:
+    - condition: device
+      type: is_off
+      device_id: 0dac4ca1d28c7cdb4a3517b64d5aaa21
+      entity_id: 45612e367dd14a46907b2f8cc54bafdc
+      domain: light
+    then:
+    - action: light.turn_off
+      metadata: {}
+      data: {}
+      target:
+        area_id:
+        - bedroom
+    else:
+    - action: light.turn_on
+      metadata: {}
+      data:
+        effect: stop_hue_effect
+      target:
+        area_id:
+        - bedroom
+  mode: restart

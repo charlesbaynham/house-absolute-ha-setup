@@ -28,11 +28,9 @@ input_number:
 # Shell commands for git operations
 shell_command:
   git_commit_push: >
-    cd ~/config &&
-    git pull &&
+    cd /config &&
     git add . &&
-    git commit -m "Auto-commit: $(date '+%Y-%m-%d %H:%M:%S')" &&
-    git push || true
+    git commit -m "Auto-commit"
 
 # for nginx reverse proxy
 http:
