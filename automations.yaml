@@ -535,3 +535,14 @@
       thermostat_value: input_number.master_bedroom_trv_valve_position
       max_valve_opening: number.trv_master_bedroom_valve_opening_degree
       max_valve_closing: number.trv_master_bedroom_valve_closing_degree
+- id: '1762044524000'
+  alias: Git Backup - Daily
+  description: 'Automated git backup of Home Assistant configuration using existing SSH certificate'
+  triggers:
+  - platform: time
+    at: '23:32:00'
+  conditions: []
+  actions:
+  - action: shell_command.git_commit_push
+    data: {}
+  mode: single

@@ -7,3 +7,15 @@ deps
 *.db-shm
 *.db-wal
 .ha_run.lock
+
+# Git backup exclusions (from https://gist.github.com/AkdM/70f3f600356b3b834ae0290bd6f741b3)
+# Note: custom_components/ kept in version control as they are actively developed
+zigbee2mqtt/log
+zigbee2mqtt/state.json
+home-assistant_v2.*
+home-assistant.log*
+.ssh/
+
+# Keep specific files
+!.gitignore
+!.HA_VERSION
