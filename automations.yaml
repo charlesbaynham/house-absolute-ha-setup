@@ -520,7 +520,7 @@
   description: Start the Valetudo vacuum cleaning daily at 2pm on weekdays
   triggers:
   - trigger: time
-    at: '14:00:00'
+    at: '10:00:00'
   conditions:
   - condition: time
     weekday:
