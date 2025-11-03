@@ -1,6 +1,6 @@
 
 
-git config core.sshCommand 'ssh -o UserKnownHostsFile=/config/.ssh/known_hosts -o StrictHostKeyChecking=no -i /config/.ssh/id_rsa -F /dev/null'
+git config core.sshCommand 'ssh -o UserKnownHostsFile=/config/.ssh/known_hosts -o StrictHostKeyChecking=no -i /config/.ssh/id_ed25519 -F /dev/null'
 
 echo Starting git backup...
 cd /config
