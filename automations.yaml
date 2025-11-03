@@ -352,6 +352,7 @@
   - action: shell_command.git_commit_push
     metadata: {}
     data: {}
+    response_variable: response
   mode: single
 - id: '1761476521000'
   alias: Hallway motion

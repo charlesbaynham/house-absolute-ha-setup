@@ -33,10 +33,7 @@ input_number:
 
 # Shell commands for git operations
 shell_command:
-  git_commit_push: >
-    cd /config &&
-    git add . &&
-    git commit -m "Auto-commit"
+  git_commit_push: /config/gitsync.sh
 
 # for nginx reverse proxy
 http:
