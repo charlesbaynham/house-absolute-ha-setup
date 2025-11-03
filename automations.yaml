@@ -534,5 +534,5 @@
     metadata: {}
     data: {}
     target:
-      entity_id: vacuum.valetudo
+      device_id: ad695f2edac52f6f16ebb0be993c21d2
   mode: single
