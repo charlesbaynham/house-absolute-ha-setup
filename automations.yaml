@@ -515,3 +515,24 @@
       thermostat_value: input_number.master_bedroom_trv_valve_position
       max_valve_opening: number.trv_master_bedroom_valve_opening_degree
       max_valve_closing: number.trv_master_bedroom_valve_closing_degree
+- id: '1730595645000'
+  alias: Vacuum daily clean weekdays
+  description: Start the Valetudo vacuum cleaning daily at 2pm on weekdays
+  triggers:
+  - trigger: time
+    at: '14:00:00'
+  conditions:
+  - condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  actions:
+  - action: vacuum.start
+    metadata: {}
+    data: {}
+    target:
+      entity_id: vacuum.valetudo
+  mode: single
