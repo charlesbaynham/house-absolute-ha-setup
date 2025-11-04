@@ -86,6 +86,8 @@ devices:
     friendly_name: Living room lamp tall
   '0x00124b002510a7c7':
     friendly_name: Cosy button
+  '0x00158d008c4a18b7':
+    friendly_name: Bedroom sensor
 groups: {}
 availability:
   enabled: true
