@@ -87,7 +87,7 @@ devices:
   '0x00124b002510a7c7':
     friendly_name: Cosy button
   '0x00158d008c4a18b7':
-    friendly_name: Bedroom sensor
+    friendly_name: Sensor bedroom
 groups: {}
 availability:
   enabled: true
