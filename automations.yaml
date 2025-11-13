@@ -566,7 +566,8 @@
   mode: single
 - id: '1731542000000'
   alias: Activate night mode
-  description: Turn on night mode when non-bedroom lights are off for 5 minutes and someone is home
+  description: Turn on night mode when non-bedroom lights are off for 5 minutes and
+    someone is home
   triggers:
   - trigger: state
     entity_id: binary_sensor.non_bedroom_lights_off
@@ -577,6 +578,8 @@
   - condition: state
     entity_id: binary_sensor.anyone_home
     state: 'on'
+  - condition: time
+    after: '21:00:00'
   actions:
   - action: input_boolean.turn_on
     metadata: {}
@@ -589,7 +592,7 @@
   description: Turn off night mode every morning at 7:30 AM
   triggers:
   - trigger: time
-    at: '07:30:00'
+    at: 07:30:00
   conditions: []
   actions:
   - action: input_boolean.turn_off

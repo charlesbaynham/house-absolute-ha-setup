@@ -21,4 +21,3 @@
             {% set lights_on.count = lights_on.count + area_lights | count %}
           {% endfor %}
           {{ lights_on.count == 0 }}
-        device_class: light
