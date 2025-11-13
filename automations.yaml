@@ -515,15 +515,6 @@
       thermostat_value: input_number.master_bedroom_trv_valve_position
       max_valve_opening: number.trv_master_bedroom_valve_opening_degree
       max_valve_closing: number.trv_master_bedroom_valve_closing_degree
-- id: '1731536615000'
-  alias: Sync bedroom TRV with external sensor
-  description: ''
-  use_blueprint:
-    path: photomoose/sonoff-trvzb-external-temperature-sensor-calibration.yaml
-    input:
-      external_temperature_sensor: sensor.sensor_bedroom_temperature
-      trv_external_temperature_input:
-      - number.trv_bedroom_external_temperature_input
 - id: '1731536616000'
   alias: Bedroom TRV - sync valve with helper
   description: 'Copy the settings from the 0 - 100 helper to the TRV valve position.
@@ -537,7 +528,8 @@
       max_valve_closing: number.trv_bedroom_valve_closing_degree
 - id: '1730595645000'
   alias: Vacuum when everyone leaves
-  description: Start the vacuum 30 minutes after the last person leaves, max once per day
+  description: Start the vacuum 30 minutes after the last person leaves, max once
+    per day
   triggers:
   - trigger: state
     entity_id: binary_sensor.anyone_home
@@ -545,9 +537,11 @@
     to: 'off'
   conditions:
   - condition: template
-    value_template: >
-      {% set last_run = state_attr('automation.vacuum_when_everyone_leaves', 'last_triggered') %}
-      {{ last_run == none or (now() - last_run).total_seconds() > 72000 }}
+    value_template: '{% set last_run = state_attr(''automation.vacuum_when_everyone_leaves'',
+      ''last_triggered'') %} {{ last_run == none or (now() - last_run).total_seconds()
+      > 72000 }}
+
+      '
   actions:
   - delay:
       hours: 0
