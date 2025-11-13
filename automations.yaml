@@ -219,12 +219,22 @@
         transition: 3
       target:
         entity_id: scene.living_room_cosy
+    - action: light.turn_off
+      metadata: {}
+      data: {}
+      target:
+        area_id: kitchen
     else:
     - action: light.turn_off
       metadata: {}
       data: {}
       target:
         area_id: living_room
+    - action: light.turn_off
+      metadata: {}
+      data: {}
+      target:
+        area_id: kitchen
   mode: single
 - id: '1748385723267'
   alias: Master bedroom light dimmer switch
