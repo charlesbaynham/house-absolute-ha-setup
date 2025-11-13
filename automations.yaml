@@ -516,20 +516,23 @@
       max_valve_opening: number.trv_master_bedroom_valve_opening_degree
       max_valve_closing: number.trv_master_bedroom_valve_closing_degree
 - id: '1730595645000'
-  alias: Vacuum daily clean weekdays
-  description: Start the Valetudo vacuum cleaning daily at 2pm on weekdays
+  alias: Vacuum when everyone leaves
+  description: Start the vacuum 30 minutes after the last person leaves, max once per day
   triggers:
-  - trigger: time
-    at: '10:00:00'
+  - trigger: state
+    entity_id: binary_sensor.anyone_home
+    from: 'on'
+    to: 'off'
   conditions:
-  - condition: time
-    weekday:
-    - mon
-    - tue
-    - wed
-    - thu
-    - fri
+  - condition: template
+    value_template: >
+      {% set last_run = state_attr('automation.vacuum_when_everyone_leaves', 'last_triggered') %}
+      {{ last_run == none or (now() - last_run).total_seconds() > 72000 }}
   actions:
+  - delay:
+      hours: 0
+      minutes: 30
+      seconds: 0
   - action: vacuum.start
     metadata: {}
     data: {}
