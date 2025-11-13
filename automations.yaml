@@ -564,3 +564,37 @@
       device_id:
       - 8494972a3e4dd42011930160e8845cec
   mode: single
+- id: '1731542000000'
+  alias: Activate night mode
+  description: Turn on night mode when non-bedroom lights are off for 5 minutes and someone is home
+  triggers:
+  - trigger: state
+    entity_id: binary_sensor.non_bedroom_lights_off
+    to: 'on'
+    for:
+      minutes: 5
+  conditions:
+  - condition: state
+    entity_id: binary_sensor.anyone_home
+    state: 'on'
+  actions:
+  - action: input_boolean.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.night_mode
+  mode: single
+- id: '1731542000001'
+  alias: Deactivate night mode at 7:30 AM
+  description: Turn off night mode every morning at 7:30 AM
+  triggers:
+  - trigger: time
+    at: '07:30:00'
+  conditions: []
+  actions:
+  - action: input_boolean.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.night_mode
+  mode: single

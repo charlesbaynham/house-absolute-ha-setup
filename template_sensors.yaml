@@ -10,3 +10,15 @@
           ] %}
           {{ people | selectattr('state', 'equalto', 'home') | list | count > 0 }}
         device_class: presence
+      
+      - name: "Non Bedroom Lights Off"
+        unique_id: non_bedroom_lights_off
+        state: >
+          {% set areas_to_check = ['living_room', 'kitchen', 'hallway', 'garden'] %}
+          {% set lights_on = namespace(count=0) %}
+          {% for area in areas_to_check %}
+            {% set area_lights = states.light | selectattr('entity_id', 'search', area) | selectattr('state', 'equalto', 'on') | list %}
+            {% set lights_on.count = lights_on.count + area_lights | count %}
+          {% endfor %}
+          {{ lights_on.count == 0 }}
+        device_class: light
