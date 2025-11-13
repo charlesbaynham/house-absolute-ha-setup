@@ -15,6 +15,9 @@ input_boolean:
   hallway_motion_enabled:
     name: Hallway Motion Enabled
     icon: mdi:motion-sensor
+  night_mode:
+    name: Night Mode
+    icon: mdi:weather-night
 
 # Numeric helper for TRV valve positions, from 0 to 100
 input_number:
