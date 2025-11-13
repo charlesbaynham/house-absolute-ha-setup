@@ -567,14 +567,6 @@
   - condition: state
     entity_id: binary_sensor.anyone_home
     state: 'on'
-  - condition: or
-    conditions:
-    - condition: state
-      entity_id: person.charles
-      state: home
-    - condition: state
-      entity_id: person.gaby
-      state: home
   actions:
   - action: input_boolean.turn_on
     metadata: {}
