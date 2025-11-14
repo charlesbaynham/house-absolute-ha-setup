@@ -601,3 +601,33 @@
     target:
       entity_id: input_boolean.night_mode
   mode: single
+- id: '1763109049950'
+  alias: Activate adaptive lighting sleep mode with night mode
+  description: Turn on adaptive lighting sleep mode when night mode is activated
+  triggers:
+  - trigger: state
+    entity_id: input_boolean.night_mode
+    to: 'on'
+  conditions: []
+  actions:
+  - action: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.adaptive_lighting_sleep_mode_rest_of_house
+  mode: single
+- id: '1763109049951'
+  alias: Deactivate adaptive lighting sleep mode with night mode
+  description: Turn off adaptive lighting sleep mode when night mode is deactivated
+  triggers:
+  - trigger: state
+    entity_id: input_boolean.night_mode
+    to: 'off'
+  conditions: []
+  actions:
+  - action: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.adaptive_lighting_sleep_mode_rest_of_house
+  mode: single
