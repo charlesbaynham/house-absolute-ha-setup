@@ -552,6 +552,9 @@
       > 72000 }}
 
       '
+  - condition: state
+    entity_id: input_boolean.night_mode
+    state: 'off'
   actions:
   - delay:
       hours: 0
@@ -628,7 +631,8 @@
   mode: single
 - id: '1731600000000'
   alias: Morse code greeting at 10:05 PM
-  description: Flash living room lights in Morse code spelling "hello Charles" at 10:05 PM daily
+  description: Flash living room lights in Morse code spelling "hello Charles" at
+    10:05 PM daily
   triggers:
   - trigger: time
     at: '22:05:00'
