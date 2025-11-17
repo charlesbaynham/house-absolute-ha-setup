@@ -399,20 +399,16 @@
     target:
       area_id: hallway
     data: {}
-  - alias: Wait until there is no motion or door is closed
+  - alias: Wait until there is no motion
     wait_for_trigger:
     - trigger: state
       entity_id:
       - binary_sensor.hallway_motion_occupancy
       from: 'on'
       to: 'off'
-    - trigger: state
-      entity_id: binary_sensor.front_door_sensor_contact
-      from: 'on'
-      to: 'off'
     timeout:
       hours: 0
-      minutes: 10
+      minutes: 5
       seconds: 0
       milliseconds: 0
     continue_on_timeout: true
