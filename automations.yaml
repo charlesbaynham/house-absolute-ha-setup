@@ -625,19 +625,6 @@
       target:
         entity_id: switch.adaptive_lighting_sleep_mode_rest_of_house
   mode: single
-- id: '1731600000000'
-  alias: Morse code greeting at 10:05 PM
-  description: Flash living room lights in Morse code spelling "hello Charles" at
-    10:05 PM daily
-  triggers:
-  - trigger: time
-    at: '22:05:00'
-  conditions: []
-  actions:
-  - action: script.morse_code_hello_charles
-    metadata: {}
-    data: {}
-  mode: single
 - id: '1763508383336'
   alias: Master bedroom restart heating at 4am
   description: ''
