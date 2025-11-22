@@ -408,15 +408,15 @@
       to: 'off'
     timeout:
       hours: 0
-      minutes: 5
+      minutes: 10
       seconds: 0
       milliseconds: 0
     continue_on_timeout: true
   - alias: Wait the number of seconds that has been set
     delay:
       hours: 0
-      minutes: 0
-      seconds: 30
+      minutes: 5
+      seconds: 0
       milliseconds: 0
   - alias: Turn off the light
     action: light.turn_off
