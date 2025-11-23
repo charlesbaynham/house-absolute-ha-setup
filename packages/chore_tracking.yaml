@@ -78,10 +78,6 @@ template:
         icon: mdi:timer-sand
         availability: "{{ states('input_number.chore_minutes_gaby') not in ['unknown', 'unavailable'] }}"
 
-      
-      
-      
-
       # Weekly leader badge
       - name: "Chore Weekly Leader"
         unique_id: chore_weekly_leader
