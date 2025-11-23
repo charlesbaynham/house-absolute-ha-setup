@@ -882,12 +882,13 @@
     value_template: >
       {% set last_activity = states('input_datetime.chore_last_activity_charles') %}
       {% if last_activity not in ['unknown', 'unavailable', ''] %}
-        {% set last_time = strptime(last_activity, '%Y-%m-%d %H:%M:%S') %}
+        {% set last_time = last_activity | as_datetime | as_local %}
         {% set seconds_elapsed = (now() - last_time).total_seconds() %}
         {{ seconds_elapsed > 900 }}
       {% else %}
         false
       {% endif %}
+
   actions:
   - action: input_boolean.turn_off
     metadata: {}
@@ -909,7 +910,7 @@
     value_template: >
       {% set last_activity = states('input_datetime.chore_last_activity_gaby') %}
       {% if last_activity not in ['unknown', 'unavailable', ''] %}
-        {% set last_time = strptime(last_activity, '%Y-%m-%d %H:%M:%S') %}
+        {% set last_time = last_activity | as_datetime | as_local %}
         {% set seconds_elapsed = (now() - last_time).total_seconds() %}
         {{ seconds_elapsed > 900 }}
       {% else %}
