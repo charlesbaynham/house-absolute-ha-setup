@@ -1,0 +1,96 @@
+---
+# Night Mode Package
+# 
+# Automatically activates night mode when non-bedroom lights are off for 5 minutes
+# after 9pm, and deactivates at 7:30 AM. Syncs with adaptive lighting sleep mode.
+#
+# Dependencies:
+# - binary_sensor.anyone_home (defined in template_sensors.yaml)
+# - switch.adaptive_lighting_sleep_mode_rest_of_house (adaptive_lighting integration)
+#
+# Referenced by:
+# - automation.vacuum_when_everyone_leaves (checks night_mode is off)
+
+input_boolean:
+  night_mode:
+    name: Night Mode
+    icon: mdi:weather-night
+
+template:
+  - binary_sensor:
+      - name: "Non Bedroom Lights Off"
+        unique_id: non_bedroom_lights_off
+        state: >
+          {% set areas_to_check = ['living_room', 'kitchen', 'hallway', 'garden'] %}
+          {% set lights_on = namespace(count=0) %}
+          {% for area in areas_to_check %}
+            {% set area_lights = states.light | selectattr('entity_id', 'search', area) | selectattr('state', 'equalto', 'on') | list %}
+            {% set lights_on.count = lights_on.count + area_lights | count %}
+          {% endfor %}
+          {{ lights_on.count == 0 }}
+
+automation:
+  - id: '1731542000000'
+    alias: Activate night mode
+    description: Turn on night mode when non-bedroom lights are off for 5 minutes and
+      someone is home
+    triggers:
+    - trigger: state
+      entity_id: binary_sensor.non_bedroom_lights_off
+      to: 'on'
+      for:
+        minutes: 5
+    conditions:
+    - condition: state
+      entity_id: binary_sensor.anyone_home
+      state: 'on'
+    - condition: time
+      after: '21:00:00'
+    actions:
+    - action: input_boolean.turn_on
+      metadata: {}
+      data: {}
+      target:
+        entity_id: input_boolean.night_mode
+    mode: single
+
+  - id: '1731542000001'
+    alias: Deactivate night mode at 7:30 AM
+    description: Turn off night mode every morning at 7:30 AM
+    triggers:
+    - trigger: time
+      at: 07:30:00
+    conditions: []
+    actions:
+    - action: input_boolean.turn_off
+      metadata: {}
+      data: {}
+      target:
+        entity_id: input_boolean.night_mode
+    mode: single
+
+  - id: '1763109049950'
+    alias: Sync adaptive lighting sleep mode with night mode
+    description: Turn on/off adaptive lighting sleep mode when night mode changes
+    triggers:
+    - trigger: state
+      entity_id: input_boolean.night_mode
+    conditions: []
+    actions:
+    - if:
+      - condition: state
+        entity_id: input_boolean.night_mode
+        state: 'on'
+      then:
+      - action: switch.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: switch.adaptive_lighting_sleep_mode_rest_of_house
+      else:
+      - action: switch.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: switch.adaptive_lighting_sleep_mode_rest_of_house
+    mode: single
