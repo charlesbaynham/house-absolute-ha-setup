@@ -38,17 +38,7 @@ views:
             name: Gaby
             needle: false
 
-      - type: grid
-        title: Chores this quarter-hour
-        cards:
-          - type: gauge
-            entity: sensor.chore_minutes_charles_quick
-            name: Charles
-            needle: false
-          - type: gauge
-            entity: sensor.chore_minutes_gaby_quick
-            name: Gaby
-            needle: false
+
         columns: 2
       - type: entities
         title: Charles
@@ -120,6 +110,18 @@ views:
             name: Gaby
             color: "#FF69B4"
             hours_to_show: 168
+
+      - type: custom:mini-graph-card
+        name: 15-minute Chore Minutes
+        icon: mdi:chart-line
+        entities:
+          - entity: sensor.chore_minutes_charles_quick
+            name: Charles
+            color: "#0066FF"
+          - entity: sensor.chore_minutes_gaby_quick
+            name: Gaby
+            color: "#FF69B4"
+            hours_to_show: 6
         points_per_hour: 0.25
         line_width: 3
         animate: true
