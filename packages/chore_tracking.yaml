@@ -23,7 +23,6 @@ input_boolean:
 input_number:
   chore_minutes_charles:
     name: Chore Minutes - Charles
-    initial: 0
     min: 0
     max: 100000
     step: 1
@@ -31,7 +30,6 @@ input_number:
 
   chore_minutes_gaby:
     name: Chore Minutes - Gaby
-    initial: 0
     min: 0
     max: 100000
     step: 1
