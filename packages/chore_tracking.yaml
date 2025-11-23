@@ -57,6 +57,68 @@ input_datetime:
     has_time: true
     icon: mdi:clock-outline
 
+# Template sensors to convert input_number to sensor domain for utility_meter
+template:
+  - sensor:
+    - name: "Chore Minutes Charles"
+      unique_id: chore_minutes_charles_sensor
+      state: "{{ states('input_number.chore_minutes_charles') | float(0) }}"
+      unit_of_measurement: "min"
+      device_class: duration
+      state_class: total_increasing
+      icon: mdi:timer-sand
+      availability: "{{ states('input_number.chore_minutes_charles') not in ['unknown', 'unavailable'] }}"
+
+    - name: "Chore Minutes Gaby"
+      unique_id: chore_minutes_gaby_sensor
+      state: "{{ states('input_number.chore_minutes_gaby') | float(0) }}"
+      unit_of_measurement: "min"
+      device_class: duration
+      state_class: total_increasing
+      icon: mdi:timer-sand
+      availability: "{{ states('input_number.chore_minutes_gaby') not in ['unknown', 'unavailable'] }}"
+
+
+# Utility meters for daily, weekly, and monthly tracking
+utility_meter:
+  chore_minutes_charles_daily:
+    source: sensor.chore_minutes_charles
+    cycle: daily
+    offset:
+      hours: 4
+
+  chore_minutes_charles_weekly:
+    source: sensor.chore_minutes_charles
+    cycle: weekly
+    offset:
+      hours: 4
+      days: 6
+
+  chore_minutes_charles_monthly:
+    source: sensor.chore_minutes_charles
+    cycle: monthly
+    offset:
+      hours: 4
+
+  chore_minutes_gaby_daily:
+    source: sensor.chore_minutes_gaby
+    cycle: daily
+    offset:
+      hours: 4
+
+  chore_minutes_gaby_weekly:
+    source: sensor.chore_minutes_gaby
+    cycle: weekly
+    offset:
+      hours: 4
+      days: 6
+
+  chore_minutes_gaby_monthly:
+    source: sensor.chore_minutes_gaby
+    cycle: monthly
+    offset:
+      hours: 4
+
 automation:
   - id: '1763903316655'
     alias: Charles chore button - start/renew timer
@@ -198,4 +260,26 @@ automation:
       data: {}
       target:
         entity_id: input_boolean.chore_mode_gaby
+    mode: single
+
+  - id: '1732372800002'
+    alias: Reset chore counters at 4am
+    description: 'Reset daily chore minute counters at 4am for both Charles and Gaby'
+    triggers:
+    - trigger: time
+      at: '04:00:00'
+    conditions: []
+    actions:
+    - action: input_number.set_value
+      metadata: {}
+      data:
+        value: 0
+      target:
+        entity_id: input_number.chore_minutes_charles
+    - action: input_number.set_value
+      metadata: {}
+      data:
+        value: 0
+      target:
+        entity_id: input_number.chore_minutes_gaby
     mode: single
