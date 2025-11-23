@@ -1,25 +1,18 @@
-# Chore Tracking Dashboard - Competitive Leaderboard
-#
-# This dashboard provides a gamified view of household chore contributions.
-# Loaded directly by Home Assistant via configuration.yaml lovelace dashboards.
-
 title: Chore Champions
 views:
   - title: Overview
     icon: mdi:trophy
     cards:
-      # Header card
       - type: markdown
         content: |
           # 🏆 Chore Champions
           *Track your household contributions*
-
       - type: gauge
         entity: sensor.chore_minutes_charles_weekly
         name: Charles chores this week
         needle: false
-
-      - type: grid
+      - square: false
+        type: grid
         title: Chores today
         cards:
           - graph: line
@@ -32,9 +25,7 @@ views:
             detail: 1
             entity: sensor.chore_minutes_gaby_daily
             name: Gaby
-            
         columns: 1
-
       - type: grid
         title: Chores this week
         cards:
@@ -47,8 +38,6 @@ views:
             name: Gaby
             needle: false
         columns: 2
-
-      # Charles status card
       - type: entities
         title: Charles
         icon: mdi:account
@@ -70,8 +59,6 @@ views:
           - entity: sensor.charles_last_activity_relative
             name: Last Activity
             icon: mdi:clock-outline
-
-      # Gaby status card
       - type: entities
         title: Gaby
         icon: mdi:account
@@ -93,19 +80,17 @@ views:
           - entity: sensor.gaby_last_activity_relative
             name: Last Activity
             icon: mdi:clock-outline
-
-      # Weekly leader badge (conditional)
       - type: conditional
         conditions:
           - entity: sensor.chore_weekly_leader
             state_not: Tied
         card:
           type: markdown
-          content: |
-            ### 🏆 This Week's Leader: {{ states('sensor.chore_weekly_leader') }}
-            Keep up the great work!
+          content: >
+            ### 🏆 This Week's Leader: {{ states('sensor.chore_weekly_leader')
+            }}
 
-      # Weekly comparison graph (mini-graph-card)
+            Keep up the great work!
       - type: custom:mini-graph-card
         name: Weekly Chore Minutes
         icon: mdi:chart-line
@@ -126,30 +111,3 @@ views:
           points: true
           legend: true
           state: true
-
-      # Daily comparison (built-in entities card with gauges)
-      - type: entities
-        title: Today's Progress
-        icon: mdi:calendar-today
-        entities:
-          - entity: sensor.charles_chore_time_formatted
-            name: Charles
-            icon: mdi:account
-          - entity: sensor.gaby_chore_time_formatted
-            name: Gaby
-            icon: mdi:account
-
-      # Monthly statistics
-      - type: entities
-        title: Monthly Statistics
-        icon: mdi:chart-bar
-        entities:
-          - entity: sensor.chore_minutes_charles_monthly
-            name: Charles Total
-            icon: mdi:account
-          - entity: sensor.chore_minutes_gaby_monthly
-            name: Gaby Total
-            icon: mdi:account
-          - type: section
-          - entity: input_number.chore_timeout_minutes
-            name: Timeout Duration
