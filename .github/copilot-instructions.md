@@ -257,6 +257,7 @@ Each room with TRV PID control requires the following components:
 2. **Climate Entity** - Smart thermostat with PID controller
 3. **Valve Sync Automation** - Syncs PID output to TRV valve position
 4. **External Temperature Sync Automation** - Syncs external sensor to TRV
+5. **Setpoint Sync Automations (2)** - Bidirectional sync of temperature setpoints between physical TRV and PID controller
 
 ### Complete Setup Template
 
@@ -384,13 +385,120 @@ Create an automation using the `photomoose/sonoff-trvzb-external-temperature-sen
         - number.trv_living_room_external_temperature_input
 ```
 
+#### 5. Temperature Setpoint Sync Automations (automations.yaml)
+
+Create two automations to sync temperature setpoints bidirectionally between the physical TRV and PID controller.
+
+**Template for Physical TRV → PID Controller:**
+
+```yaml
+- id: '{unique_id}'
+  alias: {Room Name} TRV - sync physical setpoint to PID
+  description: 'When user changes setpoint on physical TRV, copy it to the PID controller'
+  triggers:
+  - trigger: state
+    entity_id: climate.trv_{room_name}
+    attribute: temperature
+  conditions:
+  - condition: template
+    value_template: >
+      {% set trv_temp = state_attr('climate.trv_{room_name}', 'temperature') %}
+      {% set pid_temp = state_attr('climate.{room_name}_trv_pid_controller', 'temperature') %}
+      {{ trv_temp != none and pid_temp != none and trv_temp != pid_temp }}
+  actions:
+  - action: climate.set_temperature
+    metadata: {}
+    data:
+      temperature: >
+        {{ state_attr('climate.trv_{room_name}', 'temperature') }}
+    target:
+      entity_id: climate.{room_name}_trv_pid_controller
+  mode: single
+```
+
+**Template for PID Controller → Physical TRV:**
+
+```yaml
+- id: '{unique_id}'
+  alias: {Room Name} TRV - sync PID setpoint to physical
+  description: 'When user changes setpoint on PID controller, copy it to the physical TRV'
+  triggers:
+  - trigger: state
+    entity_id: climate.{room_name}_trv_pid_controller
+    attribute: temperature
+  conditions:
+  - condition: template
+    value_template: >
+      {% set trv_temp = state_attr('climate.trv_{room_name}', 'temperature') %}
+      {% set pid_temp = state_attr('climate.{room_name}_trv_pid_controller', 'temperature') %}
+      {{ trv_temp != none and pid_temp != none and trv_temp != pid_temp }}
+  actions:
+  - action: climate.set_temperature
+    metadata: {}
+    data:
+      temperature: >
+        {{ state_attr('climate.{room_name}_trv_pid_controller', 'temperature') }}
+    target:
+      entity_id: climate.trv_{room_name}
+  mode: single
+```
+
+**Example (Living room):**
+```yaml
+- id: '1732372800000'
+  alias: Living room TRV - sync physical setpoint to PID
+  description: 'When user changes setpoint on physical TRV, copy it to the PID controller'
+  triggers:
+  - trigger: state
+    entity_id: climate.trv_living_room
+    attribute: temperature
+  conditions:
+  - condition: template
+    value_template: >
+      {% set trv_temp = state_attr('climate.trv_living_room', 'temperature') %}
+      {% set pid_temp = state_attr('climate.living_room_trv_pid_controller', 'temperature') %}
+      {{ trv_temp != none and pid_temp != none and trv_temp != pid_temp }}
+  actions:
+  - action: climate.set_temperature
+    metadata: {}
+    data:
+      temperature: >
+        {{ state_attr('climate.trv_living_room', 'temperature') }}
+    target:
+      entity_id: climate.living_room_trv_pid_controller
+  mode: single
+
+- id: '1732372800001'
+  alias: Living room TRV - sync PID setpoint to physical
+  description: 'When user changes setpoint on PID controller, copy it to the physical TRV'
+  triggers:
+  - trigger: state
+    entity_id: climate.living_room_trv_pid_controller
+    attribute: temperature
+  conditions:
+  - condition: template
+    value_template: >
+      {% set trv_temp = state_attr('climate.trv_living_room', 'temperature') %}
+      {% set pid_temp = state_attr('climate.living_room_trv_pid_controller', 'temperature') %}
+      {{ trv_temp != none and pid_temp != none and trv_temp != pid_temp }}
+  actions:
+  - action: climate.set_temperature
+    metadata: {}
+    data:
+      temperature: >
+        {{ state_attr('climate.living_room_trv_pid_controller', 'temperature') }}
+    target:
+      entity_id: climate.trv_living_room
+  mode: single
+```
+
 ### Current Implementations
 
 This pattern is currently implemented for:
 
-1. **Living room** - Complete setup with all 4 components
-2. **Master bedroom** - Complete setup with all 4 components
-3. **Bedroom** - Complete setup with all 4 components
+1. **Living room** - Complete setup with all 6 components
+2. **Master bedroom** - Complete setup with all 6 components
+3. **Bedroom** - Complete setup with all 6 components
 
 ### Prerequisites
 
@@ -415,3 +523,5 @@ These can be adjusted per room via the climate entity UI or by modifying the cli
 - **TRV not responding**: Check that valve sync automation is running
 - **Temperature not accurate**: Verify external temperature sensor sync automation is active
 - **TRV enters fail-safe mode**: Ensure external temperature sensor reports at least once every 2 hours
+- **Setpoint changes not syncing**: Verify the two setpoint sync automations are enabled and running
+- **Setpoint sync loop**: The condition templates prevent infinite loops by only triggering when temperatures differ
