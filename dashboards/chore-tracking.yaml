@@ -1,0 +1,120 @@
+title: Chore Champions
+views:
+  - title: Overview
+    icon: mdi:trophy
+    cards:
+      - type: markdown
+        content: |
+          # 🏆 Chore Champions
+          *Track your household contributions*
+      - type: gauge
+        entity: sensor.chore_minutes_charles_weekly
+        name: Charles chores this week
+        needle: false
+      - square: false
+        type: grid
+        title: Chores today
+        cards:
+          - graph: line
+            type: sensor
+            detail: 1
+            entity: sensor.chore_minutes_charles_daily
+            name: Charles
+          - graph: line
+            type: sensor
+            detail: 1
+            entity: sensor.chore_minutes_gaby_daily
+            name: Gaby
+        columns: 1
+      - type: grid
+        title: Chores this week
+        cards:
+          - type: gauge
+            entity: sensor.chore_minutes_charles_weekly
+            name: Charles
+            needle: false
+          - type: gauge
+            entity: sensor.chore_minutes_gaby_weekly
+            name: Gaby
+            needle: false
+
+        columns: 2
+      - type: entities
+        title: Charles
+        icon: mdi:account
+        entities:
+          - entity: input_boolean.chore_mode_charles
+            name: Status
+            icon: mdi:circle
+          - type: section
+          - entity: sensor.chore_minutes_charles_quick
+            name: This Quarter-Hour
+            icon: mdi:clock-outline
+          - entity: sensor.chore_minutes_charles_daily
+            name: Today
+            icon: mdi:calendar-today
+          - entity: sensor.chore_minutes_charles_weekly
+            name: This Week
+            icon: mdi:calendar-week
+          - entity: sensor.chore_minutes_charles_monthly
+            name: This Month
+            icon: mdi:calendar-month
+          - type: section
+          - entity: sensor.charles_last_activity_relative
+            name: Last Activity
+            icon: mdi:clock-outline
+      - type: entities
+        title: Gaby
+        icon: mdi:account
+        entities:
+          - entity: input_boolean.chore_mode_gaby
+            name: Status
+            icon: mdi:circle
+          - type: section
+          - entity: sensor.chore_minutes_gaby_quick
+            name: This Quarter-Hour
+            icon: mdi:clock-outline
+          - entity: sensor.chore_minutes_gaby_daily
+            name: Today
+            icon: mdi:calendar-today
+          - entity: sensor.chore_minutes_gaby_weekly
+            name: This Week
+            icon: mdi:calendar-week
+          - entity: sensor.chore_minutes_gaby_monthly
+            name: This Month
+            icon: mdi:calendar-month
+          - type: section
+          - entity: sensor.gaby_last_activity_relative
+            name: Last Activity
+            icon: mdi:clock-outline
+      - type: conditional
+        conditions:
+          - entity: sensor.chore_weekly_leader
+            state_not: Tied
+        card:
+          type: markdown
+          content: >
+            ### 🏆 This Week's Leader: {{ states('sensor.chore_weekly_leader')
+            }}
+
+            Keep up the great work!
+
+      - type: custom:mini-graph-card
+        name: 15-minute Chore Minutes
+        icon: mdi:chart-line
+        entities:
+          - entity: sensor.chore_minutes_charles_quick
+            name: Charles
+            color: "#0066FF"
+          - entity: sensor.chore_minutes_gaby_quick
+            name: Gaby
+            color: "#FF69B4"
+        hours_to_show: 2
+        points_per_hour: 4
+        aggregate_func: max
+        line_width: 3
+        animate: true
+        show:
+          graph: bar
+          fill: true
+          legend: true
