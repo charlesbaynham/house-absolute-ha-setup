@@ -21,6 +21,15 @@ input_boolean:
     initial: false
 
 input_number:
+  chore_timeout_minutes:
+    name: Chore Timeout Duration
+    min: 1
+    max: 120
+    step: 1
+    initial: 15
+    unit_of_measurement: min
+    icon: mdi:timer-outline
+
   chore_minutes_charles:
     name: Chore Minutes - Charles
     min: 0
@@ -135,7 +144,7 @@ automation:
 
   - id: '1763903316659'
     alias: Charles chore timeout
-    description: 'Disable Charles chore mode after 15 minutes of inactivity'
+    description: 'Disable Charles chore mode after configured timeout period of inactivity'
     triggers:
     - trigger: time_pattern
       minutes: /1
@@ -149,7 +158,8 @@ automation:
         {% if last_activity not in ['unknown', 'unavailable', ''] %}
           {% set last_time = last_activity | as_datetime | as_local %}
           {% set seconds_elapsed = (now() - last_time).total_seconds() %}
-          {{ seconds_elapsed > 900 }}
+          {% set timeout_seconds = states('input_number.chore_timeout_minutes') | float * 60 %}
+          {{ seconds_elapsed > timeout_seconds }}
         {% else %}
           false
         {% endif %}
@@ -163,7 +173,7 @@ automation:
 
   - id: '1763903316660'
     alias: Gaby chore timeout
-    description: 'Disable Gaby chore mode after 15 minutes of inactivity'
+    description: 'Disable Gaby chore mode after configured timeout period of inactivity'
     triggers:
     - trigger: time_pattern
       minutes: /1
@@ -177,7 +187,8 @@ automation:
         {% if last_activity not in ['unknown', 'unavailable', ''] %}
           {% set last_time = last_activity | as_datetime | as_local %}
           {% set seconds_elapsed = (now() - last_time).total_seconds() %}
-          {{ seconds_elapsed > 900 }}
+          {% set timeout_seconds = states('input_number.chore_timeout_minutes') | float * 60 %}
+          {{ seconds_elapsed > timeout_seconds }}
         {% else %}
           false
         {% endif %}
