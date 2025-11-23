@@ -788,3 +788,137 @@
     target:
       entity_id: climate.trv_bedroom
   mode: single
+- id: '1763903316655'
+  alias: Charles chore button - start/renew timer
+  description: 'Left button on Aqara switch starts or renews Charles chore tracking session'
+  triggers:
+  - domain: mqtt
+    device_id: eea20367040d6e9ad92eee3f0dc0ede2
+    type: action
+    subtype: single_left
+    trigger: device
+  conditions: []
+  actions:
+  - action: input_boolean.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.chore_mode_charles
+  - action: input_datetime.set_datetime
+    metadata: {}
+    data:
+      datetime: '{{ now().isoformat() }}'
+    target:
+      entity_id: input_datetime.chore_last_activity_charles
+  mode: single
+- id: '1763903316656'
+  alias: Gaby chore button - start/renew timer
+  description: 'Right button on Aqara switch starts or renews Gaby chore tracking session'
+  triggers:
+  - domain: mqtt
+    device_id: eea20367040d6e9ad92eee3f0dc0ede2
+    type: action
+    subtype: single_right
+    trigger: device
+  conditions: []
+  actions:
+  - action: input_boolean.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.chore_mode_gaby
+  - action: input_datetime.set_datetime
+    metadata: {}
+    data:
+      datetime: '{{ now().isoformat() }}'
+    target:
+      entity_id: input_datetime.chore_last_activity_gaby
+  mode: single
+- id: '1763903316657'
+  alias: Charles chore accumulator
+  description: 'Add 1 minute to Charles chore counter every minute while chore mode is active'
+  triggers:
+  - trigger: time_pattern
+    minutes: /1
+  conditions:
+  - condition: state
+    entity_id: input_boolean.chore_mode_charles
+    state: 'on'
+  actions:
+  - action: input_number.increment
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_number.chore_minutes_charles
+  mode: single
+- id: '1763903316658'
+  alias: Gaby chore accumulator
+  description: 'Add 1 minute to Gaby chore counter every minute while chore mode is active'
+  triggers:
+  - trigger: time_pattern
+    minutes: /1
+  conditions:
+  - condition: state
+    entity_id: input_boolean.chore_mode_gaby
+    state: 'on'
+  actions:
+  - action: input_number.increment
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_number.chore_minutes_gaby
+  mode: single
+- id: '1763903316659'
+  alias: Charles chore timeout
+  description: 'Disable Charles chore mode after 15 minutes of inactivity'
+  triggers:
+  - trigger: time_pattern
+    minutes: /1
+  conditions:
+  - condition: state
+    entity_id: input_boolean.chore_mode_charles
+    state: 'on'
+  - condition: template
+    value_template: >
+      {% set last_activity = states('input_datetime.chore_last_activity_charles') %}
+      {% if last_activity not in ['unknown', 'unavailable', ''] %}
+        {% set last_time = strptime(last_activity, '%Y-%m-%d %H:%M:%S') %}
+        {% set seconds_elapsed = (now() - last_time).total_seconds() %}
+        {{ seconds_elapsed > 900 }}
+      {% else %}
+        false
+      {% endif %}
+  actions:
+  - action: input_boolean.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.chore_mode_charles
+  mode: single
+- id: '1763903316660'
+  alias: Gaby chore timeout
+  description: 'Disable Gaby chore mode after 15 minutes of inactivity'
+  triggers:
+  - trigger: time_pattern
+    minutes: /1
+  conditions:
+  - condition: state
+    entity_id: input_boolean.chore_mode_gaby
+    state: 'on'
+  - condition: template
+    value_template: >
+      {% set last_activity = states('input_datetime.chore_last_activity_gaby') %}
+      {% if last_activity not in ['unknown', 'unavailable', ''] %}
+        {% set last_time = strptime(last_activity, '%Y-%m-%d %H:%M:%S') %}
+        {% set seconds_elapsed = (now() - last_time).total_seconds() %}
+        {{ seconds_elapsed > 900 }}
+      {% else %}
+        false
+      {% endif %}
+  actions:
+  - action: input_boolean.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.chore_mode_gaby
+  mode: single

@@ -18,6 +18,12 @@ input_boolean:
   night_mode:
     name: Night Mode
     icon: mdi:weather-night
+  chore_mode_charles:
+    name: Chore Mode - Charles
+    icon: mdi:broom
+  chore_mode_gaby:
+    name: Chore Mode - Gaby
+    icon: mdi:broom
 
 # Numeric helper for TRV valve positions, from 0 to 100
 input_number:
@@ -39,6 +45,32 @@ input_number:
     min: 0
     max: 100
     step: 1
+  chore_minutes_charles:
+    name: Chore Minutes - Charles
+    initial: 0
+    min: 0
+    max: 100000
+    step: 1
+    icon: mdi:timer-sand
+  chore_minutes_gaby:
+    name: Chore Minutes - Gaby
+    initial: 0
+    min: 0
+    max: 100000
+    step: 1
+    icon: mdi:timer-sand
+
+input_datetime:
+  chore_last_activity_charles:
+    name: Chore Last Activity - Charles
+    has_date: true
+    has_time: true
+    icon: mdi:clock-outline
+  chore_last_activity_gaby:
+    name: Chore Last Activity - Gaby
+    has_date: true
+    has_time: true
+    icon: mdi:clock-outline
 
 # Shell commands for git operations
 shell_command:
