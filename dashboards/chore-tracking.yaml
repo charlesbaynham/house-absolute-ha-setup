@@ -18,15 +18,12 @@ views:
         entity: sensor.chore_minutes_charles_weekly
         name: Charles chores this week
         needle: false
+        
 
+        
       - type: grid
+        title: Chores today
         cards:
-          - type: heading
-            heading: New section
-          - type: heading
-            icon: mdi:clock-edit-outline
-            heading: Chores today
-            heading_style: title
           - graph: line
             type: sensor
             detail: 1
@@ -36,6 +33,22 @@ views:
             entity: sensor.chore_minutes_gaby_daily
             name: Gaby
             state_color: false
+        columns: 1
+
+        
+      - type: grid
+        title: Chores this week
+        cards:        
+          - type: gauge
+            entity: sensor.chore_minutes_charles_weekly
+            name: Charles
+            needle: false
+          - type: gauge
+            entity: sensor.chore_minutes_gaby_weekly
+            name: Gaby
+            needle: false
+        columns: 2
+
 
 
 
