@@ -46,6 +46,10 @@ Located in `custom_components/`, these are Python-based integrations:
 
 ## Key Conventions
 
+### Use of packages
+
+For anything other than trivial features, i.e. any feature that requires more than one entity, use a package (in `packages/`) to keep related configuration together. See `packages/` for examples.
+
 ### Entity Identification Pattern
 
 Home Assistant uses three distinct ID types - **never confuse them**:
