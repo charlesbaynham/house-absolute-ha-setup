@@ -1,8 +1,127 @@
+# Chore Tracking Dashboard - Competitive Leaderboard
+#
+# This dashboard provides a gamified view of household chore contributions.
+# Loaded directly by Home Assistant via configuration.yaml lovelace dashboards.
+
+title: Chore Champions
 views:
-  - title: Chore tracking
-    header:
-      card:
-        type: markdown
-        text_only: true
-        content: '# Chore tracking'
-    sections: []
+  - title: Overview
+    icon: mdi:trophy
+    cards:
+      # Header card
+      - type: markdown
+        content: |
+          # 🏆 Chore Champions
+          *Track your household contributions*
+
+      # Charles status card
+      - type: entities
+        title: Charles
+        icon: mdi:account
+        entities:
+          - entity: input_boolean.chore_mode_charles
+            name: Status
+            icon: mdi:circle
+          - type: section
+          - entity: sensor.charles_chore_time_formatted
+            name: Today
+            icon: mdi:calendar-today
+          - entity: sensor.chore_minutes_charles_weekly
+            name: This Week
+            icon: mdi:calendar-week
+          - entity: sensor.chore_minutes_charles_monthly
+            name: This Month
+            icon: mdi:calendar-month
+          - type: section
+          - entity: sensor.charles_time_remaining
+            name: Time Remaining
+            icon: mdi:timer-outline
+          - entity: sensor.charles_last_activity_relative
+            name: Last Activity
+            icon: mdi:clock-outline
+
+      # Gaby status card
+      - type: entities
+        title: Gaby
+        icon: mdi:account
+        entities:
+          - entity: input_boolean.chore_mode_gaby
+            name: Status
+            icon: mdi:circle
+          - type: section
+          - entity: sensor.gaby_chore_time_formatted
+            name: Today
+            icon: mdi:calendar-today
+          - entity: sensor.chore_minutes_gaby_weekly
+            name: This Week
+            icon: mdi:calendar-week
+          - entity: sensor.chore_minutes_gaby_monthly
+            name: This Month
+            icon: mdi:calendar-month
+          - type: section
+          - entity: sensor.gaby_time_remaining
+            name: Time Remaining
+            icon: mdi:timer-outline
+          - entity: sensor.gaby_last_activity_relative
+            name: Last Activity
+            icon: mdi:clock-outline
+
+      # Weekly leader badge (conditional)
+      - type: conditional
+        conditions:
+          - entity: sensor.chore_weekly_leader
+            state_not: Tied
+        card:
+          type: markdown
+          content: |
+            ### 🏆 This Week's Leader: {{ states('sensor.chore_weekly_leader') }}
+            Keep up the great work!
+
+      # Weekly comparison graph (mini-graph-card)
+      - type: custom:mini-graph-card
+        name: Weekly Chore Minutes
+        icon: mdi:chart-line
+        entities:
+          - entity: sensor.chore_minutes_charles_weekly
+            name: Charles
+            color: '#3498db'
+          - entity: sensor.chore_minutes_gaby_weekly
+            name: Gaby
+            color: '#e74c3c'
+        hours_to_show: 168
+        points_per_hour: 0.25
+        line_width: 3
+        animate: true
+        show:
+          graph: line
+          fill: fade
+          points: true
+          legend: true
+          state: true
+
+      # Daily comparison (built-in entities card with gauges)
+      - type: entities
+        title: Today's Progress
+        icon: mdi:calendar-today
+        entities:
+          - entity: sensor.charles_chore_time_formatted
+            name: Charles
+            icon: mdi:account
+          - entity: sensor.gaby_chore_time_formatted
+            name: Gaby
+            icon: mdi:account
+
+      # Monthly statistics
+      - type: entities
+        title: Monthly Statistics
+        icon: mdi:chart-bar
+        entities:
+          - entity: sensor.chore_minutes_charles_monthly
+            name: Charles Total
+            icon: mdi:account
+          - entity: sensor.chore_minutes_gaby_monthly
+            name: Gaby Total
+            icon: mdi:account
+          - type: section
+          - entity: input_number.chore_timeout_minutes
+            name: Timeout Duration
