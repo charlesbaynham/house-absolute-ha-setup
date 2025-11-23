@@ -142,6 +142,9 @@ utility_meter:
   chore_minutes_charles_quick:
     source: sensor.chore_minutes_charles
     cycle: quarter-hourly
+  chore_minutes_gaby_quick:
+    source: sensor.chore_minutes_gaby
+    cycle: quarter-hourly
 
   chore_minutes_charles_daily:
     source: sensor.chore_minutes_charles

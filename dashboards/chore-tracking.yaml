@@ -37,6 +37,18 @@ views:
             entity: sensor.chore_minutes_gaby_weekly
             name: Gaby
             needle: false
+
+      - type: grid
+        title: Chores this quarter-hour
+        cards:
+          - type: gauge
+            entity: sensor.chore_minutes_charles_quick
+            name: Charles
+            needle: false
+          - type: gauge
+            entity: sensor.chore_minutes_gaby_quick
+            name: Gaby
+            needle: false
         columns: 2
       - type: entities
         title: Charles
