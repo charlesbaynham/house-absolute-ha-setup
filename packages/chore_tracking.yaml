@@ -138,6 +138,11 @@ template:
 
 # Utility meters for daily, weekly, and monthly tracking
 utility_meter:
+  # For debug:
+  chore_minutes_charles_quick:
+    source: sensor.chore_minutes_charles
+    cycle: quarter-hourly
+
   chore_minutes_charles_daily:
     source: sensor.chore_minutes_charles
     cycle: daily
