@@ -110,11 +110,11 @@ views:
         entities:
           - entity: sensor.chore_minutes_charles_weekly
             name: Charles
-            color: "#3498db"
+            color: "#0066FF"
           - entity: sensor.chore_minutes_gaby_weekly
             name: Gaby
-            color: "#e74c3c"
-        hours_to_show: 168
+            color: "#FF69B4"
+            hours_to_show: 168
         points_per_hour: 0.25
         line_width: 3
         animate: true
