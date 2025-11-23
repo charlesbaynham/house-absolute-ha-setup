@@ -216,6 +216,9 @@ automation:
           message: Chore mode activated for Charles
         target:
           entity_id: tts.google_translate_en_com
+      # Flash kitchen surface lights
+      - action: script.flash_kitchen_surface_lights
+        data: {}
     mode: single
 
   - id: "1763903316656"
@@ -248,6 +251,9 @@ automation:
           message: Chore mode activated for Gaby
         target:
           entity_id: tts.google_translate_en_com
+      # Flash kitchen surface lights
+      - action: script.flash_kitchen_surface_lights
+        data: {}
     mode: single
 
   - id: "1763903316657"
@@ -321,6 +327,9 @@ automation:
           message: Chore mode deactivated for Charles
         target:
           entity_id: tts.google_translate_en_com
+      # Flash kitchen surface lights
+      - action: script.flash_kitchen_surface_lights
+        data: {}
     mode: single
 
   - id: "1763903316660"
@@ -358,6 +367,9 @@ automation:
           message: Chore mode deactivated for Gaby
         target:
           entity_id: tts.google_translate_en_com
+      # Flash kitchen surface lights
+      - action: script.flash_kitchen_surface_lights
+        data: {}
     mode: single
 
   - id: "1732372800002"
