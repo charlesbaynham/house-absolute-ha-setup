@@ -1,0 +1,79 @@
+---
+# Hallway Motion Lighting Package
+#
+# Controls hallway lights based on motion sensor and front door opening.
+# Lights turn on when motion detected or door opens (if motion control enabled).
+# 10 minute timeout for motion detection, then 5 minute delay before turning off.
+#
+# Entities referenced:
+# - binary_sensor.hallway_motion_occupancy
+# - binary_sensor.front_door_sensor_contact
+
+input_boolean:
+  hallway_motion_enabled:
+    name: Hallway Motion Enabled
+    icon: mdi:motion-sensor
+    initial: true
+
+automation:
+  - id: '1761476521000'
+    alias: Hallway motion
+    description: ''
+    triggers:
+    - trigger: state
+      entity_id:
+      - binary_sensor.hallway_motion_occupancy
+      from: 'off'
+      to: 'on'
+    - trigger: state
+      entity_id: binary_sensor.front_door_sensor_contact
+      from: 'off'
+      to: 'on'
+    - trigger: state
+      entity_id:
+      - input_boolean.hallway_motion_enabled
+      to: 'on'
+    conditions:
+    - condition: state
+      entity_id: input_boolean.hallway_motion_enabled
+      state: 'on'
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: binary_sensor.hallway_motion_occupancy
+        state: 'on'
+      - condition: state
+        entity_id: binary_sensor.front_door_sensor_contact
+        state: 'on'
+    actions:
+    - alias: Turn on the light
+      action: light.turn_on
+      target:
+        area_id: hallway
+      data: {}
+    - alias: Wait until there is no motion
+      wait_for_trigger:
+      - trigger: state
+        entity_id:
+        - binary_sensor.hallway_motion_occupancy
+        from: 'on'
+        to: 'off'
+      timeout:
+        hours: 0
+        minutes: 10
+        seconds: 0
+        milliseconds: 0
+      continue_on_timeout: true
+    - alias: Wait the number of seconds that has been set
+      delay:
+        hours: 0
+        minutes: 5
+        seconds: 0
+        milliseconds: 0
+    - alias: Turn off the light
+      action: light.turn_off
+      target:
+        area_id: hallway
+      data: {}
+    mode: restart
+    max_exceeded: silent

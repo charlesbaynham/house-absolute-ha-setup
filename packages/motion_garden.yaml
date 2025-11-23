@@ -1,0 +1,49 @@
+---
+# Garden Motion Lighting Package
+#
+# Controls garden lights based on motion sensor and sun position.
+# Lights turn on when motion detected after sunset.
+# 5 minute timeout after motion stops, max 2 hour runtime.
+#
+# Entities referenced:
+# - binary_sensor.garden_motion_occupancy
+# - Sun integration (condition: after sunset)
+
+automation:
+  - id: gardenlightsmotinoandsun
+    alias: Turn on living room light when garden motion and sun is down
+    description: Triggers on motion or sunset, checks both motion and sun conditions
+    triggers:
+    - entity_id:
+      - binary_sensor.garden_motion_occupancy
+      to: 'on'
+      trigger: state
+    - event: sunset
+      trigger: sun
+    conditions:
+    - condition: state
+      entity_id: binary_sensor.garden_motion_occupancy
+      state: 'on'
+    - condition: sun
+      after: sunset
+    actions:
+    - target:
+        area_id: garden
+      action: light.turn_on
+      data: {}
+    - wait_for_trigger:
+      - entity_id:
+        - binary_sensor.garden_motion_occupancy
+        to: 'off'
+        for:
+          hours: 0
+          minutes: 5
+          seconds: 0
+        trigger: state
+      timeout: 02:00:00
+      continue_on_timeout: true
+    - target:
+        area_id: garden
+      action: light.turn_off
+      data: {}
+    mode: restart

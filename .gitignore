@@ -7,3 +7,4 @@ deps
 *.db-shm
 *.db-wal
 .ha_run.lock
+automations_old.yaml

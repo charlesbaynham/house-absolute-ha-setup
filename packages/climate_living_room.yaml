@@ -1,0 +1,113 @@
+---
+# Living Room Climate Control Package
+#
+# PID-controlled TRV system for living room heating.
+# Uses external temperature sensor and smart_thermostat integration.
+#
+# Components:
+# - PID controller climate entity
+# - Helper for valve position (0-100)
+# - Valve position sync automation (blueprint)
+# - External sensor sync automation (blueprint)
+# - Bidirectional setpoint sync (physical TRV ↔ PID controller)
+#
+# Physical device: climate.trv_living_room
+# External sensor: sensor.sensor_living_room_temperature
+#
+# Blueprints used:
+# - arnie580/sonoff-trv-pid.yaml
+# - photomoose/sonoff-trvzb-external-temperature-sensor-calibration.yaml
+
+input_number:
+  living_room_trv_valve_position:
+    name: Living room TRV Valve Position
+    initial: 0
+    min: 0
+    max: 100
+    step: 1
+
+climate:
+  - platform: smart_thermostat
+    name: Living room TRV PID controller
+    unique_id: trv_pid_living_room
+    heater: input_number.living_room_trv_valve_position
+    target_sensor: sensor.sensor_living_room_temperature
+    min_temp: 7
+    max_temp: 28
+    ac_mode: False
+    target_temp: 19
+    keep_alive:
+      seconds: 60
+    kp: 60
+    ki: 0.01
+    kd: 2000
+    pwm: 0
+
+automation:
+  - id: '1761691019774'
+    alias: Living room TRV - sync valve with helper
+    description: 'Copy the settings from the 0 - 100 helper to the TRV valve position.
+      This will be controlled by a PID controller from Smart thermostat (PID) - see
+      the YAML. '
+    use_blueprint:
+      path: arnie580/sonoff-trv-pid.yaml
+      input:
+        thermostat_value: input_number.living_room_trv_valve_position
+        max_valve_opening: number.trv_living_room_valve_opening_degree
+        max_valve_closing: number.trv_living_room_valve_closing_degree
+
+  - id: '1761512302799'
+    alias: Sync living room TRV with external sensor
+    description: ''
+    use_blueprint:
+      path: photomoose/sonoff-trvzb-external-temperature-sensor-calibration.yaml
+      input:
+        external_temperature_sensor: sensor.sensor_living_room_temperature
+        trv_external_temperature_input:
+        - number.trv_living_room_external_temperature_input
+
+  - id: '1732372800000'
+    alias: Living room TRV - sync physical setpoint to PID
+    description: 'When user changes setpoint on physical TRV, copy it to the PID controller'
+    triggers:
+    - trigger: state
+      entity_id: climate.trv_living_room
+      attribute: temperature
+    conditions:
+    - condition: template
+      value_template: >
+        {% set trv_temp = state_attr('climate.trv_living_room', 'temperature') %}
+        {% set pid_temp = state_attr('climate.living_room_trv_pid_controller', 'temperature') %}
+        {{ trv_temp != none and pid_temp != none and trv_temp != pid_temp }}
+    actions:
+    - action: climate.set_temperature
+      metadata: {}
+      data:
+        temperature: >
+          {{ state_attr('climate.trv_living_room', 'temperature') }}
+      target:
+        entity_id: climate.living_room_trv_pid_controller
+    mode: single
+
+  - id: '1732372800001'
+    alias: Living room TRV - sync PID setpoint to physical
+    description: 'When user changes setpoint on PID controller, copy it to the physical TRV'
+    triggers:
+    - trigger: state
+      entity_id: climate.living_room_trv_pid_controller
+      attribute: temperature
+    conditions:
+    - condition: template
+      value_template: >
+        {% set trv_temp = state_attr('climate.trv_living_room', 'temperature') %}
+        {% set pid_temp = state_attr('climate.living_room_trv_pid_controller', 'temperature') %}
+        {{ trv_temp != none and pid_temp != none and trv_temp != pid_temp }}
+    actions:
+    - action: climate.set_temperature
+      metadata: {}
+      data:
+        temperature: >
+          {{ state_attr('climate.living_room_trv_pid_controller', 'temperature') }}
+      target:
+        entity_id: climate.trv_living_room
+    mode: single

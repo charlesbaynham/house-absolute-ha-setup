@@ -1,0 +1,137 @@
+---
+# Master Bedroom Climate Control Package
+#
+# PID-controlled TRV system for master bedroom heating.
+# Uses external temperature sensor and smart_thermostat integration.
+#
+# Components:
+# - PID controller climate entity
+# - Helper for valve position (0-100)
+# - Valve position sync automation (blueprint)
+# - External sensor sync automation (blueprint)
+# - Bidirectional setpoint sync (physical TRV ↔ PID controller)
+# - One-time 4am heating restart automation (self-disabling)
+#
+# Physical device: climate.trv_master_bedroom
+# External sensor: sensor.sensor_master_bedroom_temperature
+#
+# Blueprints used:
+# - arnie580/sonoff-trv-pid.yaml
+# - photomoose/sonoff-trvzb-external-temperature-sensor-calibration.yaml
+
+input_number:
+  master_bedroom_trv_valve_position:
+    name: Master bedroom TRV Valve Position
+    initial: 0
+    min: 0
+    max: 100
+    step: 1
+
+climate:
+  - platform: smart_thermostat
+    name: Master bedroom TRV PID controller
+    unique_id: trv_pid_master_bedroom
+    heater: input_number.master_bedroom_trv_valve_position
+    target_sensor: sensor.sensor_master_bedroom_temperature
+    min_temp: 7
+    max_temp: 28
+    ac_mode: False
+    target_temp: 19
+    keep_alive:
+      seconds: 60
+    kp: 60
+    ki: 0.01
+    kd: 2000
+    pwm: 0
+
+automation:
+  - id: '1761691019775'
+    alias: Master bedroom TRV - sync valve with helper
+    description: 'Copy the settings from the 0 - 100 helper to the TRV valve position.
+      This will be controlled by a PID controller from Smart thermostat (PID) - see
+      the YAML. '
+    use_blueprint:
+      path: arnie580/sonoff-trv-pid.yaml
+      input:
+        thermostat_value: input_number.master_bedroom_trv_valve_position
+        max_valve_opening: number.trv_master_bedroom_valve_opening_degree
+        max_valve_closing: number.trv_master_bedroom_valve_closing_degree
+
+  - id: '1761479998275'
+    alias: Sync master bedroom TRV with external sensor
+    description: ''
+    use_blueprint:
+      path: photomoose/sonoff-trvzb-external-temperature-sensor-calibration.yaml
+      input:
+        external_temperature_sensor: sensor.sensor_master_bedroom_temperature
+        trv_external_temperature_input:
+        - number.trv_master_bedroom_external_temperature_input
+
+  - id: '1732372800002'
+    alias: Master bedroom TRV - sync physical setpoint to PID
+    description: 'When user changes setpoint on physical TRV, copy it to the PID controller'
+    triggers:
+    - trigger: state
+      entity_id: climate.trv_master_bedroom
+      attribute: temperature
+    conditions:
+    - condition: template
+      value_template: >
+        {% set trv_temp = state_attr('climate.trv_master_bedroom', 'temperature') %}
+        {% set pid_temp = state_attr('climate.master_bedroom_trv_pid_controller', 'temperature') %}
+        {{ trv_temp != none and pid_temp != none and trv_temp != pid_temp }}
+    actions:
+    - action: climate.set_temperature
+      metadata: {}
+      data:
+        temperature: >
+          {{ state_attr('climate.trv_master_bedroom', 'temperature') }}
+      target:
+        entity_id: climate.master_bedroom_trv_pid_controller
+    mode: single
+
+  - id: '1732372800003'
+    alias: Master bedroom TRV - sync PID setpoint to physical
+    description: 'When user changes setpoint on PID controller, copy it to the physical TRV'
+    triggers:
+    - trigger: state
+      entity_id: climate.master_bedroom_trv_pid_controller
+      attribute: temperature
+    conditions:
+    - condition: template
+      value_template: >
+        {% set trv_temp = state_attr('climate.trv_master_bedroom', 'temperature') %}
+        {% set pid_temp = state_attr('climate.master_bedroom_trv_pid_controller', 'temperature') %}
+        {{ trv_temp != none and pid_temp != none and trv_temp != pid_temp }}
+    actions:
+    - action: climate.set_temperature
+      metadata: {}
+      data:
+        temperature: >
+          {{ state_attr('climate.master_bedroom_trv_pid_controller', 'temperature') }}
+      target:
+        entity_id: climate.trv_master_bedroom
+    mode: single
+
+  - id: '1763508383336'
+    alias: Master bedroom restart heating at 4am
+    description: ''
+    triggers:
+    - trigger: time
+      at: 04:00:00
+    conditions: []
+    actions:
+    - action: climate.set_temperature
+      metadata: {}
+      data:
+        temperature: 22
+        hvac_mode: heat
+      target:
+        entity_id: climate.master_bedroom_trv_pid_controller
+    - action: automation.turn_off
+      metadata: {}
+      data:
+        stop_actions: false
+      target:
+        entity_id: automation.master_bedroom_restart_heating_at_4am
+    mode: single
