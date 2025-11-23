@@ -60,152 +60,151 @@ input_datetime:
 # Template sensors to convert input_number to sensor domain for utility_meter
 template:
   - sensor:
-    - name: "Total Chore Minutes Charles"
-      unique_id: chore_minutes_charles_sensor
-      state: "{{ states('input_number.chore_minutes_charles') | float(0) }}"
-      unit_of_measurement: "min"
-      device_class: duration
-      state_class: total_increasing
-      icon: mdi:timer-sand
-      availability: "{{ states('input_number.chore_minutes_charles') not in ['unknown', 'unavailable'] }}"
+      - name: "Total Chore Minutes Charles"
+        unique_id: chore_minutes_charles_sensor
+        state: "{{ states('input_number.chore_minutes_charles') | float(0) }}"
+        unit_of_measurement: "min"
+        device_class: duration
+        state_class: total_increasing
+        icon: mdi:timer-sand
+        availability: "{{ states('input_number.chore_minutes_charles') not in ['unknown', 'unavailable'] }}"
 
-    - name: "Total Chore Minutes Gaby"
-      unique_id: chore_minutes_gaby_sensor
-      state: "{{ states('input_number.chore_minutes_gaby') | float(0) }}"
-      unit_of_measurement: "min"
-      device_class: duration
-      state_class: total_increasing
-      icon: mdi:timer-sand
-      availability: "{{ states('input_number.chore_minutes_gaby') not in ['unknown', 'unavailable'] }}"
+      - name: "Total Chore Minutes Gaby"
+        unique_id: chore_minutes_gaby_sensor
+        state: "{{ states('input_number.chore_minutes_gaby') | float(0) }}"
+        unit_of_measurement: "min"
+        device_class: duration
+        state_class: total_increasing
+        icon: mdi:timer-sand
+        availability: "{{ states('input_number.chore_minutes_gaby') not in ['unknown', 'unavailable'] }}"
 
-    # Formatted time strings (convert minutes to "Xh Ym" format)
-    - name: "Charles Chore Time Formatted"
-      unique_id: charles_chore_time_formatted
-      state: >
-        {% set minutes = states('input_number.chore_minutes_charles') | float(0) %}
-        {% set hours = (minutes / 60) | int %}
-        {% set mins = (minutes % 60) | int %}
-        {% if hours > 0 %}{{ hours }}h {{ mins }}m{% else %}{{ mins }}m{% endif %}
-      icon: mdi:timer-sand
+      # Formatted time strings (convert minutes to "Xh Ym" format)
+      - name: "Charles Chore Time Formatted"
+        unique_id: charles_chore_time_formatted
+        state: >
+          {% set minutes = states('input_number.chore_minutes_charles') | float(0) %}
+          {% set hours = (minutes / 60) | int %}
+          {% set mins = (minutes % 60) | int %}
+          {% if hours > 0 %}{{ hours }}h {{ mins }}m{% else %}{{ mins }}m{% endif %}
+        icon: mdi:timer-sand
 
-    - name: "Gaby Chore Time Formatted"
-      unique_id: gaby_chore_time_formatted
-      state: >
-        {% set minutes = states('input_number.chore_minutes_gaby') | float(0) %}
-        {% set hours = (minutes / 60) | int %}
-        {% set mins = (minutes % 60) | int %}
-        {% if hours > 0 %}{{ hours }}h {{ mins }}m{% else %}{{ mins }}m{% endif %}
-      icon: mdi:timer-sand
+      - name: "Gaby Chore Time Formatted"
+        unique_id: gaby_chore_time_formatted
+        state: >
+          {% set minutes = states('input_number.chore_minutes_gaby') | float(0) %}
+          {% set hours = (minutes / 60) | int %}
+          {% set mins = (minutes % 60) | int %}
+          {% if hours > 0 %}{{ hours }}h {{ mins }}m{% else %}{{ mins }}m{% endif %}
+        icon: mdi:timer-sand
 
-    # Time remaining until timeout (countdown)
-    - name: "Charles Time Remaining"
-      unique_id: charles_time_remaining
-      state: >
-        {% if is_state('input_boolean.chore_mode_charles', 'on') %}
+      # Time remaining until timeout (countdown)
+      - name: "Charles Time Remaining"
+        unique_id: charles_time_remaining
+        state: >
+          {% if is_state('input_boolean.chore_mode_charles', 'on') %}
+            {% set last_activity = states('input_datetime.chore_last_activity_charles') %}
+            {% if last_activity not in ['unknown', 'unavailable', ''] %}
+              {% set last_time = last_activity | as_datetime | as_local %}
+              {% set seconds_elapsed = (now() - last_time).total_seconds() %}
+              {% set timeout_seconds = states('input_number.chore_timeout_minutes') | float * 60 %}
+              {% set remaining_seconds = timeout_seconds - seconds_elapsed %}
+              {% if remaining_seconds > 0 %}
+                {% set mins = (remaining_seconds / 60) | int %}
+                {% set secs = (remaining_seconds % 60) | int %}
+                {{ mins }}m {{ secs }}s
+              {% else %}
+                0m 0s
+              {% endif %}
+            {% else %}
+              Unknown
+            {% endif %}
+          {% else %}
+            Inactive
+          {% endif %}
+        icon: mdi:timer-outline
+
+      - name: "Gaby Time Remaining"
+        unique_id: gaby_time_remaining
+        state: >
+          {% if is_state('input_boolean.chore_mode_gaby', 'on') %}
+            {% set last_activity = states('input_datetime.chore_last_activity_gaby') %}
+            {% if last_activity not in ['unknown', 'unavailable', ''] %}
+              {% set last_time = last_activity | as_datetime | as_local %}
+              {% set seconds_elapsed = (now() - last_time).total_seconds() %}
+              {% set timeout_seconds = states('input_number.chore_timeout_minutes') | float * 60 %}
+              {% set remaining_seconds = timeout_seconds - seconds_elapsed %}
+              {% if remaining_seconds > 0 %}
+                {% set mins = (remaining_seconds / 60) | int %}
+                {% set secs = (remaining_seconds % 60) | int %}
+                {{ mins }}m {{ secs }}s
+              {% else %}
+                0m 0s
+              {% endif %}
+            {% else %}
+              Unknown
+            {% endif %}
+          {% else %}
+            Inactive
+          {% endif %}
+        icon: mdi:timer-outline
+
+      # Weekly leader badge
+      - name: "Chore Weekly Leader"
+        unique_id: chore_weekly_leader
+        state: >
+          {% set charles_weekly = states('sensor.chore_minutes_charles_weekly') | float(0) %}
+          {% set gaby_weekly = states('sensor.chore_minutes_gaby_weekly') | float(0) %}
+          {% if charles_weekly > gaby_weekly %}
+            Charles
+          {% elif gaby_weekly > charles_weekly %}
+            Gaby
+          {% else %}
+            Tied
+          {% endif %}
+        icon: mdi:trophy
+
+      # Relative last activity times
+      - name: "Charles Last Activity Relative"
+        unique_id: charles_last_activity_relative
+        state: >
           {% set last_activity = states('input_datetime.chore_last_activity_charles') %}
           {% if last_activity not in ['unknown', 'unavailable', ''] %}
             {% set last_time = last_activity | as_datetime | as_local %}
-            {% set seconds_elapsed = (now() - last_time).total_seconds() %}
-            {% set timeout_seconds = states('input_number.chore_timeout_minutes') | float * 60 %}
-            {% set remaining_seconds = timeout_seconds - seconds_elapsed %}
-            {% if remaining_seconds > 0 %}
-              {% set mins = (remaining_seconds / 60) | int %}
-              {% set secs = (remaining_seconds % 60) | int %}
-              {{ mins }}m {{ secs }}s
+            {% set seconds_ago = (now() - last_time).total_seconds() %}
+            {% if seconds_ago < 60 %}
+              Just now
+            {% elif seconds_ago < 3600 %}
+              {{ (seconds_ago / 60) | int }} minutes ago
+            {% elif seconds_ago < 86400 %}
+              {{ (seconds_ago / 3600) | int }} hours ago
             {% else %}
-              0m 0s
+              {{ (seconds_ago / 86400) | int }} days ago
             {% endif %}
           {% else %}
-            Unknown
+            Never
           {% endif %}
-        {% else %}
-          Inactive
-        {% endif %}
-      icon: mdi:timer-outline
+        icon: mdi:clock-outline
 
-    - name: "Gaby Time Remaining"
-      unique_id: gaby_time_remaining
-      state: >
-        {% if is_state('input_boolean.chore_mode_gaby', 'on') %}
+      - name: "Gaby Last Activity Relative"
+        unique_id: gaby_last_activity_relative
+        state: >
           {% set last_activity = states('input_datetime.chore_last_activity_gaby') %}
           {% if last_activity not in ['unknown', 'unavailable', ''] %}
             {% set last_time = last_activity | as_datetime | as_local %}
-            {% set seconds_elapsed = (now() - last_time).total_seconds() %}
-            {% set timeout_seconds = states('input_number.chore_timeout_minutes') | float * 60 %}
-            {% set remaining_seconds = timeout_seconds - seconds_elapsed %}
-            {% if remaining_seconds > 0 %}
-              {% set mins = (remaining_seconds / 60) | int %}
-              {% set secs = (remaining_seconds % 60) | int %}
-              {{ mins }}m {{ secs }}s
+            {% set seconds_ago = (now() - last_time).total_seconds() %}
+            {% if seconds_ago < 60 %}
+              Just now
+            {% elif seconds_ago < 3600 %}
+              {{ (seconds_ago / 60) | int }} minutes ago
+            {% elif seconds_ago < 86400 %}
+              {{ (seconds_ago / 3600) | int }} hours ago
             {% else %}
-              0m 0s
+              {{ (seconds_ago / 86400) | int }} days ago
             {% endif %}
           {% else %}
-            Unknown
+            Never
           {% endif %}
-        {% else %}
-          Inactive
-        {% endif %}
-      icon: mdi:timer-outline
-
-    # Weekly leader badge
-    - name: "Chore Weekly Leader"
-      unique_id: chore_weekly_leader
-      state: >
-        {% set charles_weekly = states('sensor.chore_minutes_charles_weekly') | float(0) %}
-        {% set gaby_weekly = states('sensor.chore_minutes_gaby_weekly') | float(0) %}
-        {% if charles_weekly > gaby_weekly %}
-          Charles
-        {% elif gaby_weekly > charles_weekly %}
-          Gaby
-        {% else %}
-          Tied
-        {% endif %}
-      icon: mdi:trophy
-
-    # Relative last activity times
-    - name: "Charles Last Activity Relative"
-      unique_id: charles_last_activity_relative
-      state: >
-        {% set last_activity = states('input_datetime.chore_last_activity_charles') %}
-        {% if last_activity not in ['unknown', 'unavailable', ''] %}
-          {% set last_time = last_activity | as_datetime | as_local %}
-          {% set seconds_ago = (now() - last_time).total_seconds() %}
-          {% if seconds_ago < 60 %}
-            Just now
-          {% elif seconds_ago < 3600 %}
-            {{ (seconds_ago / 60) | int }} minutes ago
-          {% elif seconds_ago < 86400 %}
-            {{ (seconds_ago / 3600) | int }} hours ago
-          {% else %}
-            {{ (seconds_ago / 86400) | int }} days ago
-          {% endif %}
-        {% else %}
-          Never
-        {% endif %}
-      icon: mdi:clock-outline
-
-    - name: "Gaby Last Activity Relative"
-      unique_id: gaby_last_activity_relative
-      state: >
-        {% set last_activity = states('input_datetime.chore_last_activity_gaby') %}
-        {% if last_activity not in ['unknown', 'unavailable', ''] %}
-          {% set last_time = last_activity | as_datetime | as_local %}
-          {% set seconds_ago = (now() - last_time).total_seconds() %}
-          {% if seconds_ago < 60 %}
-            Just now
-          {% elif seconds_ago < 3600 %}
-            {{ (seconds_ago / 60) | int }} minutes ago
-          {% elif seconds_ago < 86400 %}
-            {{ (seconds_ago / 3600) | int }} hours ago
-          {% else %}
-            {{ (seconds_ago / 86400) | int }} days ago
-          {% endif %}
-        {% else %}
-          Never
-        {% endif %}
-      icon: mdi:clock-outline
-
+        icon: mdi:clock-outline
 
 # Utility meters for daily, weekly, and monthly tracking
 utility_meter:
@@ -214,7 +213,6 @@ utility_meter:
     cycle: daily
     offset:
       hours: 4
-    state_class: total_increasing
 
   chore_minutes_charles_weekly:
     source: sensor.chore_minutes_charles
@@ -222,21 +220,18 @@ utility_meter:
     offset:
       hours: 4
       days: 6
-    state_class: total_increasing
 
   chore_minutes_charles_monthly:
     source: sensor.chore_minutes_charles
     cycle: monthly
     offset:
       hours: 4
-    state_class: total_increasing
 
   chore_minutes_gaby_daily:
     source: sensor.chore_minutes_gaby
     cycle: daily
     offset:
       hours: 4
-    state_class: total_increasing
 
   chore_minutes_gaby_weekly:
     source: sensor.chore_minutes_gaby
@@ -244,176 +239,174 @@ utility_meter:
     offset:
       hours: 4
       days: 6
-    state_class: total_increasing
 
   chore_minutes_gaby_monthly:
     source: sensor.chore_minutes_gaby
     cycle: monthly
     offset:
       hours: 4
-    state_class: total_increasing
 
 automation:
-  - id: '1763903316655'
+  - id: "1763903316655"
     alias: Charles chore button - start/renew timer
-    description: 'Left button on Aqara switch starts or renews Charles chore tracking session'
+    description: "Left button on Aqara switch starts or renews Charles chore tracking session"
     triggers:
-    - domain: mqtt
-      device_id: eea20367040d6e9ad92eee3f0dc0ede2
-      type: action
-      subtype: single_left
-      trigger: device
+      - domain: mqtt
+        device_id: eea20367040d6e9ad92eee3f0dc0ede2
+        type: action
+        subtype: single_left
+        trigger: device
     conditions: []
     actions:
-    - action: input_boolean.turn_on
-      metadata: {}
-      data: {}
-      target:
-        entity_id: input_boolean.chore_mode_charles
-    - action: input_datetime.set_datetime
-      metadata: {}
-      data:
-        datetime: '{{ now().isoformat() }}'
-      target:
-        entity_id: input_datetime.chore_last_activity_charles
+      - action: input_boolean.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: input_boolean.chore_mode_charles
+      - action: input_datetime.set_datetime
+        metadata: {}
+        data:
+          datetime: "{{ now().isoformat() }}"
+        target:
+          entity_id: input_datetime.chore_last_activity_charles
     mode: single
 
-  - id: '1763903316656'
+  - id: "1763903316656"
     alias: Gaby chore button - start/renew timer
-    description: 'Right button on Aqara switch starts or renews Gaby chore tracking session'
+    description: "Right button on Aqara switch starts or renews Gaby chore tracking session"
     triggers:
-    - domain: mqtt
-      device_id: eea20367040d6e9ad92eee3f0dc0ede2
-      type: action
-      subtype: single_right
-      trigger: device
+      - domain: mqtt
+        device_id: eea20367040d6e9ad92eee3f0dc0ede2
+        type: action
+        subtype: single_right
+        trigger: device
     conditions: []
     actions:
-    - action: input_boolean.turn_on
-      metadata: {}
-      data: {}
-      target:
-        entity_id: input_boolean.chore_mode_gaby
-    - action: input_datetime.set_datetime
-      metadata: {}
-      data:
-        datetime: '{{ now().isoformat() }}'
-      target:
-        entity_id: input_datetime.chore_last_activity_gaby
+      - action: input_boolean.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: input_boolean.chore_mode_gaby
+      - action: input_datetime.set_datetime
+        metadata: {}
+        data:
+          datetime: "{{ now().isoformat() }}"
+        target:
+          entity_id: input_datetime.chore_last_activity_gaby
     mode: single
 
-  - id: '1763903316657'
+  - id: "1763903316657"
     alias: Charles chore accumulator
-    description: 'Add 1 minute to Charles chore counter every minute while chore mode is active'
+    description: "Add 1 minute to Charles chore counter every minute while chore mode is active"
     triggers:
-    - trigger: time_pattern
-      minutes: /1
+      - trigger: time_pattern
+        minutes: /1
     conditions:
-    - condition: state
-      entity_id: input_boolean.chore_mode_charles
-      state: 'on'
-    actions:
-    - action: input_number.increment
-      metadata: {}
-      data: {}
-      target:
-        entity_id: input_number.chore_minutes_charles
-    mode: single
-
-  - id: '1763903316658'
-    alias: Gaby chore accumulator
-    description: 'Add 1 minute to Gaby chore counter every minute while chore mode is active'
-    triggers:
-    - trigger: time_pattern
-      minutes: /1
-    conditions:
-    - condition: state
-      entity_id: input_boolean.chore_mode_gaby
-      state: 'on'
-    actions:
-    - action: input_number.increment
-      metadata: {}
-      data: {}
-      target:
-        entity_id: input_number.chore_minutes_gaby
-    mode: single
-
-  - id: '1763903316659'
-    alias: Charles chore timeout
-    description: 'Disable Charles chore mode after configured timeout period of inactivity'
-    triggers:
-    - trigger: time_pattern
-      minutes: /1
-    conditions:
-    - condition: state
-      entity_id: input_boolean.chore_mode_charles
-      state: 'on'
-    - condition: template
-      value_template: >
-        {% set last_activity = states('input_datetime.chore_last_activity_charles') %}
-        {% if last_activity not in ['unknown', 'unavailable', ''] %}
-          {% set last_time = last_activity | as_datetime | as_local %}
-          {% set seconds_elapsed = (now() - last_time).total_seconds() %}
-          {% set timeout_seconds = states('input_number.chore_timeout_minutes') | float * 60 %}
-          {{ seconds_elapsed > timeout_seconds }}
-        {% else %}
-          false
-        {% endif %}
-    actions:
-    - action: input_boolean.turn_off
-      metadata: {}
-      data: {}
-      target:
+      - condition: state
         entity_id: input_boolean.chore_mode_charles
-    mode: single
-
-  - id: '1763903316660'
-    alias: Gaby chore timeout
-    description: 'Disable Gaby chore mode after configured timeout period of inactivity'
-    triggers:
-    - trigger: time_pattern
-      minutes: /1
-    conditions:
-    - condition: state
-      entity_id: input_boolean.chore_mode_gaby
-      state: 'on'
-    - condition: template
-      value_template: >
-        {% set last_activity = states('input_datetime.chore_last_activity_gaby') %}
-        {% if last_activity not in ['unknown', 'unavailable', ''] %}
-          {% set last_time = last_activity | as_datetime | as_local %}
-          {% set seconds_elapsed = (now() - last_time).total_seconds() %}
-          {% set timeout_seconds = states('input_number.chore_timeout_minutes') | float * 60 %}
-          {{ seconds_elapsed > timeout_seconds }}
-        {% else %}
-          false
-        {% endif %}
+        state: "on"
     actions:
-    - action: input_boolean.turn_off
-      metadata: {}
-      data: {}
-      target:
-        entity_id: input_boolean.chore_mode_gaby
+      - action: input_number.increment
+        metadata: {}
+        data: {}
+        target:
+          entity_id: input_number.chore_minutes_charles
     mode: single
 
-  - id: '1732372800002'
-    alias: Reset chore counters at 4am
-    description: 'Reset daily chore minute counters at 4am for both Charles and Gaby'
+  - id: "1763903316658"
+    alias: Gaby chore accumulator
+    description: "Add 1 minute to Gaby chore counter every minute while chore mode is active"
     triggers:
-    - trigger: time
-      at: '04:00:00'
+      - trigger: time_pattern
+        minutes: /1
+    conditions:
+      - condition: state
+        entity_id: input_boolean.chore_mode_gaby
+        state: "on"
+    actions:
+      - action: input_number.increment
+        metadata: {}
+        data: {}
+        target:
+          entity_id: input_number.chore_minutes_gaby
+    mode: single
+
+  - id: "1763903316659"
+    alias: Charles chore timeout
+    description: "Disable Charles chore mode after configured timeout period of inactivity"
+    triggers:
+      - trigger: time_pattern
+        minutes: /1
+    conditions:
+      - condition: state
+        entity_id: input_boolean.chore_mode_charles
+        state: "on"
+      - condition: template
+        value_template: >
+          {% set last_activity = states('input_datetime.chore_last_activity_charles') %}
+          {% if last_activity not in ['unknown', 'unavailable', ''] %}
+            {% set last_time = last_activity | as_datetime | as_local %}
+            {% set seconds_elapsed = (now() - last_time).total_seconds() %}
+            {% set timeout_seconds = states('input_number.chore_timeout_minutes') | float * 60 %}
+            {{ seconds_elapsed > timeout_seconds }}
+          {% else %}
+            false
+          {% endif %}
+    actions:
+      - action: input_boolean.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: input_boolean.chore_mode_charles
+    mode: single
+
+  - id: "1763903316660"
+    alias: Gaby chore timeout
+    description: "Disable Gaby chore mode after configured timeout period of inactivity"
+    triggers:
+      - trigger: time_pattern
+        minutes: /1
+    conditions:
+      - condition: state
+        entity_id: input_boolean.chore_mode_gaby
+        state: "on"
+      - condition: template
+        value_template: >
+          {% set last_activity = states('input_datetime.chore_last_activity_gaby') %}
+          {% if last_activity not in ['unknown', 'unavailable', ''] %}
+            {% set last_time = last_activity | as_datetime | as_local %}
+            {% set seconds_elapsed = (now() - last_time).total_seconds() %}
+            {% set timeout_seconds = states('input_number.chore_timeout_minutes') | float * 60 %}
+            {{ seconds_elapsed > timeout_seconds }}
+          {% else %}
+            false
+          {% endif %}
+    actions:
+      - action: input_boolean.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: input_boolean.chore_mode_gaby
+    mode: single
+
+  - id: "1732372800002"
+    alias: Reset chore counters at 4am
+    description: "Reset daily chore minute counters at 4am for both Charles and Gaby"
+    triggers:
+      - trigger: time
+        at: "04:00:00"
     conditions: []
     actions:
-    - action: input_number.set_value
-      metadata: {}
-      data:
-        value: 0
-      target:
-        entity_id: input_number.chore_minutes_charles
-    - action: input_number.set_value
-      metadata: {}
-      data:
-        value: 0
-      target:
-        entity_id: input_number.chore_minutes_gaby
+      - action: input_number.set_value
+        metadata: {}
+        data:
+          value: 0
+        target:
+          entity_id: input_number.chore_minutes_charles
+      - action: input_number.set_value
+        metadata: {}
+        data:
+          value: 0
+        target:
+          entity_id: input_number.chore_minutes_gaby
     mode: single
