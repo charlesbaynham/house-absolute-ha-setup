@@ -18,9 +18,7 @@ views:
         entity: sensor.chore_minutes_charles_weekly
         name: Charles chores this week
         needle: false
-        
 
-        
       - type: grid
         title: Chores today
         cards:
@@ -35,10 +33,9 @@ views:
             state_color: false
         columns: 1
 
-        
       - type: grid
         title: Chores this week
-        cards:        
+        cards:
           - type: gauge
             entity: sensor.chore_minutes_charles_weekly
             name: Charles
@@ -48,9 +45,6 @@ views:
             name: Gaby
             needle: false
         columns: 2
-
-
-
 
       # Charles status card
       - type: entities
@@ -122,10 +116,10 @@ views:
         entities:
           - entity: sensor.chore_minutes_charles_weekly
             name: Charles
-            color: '#3498db'
+            color: "#3498db"
           - entity: sensor.chore_minutes_gaby_weekly
             name: Gaby
-            color: '#e74c3c'
+            color: "#e74c3c"
         hours_to_show: 168
         points_per_hour: 0.25
         line_width: 3
