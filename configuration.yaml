@@ -16,10 +16,10 @@ lovelace:
   dashboards:
     lovelace-yaml:
       mode: yaml
-      title: YAML
-      icon: mdi:script
+      title: Chore tracking
+      icon: mdi:broom
       show_in_sidebar: true
-      filename: home-sections.yaml
+      filename: dashboards/chore-tracking.yaml
       
 
 automation: !include automations.yaml

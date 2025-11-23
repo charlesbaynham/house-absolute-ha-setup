@@ -1,0 +1,8 @@
+views:
+  - title: Chore tracking
+    header:
+      card:
+        type: markdown
+        text_only: true
+        content: '# Chore tracking'
+    sections: []
