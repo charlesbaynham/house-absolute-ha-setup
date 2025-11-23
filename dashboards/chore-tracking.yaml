@@ -38,7 +38,6 @@ views:
             name: Gaby
             needle: false
 
-
         columns: 2
       - type: entities
         title: Charles
@@ -99,17 +98,6 @@ views:
             }}
 
             Keep up the great work!
-      - type: custom:mini-graph-card
-        name: Weekly Chore Minutes
-        icon: mdi:chart-line
-        entities:
-          - entity: sensor.chore_minutes_charles_weekly
-            name: Charles
-            color: "#0066FF"
-          - entity: sensor.chore_minutes_gaby_weekly
-            name: Gaby
-            color: "#FF69B4"
-            hours_to_show: 168
 
       - type: custom:mini-graph-card
         name: 15-minute Chore Minutes
@@ -121,13 +109,12 @@ views:
           - entity: sensor.chore_minutes_gaby_quick
             name: Gaby
             color: "#FF69B4"
-            hours_to_show: 6
-        points_per_hour: 0.25
+        hours_to_show: 2
+        points_per_hour: 4
+        aggregate_func: max
         line_width: 3
         animate: true
         show:
-          graph: line
-          fill: fade
-          points: true
+          graph: bar
+          fill: true
           legend: true
-          state: true
