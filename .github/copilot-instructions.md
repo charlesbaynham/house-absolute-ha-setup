@@ -102,6 +102,10 @@ Use Jinja2 templates for computed states (see `template_sensors.yaml`):
         {{ people | selectattr('state', 'equalto', 'home') | list | count > 0 }}
 ```
 
+### Device discovery
+
+Devices accessible to Home Assistant either come through Zigbee2MQTT or from other integrations. For a list of currently available Zigbee devices, check `zigbee2mqtt/configuration.yaml` under the `devices:` section. Do not modify this file: it's automatically managed by Home Assistant and Zigbee2MQTT.
+
 ## Development Workflow
 
 ### No Build/Test Commands
