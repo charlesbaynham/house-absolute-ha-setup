@@ -11,23 +11,16 @@ frontend:
 
 # Lovelace dashboards in YAML mode
 lovelace:
-  mode: yaml
-  resources:
-    - url: /hacsfiles/lovelace-valetudo-map-card/valetudo-map-card.js
-      type: module
+  mode: storage
+  # Add yaml dashboards
   dashboards:
-    lovelace-entities:
+    lovelace-yaml:
       mode: yaml
-      title: All Entities
-      icon: mdi:view-list
-      show_in_sidebar: true
-      filename: all-entities.yaml
-    lovelace-home:
-      mode: yaml
-      title: Home
-      icon: mdi:home
+      title: YAML
+      icon: mdi:script
       show_in_sidebar: true
       filename: home-sections.yaml
+      
 
 automation: !include automations.yaml
 script: !include scripts.yaml

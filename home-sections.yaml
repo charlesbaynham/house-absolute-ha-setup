@@ -1,3 +1,48 @@
-title: Home
 views:
-  - type: home
+  - title: This is a test
+    header:
+      card:
+        type: markdown
+        text_only: true
+        content: '# Murder mystery controls'
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            heading: Lights
+          - type: entities
+            entities:
+              - input_button.trigger_amulet_speech
+          - type: entities
+            entities:
+              - input_boolean.police_mode
+          - type: entities
+            entities:
+              - input_boolean.pause_mode
+          - type: entities
+            entities:
+              - input_boolean.steph_mode
+      - type: grid
+        cards:
+          - type: heading
+            heading: Debug - do not use
+            heading_style: subtitle
+          - type: entities
+            entities:
+              - entity: scene.normal
+              - entity: scene.pause_mode
+              - entity: scene.spot_1
+              - entity: scene.spot_2
+      - type: grid
+        cards:
+          - type: heading
+            heading: New section
+      - type: grid
+        cards:
+          - type: heading
+            heading: New section
+      - type: grid
+        cards:
+          - type: heading
+            heading: New section
