@@ -656,3 +656,135 @@
     target:
       entity_id: automation.master_bedroom_restart_heating_at_4am
   mode: single
+- id: '1732372800000'
+  alias: Living room TRV - sync physical setpoint to PID
+  description: 'When user changes setpoint on physical TRV, copy it to the PID controller'
+  triggers:
+  - trigger: state
+    entity_id: climate.trv_living_room
+    attribute: temperature
+  conditions:
+  - condition: template
+    value_template: >
+      {% set trv_temp = state_attr('climate.trv_living_room', 'temperature') %}
+      {% set pid_temp = state_attr('climate.living_room_trv_pid_controller', 'temperature') %}
+      {{ trv_temp != none and pid_temp != none and trv_temp != pid_temp }}
+  actions:
+  - action: climate.set_temperature
+    metadata: {}
+    data:
+      temperature: >
+        {{ state_attr('climate.trv_living_room', 'temperature') }}
+    target:
+      entity_id: climate.living_room_trv_pid_controller
+  mode: single
+- id: '1732372800001'
+  alias: Living room TRV - sync PID setpoint to physical
+  description: 'When user changes setpoint on PID controller, copy it to the physical TRV'
+  triggers:
+  - trigger: state
+    entity_id: climate.living_room_trv_pid_controller
+    attribute: temperature
+  conditions:
+  - condition: template
+    value_template: >
+      {% set trv_temp = state_attr('climate.trv_living_room', 'temperature') %}
+      {% set pid_temp = state_attr('climate.living_room_trv_pid_controller', 'temperature') %}
+      {{ trv_temp != none and pid_temp != none and trv_temp != pid_temp }}
+  actions:
+  - action: climate.set_temperature
+    metadata: {}
+    data:
+      temperature: >
+        {{ state_attr('climate.living_room_trv_pid_controller', 'temperature') }}
+    target:
+      entity_id: climate.trv_living_room
+  mode: single
+- id: '1732372800002'
+  alias: Master bedroom TRV - sync physical setpoint to PID
+  description: 'When user changes setpoint on physical TRV, copy it to the PID controller'
+  triggers:
+  - trigger: state
+    entity_id: climate.trv_master_bedroom
+    attribute: temperature
+  conditions:
+  - condition: template
+    value_template: >
+      {% set trv_temp = state_attr('climate.trv_master_bedroom', 'temperature') %}
+      {% set pid_temp = state_attr('climate.master_bedroom_trv_pid_controller', 'temperature') %}
+      {{ trv_temp != none and pid_temp != none and trv_temp != pid_temp }}
+  actions:
+  - action: climate.set_temperature
+    metadata: {}
+    data:
+      temperature: >
+        {{ state_attr('climate.trv_master_bedroom', 'temperature') }}
+    target:
+      entity_id: climate.master_bedroom_trv_pid_controller
+  mode: single
+- id: '1732372800003'
+  alias: Master bedroom TRV - sync PID setpoint to physical
+  description: 'When user changes setpoint on PID controller, copy it to the physical TRV'
+  triggers:
+  - trigger: state
+    entity_id: climate.master_bedroom_trv_pid_controller
+    attribute: temperature
+  conditions:
+  - condition: template
+    value_template: >
+      {% set trv_temp = state_attr('climate.trv_master_bedroom', 'temperature') %}
+      {% set pid_temp = state_attr('climate.master_bedroom_trv_pid_controller', 'temperature') %}
+      {{ trv_temp != none and pid_temp != none and trv_temp != pid_temp }}
+  actions:
+  - action: climate.set_temperature
+    metadata: {}
+    data:
+      temperature: >
+        {{ state_attr('climate.master_bedroom_trv_pid_controller', 'temperature') }}
+    target:
+      entity_id: climate.trv_master_bedroom
+  mode: single
+- id: '1732372800004'
+  alias: Bedroom TRV - sync physical setpoint to PID
+  description: 'When user changes setpoint on physical TRV, copy it to the PID controller'
+  triggers:
+  - trigger: state
+    entity_id: climate.trv_bedroom
+    attribute: temperature
+  conditions:
+  - condition: template
+    value_template: >
+      {% set trv_temp = state_attr('climate.trv_bedroom', 'temperature') %}
+      {% set pid_temp = state_attr('climate.bedroom_trv_pid_controller', 'temperature') %}
+      {{ trv_temp != none and pid_temp != none and trv_temp != pid_temp }}
+  actions:
+  - action: climate.set_temperature
+    metadata: {}
+    data:
+      temperature: >
+        {{ state_attr('climate.trv_bedroom', 'temperature') }}
+    target:
+      entity_id: climate.bedroom_trv_pid_controller
+  mode: single
+- id: '1732372800005'
+  alias: Bedroom TRV - sync PID setpoint to physical
+  description: 'When user changes setpoint on PID controller, copy it to the physical TRV'
+  triggers:
+  - trigger: state
+    entity_id: climate.bedroom_trv_pid_controller
+    attribute: temperature
+  conditions:
+  - condition: template
+    value_template: >
+      {% set trv_temp = state_attr('climate.trv_bedroom', 'temperature') %}
+      {% set pid_temp = state_attr('climate.bedroom_trv_pid_controller', 'temperature') %}
+      {{ trv_temp != none and pid_temp != none and trv_temp != pid_temp }}
+  actions:
+  - action: climate.set_temperature
+    metadata: {}
+    data:
+      temperature: >
+        {{ state_attr('climate.bedroom_trv_pid_controller', 'temperature') }}
+    target:
+      entity_id: climate.trv_bedroom
+  mode: single
