@@ -31,16 +31,16 @@ input_number:
     icon: mdi:timer-outline
 
   chore_minutes_charles:
-    name: Chore Minutes - Charles
+    name: Total Chore Minutes Charles
     min: 0
-    max: 100000
+    max: 10000000
     step: 1
     icon: mdi:timer-sand
 
   chore_minutes_gaby:
-    name: Chore Minutes - Gaby
+    name: Total Chore Minutes Gaby
     min: 0
-    max: 100000
+    max: 10000000
     step: 1
     icon: mdi:timer-sand
 
@@ -60,7 +60,7 @@ input_datetime:
 # Template sensors to convert input_number to sensor domain for utility_meter
 template:
   - sensor:
-    - name: "Chore Minutes Charles"
+    - name: "Total Chore Minutes Charles"
       unique_id: chore_minutes_charles_sensor
       state: "{{ states('input_number.chore_minutes_charles') | float(0) }}"
       unit_of_measurement: "min"
@@ -69,7 +69,7 @@ template:
       icon: mdi:timer-sand
       availability: "{{ states('input_number.chore_minutes_charles') not in ['unknown', 'unavailable'] }}"
 
-    - name: "Chore Minutes Gaby"
+    - name: "Total Chore Minutes Gaby"
       unique_id: chore_minutes_gaby_sensor
       state: "{{ states('input_number.chore_minutes_gaby') | float(0) }}"
       unit_of_measurement: "min"
@@ -86,6 +86,7 @@ utility_meter:
     cycle: daily
     offset:
       hours: 4
+    state_class: total_increasing
 
   chore_minutes_charles_weekly:
     source: sensor.chore_minutes_charles
@@ -93,18 +94,21 @@ utility_meter:
     offset:
       hours: 4
       days: 6
+    state_class: total_increasing
 
   chore_minutes_charles_monthly:
     source: sensor.chore_minutes_charles
     cycle: monthly
     offset:
       hours: 4
+    state_class: total_increasing
 
   chore_minutes_gaby_daily:
     source: sensor.chore_minutes_gaby
     cycle: daily
     offset:
       hours: 4
+    state_class: total_increasing
 
   chore_minutes_gaby_weekly:
     source: sensor.chore_minutes_gaby
@@ -112,12 +116,14 @@ utility_meter:
     offset:
       hours: 4
       days: 6
+    state_class: total_increasing
 
   chore_minutes_gaby_monthly:
     source: sensor.chore_minutes_gaby
     cycle: monthly
     offset:
       hours: 4
+    state_class: total_increasing
 
 automation:
   - id: '1763903316655'
