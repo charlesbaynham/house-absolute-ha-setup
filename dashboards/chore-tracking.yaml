@@ -14,6 +14,12 @@ views:
           # 🏆 Chore Champions
           *Track your household contributions*
 
+      - type: gauge
+        entity: sensor.chore_minutes_charles_weekly
+        name: Charles chores this week
+        needle: false
+
+
       # Charles status card
       - type: entities
         title: Charles
