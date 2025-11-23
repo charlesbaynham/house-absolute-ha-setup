@@ -58,6 +58,9 @@ views:
             name: Status
             icon: mdi:circle
           - type: section
+          - entity: sensor.chore_minutes_charles_quick
+            name: This Quarter-Hour
+            icon: mdi:clock-outline
           - entity: sensor.chore_minutes_charles_daily
             name: Today
             icon: mdi:calendar-today
@@ -79,6 +82,9 @@ views:
             name: Status
             icon: mdi:circle
           - type: section
+          - entity: sensor.chore_minutes_gaby_quick
+            name: This Quarter-Hour
+            icon: mdi:clock-outline
           - entity: sensor.chore_minutes_gaby_daily
             name: Today
             icon: mdi:calendar-today
