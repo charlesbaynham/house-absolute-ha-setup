@@ -27,10 +27,12 @@ views:
             detail: 1
             entity: sensor.chore_minutes_charles_daily
             name: Charles
-          - type: entity
+          - graph: line
+            type: sensor
+            detail: 1
             entity: sensor.chore_minutes_gaby_daily
             name: Gaby
-            state_color: false
+            
         columns: 1
 
       - type: grid
