@@ -88,6 +88,8 @@ devices:
     friendly_name: Cosy button
   '0x00158d008c4a18b7':
     friendly_name: Sensor bedroom
+  '0x54ef44100143eba1':
+    friendly_name: Wireless aqara
 groups: {}
 availability:
   enabled: true
