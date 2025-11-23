@@ -207,16 +207,15 @@ automation:
           datetime: "{{ now().isoformat() }}"
         target:
           entity_id: input_datetime.chore_last_activity_charles
-      
-      
 
-      
       - action: tts.speak
         metadata: {}
         data:
           cache: true
           media_player_entity_id: media_player.living_room_speaker
           message: Chore mode activated for Charles
+        target:
+          entity_id: tts.google_translate_en_com
     mode: single
 
   - id: "1763903316656"
@@ -247,6 +246,8 @@ automation:
           cache: true
           media_player_entity_id: media_player.living_room_speaker
           message: Chore mode activated for Gaby
+        target:
+          entity_id: tts.google_translate_en_com
     mode: single
 
   - id: "1763903316657"
@@ -318,6 +319,8 @@ automation:
           cache: true
           media_player_entity_id: media_player.living_room_speaker
           message: Chore mode deactivated for Charles
+        target:
+          entity_id: tts.google_translate_en_com
     mode: single
 
   - id: "1763903316660"
@@ -353,6 +356,8 @@ automation:
           cache: true
           media_player_entity_id: media_player.living_room_speaker
           message: Chore mode deactivated for Gaby
+        target:
+          entity_id: tts.google_translate_en_com
     mode: single
 
   - id: "1732372800002"
