@@ -352,10 +352,11 @@ automation:
       - condition: template
         value_template: >
           {% set last_activity = states('input_datetime.chore_last_activity_charles') %}
-          {% if last_activity not in ['unknown', 'unavailable', ''] %}
+          {% set timeout_minutes = states('input_number.chore_timeout_minutes') | float %}
+          {% if last_activity not in ['unknown', 'unavailable', ''] and timeout_minutes > 1 %}
             {% set last_time = last_activity | as_datetime | as_local %}
             {% set seconds_elapsed = (now() - last_time).total_seconds() %}
-            {% set timeout_seconds = states('input_number.chore_timeout_minutes') | float * 60 %}
+            {% set timeout_seconds = timeout_minutes * 60 %}
             {% set warning_start = timeout_seconds - 60 %}
             {{ seconds_elapsed >= warning_start and seconds_elapsed < timeout_seconds }}
           {% else %}
@@ -379,10 +380,11 @@ automation:
       - condition: template
         value_template: >
           {% set last_activity = states('input_datetime.chore_last_activity_gaby') %}
-          {% if last_activity not in ['unknown', 'unavailable', ''] %}
+          {% set timeout_minutes = states('input_number.chore_timeout_minutes') | float %}
+          {% if last_activity not in ['unknown', 'unavailable', ''] and timeout_minutes > 1 %}
             {% set last_time = last_activity | as_datetime | as_local %}
             {% set seconds_elapsed = (now() - last_time).total_seconds() %}
-            {% set timeout_seconds = states('input_number.chore_timeout_minutes') | float * 60 %}
+            {% set timeout_seconds = timeout_minutes * 60 %}
             {% set warning_start = timeout_seconds - 60 %}
             {{ seconds_elapsed >= warning_start and seconds_elapsed < timeout_seconds }}
           {% else %}
