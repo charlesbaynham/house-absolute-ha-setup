@@ -48,14 +48,14 @@ automation:
                   - bedroom
                   - hallway
             - delay:
-                milliseconds: 500
+                milliseconds: 1000
             - action: light.turn_off
               target:
                 area_id:
                   - bedroom
                   - hallway
             - delay:
-                milliseconds: 500
+                milliseconds: 1000
       # Leave lights on
       - action: light.turn_on
         target:
@@ -85,14 +85,14 @@ automation:
                   - bedroom
                   - hallway
             - delay:
-                milliseconds: 500
+                milliseconds: 1000
             - action: light.turn_off
               target:
                 area_id:
                   - bedroom
                   - hallway
             - delay:
-                milliseconds: 500
+                milliseconds: 1000
       # Leave lights on
       - action: light.turn_on
         target:
