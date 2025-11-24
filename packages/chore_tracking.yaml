@@ -339,6 +339,60 @@ automation:
         data: {}
     mode: single
 
+  - id: "1763903316661"
+    alias: Charles chore timeout warning
+    description: "Flash lights once as warning 1 minute before Charles chore mode times out"
+    triggers:
+      - trigger: time_pattern
+        minutes: /1
+    conditions:
+      - condition: state
+        entity_id: input_boolean.chore_mode_charles
+        state: "on"
+      - condition: template
+        value_template: >
+          {% set last_activity = states('input_datetime.chore_last_activity_charles') %}
+          {% if last_activity not in ['unknown', 'unavailable', ''] %}
+            {% set last_time = last_activity | as_datetime | as_local %}
+            {% set seconds_elapsed = (now() - last_time).total_seconds() %}
+            {% set timeout_seconds = states('input_number.chore_timeout_minutes') | float * 60 %}
+            {% set warning_start = timeout_seconds - 60 %}
+            {{ seconds_elapsed >= warning_start and seconds_elapsed < timeout_seconds }}
+          {% else %}
+            false
+          {% endif %}
+    actions:
+      - action: script.flash_kitchen_surface_lights_once
+        data: {}
+    mode: single
+
+  - id: "1763903316662"
+    alias: Gaby chore timeout warning
+    description: "Flash lights once as warning 1 minute before Gaby chore mode times out"
+    triggers:
+      - trigger: time_pattern
+        minutes: /1
+    conditions:
+      - condition: state
+        entity_id: input_boolean.chore_mode_gaby
+        state: "on"
+      - condition: template
+        value_template: >
+          {% set last_activity = states('input_datetime.chore_last_activity_gaby') %}
+          {% if last_activity not in ['unknown', 'unavailable', ''] %}
+            {% set last_time = last_activity | as_datetime | as_local %}
+            {% set seconds_elapsed = (now() - last_time).total_seconds() %}
+            {% set timeout_seconds = states('input_number.chore_timeout_minutes') | float * 60 %}
+            {% set warning_start = timeout_seconds - 60 %}
+            {{ seconds_elapsed >= warning_start and seconds_elapsed < timeout_seconds }}
+          {% else %}
+            false
+          {% endif %}
+    actions:
+      - action: script.flash_kitchen_surface_lights_once
+        data: {}
+    mode: single
+
   - id: "1732372800002"
     alias: Reset chore counters at 4am
     description: "Reset daily chore minute counters at 4am for both Charles and Gaby"
