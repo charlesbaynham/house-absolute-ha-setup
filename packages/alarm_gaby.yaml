@@ -1,0 +1,54 @@
+---
+# Gaby's Morning Alarm Package
+#
+# Allows Gaby to set an alarm time and enable/disable it.
+# When the alarm triggers, bedroom lights flash 3 times and stay on.
+#
+# Components:
+# - input_datetime for alarm time selection
+# - input_boolean to enable/disable alarm
+# - automation to flash lights and leave on
+
+input_datetime:
+  gaby_alarm_time:
+    name: Gaby's Alarm Time
+    has_date: false
+    has_time: true
+    icon: mdi:alarm
+
+input_boolean:
+  gaby_alarm_enabled:
+    name: Gaby's Alarm Enabled
+    icon: mdi:alarm-check
+
+automation:
+  - id: '1732500000000'
+    alias: Gaby's morning alarm
+    description: 'Flash bedroom lights 3 times and leave on when alarm triggers'
+    triggers:
+      - trigger: time
+        at: input_datetime.gaby_alarm_time
+    conditions:
+      - condition: state
+        entity_id: input_boolean.gaby_alarm_enabled
+        state: 'on'
+    actions:
+      # Flash lights 3 times
+      - repeat:
+          count: 3
+          sequence:
+            - action: light.turn_on
+              target:
+                area_id: bedroom
+            - delay:
+                milliseconds: 500
+            - action: light.turn_off
+              target:
+                area_id: bedroom
+            - delay:
+                milliseconds: 500
+      # Leave lights on
+      - action: light.turn_on
+        target:
+          area_id: bedroom
+    mode: single
