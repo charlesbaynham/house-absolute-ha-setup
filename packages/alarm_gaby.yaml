@@ -1,0 +1,102 @@
+---
+# Gaby's Morning Alarm Package
+#
+# Allows Gaby to set two alarm times and enable/disable the alarm.
+# When either alarm triggers, bedroom and hallway lights flash 3 times and stay on.
+#
+# Components:
+# - Two input_datetime helpers for alarm time selection
+# - input_boolean to enable/disable alarm
+# - Two automations (one for each alarm time)
+
+input_datetime:
+  gaby_alarm_time_1:
+    name: Gaby's Alarm Time 1
+    has_date: false
+    has_time: true
+    icon: mdi:alarm
+  gaby_alarm_time_2:
+    name: Gaby's Alarm Time 2
+    has_date: false
+    has_time: true
+    icon: mdi:alarm
+
+input_boolean:
+  gaby_alarm_enabled:
+    name: Gaby's Alarm Enabled
+    icon: mdi:alarm-check
+
+automation:
+  - id: '1732500000000'
+    alias: Gaby's morning alarm 1
+    description: 'Flash bedroom and hallway lights 3 times and leave on when alarm 1 triggers'
+    triggers:
+      - trigger: time
+        at: input_datetime.gaby_alarm_time_1
+    conditions:
+      - condition: state
+        entity_id: input_boolean.gaby_alarm_enabled
+        state: 'on'
+    actions:
+      # Flash lights 3 times
+      - repeat:
+          count: 3
+          sequence:
+            - action: light.turn_on
+              target:
+                area_id:
+                  - bedroom
+                  - hallway
+            - delay:
+                milliseconds: 500
+            - action: light.turn_off
+              target:
+                area_id:
+                  - bedroom
+                  - hallway
+            - delay:
+                milliseconds: 500
+      # Leave lights on
+      - action: light.turn_on
+        target:
+          area_id:
+            - bedroom
+            - hallway
+    mode: single
+
+  - id: '1732500000001'
+    alias: Gaby's morning alarm 2
+    description: 'Flash bedroom and hallway lights 3 times and leave on when alarm 2 triggers'
+    triggers:
+      - trigger: time
+        at: input_datetime.gaby_alarm_time_2
+    conditions:
+      - condition: state
+        entity_id: input_boolean.gaby_alarm_enabled
+        state: 'on'
+    actions:
+      # Flash lights 3 times
+      - repeat:
+          count: 3
+          sequence:
+            - action: light.turn_on
+              target:
+                area_id:
+                  - bedroom
+                  - hallway
+            - delay:
+                milliseconds: 500
+            - action: light.turn_off
+              target:
+                area_id:
+                  - bedroom
+                  - hallway
+            - delay:
+                milliseconds: 500
+      # Leave lights on
+      - action: light.turn_on
+        target:
+          area_id:
+            - bedroom
+            - hallway
+    mode: single
