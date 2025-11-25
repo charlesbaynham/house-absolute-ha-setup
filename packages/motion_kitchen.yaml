@@ -2,7 +2,7 @@
 # Kitchen Motion Lighting Package
 #
 # Controls kitchen lights based on motion sensor with manual override.
-# Night mode: only surface lights turn on (not main ceiling lights).
+# Night mode: only surface lights turn on. All lights always turn off.
 # Button left press toggles motion control, right press toggles surface lights.
 # Switch LED syncs with motion control state.
 #
@@ -66,22 +66,11 @@ automation:
         to: 'off'
     - alias: Wait the number of seconds that has been set
       delay: 120
-    - if:
-      - condition: state
-        entity_id: input_boolean.night_mode
-        state: 'on'
-      then:
-        - alias: Turn off only surface lights in night mode
-          action: light.turn_off
-          target:
-            entity_id: light.kitchen_surface_lights
-          data: {}
-      else:
-        - alias: Turn off all kitchen lights
-          action: light.turn_off
-          target:
-            area_id: kitchen
-          data: {}
+    - alias: Turn off all kitchen lights
+      action: light.turn_off
+      target:
+        area_id: kitchen
+      data: {}
     mode: restart
     max_exceeded: silent
 
