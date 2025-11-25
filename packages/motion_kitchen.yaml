@@ -53,7 +53,7 @@ automation:
         from: 'on'
         to: 'off'
     - alias: Wait the number of seconds that has been set
-      delay: 120
+      delay: 300
     - alias: Turn off the light
       action: light.turn_off
       target:
