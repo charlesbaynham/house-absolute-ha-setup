@@ -294,6 +294,10 @@
       hours: 0
       minutes: 30
       seconds: 0
+  - condition: state
+    state:
+    - 'off'
+    entity_id: binary_sensor.anyone_home
   - action: vacuum.start
     metadata: {}
     data: {}
