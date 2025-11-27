@@ -500,7 +500,7 @@ automation:
       - domain: mqtt
         device_id: eea20367040d6e9ad92eee3f0dc0ede2
         type: action
-        subtype: hold_left
+        subtype: double_left
         trigger: device
     conditions: []
     actions:
@@ -540,7 +540,7 @@ automation:
       - domain: mqtt
         device_id: eea20367040d6e9ad92eee3f0dc0ede2
         type: action
-        subtype: hold_right
+        subtype: double_right
         trigger: device
     conditions: []
     actions:
