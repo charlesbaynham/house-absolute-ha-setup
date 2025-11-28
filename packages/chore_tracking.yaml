@@ -581,7 +581,7 @@ automation:
             Extended chore mode activated for Gaby
             {% endif %}
         target:
-          entity_id: tts.google_en_com
+          entity_id: tts.google_translate_en_com
     mode: single
 
   - id: "1763903316665"
@@ -618,5 +618,5 @@ automation:
             Reminder: extended chore mode is active for Gaby
             {% endif %}
         target:
-          entity_id: tts.google_en_com
+          entity_id: tts.google_translate_en_com
     mode: single
