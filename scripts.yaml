@@ -597,3 +597,204 @@ morse_code_hello_charles:
   alias: Morse code hello Charles
   description: Flash living room lights in Morse code to spell "hello Charles"
   mode: single
+morse_code_aule_lane:
+  sequence:
+  # A: .-
+  - action: light.turn_on
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 200
+  - action: light.turn_off
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 200
+  - action: light.turn_on
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 600
+  - action: light.turn_off
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 600
+  # U: ..-
+  - action: light.turn_on
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 200
+  - action: light.turn_off
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 200
+  - action: light.turn_on
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 200
+  - action: light.turn_off
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 200
+  - action: light.turn_on
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 600
+  - action: light.turn_off
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 600
+  # L: .-..
+  - action: light.turn_on
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 200
+  - action: light.turn_off
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 200
+  - action: light.turn_on
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 600
+  - action: light.turn_off
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 200
+  - action: light.turn_on
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 200
+  - action: light.turn_off
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 200
+  - action: light.turn_on
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 200
+  - action: light.turn_off
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 600
+  # E: .
+  - action: light.turn_on
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 200
+  - action: light.turn_off
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 1400
+  # L: .-..
+  - action: light.turn_on
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 200
+  - action: light.turn_off
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 200
+  - action: light.turn_on
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 600
+  - action: light.turn_off
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 200
+  - action: light.turn_on
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 200
+  - action: light.turn_off
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 200
+  - action: light.turn_on
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 200
+  - action: light.turn_off
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 600
+  # A: .-
+  - action: light.turn_on
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 200
+  - action: light.turn_off
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 200
+  - action: light.turn_on
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 600
+  - action: light.turn_off
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 600
+  # N: -.
+  - action: light.turn_on
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 600
+  - action: light.turn_off
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 200
+  - action: light.turn_on
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 200
+  - action: light.turn_off
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 600
+  # E: .
+  - action: light.turn_on
+    target:
+      area_id: living_room
+  - delay:
+      milliseconds: 200
+  - action: light.turn_off
+    target:
+      area_id: living_room
+  alias: Morse code Aule Lane
+  description: Flash living room lights in Morse code to spell "Aule Lane"
+  mode: single

@@ -305,3 +305,15 @@
       device_id:
       - 8494972a3e4dd42011930160e8845cec
   mode: single
+- id: '1732833600000'
+  alias: Flash Aule Lane at 10:30 PM
+  description: At 10:30 PM, flash the lights in the pattern of Aule Lane sign
+  triggers:
+  - trigger: time
+    at: '22:30:00'
+  conditions: []
+  actions:
+  - action: script.morse_code_aule_lane
+    metadata: {}
+    data: {}
+  mode: single
