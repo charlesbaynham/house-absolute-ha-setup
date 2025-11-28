@@ -46,6 +46,9 @@ views:
           - entity: input_boolean.chore_mode_charles
             name: Status
             icon: mdi:circle
+          - entity: input_boolean.extended_chore_mode_charles
+            name: Extended Mode
+            icon: mdi:timer-lock-outline
           - type: section
           - entity: sensor.chore_minutes_charles_quick
             name: This Quarter-Hour
@@ -70,6 +73,9 @@ views:
           - entity: input_boolean.chore_mode_gaby
             name: Status
             icon: mdi:circle
+          - entity: input_boolean.extended_chore_mode_gaby
+            name: Extended Mode
+            icon: mdi:timer-lock-outline
           - type: section
           - entity: sensor.chore_minutes_gaby_quick
             name: This Quarter-Hour
