@@ -214,6 +214,21 @@ Per `.gitignore`:
   mode: single
 ```
 
+### Using a TTS announcement
+
+To add a text-to-speech (TTS) announcement in an automation, e.g. for the living room speaker:
+
+```yaml
+action: tts.speak
+metadata: {}
+data:
+  cache: true
+  media_player_entity_id: media_player.living_room_speaker
+  message: This is an example message
+target:
+  entity_id: tts.google_translate_en_com
+```
+
 ### Adding a Template Sensor
 
 ```yaml
