@@ -235,12 +235,6 @@ automation:
             data: {}
             target:
               entity_id: input_boolean.chore_mode_charles
-          - action: input_datetime.set_datetime
-            metadata: {}
-            data:
-              datetime: "{{ now().isoformat() }}"
-            target:
-              entity_id: input_datetime.chore_last_activity_charles
           # Flash kitchen surface lights
           - action: script.flash_kitchen_surface_lights
             data: {}
@@ -282,15 +276,49 @@ automation:
             data: {}
             target:
               entity_id: input_boolean.chore_mode_gaby
-          - action: input_datetime.set_datetime
-            metadata: {}
-            data:
-              datetime: "{{ now().isoformat() }}"
-            target:
-              entity_id: input_datetime.chore_last_activity_gaby
           # Flash kitchen surface lights
           - action: script.flash_kitchen_surface_lights
             data: {}
+    mode: single
+
+  - id: "1763903316668"
+    alias: Charles chore mode activated - set last activity
+    description: >-
+      Set the last activity timestamp when Charles chore mode is activated,
+      whether from button press or dashboard toggle.
+    triggers:
+      - trigger: state
+        entity_id: input_boolean.chore_mode_charles
+        from: "off"
+        to: "on"
+    conditions: []
+    actions:
+      - action: input_datetime.set_datetime
+        metadata: {}
+        data:
+          datetime: "{{ now().isoformat() }}"
+        target:
+          entity_id: input_datetime.chore_last_activity_charles
+    mode: single
+
+  - id: "1763903316669"
+    alias: Gaby chore mode activated - set last activity
+    description: >-
+      Set the last activity timestamp when Gaby chore mode is activated,
+      whether from button press or dashboard toggle.
+    triggers:
+      - trigger: state
+        entity_id: input_boolean.chore_mode_gaby
+        from: "off"
+        to: "on"
+    conditions: []
+    actions:
+      - action: input_datetime.set_datetime
+        metadata: {}
+        data:
+          datetime: "{{ now().isoformat() }}"
+        target:
+          entity_id: input_datetime.chore_last_activity_gaby
     mode: single
 
   - id: "1763903316657"
@@ -511,12 +539,6 @@ automation:
           entity_id:
             - input_boolean.chore_mode_charles
             - input_boolean.extended_chore_mode_charles
-      - action: input_datetime.set_datetime
-        metadata: {}
-        data:
-          datetime: "{{ now().isoformat() }}"
-        target:
-          entity_id: input_datetime.chore_last_activity_charles
       # Flash kitchen surface lights
       - action: script.flash_kitchen_surface_lights
         data: {}
@@ -542,12 +564,6 @@ automation:
           entity_id:
             - input_boolean.chore_mode_gaby
             - input_boolean.extended_chore_mode_gaby
-      - action: input_datetime.set_datetime
-        metadata: {}
-        data:
-          datetime: "{{ now().isoformat() }}"
-        target:
-          entity_id: input_datetime.chore_last_activity_gaby
       # Flash kitchen surface lights
       - action: script.flash_kitchen_surface_lights
         data: {}
