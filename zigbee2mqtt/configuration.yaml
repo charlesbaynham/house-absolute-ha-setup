@@ -90,6 +90,8 @@ devices:
     friendly_name: Sensor bedroom
   '0x54ef44100143eba1':
     friendly_name: Wireless aqara
+  '0x00124b0024fc163b':
+    friendly_name: '0x00124b0024fc163b'
 groups: {}
 availability:
   enabled: true
