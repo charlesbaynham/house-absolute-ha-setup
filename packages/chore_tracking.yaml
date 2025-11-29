@@ -235,6 +235,12 @@ automation:
             data: {}
             target:
               entity_id: input_boolean.chore_mode_charles
+          - action: input_datetime.set_datetime
+            metadata: {}
+            data:
+              datetime: "{{ now().isoformat() }}"
+            target:
+              entity_id: input_datetime.chore_last_activity_charles
           # Flash kitchen surface lights
           - action: script.flash_kitchen_surface_lights
             data: {}
@@ -276,6 +282,12 @@ automation:
             data: {}
             target:
               entity_id: input_boolean.chore_mode_gaby
+          - action: input_datetime.set_datetime
+            metadata: {}
+            data:
+              datetime: "{{ now().isoformat() }}"
+            target:
+              entity_id: input_datetime.chore_last_activity_gaby
           # Flash kitchen surface lights
           - action: script.flash_kitchen_surface_lights
             data: {}
