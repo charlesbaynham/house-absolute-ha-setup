@@ -3,11 +3,15 @@
 #
 # Controls hallway lights based on motion sensor and front door opening.
 # Lights turn on when motion detected or door opens (if motion control enabled).
-# 10 minute timeout for motion detection, then 5 minute delay before turning off.
+# 10 minute timeout for motion detection, then delay (controlled by
+# input_number.motion_light_timeout) before turning off.
 #
 # Entities referenced:
 # - binary_sensor.hallway_motion_occupancy
 # - binary_sensor.front_door_sensor_contact
+#
+# Dependencies:
+# - input_number.motion_light_timeout (defined in packages/motion_timeout.yaml)
 
 input_boolean:
   hallway_motion_enabled:
@@ -66,10 +70,7 @@ automation:
       continue_on_timeout: true
     - alias: Wait the number of seconds that has been set
       delay:
-        hours: 0
-        minutes: 5
-        seconds: 0
-        milliseconds: 0
+        seconds: "{{ states('input_number.motion_light_timeout') | int }}"
     - alias: Turn off the light
       action: light.turn_off
       target:

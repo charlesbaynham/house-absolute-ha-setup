@@ -1,0 +1,58 @@
+---
+# Motion Timeout Package
+#
+# Centralizes motion light timeout configuration.
+# Timeout is 5 minutes (300s) normally, 1 minute (60s) in night mode.
+#
+# Referenced by:
+# - packages/motion_garden.yaml
+# - packages/motion_hallway.yaml
+# - packages/motion_kitchen.yaml
+#
+# Dependencies:
+# - input_boolean.night_mode (defined in packages/night_mode.yaml)
+
+input_number:
+  motion_light_timeout:
+    name: Motion Light Timeout
+    icon: mdi:timer-outline
+    min: 60
+    max: 600
+    step: 30
+    initial: 300
+    unit_of_measurement: seconds
+
+automation:
+  - id: '1732976927000'
+    alias: Set motion timeout short for night mode
+    description: Set motion light timeout to 1 minute when night mode activates
+    triggers:
+    - trigger: state
+      entity_id: input_boolean.night_mode
+      to: 'on'
+    conditions: []
+    actions:
+    - action: input_number.set_value
+      metadata: {}
+      data:
+        value: 60
+      target:
+        entity_id: input_number.motion_light_timeout
+    mode: single
+
+  - id: '1732976927001'
+    alias: Set motion timeout normal when day mode
+    description: Set motion light timeout to 5 minutes when night mode deactivates
+    triggers:
+    - trigger: state
+      entity_id: input_boolean.night_mode
+      to: 'off'
+    conditions: []
+    actions:
+    - action: input_number.set_value
+      metadata: {}
+      data:
+        value: 300
+      target:
+        entity_id: input_number.motion_light_timeout
+    mode: single

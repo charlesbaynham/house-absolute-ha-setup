@@ -3,11 +3,15 @@
 #
 # Controls garden lights based on motion sensor and sun position.
 # Lights turn on when motion detected after sunset.
-# 5 minute timeout after motion stops, max 2 hour runtime.
+# Timeout after motion stops controlled by input_number.motion_light_timeout,
+# max 2 hour runtime.
 #
 # Entities referenced:
 # - binary_sensor.garden_motion_occupancy
 # - Sun integration (condition: after sunset)
+#
+# Dependencies:
+# - input_number.motion_light_timeout (defined in packages/motion_timeout.yaml)
 
 automation:
   - id: gardenlightsmotinoandsun
@@ -36,9 +40,7 @@ automation:
         - binary_sensor.garden_motion_occupancy
         to: 'off'
         for:
-          hours: 0
-          minutes: 5
-          seconds: 0
+          seconds: "{{ states('input_number.motion_light_timeout') | int }}"
         trigger: state
       timeout: 02:00:00
       continue_on_timeout: true

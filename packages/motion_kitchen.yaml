@@ -5,10 +5,15 @@
 # Night mode: only surface lights turn on. All lights always turn off.
 # Button left press toggles motion control, right press toggles surface lights.
 # Switch LED syncs with motion control state.
+# Timeout controlled by input_number.motion_light_timeout.
 #
 # Devices:
 # - Kitchen switch (motion control): bb9532358b487e4b89cfe0e3b76b91e0
 # - Kitchen surface lights switch: f4b4e900064fe24bcc24ab77d53af88a
+#
+# Dependencies:
+# - input_boolean.night_mode (defined in packages/night_mode.yaml)
+# - input_number.motion_light_timeout (defined in packages/motion_timeout.yaml)
 #
 # Referenced by:
 # - scene.pause_mode (1746979065248)
@@ -65,7 +70,8 @@ automation:
         from: 'on'
         to: 'off'
     - alias: Wait the number of seconds that has been set
-      delay: 300
+      delay:
+        seconds: "{{ states('input_number.motion_light_timeout') | int }}"
     - alias: Turn off all kitchen lights
       action: light.turn_off
       target:
