@@ -212,3 +212,61 @@ flash_kitchen_surface_lights_once:
   alias: Flash kitchen surface lights once
   description: Flash kitchen surface lights off then on with 250ms gap (single flash)
   mode: single
+
+chore_gaby_subtract_minutes:
+  alias: "Chores: subtract minutes from Gaby meters"
+  description: "Subtract a specified number of minutes from all Gaby chore utility meters (daily, weekly, monthly, quick). Uses utility_meter.calibrate."
+  fields:
+    minutes:
+      description: "Minutes to subtract (positive number)."
+      example: 10
+      default: 10
+  sequence:
+    - variables:
+        amount: "{{ (minutes | default(10)) | float(0) }}"
+        meters:
+          - sensor.chore_minutes_gaby_daily
+          - sensor.chore_minutes_gaby_weekly
+          - sensor.chore_minutes_gaby_monthly
+          - sensor.chore_minutes_gaby_quick
+    - repeat:
+        for_each: "{{ meters }}"
+        sequence:
+          - variables:
+              current: "{{ states(repeat.item) | float(0) }}"
+              new_value: "{{ max(current - amount, 0) }}"
+          - action: utility_meter.calibrate
+            data:
+              value: "{{ new_value }}"
+            target:
+              entity_id: "{{ repeat.item }}"
+  mode: single
+
+chore_charles_subtract_minutes:
+  alias: "Chores: subtract minutes from Charles meters"
+  description: "Subtract a specified number of minutes from all Charles chore utility meters (daily, weekly, monthly, quick). Uses utility_meter.calibrate."
+  fields:
+    minutes:
+      description: "Minutes to subtract (positive number)."
+      example: 10
+      default: 10
+  sequence:
+    - variables:
+        amount: "{{ (minutes | default(10)) | float(0) }}"
+        meters:
+          - sensor.chore_minutes_charles_daily
+          - sensor.chore_minutes_charles_weekly
+          - sensor.chore_minutes_charles_monthly
+          - sensor.chore_minutes_charles_quick
+    - repeat:
+        for_each: "{{ meters }}"
+        sequence:
+          - variables:
+              current: "{{ states(repeat.item) | float(0) }}"
+              new_value: "{{ max(current - amount, 0) }}"
+          - action: utility_meter.calibrate
+            data:
+              value: "{{ new_value }}"
+            target:
+              entity_id: "{{ repeat.item }}"
+  mode: single
