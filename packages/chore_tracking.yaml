@@ -570,7 +570,7 @@ automation:
     alias: Charles chore button - start extended mode
     description: >-
       Long press on left button activates extended chore mode for Charles.
-      Extended chore mode times out after 6 hours.
+      Extended chore mode times out after configured hours (see input_number.extended_chore_timeout_hours).
     triggers:
       - domain: mqtt
         device_id: eea20367040d6e9ad92eee3f0dc0ede2
@@ -607,7 +607,7 @@ automation:
     alias: Gaby chore button - start extended mode
     description: >-
       Long press on right button activates extended chore mode for Gaby.
-      Extended chore mode times out after 6 hours.
+      Extended chore mode times out after configured hours (see input_number.extended_chore_timeout_hours).
     triggers:
       - domain: mqtt
         device_id: eea20367040d6e9ad92eee3f0dc0ede2
