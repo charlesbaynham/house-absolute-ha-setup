@@ -58,6 +58,20 @@ input_number:
     step: 1
     icon: mdi:timer-sand
 
+  extended_session_minutes_charles:
+    name: Extended Session Minutes Charles
+    min: 0
+    max: 10000000
+    step: 1
+    icon: mdi:timer-sand
+
+  extended_session_minutes_gaby:
+    name: Extended Session Minutes Gaby
+    min: 0
+    max: 10000000
+    step: 1
+    icon: mdi:timer-sand
+
 input_datetime:
   chore_last_activity_charles:
     name: Chore Last Activity - Charles
@@ -70,6 +84,18 @@ input_datetime:
     has_date: true
     has_time: true
     icon: mdi:clock-outline
+
+  extended_chore_start_charles:
+    name: Extended Chore Start - Charles
+    has_date: true
+    has_time: true
+    icon: mdi:clock-start
+
+  extended_chore_start_gaby:
+    name: Extended Chore Start - Gaby
+    has_date: true
+    has_time: true
+    icon: mdi:clock-start
 
 # Template sensors to convert input_number to sensor domain for utility_meter
 template:
@@ -349,6 +375,17 @@ automation:
         data: {}
         target:
           entity_id: input_number.chore_minutes_charles
+      # Also track extended session minutes if in extended mode
+      - if:
+          - condition: state
+            entity_id: input_boolean.extended_chore_mode_charles
+            state: "on"
+        then:
+          - action: input_number.increment
+            metadata: {}
+            data: {}
+            target:
+              entity_id: input_number.extended_session_minutes_charles
     mode: single
 
   - id: "1763903316658"
@@ -367,6 +404,17 @@ automation:
         data: {}
         target:
           entity_id: input_number.chore_minutes_gaby
+      # Also track extended session minutes if in extended mode
+      - if:
+          - condition: state
+            entity_id: input_boolean.extended_chore_mode_gaby
+            state: "on"
+        then:
+          - action: input_number.increment
+            metadata: {}
+            data: {}
+            target:
+              entity_id: input_number.extended_session_minutes_gaby
     mode: single
 
   - id: "1763903316659"
@@ -513,7 +561,7 @@ automation:
     alias: Charles chore button - start extended mode
     description: >-
       Long press on left button activates extended chore mode for Charles.
-      Extended chore mode does not timeout automatically.
+      Extended chore mode times out after 6 hours.
     triggers:
       - domain: mqtt
         device_id: eea20367040d6e9ad92eee3f0dc0ede2
@@ -529,6 +577,18 @@ automation:
           entity_id:
             - input_boolean.chore_mode_charles
             - input_boolean.extended_chore_mode_charles
+      - action: input_datetime.set_datetime
+        metadata: {}
+        data:
+          datetime: "{{ now().isoformat() }}"
+        target:
+          entity_id: input_datetime.extended_chore_start_charles
+      - action: input_number.set_value
+        metadata: {}
+        data:
+          value: 0
+        target:
+          entity_id: input_number.extended_session_minutes_charles
       # Flash kitchen surface lights
       - action: script.flash_kitchen_surface_lights
         data: {}
@@ -538,7 +598,7 @@ automation:
     alias: Gaby chore button - start extended mode
     description: >-
       Long press on right button activates extended chore mode for Gaby.
-      Extended chore mode does not timeout automatically.
+      Extended chore mode times out after 6 hours.
     triggers:
       - domain: mqtt
         device_id: eea20367040d6e9ad92eee3f0dc0ede2
@@ -554,6 +614,18 @@ automation:
           entity_id:
             - input_boolean.chore_mode_gaby
             - input_boolean.extended_chore_mode_gaby
+      - action: input_datetime.set_datetime
+        metadata: {}
+        data:
+          datetime: "{{ now().isoformat() }}"
+        target:
+          entity_id: input_datetime.extended_chore_start_gaby
+      - action: input_number.set_value
+        metadata: {}
+        data:
+          value: 0
+        target:
+          entity_id: input_number.extended_session_minutes_gaby
       # Flash kitchen surface lights
       - action: script.flash_kitchen_surface_lights
         data: {}
@@ -621,6 +693,46 @@ automation:
           entity_id: tts.google_translate_en_com
     mode: single
 
+  - id: "1763903316674"
+    alias: Charles extended chore mode deactivated - reset session counter
+    description: >-
+      Reset the session minutes counter when Charles extended chore mode
+      is deactivated (either manually or by timeout).
+    triggers:
+      - trigger: state
+        entity_id: input_boolean.extended_chore_mode_charles
+        from: "on"
+        to: "off"
+    conditions: []
+    actions:
+      - action: input_number.set_value
+        metadata: {}
+        data:
+          value: 0
+        target:
+          entity_id: input_number.extended_session_minutes_charles
+    mode: single
+
+  - id: "1763903316675"
+    alias: Gaby extended chore mode deactivated - reset session counter
+    description: >-
+      Reset the session minutes counter when Gaby extended chore mode
+      is deactivated (either manually or by timeout).
+    triggers:
+      - trigger: state
+        entity_id: input_boolean.extended_chore_mode_gaby
+        from: "on"
+        to: "off"
+    conditions: []
+    actions:
+      - action: input_number.set_value
+        metadata: {}
+        data:
+          value: 0
+        target:
+          entity_id: input_number.extended_session_minutes_gaby
+    mode: single
+
   - id: "1763903316665"
     alias: Extended chore mode reminder
     description: >-
@@ -656,4 +768,198 @@ automation:
             {% endif %}
         target:
           entity_id: tts.google_translate_en_com
+    mode: single
+
+  - id: "1763903316670"
+    alias: Charles extended chore mode timeout warning
+    description: >-
+      Warn 30 minutes before Charles extended chore mode times out.
+      Extended mode times out after 6 hours.
+    triggers:
+      - trigger: time_pattern
+        minutes: /1
+    conditions:
+      - condition: state
+        entity_id: input_boolean.extended_chore_mode_charles
+        state: "on"
+      - condition: template
+        value_template: >
+          {% set start_time = states('input_datetime.extended_chore_start_charles') %}
+          {% if start_time not in ['unknown', 'unavailable', ''] %}
+            {% set start = start_time | as_datetime | as_local %}
+            {% set elapsed_minutes = ((now() - start).total_seconds() / 60) | int %}
+            {% set timeout_minutes = 360 %}
+            {% set warning_minutes = 330 %}
+            {{ elapsed_minutes >= warning_minutes and elapsed_minutes < timeout_minutes }}
+          {% else %}
+            false
+          {% endif %}
+    actions:
+      - action: tts.speak
+        metadata: {}
+        data:
+          cache: true
+          media_player_entity_id: media_player.living_room_speaker
+          message: >-
+            Warning: Charles extended chore mode will timeout in 30 minutes.
+            Press the button to save your progress.
+        target:
+          entity_id: tts.google_translate_en_com
+      # Flash kitchen surface lights
+      - action: script.flash_kitchen_surface_lights
+        data: {}
+    mode: single
+
+  - id: "1763903316671"
+    alias: Gaby extended chore mode timeout warning
+    description: >-
+      Warn 30 minutes before Gaby extended chore mode times out.
+      Extended mode times out after 6 hours.
+    triggers:
+      - trigger: time_pattern
+        minutes: /1
+    conditions:
+      - condition: state
+        entity_id: input_boolean.extended_chore_mode_gaby
+        state: "on"
+      - condition: template
+        value_template: >
+          {% set start_time = states('input_datetime.extended_chore_start_gaby') %}
+          {% if start_time not in ['unknown', 'unavailable', ''] %}
+            {% set start = start_time | as_datetime | as_local %}
+            {% set elapsed_minutes = ((now() - start).total_seconds() / 60) | int %}
+            {% set timeout_minutes = 360 %}
+            {% set warning_minutes = 330 %}
+            {{ elapsed_minutes >= warning_minutes and elapsed_minutes < timeout_minutes }}
+          {% else %}
+            false
+          {% endif %}
+    actions:
+      - action: tts.speak
+        metadata: {}
+        data:
+          cache: true
+          media_player_entity_id: media_player.living_room_speaker
+          message: >-
+            Warning: Gaby extended chore mode will timeout in 30 minutes.
+            Press the button to save your progress.
+        target:
+          entity_id: tts.google_translate_en_com
+      # Flash kitchen surface lights
+      - action: script.flash_kitchen_surface_lights
+        data: {}
+    mode: single
+
+  - id: "1763903316672"
+    alias: Charles extended chore mode timeout
+    description: >-
+      Timeout Charles extended chore mode after 6 hours and remove all
+      minutes accumulated during the session.
+    triggers:
+      - trigger: time_pattern
+        minutes: /1
+    conditions:
+      - condition: state
+        entity_id: input_boolean.extended_chore_mode_charles
+        state: "on"
+      - condition: template
+        value_template: >
+          {% set start_time = states('input_datetime.extended_chore_start_charles') %}
+          {% if start_time not in ['unknown', 'unavailable', ''] %}
+            {% set start = start_time | as_datetime | as_local %}
+            {% set elapsed_minutes = ((now() - start).total_seconds() / 60) | int %}
+            {{ elapsed_minutes >= 360 }}
+          {% else %}
+            false
+          {% endif %}
+    actions:
+      # Subtract the session minutes from total
+      - action: input_number.set_value
+        metadata: {}
+        data:
+          value: >
+            {% set current = states('input_number.chore_minutes_charles') | float(0) %}
+            {% set session = states('input_number.extended_session_minutes_charles') | float(0) %}
+            {{ [0, current - session] | max }}
+        target:
+          entity_id: input_number.chore_minutes_charles
+      # Turn off extended chore mode and regular chore mode
+      - action: input_boolean.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id:
+            - input_boolean.extended_chore_mode_charles
+            - input_boolean.chore_mode_charles
+      # Announce timeout
+      - action: tts.speak
+        metadata: {}
+        data:
+          cache: true
+          media_player_entity_id: media_player.living_room_speaker
+          message: >-
+            Extended chore mode timed out for Charles after 6 hours.
+            Session minutes have been removed.
+        target:
+          entity_id: tts.google_translate_en_com
+      # Flash kitchen surface lights
+      - action: script.flash_kitchen_surface_lights
+        data: {}
+    mode: single
+
+  - id: "1763903316673"
+    alias: Gaby extended chore mode timeout
+    description: >-
+      Timeout Gaby extended chore mode after 6 hours and remove all
+      minutes accumulated during the session.
+    triggers:
+      - trigger: time_pattern
+        minutes: /1
+    conditions:
+      - condition: state
+        entity_id: input_boolean.extended_chore_mode_gaby
+        state: "on"
+      - condition: template
+        value_template: >
+          {% set start_time = states('input_datetime.extended_chore_start_gaby') %}
+          {% if start_time not in ['unknown', 'unavailable', ''] %}
+            {% set start = start_time | as_datetime | as_local %}
+            {% set elapsed_minutes = ((now() - start).total_seconds() / 60) | int %}
+            {{ elapsed_minutes >= 360 }}
+          {% else %}
+            false
+          {% endif %}
+    actions:
+      # Subtract the session minutes from total
+      - action: input_number.set_value
+        metadata: {}
+        data:
+          value: >
+            {% set current = states('input_number.chore_minutes_gaby') | float(0) %}
+            {% set session = states('input_number.extended_session_minutes_gaby') | float(0) %}
+            {{ [0, current - session] | max }}
+        target:
+          entity_id: input_number.chore_minutes_gaby
+      # Turn off extended chore mode and regular chore mode
+      - action: input_boolean.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id:
+            - input_boolean.extended_chore_mode_gaby
+            - input_boolean.chore_mode_gaby
+      # Announce timeout
+      - action: tts.speak
+        metadata: {}
+        data:
+          cache: true
+          media_player_entity_id: media_player.living_room_speaker
+          message: >-
+            Extended chore mode timed out for Gaby after 6 hours.
+            Session minutes have been removed.
+        target:
+          entity_id: tts.google_translate_en_com
+      # Flash kitchen surface lights
+      - action: script.flash_kitchen_surface_lights
+        data: {}
     mode: single
