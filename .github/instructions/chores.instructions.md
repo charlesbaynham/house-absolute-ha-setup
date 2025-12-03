@@ -15,7 +15,7 @@ Chore Mode tracks household chore time for Charles and Gaby, controlled by a dua
   - `double_left`: Start Charles' extended chore mode.
   - `double_right`: Start Gaby's extended chore mode.
 - **Regular Mode**: Times out after `input_number.chore_timeout_minutes` of inactivity.
-- **Extended Mode**: Times out after 6 hours; plays a reminder TTS every 5 minutes; single press turns it OFF. If it times out, ALL minutes from that session are removed from the counter.
+- **Extended Mode**: Times out after `input_number.extended_chore_timeout_hours` (default 6 hours); plays a reminder TTS every 5 minutes; single press turns it OFF. If it times out, ALL minutes from that session are removed from the counter.
 
 ## Entities and Structure
 All configuration lives in `packages/chore_tracking.yaml` and the dashboard view in `dashboards/chore-tracking.yaml`.
@@ -26,6 +26,7 @@ All configuration lives in `packages/chore_tracking.yaml` and the dashboard view
 - `input_boolean.extended_chore_mode_charles`
 - `input_boolean.extended_chore_mode_gaby`
 - `input_number.chore_timeout_minutes` (default 5)
+- `input_number.extended_chore_timeout_hours` (default 6) — configurable timeout for extended mode
 - `input_number.chore_minutes_charles`
 - `input_number.chore_minutes_gaby`
 - `input_number.extended_session_minutes_charles` — tracks minutes in current extended session
@@ -77,7 +78,7 @@ Create rolling aggregates for minutes:
 
 ## Common Extensions
 - Add a new person: copy-paste blocks for helpers, template sensors, utility meters, and automations; replace names; add to dashboard view.
-- Change timeout duration UI: adjust `input_number.chore_timeout_minutes` ranges or default.
+- Change timeout duration UI: adjust `input_number.chore_timeout_minutes` or `input_number.extended_chore_timeout_hours` ranges or defaults.
 - Add visual/lighting feedback: re-use `script.flash_kitchen_surface_lights` or add variants; call from existing automations.
 - Modify reminder frequency: update `triggers: time_pattern minutes: /5` and wording.
 
@@ -90,6 +91,7 @@ Create rolling aggregates for minutes:
 ## Known Design Decisions
 - Daily reset sets raw minute counters to 0 at 04:00 for UI clarity; utility meters maintain authoritative aggregates for daily/weekly/monthly summaries.
 - Extended mode reminder is intentionally frequent to provide accountability; disable by turning OFF extended mode or editing the reminder automation.
-- Extended mode timeout (6 hours) removes ALL session minutes to prevent accidental accumulation of thousands of minutes when left on by mistake.
+- Extended mode timeout (configurable, default 6 hours) removes ALL session minutes to prevent accidental accumulation of thousands of minutes when left on by mistake.
 - Session minutes are tracked separately during extended mode so they can be rolled back if timeout occurs.
 - Manual deactivation of extended mode (via button or dashboard) keeps the minutes; only timeout removes them.
+- Timeout duration is configurable via `input_number.extended_chore_timeout_hours` for flexibility.

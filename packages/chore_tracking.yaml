@@ -44,6 +44,15 @@ input_number:
     unit_of_measurement: min
     icon: mdi:timer-outline
 
+  extended_chore_timeout_hours:
+    name: Extended Chore Timeout Duration
+    min: 1
+    max: 24
+    step: 0.5
+    initial: 6
+    unit_of_measurement: h
+    icon: mdi:timer-outline
+
   chore_minutes_charles:
     name: Total Chore Minutes Charles
     min: 0
@@ -774,7 +783,7 @@ automation:
     alias: Charles extended chore mode timeout warning
     description: >-
       Warn 30 minutes before Charles extended chore mode times out.
-      Extended mode times out after 6 hours.
+      Extended mode timeout is configurable via input_number.extended_chore_timeout_hours.
     triggers:
       - trigger: time_pattern
         minutes: /1
@@ -788,8 +797,9 @@ automation:
           {% if start_time not in ['unknown', 'unavailable', ''] %}
             {% set start = start_time | as_datetime | as_local %}
             {% set elapsed_minutes = ((now() - start).total_seconds() / 60) | int %}
-            {% set timeout_minutes = 360 %}
-            {% set warning_minutes = 330 %}
+            {% set timeout_hours = states('input_number.extended_chore_timeout_hours') | float(6) %}
+            {% set timeout_minutes = (timeout_hours * 60) | int %}
+            {% set warning_minutes = timeout_minutes - 30 %}
             {{ elapsed_minutes >= warning_minutes and elapsed_minutes < timeout_minutes }}
           {% else %}
             false
@@ -814,7 +824,7 @@ automation:
     alias: Gaby extended chore mode timeout warning
     description: >-
       Warn 30 minutes before Gaby extended chore mode times out.
-      Extended mode times out after 6 hours.
+      Extended mode timeout is configurable via input_number.extended_chore_timeout_hours.
     triggers:
       - trigger: time_pattern
         minutes: /1
@@ -828,8 +838,9 @@ automation:
           {% if start_time not in ['unknown', 'unavailable', ''] %}
             {% set start = start_time | as_datetime | as_local %}
             {% set elapsed_minutes = ((now() - start).total_seconds() / 60) | int %}
-            {% set timeout_minutes = 360 %}
-            {% set warning_minutes = 330 %}
+            {% set timeout_hours = states('input_number.extended_chore_timeout_hours') | float(6) %}
+            {% set timeout_minutes = (timeout_hours * 60) | int %}
+            {% set warning_minutes = timeout_minutes - 30 %}
             {{ elapsed_minutes >= warning_minutes and elapsed_minutes < timeout_minutes }}
           {% else %}
             false
@@ -853,7 +864,7 @@ automation:
   - id: "1763903316672"
     alias: Charles extended chore mode timeout
     description: >-
-      Timeout Charles extended chore mode after 6 hours and remove all
+      Timeout Charles extended chore mode after configured hours and remove all
       minutes accumulated during the session.
     triggers:
       - trigger: time_pattern
@@ -868,7 +879,9 @@ automation:
           {% if start_time not in ['unknown', 'unavailable', ''] %}
             {% set start = start_time | as_datetime | as_local %}
             {% set elapsed_minutes = ((now() - start).total_seconds() / 60) | int %}
-            {{ elapsed_minutes >= 360 }}
+            {% set timeout_hours = states('input_number.extended_chore_timeout_hours') | float(6) %}
+            {% set timeout_minutes = (timeout_hours * 60) | int %}
+            {{ elapsed_minutes >= timeout_minutes }}
           {% else %}
             false
           {% endif %}
@@ -898,7 +911,8 @@ automation:
           cache: true
           media_player_entity_id: media_player.living_room_speaker
           message: >-
-            Extended chore mode timed out for Charles after 6 hours.
+            {% set timeout_hours = states('input_number.extended_chore_timeout_hours') | float(6) %}
+            Extended chore mode timed out for Charles after {{ timeout_hours }} hours.
             Session minutes have been removed.
         target:
           entity_id: tts.google_translate_en_com
@@ -910,7 +924,7 @@ automation:
   - id: "1763903316673"
     alias: Gaby extended chore mode timeout
     description: >-
-      Timeout Gaby extended chore mode after 6 hours and remove all
+      Timeout Gaby extended chore mode after configured hours and remove all
       minutes accumulated during the session.
     triggers:
       - trigger: time_pattern
@@ -925,7 +939,9 @@ automation:
           {% if start_time not in ['unknown', 'unavailable', ''] %}
             {% set start = start_time | as_datetime | as_local %}
             {% set elapsed_minutes = ((now() - start).total_seconds() / 60) | int %}
-            {{ elapsed_minutes >= 360 }}
+            {% set timeout_hours = states('input_number.extended_chore_timeout_hours') | float(6) %}
+            {% set timeout_minutes = (timeout_hours * 60) | int %}
+            {{ elapsed_minutes >= timeout_minutes }}
           {% else %}
             false
           {% endif %}
@@ -955,7 +971,8 @@ automation:
           cache: true
           media_player_entity_id: media_player.living_room_speaker
           message: >-
-            Extended chore mode timed out for Gaby after 6 hours.
+            {% set timeout_hours = states('input_number.extended_chore_timeout_hours') | float(6) %}
+            Extended chore mode timed out for Gaby after {{ timeout_hours }} hours.
             Session minutes have been removed.
         target:
           entity_id: tts.google_translate_en_com
