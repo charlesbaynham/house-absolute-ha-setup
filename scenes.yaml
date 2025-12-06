@@ -13,12 +13,9 @@
       - stop_hue_effect
       supported_color_modes:
       - brightness
-      effect:
-      color_mode: brightness
-      brightness: 26
       friendly_name: Living room hue lamp
       supported_features: 44
-      state: 'on'
+      state: unavailable
     light.living_room_light_switch_left:
       supported_color_modes:
       - onoff
@@ -50,24 +47,9 @@
       supported_color_modes:
       - color_temp
       - xy
-      effect:
-      color_mode: color_temp
-      brightness: 48
-      color_temp_kelvin: 2000
-      color_temp: 500
-      hs_color:
-      - 30.601
-      - 94.547
-      rgb_color:
-      - 255
-      - 137
-      - 14
-      xy_color:
-      - 0.598
-      - 0.383
       friendly_name: Living room lamp 1
       supported_features: 44
-      state: 'on'
+      state: unavailable
     light.living_room_lamp_tall:
       effect_list:
       - blink
@@ -82,9 +64,16 @@
       - brightness
       effect:
       color_mode: brightness
-      brightness: 26
+      brightness: 255
       friendly_name: Living room lamp tall
       supported_features: 44
+      state: 'on'
+    light.living_room_christmas_lights:
+      supported_color_modes:
+      - onoff
+      friendly_name: Living room Christmas lights
+      supported_features: 0
+      color_mode: onoff
       state: 'on'
   icon: mdi:fire
   metadata: {}
