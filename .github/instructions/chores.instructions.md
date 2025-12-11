@@ -46,6 +46,7 @@ Create rolling aggregates for minutes:
 - Daily: `sensor.chore_minutes_charles_daily`, `sensor.chore_minutes_gaby_daily`
 - Weekly: `sensor.chore_minutes_charles_weekly`, `sensor.chore_minutes_gaby_weekly`
 - Monthly: `sensor.chore_minutes_charles_monthly`, `sensor.chore_minutes_gaby_monthly`
+- Yearly: `sensor.chore_minutes_charles_yearly`, `sensor.chore_minutes_gaby_yearly`
 - Quick (debug, 15-minute cycle): `sensor.chore_minutes_charles_quick`, `sensor.chore_minutes_gaby_quick`
 
 ### Automations (summary)
@@ -61,7 +62,7 @@ Create rolling aggregates for minutes:
 ### Dashboard
 `dashboards/chore-tracking.yaml` renders gauges and entities:
 - Status and extended mode toggles per person.
-- Time period displays: quarter-hourly (quick), daily, weekly, monthly, and all-time total meters.
+- Time period displays: quarter-hourly (quick), daily, weekly, monthly, yearly, and all-time total meters.
 - Last activity relative.
 - Weekly leader banner when not tied.
 - Mini graph card for quick meters.
@@ -80,6 +81,9 @@ Create rolling aggregates for minutes:
 - Change timeout duration UI: adjust `input_number.chore_timeout_minutes` or `input_number.extended_chore_timeout_hours` ranges or defaults.
 - Add visual/lighting feedback: re-use `script.flash_kitchen_surface_lights` or add variants; call from existing automations.
 - Modify reminder frequency: update `triggers: time_pattern minutes: /5` and wording.
+
+## Scripts
+- `script.chore_initialize_yearly_meters`: One-time initialization script to copy current monthly meter values to the yearly meters. Run this manually via the Home Assistant UI when first setting up yearly meters to preserve existing totals.
 
 ## Safety Checks
 - Ensure all `entity_id` references exist after changes; mismatches will break automations.

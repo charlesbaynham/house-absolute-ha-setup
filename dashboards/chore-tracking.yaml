@@ -62,6 +62,9 @@ views:
           - entity: sensor.chore_minutes_charles_monthly
             name: This Month
             icon: mdi:calendar-month
+          - entity: sensor.chore_minutes_charles_yearly
+            name: This Year
+            icon: mdi:calendar
           - entity: sensor.chore_minutes_charles
             name: All-Time Total
             icon: mdi:timer-sand-complete
@@ -92,6 +95,9 @@ views:
           - entity: sensor.chore_minutes_gaby_monthly
             name: This Month
             icon: mdi:calendar-month
+          - entity: sensor.chore_minutes_gaby_yearly
+            name: This Year
+            icon: mdi:calendar
           - entity: sensor.chore_minutes_gaby
             name: All-Time Total
             icon: mdi:timer-sand-complete

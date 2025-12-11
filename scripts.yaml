@@ -264,3 +264,24 @@ chore_charles_subtract_minutes:
         target:
           entity_id: '{{ repeat.item }}'
   mode: single
+chore_initialize_yearly_meters:
+  alias: 'Chores: initialize yearly meters from monthly'
+  description: >-
+    One-time initialization script to set the yearly chore meters to match
+    the current monthly meter values. Run this once when first setting up
+    the yearly meters to preserve existing monthly totals.
+  sequence:
+  - variables:
+      charles_monthly: '{{ states("sensor.chore_minutes_charles_monthly") | float(0) }}'
+      gaby_monthly: '{{ states("sensor.chore_minutes_gaby_monthly") | float(0) }}'
+  - action: utility_meter.calibrate
+    data:
+      value: '{{ charles_monthly }}'
+    target:
+      entity_id: sensor.chore_minutes_charles_yearly
+  - action: utility_meter.calibrate
+    data:
+      value: '{{ gaby_monthly }}'
+    target:
+      entity_id: sensor.chore_minutes_gaby_yearly
+  mode: single
