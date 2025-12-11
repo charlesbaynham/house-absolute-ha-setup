@@ -57,12 +57,11 @@ Create rolling aggregates for minutes:
 - Extended mode timeout: after 6 hours, turn OFF extended mode and subtract all session minutes from total.
 - Extended mode timeout warning: announce 30 minutes before extended mode times out.
 - Session counter reset: when extended mode is turned off, reset the session minutes counter.
-- Daily reset at 04:00 sets `chore_minutes_*` to 0 (note: utility meters continue to track aggregates).
 
 ### Dashboard
 `dashboards/chore-tracking.yaml` renders gauges and entities:
 - Status and extended mode toggles per person.
-- Daily/weekly/monthly meters.
+- Time period displays: quarter-hourly (quick), daily, weekly, monthly, and all-time total meters.
 - Last activity relative.
 - Weekly leader banner when not tied.
 - Mini graph card for quick meters.
@@ -89,7 +88,7 @@ Create rolling aggregates for minutes:
 - Ensure that the instructions at `.github/instructions/chores.instructions.md` are updated if significant changes are made to functionality or entities.
 
 ## Known Design Decisions
-- Daily reset sets raw minute counters to 0 at 04:00 for UI clarity; utility meters maintain authoritative aggregates for daily/weekly/monthly summaries.
+- `input_number.chore_minutes_*` maintains all-time totals that continuously accumulate; utility meters create rolling daily/weekly/monthly aggregates from these totals.
 - Extended mode reminder is intentionally frequent to provide accountability; disable by turning OFF extended mode or editing the reminder automation.
 - Extended mode timeout (configurable, default 6 hours) removes ALL session minutes to prevent accidental accumulation of thousands of minutes when left on by mistake.
 - Session minutes are tracked separately during extended mode so they can be rolled back if timeout occurs.
