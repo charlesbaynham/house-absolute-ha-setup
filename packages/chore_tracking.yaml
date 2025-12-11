@@ -127,6 +127,20 @@ template:
         icon: mdi:timer-sand
         availability: "{{ states('input_number.chore_minutes_gaby') not in ['unknown', 'unavailable'] }}"
 
+      - name: "Total Chore Minutes Combined"
+        unique_id: chore_minutes_combined_sensor
+        state: >
+          {% set charles = states('input_number.chore_minutes_charles') | float(0) %}
+          {% set gaby = states('input_number.chore_minutes_gaby') | float(0) %}
+          {{ charles + gaby }}
+        unit_of_measurement: "min"
+        device_class: duration
+        state_class: total_increasing
+        icon: mdi:timer-sand
+        availability: >
+          {{ states('input_number.chore_minutes_charles') not in ['unknown', 'unavailable'] 
+             and states('input_number.chore_minutes_gaby') not in ['unknown', 'unavailable'] }}
+
       # Weekly leader badge
       - name: "Chore Weekly Leader"
         unique_id: chore_weekly_leader
@@ -229,6 +243,29 @@ utility_meter:
 
   chore_minutes_gaby_monthly:
     source: sensor.chore_minutes_gaby
+    cycle: monthly
+    offset:
+      hours: 4
+
+  chore_minutes_combined_quick:
+    source: sensor.chore_minutes_combined
+    cycle: quarter-hourly
+
+  chore_minutes_combined_daily:
+    source: sensor.chore_minutes_combined
+    cycle: daily
+    offset:
+      hours: 4
+
+  chore_minutes_combined_weekly:
+    source: sensor.chore_minutes_combined
+    cycle: weekly
+    offset:
+      hours: 4
+      days: 6
+
+  chore_minutes_combined_monthly:
+    source: sensor.chore_minutes_combined
     cycle: monthly
     offset:
       hours: 4

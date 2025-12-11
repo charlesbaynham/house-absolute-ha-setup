@@ -124,3 +124,89 @@ views:
           graph: bar
           fill: true
           legend: true
+
+  - title: Total
+    icon: mdi:home-group
+    cards:
+      - type: markdown
+        content: |
+          # 📊 Combined Household Totals
+          *Together we're stronger!*
+      - type: gauge
+        entity: sensor.chore_minutes_combined_weekly
+        name: Combined chores this week
+        needle: false
+        min: 0
+        max: 1000
+      - square: false
+        type: grid
+        title: Combined chores today
+        cards:
+          - graph: line
+            type: sensor
+            detail: 1
+            entity: sensor.chore_minutes_combined_daily
+            name: Total
+        columns: 1
+      - type: grid
+        title: Combined chores this week
+        cards:
+          - type: gauge
+            entity: sensor.chore_minutes_combined_weekly
+            name: This Week
+            needle: false
+            min: 0
+            max: 1000
+        columns: 1
+      - type: entities
+        title: Combined Totals
+        icon: mdi:home-group
+        entities:
+          - entity: sensor.chore_minutes_combined_quick
+            name: This Quarter-Hour
+            icon: mdi:clock-outline
+          - entity: sensor.chore_minutes_combined_daily
+            name: Today
+            icon: mdi:calendar-today
+          - entity: sensor.chore_minutes_combined_weekly
+            name: This Week
+            icon: mdi:calendar-week
+          - entity: sensor.chore_minutes_combined_monthly
+            name: This Month
+            icon: mdi:calendar-month
+      - type: custom:mini-graph-card
+        name: Combined 15-minute Chore Minutes
+        icon: mdi:chart-line
+        entities:
+          - entity: sensor.chore_minutes_combined_quick
+            name: Combined Total
+            color: "#9C27B0"
+        hours_to_show: 2
+        points_per_hour: 4
+        aggregate_func: max
+        line_width: 3
+        animate: true
+        show:
+          graph: bar
+          fill: true
+          legend: true
+      - type: custom:mini-graph-card
+        name: Individual Contributions
+        icon: mdi:chart-line
+        entities:
+          - entity: sensor.chore_minutes_charles_quick
+            name: Charles
+            color: "#0066FF"
+          - entity: sensor.chore_minutes_gaby_quick
+            name: Gaby
+            color: "#FF69B4"
+        hours_to_show: 2
+        points_per_hour: 4
+        aggregate_func: max
+        line_width: 3
+        animate: true
+        show:
+          graph: bar
+          fill: true
+          legend: true
+
