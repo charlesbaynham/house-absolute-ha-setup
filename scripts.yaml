@@ -225,10 +225,7 @@ chore_gaby_subtract_minutes:
   - variables:
       amount: '{{ (minutes | default(1423)) | float(0) }}'
       meters:
-      - sensor.chore_minutes_gaby_daily
-      - sensor.chore_minutes_gaby_weekly
-      - sensor.chore_minutes_gaby_monthly
-      - sensor.chore_minutes_gaby_quick
+      - sensor.chore_minutes_gaby
   - repeat:
       for_each: '{{ meters }}'
       sequence:
@@ -254,10 +251,7 @@ chore_charles_subtract_minutes:
   - variables:
       amount: '{{ (minutes | default(768)) | float(0) }}'
       meters:
-      - sensor.chore_minutes_charles_daily
-      - sensor.chore_minutes_charles_weekly
-      - sensor.chore_minutes_charles_monthly
-      - sensor.chore_minutes_charles_quick
+      - sensor.chore_minutes_charles
   - repeat:
       for_each: '{{ meters }}'
       sequence:
