@@ -214,6 +214,12 @@ utility_meter:
     offset:
       hours: 4
 
+  chore_minutes_charles_yearly:
+    source: sensor.chore_minutes_charles
+    cycle: yearly
+    offset:
+      hours: 4
+
   chore_minutes_gaby_daily:
     source: sensor.chore_minutes_gaby
     cycle: daily
@@ -230,6 +236,12 @@ utility_meter:
   chore_minutes_gaby_monthly:
     source: sensor.chore_minutes_gaby
     cycle: monthly
+    offset:
+      hours: 4
+
+  chore_minutes_gaby_yearly:
+    source: sensor.chore_minutes_gaby
+    cycle: yearly
     offset:
       hours: 4
 
