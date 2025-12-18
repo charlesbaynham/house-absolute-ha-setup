@@ -38,8 +38,8 @@ climate:
     target_temp: 19
     keep_alive:
       seconds: 60
-    kp: 60
-    ki: 0.01
+    kp: 30
+    ki: 0.005
     kd: 2000
     pwm: 0
 
