@@ -1,0 +1,74 @@
+---
+# Vacuum Automation Package
+#
+# Automatically starts the vacuum when everyone leaves the house.
+# The vacuum will run at most twice per absence period (between people leaving and returning).
+# 
+# Features:
+# - Starts vacuum 30 minutes after last person leaves
+# - Runs maximum 2 times while house is empty
+# - Counter resets when anyone comes home
+# - Will not run during night mode
+#
+# Entities:
+# - binary_sensor.anyone_home (tracks if anyone is home)
+# - input_boolean.night_mode (from packages/night_mode.yaml)
+# - Vacuum device: 8494972a3e4dd42011930160e8845cec
+
+counter:
+  vacuum_runs_while_away:
+    name: Vacuum Runs While Away
+    initial: 0
+    step: 1
+    icon: mdi:robot-vacuum
+
+automation:
+  - id: '1730595645000'
+    alias: Vacuum when everyone leaves
+    description: Start the vacuum 30 minutes after the last person leaves, max twice per absence
+    triggers:
+    - trigger: state
+      entity_id: binary_sensor.anyone_home
+      from: 'on'
+      to: 'off'
+    conditions:
+    - condition: numeric_state
+      entity_id: counter.vacuum_runs_while_away
+      below: 2
+    - condition: state
+      entity_id: input_boolean.night_mode
+      state: 'off'
+    actions:
+    - delay:
+        hours: 0
+        minutes: 30
+        seconds: 0
+    - condition: state
+      state:
+      - 'off'
+      entity_id: binary_sensor.anyone_home
+    - action: vacuum.start
+      metadata: {}
+      data: {}
+      target:
+        device_id:
+        - 8494972a3e4dd42011930160e8845cec
+    - action: counter.increment
+      target:
+        entity_id: counter.vacuum_runs_while_away
+    mode: single
+
+  - id: '1734630000000'
+    alias: Reset vacuum counter when anyone comes home
+    description: Reset the vacuum run counter when anyone arrives home
+    triggers:
+    - trigger: state
+      entity_id: binary_sensor.anyone_home
+      from: 'off'
+      to: 'on'
+    conditions: []
+    actions:
+    - action: counter.reset
+      target:
+        entity_id: counter.vacuum_runs_while_away
+    mode: single
