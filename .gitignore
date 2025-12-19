@@ -8,3 +8,4 @@ deps
 *.db-wal
 .ha_run.lock
 automations_old.yaml
+*.swp
