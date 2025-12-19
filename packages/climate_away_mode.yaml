@@ -1,0 +1,100 @@
+---
+# Climate Away Mode Package
+#
+# Automatically turns off all PID climate controllers when both Charles and Gaby
+# are more than 50km away from home, and turns them back on when either person
+# returns within 50km.
+#
+# Components:
+# - Binary sensor to detect when both people are far away (>50km)
+# - Automation to turn off all PID controllers when away
+# - Automation to restore PID controllers when someone returns
+#
+# Affected climate entities:
+# - climate.living_room_trv_pid_controller
+# - climate.master_bedroom_trv_pid_controller
+# - climate.bedroom_trv_pid_controller
+
+template:
+  - binary_sensor:
+      - name: "Both Charles and Gaby Far Away"
+        unique_id: both_charles_gaby_far_away
+        device_class: presence
+        state: >
+          {% set charles = states.person.charles %}
+          {% set gaby = states.person.gaby %}
+          {% set home_lat = state_attr('zone.home', 'latitude') %}
+          {% set home_lon = state_attr('zone.home', 'longitude') %}
+
+          {# Check if all required data is available #}
+          {% if charles.state == 'unavailable' or gaby.state == 'unavailable' %}
+            false
+          {% elif home_lat is none or home_lon is none %}
+            false
+          {% else %}
+            {# Calculate distances using haversine formula #}
+            {% set charles_lat = state_attr('person.charles',
+                'latitude') %}
+            {% set charles_lon = state_attr('person.charles',
+                'longitude') %}
+            {% set gaby_lat = state_attr('person.gaby', 'latitude') %}
+            {% set gaby_lon = state_attr('person.gaby', 'longitude') %}
+
+            {% if charles_lat is none or charles_lon is none or
+                gaby_lat is none or gaby_lon is none %}
+              false
+            {% else %}
+              {% set charles_dist = distance(home_lat, home_lon,
+                  charles_lat, charles_lon) %}
+              {% set gaby_dist = distance(home_lat, home_lon,
+                  gaby_lat, gaby_lon) %}
+
+              {# Both must be more than 50km away #}
+              {{ charles_dist > 50 and gaby_dist > 50 }}
+            {% endif %}
+          {% endif %}
+
+automation:
+  - id: '1734631000000'
+    alias: Climate - Turn off PID controllers when both far away
+    description: >
+      When both Charles and Gaby are >50km from home, turn off all PID
+      climate controllers to save energy
+    triggers:
+      - trigger: state
+        entity_id: binary_sensor.both_charles_and_gaby_far_away
+        to: 'on'
+        for:
+          minutes: 30
+    conditions: []
+    actions:
+      - action: climate.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id:
+            - climate.living_room_trv_pid_controller
+            - climate.master_bedroom_trv_pid_controller
+            - climate.bedroom_trv_pid_controller
+    mode: single
+
+  - id: '1734631000001'
+    alias: Climate - Turn on PID controllers when someone returns
+    description: >
+      When at least one of Charles or Gaby comes within 50km of home,
+      turn PID controllers back on
+    triggers:
+      - trigger: state
+        entity_id: binary_sensor.both_charles_and_gaby_far_away
+        to: 'off'
+    conditions: []
+    actions:
+      - action: climate.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id:
+            - climate.living_room_trv_pid_controller
+            - climate.master_bedroom_trv_pid_controller
+            - climate.bedroom_trv_pid_controller
+    mode: single
