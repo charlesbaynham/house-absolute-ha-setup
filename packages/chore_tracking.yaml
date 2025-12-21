@@ -579,9 +579,11 @@ automation:
     mode: single
 
   - id: "1763903316663"
-    alias: Charles chore button - start extended mode
+    alias: Charles chore button - toggle extended mode
     description: >-
-      Long press on left button activates extended chore mode for Charles.
+      Double press on left button toggles extended chore mode for Charles.
+      If extended mode is already active, it will be deactivated.
+      If extended mode is not active, it will be activated.
       Extended chore mode times out after configured hours (see input_number.extended_chore_timeout_hours).
     triggers:
       - domain: mqtt
@@ -591,34 +593,54 @@ automation:
         trigger: device
     conditions: []
     actions:
-      - action: input_boolean.turn_on
-        metadata: {}
-        data: {}
-        target:
-          entity_id:
-            - input_boolean.chore_mode_charles
-            - input_boolean.extended_chore_mode_charles
-      - action: input_datetime.set_datetime
-        metadata: {}
-        data:
-          datetime: "{{ now().isoformat() }}"
-        target:
-          entity_id: input_datetime.extended_chore_start_charles
-      - action: input_number.set_value
-        metadata: {}
-        data:
-          value: 0
-        target:
-          entity_id: input_number.extended_session_minutes_charles
-      # Flash kitchen surface lights
-      - action: script.flash_kitchen_surface_lights
-        data: {}
+      - if:
+          - condition: state
+            entity_id: input_boolean.extended_chore_mode_charles
+            state: "on"
+        then:
+          # Turn off extended chore mode and regular chore mode
+          - action: input_boolean.turn_off
+            metadata: {}
+            data: {}
+            target:
+              entity_id:
+                - input_boolean.extended_chore_mode_charles
+                - input_boolean.chore_mode_charles
+          # Flash kitchen surface lights
+          - action: script.flash_kitchen_surface_lights
+            data: {}
+        else:
+          # Start extended chore mode
+          - action: input_boolean.turn_on
+            metadata: {}
+            data: {}
+            target:
+              entity_id:
+                - input_boolean.chore_mode_charles
+                - input_boolean.extended_chore_mode_charles
+          - action: input_datetime.set_datetime
+            metadata: {}
+            data:
+              datetime: "{{ now().isoformat() }}"
+            target:
+              entity_id: input_datetime.extended_chore_start_charles
+          - action: input_number.set_value
+            metadata: {}
+            data:
+              value: 0
+            target:
+              entity_id: input_number.extended_session_minutes_charles
+          # Flash kitchen surface lights
+          - action: script.flash_kitchen_surface_lights
+            data: {}
     mode: single
 
   - id: "1763903316664"
-    alias: Gaby chore button - start extended mode
+    alias: Gaby chore button - toggle extended mode
     description: >-
-      Long press on right button activates extended chore mode for Gaby.
+      Double press on right button toggles extended chore mode for Gaby.
+      If extended mode is already active, it will be deactivated.
+      If extended mode is not active, it will be activated.
       Extended chore mode times out after configured hours (see input_number.extended_chore_timeout_hours).
     triggers:
       - domain: mqtt
@@ -628,28 +650,46 @@ automation:
         trigger: device
     conditions: []
     actions:
-      - action: input_boolean.turn_on
-        metadata: {}
-        data: {}
-        target:
-          entity_id:
-            - input_boolean.chore_mode_gaby
-            - input_boolean.extended_chore_mode_gaby
-      - action: input_datetime.set_datetime
-        metadata: {}
-        data:
-          datetime: "{{ now().isoformat() }}"
-        target:
-          entity_id: input_datetime.extended_chore_start_gaby
-      - action: input_number.set_value
-        metadata: {}
-        data:
-          value: 0
-        target:
-          entity_id: input_number.extended_session_minutes_gaby
-      # Flash kitchen surface lights
-      - action: script.flash_kitchen_surface_lights
-        data: {}
+      - if:
+          - condition: state
+            entity_id: input_boolean.extended_chore_mode_gaby
+            state: "on"
+        then:
+          # Turn off extended chore mode and regular chore mode
+          - action: input_boolean.turn_off
+            metadata: {}
+            data: {}
+            target:
+              entity_id:
+                - input_boolean.extended_chore_mode_gaby
+                - input_boolean.chore_mode_gaby
+          # Flash kitchen surface lights
+          - action: script.flash_kitchen_surface_lights
+            data: {}
+        else:
+          # Start extended chore mode
+          - action: input_boolean.turn_on
+            metadata: {}
+            data: {}
+            target:
+              entity_id:
+                - input_boolean.chore_mode_gaby
+                - input_boolean.extended_chore_mode_gaby
+          - action: input_datetime.set_datetime
+            metadata: {}
+            data:
+              datetime: "{{ now().isoformat() }}"
+            target:
+              entity_id: input_datetime.extended_chore_start_gaby
+          - action: input_number.set_value
+            metadata: {}
+            data:
+              value: 0
+            target:
+              entity_id: input_number.extended_session_minutes_gaby
+          # Flash kitchen surface lights
+          - action: script.flash_kitchen_surface_lights
+            data: {}
     mode: single
 
   - id: "1763903316666"
