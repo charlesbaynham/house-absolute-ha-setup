@@ -12,8 +12,8 @@ Chore Mode tracks household chore time for Charles and Gaby, controlled by a dua
 - **Control Device**: Aqara switch `device_id: eea20367040d6e9ad92eee3f0dc0ede2`.
   - `single_left`: Start/renew Charles' session; if extended mode is ON, single press turns it OFF.
   - `single_right`: Start/renew Gaby's session; if extended mode is ON, single press turns it OFF.
-  - `double_left`: Start Charles' extended chore mode.
-  - `double_right`: Start Gaby's extended chore mode.
+  - `double_left`: Toggle Charles' extended chore mode (activate if OFF, deactivate if ON).
+  - `double_right`: Toggle Gaby's extended chore mode (activate if OFF, deactivate if ON).
 - **Regular Mode**: Times out after `input_number.chore_timeout_minutes` of inactivity.
 - **Extended Mode**: Times out after `input_number.extended_chore_timeout_hours` (default 6 hours); plays a reminder TTS every 5 minutes; single press turns it OFF. If it times out, ALL minutes from that session are removed from the counter.
 
