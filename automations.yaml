@@ -305,3 +305,35 @@
       device_id:
       - 8494972a3e4dd42011930160e8845cec
   mode: single
+- id: '1766950369548'
+  alias: 'Oneoff: welcome home'
+  description: ''
+  triggers:
+  - type: opened
+    device_id: 8a4c980ba6e0608c7b56fc7b9a25db16
+    entity_id: 5c680383496e884c0dffac3922c3d5d2
+    domain: binary_sensor
+    trigger: device
+  conditions: []
+  actions:
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 30
+      milliseconds: 0
+  - action: tts.speak
+    metadata: {}
+    target:
+      entity_id: tts.google_translate_en_com
+    data:
+      cache: true
+      media_player_entity_id: media_player.all_speakers
+      message: Welcome back to House Absolute, Gaby. The house has been pre-heated
+        for your pleasure. You will be missed in Wales.
+  - action: automation.turn_off
+    metadata: {}
+    target:
+      entity_id: automation.oneoff_welcome_home
+    data:
+      stop_actions: false
+  mode: single
