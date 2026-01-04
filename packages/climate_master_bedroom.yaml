@@ -27,6 +27,31 @@ input_number:
     max: 100
     step: 1
 
+input_boolean:
+  boost_mode_master_bedroom:
+    name: Boost Mode - Master Bedroom
+    icon: mdi:rocket-launch
+    initial: false
+
+input_datetime:
+  boost_start_master_bedroom:
+    name: Boost Start - Master Bedroom
+    has_date: true
+    has_time: true
+    icon: mdi:clock-start
+
+button:
+  - platform: template
+    buttons:
+      boost_master_bedroom:
+        unique_id: boost_button_master_bedroom
+        friendly_name: "Boost Master Bedroom"
+        icon_template: mdi:rocket-launch
+        press:
+          - action: input_boolean.toggle
+            target:
+              entity_id: input_boolean.boost_mode_master_bedroom
+
 climate:
   - platform: smart_thermostat
     name: Master bedroom TRV PID controller
@@ -134,4 +159,80 @@ automation:
         stop_actions: false
       target:
         entity_id: automation.master_bedroom_restart_heating_at_4am
+    mode: single
+
+  - id: '1736044800003'
+    alias: Master bedroom TRV - activate boost mode
+    description: 'When boost mode is activated, set valve to 100% and stop PID updates'
+    triggers:
+    - trigger: state
+      entity_id: input_boolean.boost_mode_master_bedroom
+      to: 'on'
+    conditions: []
+    actions:
+    - action: input_datetime.set_datetime
+      target:
+        entity_id: input_datetime.boost_start_master_bedroom
+      data:
+        timestamp: '{{ now().timestamp() }}'
+    - action: automation.turn_off
+      target:
+        entity_id: automation.master_bedroom_trv_sync_valve_with_helper
+      data:
+        stop_actions: false
+    - action: input_number.set_value
+      target:
+        entity_id: input_number.master_bedroom_trv_valve_position
+      data:
+        value: 100
+    - action: climate.set_hvac_mode
+      target:
+        entity_id: climate.master_bedroom_trv_pid_controller
+      data:
+        hvac_mode: 'off'
+    mode: single
+
+  - id: '1736044800004'
+    alias: Master bedroom TRV - deactivate boost mode
+    description: 'When boost mode is turned off, restore PID control'
+    triggers:
+    - trigger: state
+      entity_id: input_boolean.boost_mode_master_bedroom
+      to: 'off'
+    conditions: []
+    actions:
+    - action: automation.turn_on
+      target:
+        entity_id: automation.master_bedroom_trv_sync_valve_with_helper
+    - action: climate.set_hvac_mode
+      target:
+        entity_id: climate.master_bedroom_trv_pid_controller
+      data:
+        hvac_mode: 'heat'
+    mode: single
+
+  - id: '1736044800005'
+    alias: Master bedroom TRV - boost timeout
+    description: 'Turn off boost mode after 1 hour'
+    triggers:
+    - trigger: time_pattern
+      minutes: /1
+    conditions:
+    - condition: state
+      entity_id: input_boolean.boost_mode_master_bedroom
+      state: 'on'
+    - condition: template
+      value_template: >
+        {% set boost_start = states('input_datetime.boost_start_master_bedroom') %}
+        {% if boost_start not in ['unknown', 'unavailable', ''] %}
+          {% set start_time = as_timestamp(boost_start) %}
+          {% set current_time = now().timestamp() %}
+          {{ (current_time - start_time) >= 3600 }}
+        {% else %}
+          false
+        {% endif %}
+    actions:
+    - action: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.boost_mode_master_bedroom
     mode: single
