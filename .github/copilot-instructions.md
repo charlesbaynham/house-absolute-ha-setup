@@ -281,6 +281,7 @@ Each room with TRV PID control requires the following components:
 3. **Valve Sync Automation** - Syncs PID output to TRV valve position
 4. **External Temperature Sync Automation** - Syncs external sensor to TRV
 5. **Setpoint Sync Automations (2)** - Bidirectional sync of temperature setpoints between physical TRV and PID controller
+6. **Boost Mode Components** - Input boolean, datetime, button, and 3 automations for temporary max heating
 
 ### Complete Setup Template
 
@@ -519,9 +520,9 @@ Create two automations to sync temperature setpoints bidirectionally between the
 
 This pattern is currently implemented for:
 
-1. **Living room** - Complete setup with all 6 components
-2. **Master bedroom** - Complete setup with all 6 components
-3. **Bedroom** - Complete setup with all 6 components
+1. **Living room** - Complete setup with all components including boost mode
+2. **Master bedroom** - Complete setup with all components including boost mode
+3. **Bedroom** - Complete setup with all components including boost mode
 
 ### Prerequisites
 
@@ -548,3 +549,168 @@ These can be adjusted per room via the climate entity UI or by modifying the cli
 - **TRV enters fail-safe mode**: Ensure external temperature sensor reports at least once every 2 hours
 - **Setpoint changes not syncing**: Verify the two setpoint sync automations are enabled and running
 - **Setpoint sync loop**: The condition templates prevent infinite loops by only triggering when temperatures differ
+
+### Boost Mode Feature
+
+All rooms with PID-controlled TRVs include a "boost mode" feature that provides temporary maximum heating.
+
+#### Boost Mode Components
+
+Each room has:
+1. **Input Boolean** - `input_boolean.boost_mode_{room_name}` - Tracks boost state
+2. **Input DateTime** - `input_datetime.boost_start_{room_name}` - Records when boost started
+3. **Button Entity** - `button.boost_{room_name}` - Dashboard button to toggle boost mode
+4. **Activation Automation** - Turns on boost mode
+5. **Deactivation Automation** - Restores normal PID operation
+6. **Timeout Automation** - Automatically deactivates boost after 1 hour
+
+#### Boost Mode Behavior
+
+When boost mode is activated:
+1. Valve position is set to 100% (maximum heat)
+2. PID controller is turned off (HVAC mode set to 'off')
+3. Valve sync automation is disabled to prevent PID from updating the valve
+4. Start time is recorded
+
+After 1 hour:
+1. Boost mode automatically turns off
+2. PID controller is re-enabled (HVAC mode set to 'heat')
+3. Valve sync automation is re-enabled
+4. Normal PID control resumes
+
+#### Using Boost Mode
+
+**Via Dashboard Button:**
+- Press the boost button for the room (e.g., `button.boost_living_room`)
+- The button toggles boost mode on/off
+
+**Via Automation/Script:**
+```yaml
+- action: input_boolean.turn_on
+  target:
+    entity_id: input_boolean.boost_mode_living_room
+```
+
+**To disable manually before timeout:**
+```yaml
+- action: input_boolean.turn_off
+  target:
+    entity_id: input_boolean.boost_mode_living_room
+```
+
+Or press the boost button again to toggle off.
+
+#### Boost Mode Template
+
+**Helpers:**
+```yaml
+input_boolean:
+  boost_mode_{room_name}:
+    name: Boost Mode - {Room Name}
+    icon: mdi:rocket-launch
+    initial: false
+
+input_datetime:
+  boost_start_{room_name}:
+    name: Boost Start - {Room Name}
+    has_date: true
+    has_time: true
+    icon: mdi:clock-start
+
+button:
+  - platform: template
+    buttons:
+      boost_{room_name}:
+        unique_id: boost_button_{room_name}
+        friendly_name: "Boost {Room Name}"
+        icon_template: mdi:rocket-launch
+        press:
+          - action: input_boolean.toggle
+            target:
+              entity_id: input_boolean.boost_mode_{room_name}
+```
+
+**Activation Automation:**
+```yaml
+- id: '{unique_id}'
+  alias: {Room Name} TRV - activate boost mode
+  description: 'When boost mode is activated, set valve to 100% and stop PID updates'
+  triggers:
+  - trigger: state
+    entity_id: input_boolean.boost_mode_{room_name}
+    to: 'on'
+  conditions: []
+  actions:
+  - action: input_datetime.set_datetime
+    target:
+      entity_id: input_datetime.boost_start_{room_name}
+    data:
+      timestamp: '{{ now().timestamp() }}'
+  - action: automation.turn_off
+    target:
+      entity_id: automation.{room_name}_trv_sync_valve_with_helper
+    data:
+      stop_actions: false
+  - action: input_number.set_value
+    target:
+      entity_id: input_number.{room_name}_trv_valve_position
+    data:
+      value: 100
+  - action: climate.set_hvac_mode
+    target:
+      entity_id: climate.{room_name}_trv_pid_controller
+    data:
+      hvac_mode: 'off'
+  mode: single
+```
+
+**Deactivation Automation:**
+```yaml
+- id: '{unique_id}'
+  alias: {Room Name} TRV - deactivate boost mode
+  description: 'When boost mode is turned off, restore PID control'
+  triggers:
+  - trigger: state
+    entity_id: input_boolean.boost_mode_{room_name}
+    to: 'off'
+  conditions: []
+  actions:
+  - action: automation.turn_on
+    target:
+      entity_id: automation.{room_name}_trv_sync_valve_with_helper
+  - action: climate.set_hvac_mode
+    target:
+      entity_id: climate.{room_name}_trv_pid_controller
+    data:
+      hvac_mode: 'heat'
+  mode: single
+```
+
+**Timeout Automation:**
+```yaml
+- id: '{unique_id}'
+  alias: {Room Name} TRV - boost timeout
+  description: 'Turn off boost mode after 1 hour'
+  triggers:
+  - trigger: time_pattern
+    minutes: /1
+  conditions:
+  - condition: state
+    entity_id: input_boolean.boost_mode_{room_name}
+    state: 'on'
+  - condition: template
+    value_template: >
+      {% set boost_start = states('input_datetime.boost_start_{room_name}') %}
+      {% if boost_start not in ['unknown', 'unavailable', ''] %}
+        {% set start_time = as_timestamp(boost_start) %}
+        {% set current_time = now().timestamp() %}
+        {{ (current_time - start_time) >= 3600 }}
+      {% else %}
+        false
+      {% endif %}
+  actions:
+  - action: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.boost_mode_{room_name}
+  mode: single
+```
