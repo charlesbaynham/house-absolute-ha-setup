@@ -693,7 +693,7 @@ button:
   description: 'Turn off boost mode after 1 hour'
   triggers:
   - trigger: time_pattern
-    minutes: /1
+    minutes: /5
   conditions:
   - condition: state
     entity_id: input_boolean.boost_mode_{room_name}
