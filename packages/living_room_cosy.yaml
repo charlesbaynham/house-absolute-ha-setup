@@ -14,7 +14,7 @@ input_select:
       - "cosy"
       - "off"
       - "cosy_again"
-    initial: "off"
+    initial: "cosy_again"
     icon: mdi:lightbulb-group
 
 automation:
