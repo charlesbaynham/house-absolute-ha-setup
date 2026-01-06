@@ -125,6 +125,7 @@ automation:
         - light.living_room_hue_lamp
         - light.living_room_lamp_1
         - light.living_room_lamp_tall
+        - light.living_room_christmas_lights
       to: 'off'
       for:
         seconds: 2
