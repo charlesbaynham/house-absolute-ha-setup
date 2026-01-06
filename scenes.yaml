@@ -862,3 +862,99 @@
       supported_features: 15
       state: closed
   metadata: {}
+- id: '1767728852849'
+  name: Living room cosy  brighter
+  entities:
+    light.living_room_hue_lamp:
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - candle
+      - finish_effect
+      - stop_effect
+      - stop_hue_effect
+      supported_color_modes:
+      - brightness
+      effect:
+      color_mode: brightness
+      brightness: 186
+      friendly_name: Living room hue lamp
+      supported_features: 44
+      state: 'on'
+    light.living_room_light_switch_left:
+      supported_color_modes:
+      - onoff
+      color_mode:
+      friendly_name: Living room main lights
+      supported_features: 0
+      state: 'off'
+    light.living_room_light_switch_right:
+      supported_color_modes:
+      - onoff
+      color_mode:
+      friendly_name: Garden lights
+      supported_features: 0
+      state: 'off'
+    light.living_room_lamp_1:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      - colorloop
+      - stop_colorloop
+      supported_color_modes:
+      - color_temp
+      - xy
+      effect:
+      color_mode: color_temp
+      brightness: 255
+      color_temp_kelvin: 2000
+      color_temp: 500
+      hs_color:
+      - 30.601
+      - 94.547
+      rgb_color:
+      - 255
+      - 137
+      - 14
+      xy_color:
+      - 0.598
+      - 0.383
+      friendly_name: Living room lamp 1
+      supported_features: 44
+      state: 'on'
+    light.living_room_lamp_tall:
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - candle
+      - finish_effect
+      - stop_effect
+      - stop_hue_effect
+      supported_color_modes:
+      - brightness
+      effect:
+      color_mode: brightness
+      brightness: 163
+      friendly_name: Living room lamp tall
+      supported_features: 44
+      state: 'on'
+    light.living_room_christmas_lights:
+      supported_color_modes:
+      - onoff
+      friendly_name: Living room Christmas lights
+      supported_features: 0
+      state: unavailable
+  icon: mdi:desk-lamp
+  metadata: {}
