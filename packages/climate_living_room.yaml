@@ -26,6 +26,31 @@ input_number:
     max: 100
     step: 1
 
+input_boolean:
+  boost_mode_living_room:
+    name: Boost Mode - Living Room
+    icon: mdi:rocket-launch
+    initial: false
+
+input_datetime:
+  boost_start_living_room:
+    name: Boost Start - Living Room
+    has_date: true
+    has_time: true
+    icon: mdi:clock-start
+
+button:
+  - platform: template
+    buttons:
+      boost_living_room:
+        unique_id: boost_button_living_room
+        friendly_name: "Boost Living Room"
+        icon_template: mdi:rocket-launch
+        press:
+          - action: input_boolean.toggle
+            target:
+              entity_id: input_boolean.boost_mode_living_room
+
 climate:
   - platform: smart_thermostat
     name: Living room TRV PID controller
@@ -110,4 +135,80 @@ automation:
           {{ state_attr('climate.living_room_trv_pid_controller', 'temperature') }}
       target:
         entity_id: climate.trv_living_room
+    mode: single
+
+  - id: '1736044800000'
+    alias: Living room TRV - activate boost mode
+    description: 'When boost mode is activated, set valve to 100% and stop PID updates'
+    triggers:
+    - trigger: state
+      entity_id: input_boolean.boost_mode_living_room
+      to: 'on'
+    conditions: []
+    actions:
+    - action: input_datetime.set_datetime
+      target:
+        entity_id: input_datetime.boost_start_living_room
+      data:
+        timestamp: '{{ now().timestamp() }}'
+    - action: automation.turn_off
+      target:
+        entity_id: automation.living_room_trv_sync_valve_with_helper
+      data:
+        stop_actions: false
+    - action: input_number.set_value
+      target:
+        entity_id: input_number.living_room_trv_valve_position
+      data:
+        value: 100
+    - action: climate.set_hvac_mode
+      target:
+        entity_id: climate.living_room_trv_pid_controller
+      data:
+        hvac_mode: 'off'
+    mode: single
+
+  - id: '1736044800001'
+    alias: Living room TRV - deactivate boost mode
+    description: 'When boost mode is turned off, restore PID control'
+    triggers:
+    - trigger: state
+      entity_id: input_boolean.boost_mode_living_room
+      to: 'off'
+    conditions: []
+    actions:
+    - action: automation.turn_on
+      target:
+        entity_id: automation.living_room_trv_sync_valve_with_helper
+    - action: climate.set_hvac_mode
+      target:
+        entity_id: climate.living_room_trv_pid_controller
+      data:
+        hvac_mode: 'heat'
+    mode: single
+
+  - id: '1736044800002'
+    alias: Living room TRV - boost timeout
+    description: 'Turn off boost mode after 1 hour'
+    triggers:
+    - trigger: time_pattern
+      minutes: /5
+    conditions:
+    - condition: state
+      entity_id: input_boolean.boost_mode_living_room
+      state: 'on'
+    - condition: template
+      value_template: >
+        {% set boost_start = states('input_datetime.boost_start_living_room') %}
+        {% if boost_start not in ['unknown', 'unavailable', ''] %}
+          {% set start_time = as_timestamp(boost_start) %}
+          {% set current_time = now().timestamp() %}
+          {{ (current_time - start_time) >= 3600 }}
+        {% else %}
+          false
+        {% endif %}
+    actions:
+    - action: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.boost_mode_living_room
     mode: single
