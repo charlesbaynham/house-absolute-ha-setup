@@ -5,11 +5,13 @@
 # Pattern: cosy brighter → cosy → off → cosy → cosy brighter → cosy → off → ...
 #
 # The cycling sequence is: [cosy_brighter, cosy, off, cosy] repeated
+# Special state: main_lights_on - when main lights are on, button press goes to cosy brighter
 
 input_select:
   living_room_cosy_state:
     name: Living Room Cosy State
     options:
+      - "main_lights_on"
       - "cosy_brighter"
       - "cosy"
       - "off"
@@ -29,6 +31,29 @@ automation:
       trigger: device
     actions:
     - choose:
+      # State: main_lights_on → next: cosy_brighter
+      - conditions:
+        - condition: state
+          entity_id: input_select.living_room_cosy_state
+          state: "main_lights_on"
+        sequence:
+        - action: scene.turn_on
+          metadata: {}
+          data:
+            transition: 3
+          target:
+            entity_id: scene.living_room_cosy_brighter
+        - action: light.turn_off
+          metadata: {}
+          data: {}
+          target:
+            area_id: kitchen
+        - action: input_select.select_option
+          target:
+            entity_id: input_select.living_room_cosy_state
+          data:
+            option: "cosy_brighter"
+      
       # State: cosy_brighter → next: cosy
       - conditions:
         - condition: state
@@ -141,4 +166,20 @@ automation:
         entity_id: input_select.living_room_cosy_state
       data:
         option: "off"
+    mode: single
+
+  - id: '1745709642332_sync_main_lights'
+    alias: Living room cosy button - sync state when main lights turn on
+    description: Update state tracker when main living room lights are turned on
+    triggers:
+    - trigger: state
+      entity_id: light.living_room_light_switch_left
+      to: 'on'
+    conditions: []
+    actions:
+    - action: input_select.select_option
+      target:
+        entity_id: input_select.living_room_cosy_state
+      data:
+        option: "main_lights_on"
     mode: single
