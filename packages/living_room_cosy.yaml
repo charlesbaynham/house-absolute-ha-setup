@@ -1,0 +1,185 @@
+---
+# Living Room Cosy Button Package
+# 
+# Cycles through living room lighting states when button is pressed
+# Pattern: cosy brighter → cosy → off → cosy → cosy brighter → cosy → off → ...
+#
+# The cycling sequence is: [cosy_brighter, cosy, off, cosy] repeated
+# Special state: main_lights_on - when main lights are on, button press goes to cosy brighter
+
+input_select:
+  living_room_cosy_state:
+    name: Living Room Cosy State
+    options:
+      - "main_lights_on"
+      - "cosy_brighter"
+      - "cosy"
+      - "off"
+      - "cosy_again"
+    initial: "cosy_again"
+    icon: mdi:lightbulb-group
+
+automation:
+  - id: '1745709642332_cycle'
+    alias: Living room cosy button - cycle states
+    description: Cycle through cosy brighter, cosy, off, cosy when button is pressed
+    triggers:
+    - domain: mqtt
+      device_id: d74916d94f1f149b3d2eec73d3b68b7f
+      type: action
+      subtype: single
+      trigger: device
+    actions:
+    - choose:
+      # State: main_lights_on → next: cosy_brighter
+      - conditions:
+        - condition: state
+          entity_id: input_select.living_room_cosy_state
+          state: "main_lights_on"
+        sequence:
+        - action: scene.turn_on
+          metadata: {}
+          data:
+            transition: 3
+          target:
+            entity_id: scene.living_room_cosy_brighter
+        - action: light.turn_off
+          metadata: {}
+          data: {}
+          target:
+            area_id: kitchen
+        - action: input_select.select_option
+          target:
+            entity_id: input_select.living_room_cosy_state
+          data:
+            option: "cosy_brighter"
+      
+      # State: cosy_brighter → next: cosy
+      - conditions:
+        - condition: state
+          entity_id: input_select.living_room_cosy_state
+          state: "cosy_brighter"
+        sequence:
+        - action: scene.turn_on
+          metadata: {}
+          data:
+            transition: 3
+          target:
+            entity_id: scene.living_room_cosy
+        - action: light.turn_off
+          metadata: {}
+          data: {}
+          target:
+            area_id: kitchen
+        - action: input_select.select_option
+          target:
+            entity_id: input_select.living_room_cosy_state
+          data:
+            option: "cosy"
+      
+      # State: cosy → next: off
+      - conditions:
+        - condition: state
+          entity_id: input_select.living_room_cosy_state
+          state: "cosy"
+        sequence:
+        - action: light.turn_off
+          metadata: {}
+          data: {}
+          target:
+            area_id: living_room
+        - action: input_select.select_option
+          target:
+            entity_id: input_select.living_room_cosy_state
+          data:
+            option: "off"
+      
+      # State: off → next: cosy_again
+      - conditions:
+        - condition: state
+          entity_id: input_select.living_room_cosy_state
+          state: "off"
+        sequence:
+        - action: scene.turn_on
+          metadata: {}
+          data:
+            transition: 3
+          target:
+            entity_id: scene.living_room_cosy
+        - action: light.turn_off
+          metadata: {}
+          data: {}
+          target:
+            area_id: kitchen
+        - action: input_select.select_option
+          target:
+            entity_id: input_select.living_room_cosy_state
+          data:
+            option: "cosy_again"
+      
+      # State: cosy_again → next: cosy_brighter
+      - conditions:
+        - condition: state
+          entity_id: input_select.living_room_cosy_state
+          state: "cosy_again"
+        sequence:
+        - action: scene.turn_on
+          metadata: {}
+          data:
+            transition: 3
+          target:
+            entity_id: scene.living_room_cosy_brighter
+        - action: light.turn_off
+          metadata: {}
+          data: {}
+          target:
+            area_id: kitchen
+        - action: input_select.select_option
+          target:
+            entity_id: input_select.living_room_cosy_state
+          data:
+            option: "cosy_brighter"
+    mode: single
+
+  - id: '1745709642332_sync_off'
+    alias: Living room cosy button - sync state when lights turn off
+    description: Update state tracker when living room lights are turned off manually
+    triggers:
+    - trigger: state
+      entity_id:
+        - light.living_room_hue_lamp
+        - light.living_room_lamp_1
+        - light.living_room_lamp_tall
+        - light.living_room_christmas_lights
+      to: 'off'
+      for:
+        seconds: 2
+    conditions:
+    - condition: template
+      value_template: >
+        {% set lr_lights = expand('light.living_room_hue_lamp', 'light.living_room_lamp_1', 
+                                   'light.living_room_lamp_tall', 'light.living_room_christmas_lights') %}
+        {{ lr_lights | selectattr('state', 'equalto', 'on') | list | count == 0 }}
+    actions:
+    - action: input_select.select_option
+      target:
+        entity_id: input_select.living_room_cosy_state
+      data:
+        option: "off"
+    mode: single
+
+  - id: '1745709642332_sync_main_lights'
+    alias: Living room cosy button - sync state when main lights turn on
+    description: Update state tracker when main living room lights are turned on
+    triggers:
+    - trigger: state
+      entity_id: light.living_room_light_switch_left
+      to: 'on'
+    conditions: []
+    actions:
+    - action: input_select.select_option
+      target:
+        entity_id: input_select.living_room_cosy_state
+      data:
+        option: "main_lights_on"
+    mode: single
