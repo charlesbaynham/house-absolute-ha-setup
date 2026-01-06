@@ -76,53 +76,7 @@
         data: {}
         target:
           device_id: 4e798fe039ef3b748b3e8c867f3fcb68
-- id: '1745709642332'
-  alias: Living room cosy button
-  description: Toggle the room light between cosy mode and off
-  triggers:
-  - domain: mqtt
-    device_id: d74916d94f1f149b3d2eec73d3b68b7f
-    type: action
-    subtype: single
-    trigger: device
-  actions:
-  - if:
-    - condition: or
-      conditions:
-      - condition: device
-        type: is_on
-        device_id: b44f30835f4c82fab781ed7ca5d3c901
-        entity_id: 50a81e844d29005a81f8f93a9c3f2572
-        domain: light
-      - condition: device
-        type: is_off
-        device_id: 3347d22c9d7e7a4461d273a892cd2fca
-        entity_id: 716fb4b36b4f199e124d8edf555abb7d
-        domain: light
-    then:
-    - action: scene.turn_on
-      metadata: {}
-      data:
-        transition: 3
-      target:
-        entity_id: scene.living_room_cosy
-    - action: light.turn_off
-      metadata: {}
-      data: {}
-      target:
-        area_id: kitchen
-    else:
-    - action: light.turn_off
-      metadata: {}
-      data: {}
-      target:
-        area_id: living_room
-    - action: light.turn_off
-      metadata: {}
-      data: {}
-      target:
-        area_id: kitchen
-  mode: single
+
 - id: '1748385723267'
   alias: Master bedroom light dimmer switch
   description: ''
