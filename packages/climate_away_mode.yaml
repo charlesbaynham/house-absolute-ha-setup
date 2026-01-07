@@ -58,33 +58,45 @@ automation:
         target:
           entity_id: input_number.away_mode_living_room_original_temp
         data:
-          value: "{{ state_attr('climate.living_room_trv_pid_controller', 'temperature') | float(19) }}"
+          value: >
+            {{ state_attr('climate.living_room_trv_pid_controller',
+               'temperature') | float(19) }}
       - action: input_number.set_value
         target:
           entity_id: input_number.away_mode_master_bedroom_original_temp
         data:
-          value: "{{ state_attr('climate.master_bedroom_trv_pid_controller', 'temperature') | float(19) }}"
+          value: >
+            {{ state_attr('climate.master_bedroom_trv_pid_controller',
+               'temperature') | float(19) }}
       - action: input_number.set_value
         target:
           entity_id: input_number.away_mode_bedroom_original_temp
         data:
-          value: "{{ state_attr('climate.bedroom_trv_pid_controller', 'temperature') | float(19) }}"
+          value: >
+            {{ state_attr('climate.bedroom_trv_pid_controller',
+               'temperature') | float(19) }}
       # Reduce temperatures by 2°C
       - action: climate.set_temperature
         target:
           entity_id: climate.living_room_trv_pid_controller
         data:
-          temperature: "{{ [state_attr('climate.living_room_trv_pid_controller', 'temperature') | float(19) - 2, 7] | max }}"
+          temperature: >
+            {{ [state_attr('climate.living_room_trv_pid_controller',
+                'temperature') | float(19) - 2, 7] | max }}
       - action: climate.set_temperature
         target:
           entity_id: climate.master_bedroom_trv_pid_controller
         data:
-          temperature: "{{ [state_attr('climate.master_bedroom_trv_pid_controller', 'temperature') | float(19) - 2, 7] | max }}"
+          temperature: >
+            {{ [state_attr('climate.master_bedroom_trv_pid_controller',
+                'temperature') | float(19) - 2, 7] | max }}
       - action: climate.set_temperature
         target:
           entity_id: climate.bedroom_trv_pid_controller
         data:
-          temperature: "{{ [state_attr('climate.bedroom_trv_pid_controller', 'temperature') | float(19) - 2, 7] | max }}"
+          temperature: >
+            {{ [state_attr('climate.bedroom_trv_pid_controller',
+                'temperature') | float(19) - 2, 7] | max }}
     mode: single
 
   - id: '1734631000001'
@@ -103,15 +115,21 @@ automation:
         target:
           entity_id: climate.living_room_trv_pid_controller
         data:
-          temperature: "{{ states('input_number.away_mode_living_room_original_temp') | float(19) }}"
+          temperature: >
+            {{ states('input_number.away_mode_living_room_original_temp')
+               | float(19) }}
       - action: climate.set_temperature
         target:
           entity_id: climate.master_bedroom_trv_pid_controller
         data:
-          temperature: "{{ states('input_number.away_mode_master_bedroom_original_temp') | float(19) }}"
+          temperature: >
+            {{ states('input_number.away_mode_master_bedroom_original_temp')
+               | float(19) }}
       - action: climate.set_temperature
         target:
           entity_id: climate.bedroom_trv_pid_controller
         data:
-          temperature: "{{ states('input_number.away_mode_bedroom_original_temp') | float(19) }}"
+          temperature: >
+            {{ states('input_number.away_mode_bedroom_original_temp')
+               | float(19) }}
     mode: single
