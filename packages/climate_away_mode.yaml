@@ -1,14 +1,23 @@
 ---
 # Climate Away Mode Package
 #
-# Automatically turns off all PID climate controllers when both Charles and Gaby
-# are more than 50km away from home, and turns them back on when either person
-# returns within 50km.
+# State machine-based climate control with three states:
+# 1. HOME: At least one person is home - normal heating
+# 2. AWAY: No one home but within 50km - reduce setpoints by 2°C
+# 3. FAR_AWAY: Both people >50km away for 30+ min - turn off heating
+#
+# State transitions:
+# - HOME → AWAY: When anyone_home goes off
+# - AWAY → FAR_AWAY: When both_far_away goes on (30min delay)
+# - FAR_AWAY → AWAY: When both_far_away goes off
+# - AWAY → HOME: When anyone_home goes on
+# - FAR_AWAY → HOME: When anyone_home goes on (direct transition)
 #
 # Components:
 # - Binary sensor to detect when both people are far away (>50km)
-# - Automation to turn off all PID controllers when away
-# - Automation to restore PID controllers when someone returns
+# - Input select to track current state
+# - Input number helpers to store original setpoint temperatures
+# - State machine automation to handle all transitions
 #
 # Affected climate entities:
 # - climate.living_room_trv_pid_controller
@@ -54,47 +63,241 @@ template:
             {% endif %}
           {% endif %}
 
+input_select:
+  climate_away_mode_state:
+    name: Climate Away Mode State
+    options:
+      - home
+      - away
+      - far_away
+    initial: home
+    icon: mdi:home-thermometer
+
+input_number:
+  away_mode_living_room_original_temp:
+    name: Living Room Original Temperature (Away Mode)
+    min: 7
+    max: 28
+    step: 0.5
+    initial: 19
+    mode: box
+
+  away_mode_master_bedroom_original_temp:
+    name: Master Bedroom Original Temperature (Away Mode)
+    min: 7
+    max: 28
+    step: 0.5
+    initial: 19
+    mode: box
+
+  away_mode_bedroom_original_temp:
+    name: Bedroom Original Temperature (Away Mode)
+    min: 7
+    max: 28
+    step: 0.5
+    initial: 19
+    mode: box
+
 automation:
-  - id: '1734631000000'
-    alias: Climate - Turn off PID controllers when both far away
+  # State Machine: Handle all climate away mode state transitions
+  - id: '1736363391001'
+    alias: Climate - State Machine
     description: >
-      When both Charles and Gaby are >50km from home, turn off all PID
-      climate controllers to save energy
+      Manages climate control state transitions between home, away, and far_away
+      states based on presence and distance sensors
     triggers:
+      # Trigger on presence changes
+      - trigger: state
+        entity_id: binary_sensor.anyone_home
+        id: anyone_home_changed
+      # Trigger on distance changes
       - trigger: state
         entity_id: binary_sensor.both_charles_and_gaby_far_away
         to: 'on'
         for:
           minutes: 30
-    conditions: []
-    actions:
-      - action: climate.turn_off
-        metadata: {}
-        data: {}
-        target:
-          entity_id:
-            - climate.living_room_trv_pid_controller
-            - climate.master_bedroom_trv_pid_controller
-            - climate.bedroom_trv_pid_controller
-    mode: single
-
-  - id: '1734631000001'
-    alias: Climate - Turn on PID controllers when someone returns
-    description: >
-      When at least one of Charles or Gaby comes within 50km of home,
-      turn PID controllers back on
-    triggers:
+        id: both_far_away_on
       - trigger: state
         entity_id: binary_sensor.both_charles_and_gaby_far_away
         to: 'off'
+        id: both_far_away_off
     conditions: []
     actions:
-      - action: climate.turn_on
-        metadata: {}
-        data: {}
-        target:
-          entity_id:
-            - climate.living_room_trv_pid_controller
-            - climate.master_bedroom_trv_pid_controller
-            - climate.bedroom_trv_pid_controller
-    mode: single
+      - variables:
+          current_state: >
+            {{ states('input_select.climate_away_mode_state') }}
+          anyone_home: >
+            {{ is_state('binary_sensor.anyone_home', 'on') }}
+          both_far_away: >
+            {{ is_state('binary_sensor.both_charles_and_gaby_far_away',
+               'on') }}
+
+      # Determine the desired state based on sensors
+      - variables:
+          desired_state: >
+            {% if anyone_home %}
+              home
+            {% elif both_far_away %}
+              far_away
+            {% else %}
+              away
+            {% endif %}
+
+      # Only act if state needs to change
+      - condition: template
+        value_template: "{{ current_state != desired_state }}"
+
+      # Execute state transition
+      - choose:
+          # Transition TO home state
+          - conditions:
+              - condition: template
+                value_template: "{{ desired_state == 'home' }}"
+            sequence:
+              # If coming from far_away, turn heating on first
+              - if:
+                  - condition: template
+                    value_template: "{{ current_state == 'far_away' }}"
+                then:
+                  - action: climate.turn_on
+                    target:
+                      entity_id:
+                        - climate.living_room_trv_pid_controller
+                        - climate.master_bedroom_trv_pid_controller
+                        - climate.bedroom_trv_pid_controller
+
+              # Restore original temperatures
+              - action: climate.set_temperature
+                target:
+                  entity_id: climate.living_room_trv_pid_controller
+                data:
+                  temperature: >
+                    {{ states(
+                       'input_number.away_mode_living_room_original_temp')
+                       | float(19) }}
+              - action: climate.set_temperature
+                target:
+                  entity_id: climate.master_bedroom_trv_pid_controller
+                data:
+                  temperature: >
+                    {{ states(
+                       'input_number.away_mode_master_bedroom_original_temp')
+                       | float(19) }}
+              - action: climate.set_temperature
+                target:
+                  entity_id: climate.bedroom_trv_pid_controller
+                data:
+                  temperature: >
+                    {{ states(
+                       'input_number.away_mode_bedroom_original_temp')
+                       | float(19) }}
+
+              # Update state
+              - action: input_select.select_option
+                target:
+                  entity_id: input_select.climate_away_mode_state
+                data:
+                  option: home
+
+          # Transition TO away state
+          - conditions:
+              - condition: template
+                value_template: "{{ desired_state == 'away' }}"
+            sequence:
+              # If coming from far_away, turn heating on first
+              - if:
+                  - condition: template
+                    value_template: "{{ current_state == 'far_away' }}"
+                then:
+                  - action: climate.turn_on
+                    target:
+                      entity_id:
+                        - climate.living_room_trv_pid_controller
+                        - climate.master_bedroom_trv_pid_controller
+                        - climate.bedroom_trv_pid_controller
+
+              # If coming from home, store current temperatures and reduce
+              - if:
+                  - condition: template
+                    value_template: "{{ current_state == 'home' }}"
+                then:
+                  # Capture current temperatures once to ensure consistency
+                  - variables:
+                      living_room_temp: >
+                        {{ state_attr(
+                           'climate.living_room_trv_pid_controller',
+                           'temperature') | float(19) }}
+                      master_bedroom_temp: >
+                        {{ state_attr(
+                           'climate.master_bedroom_trv_pid_controller',
+                           'temperature') | float(19) }}
+                      bedroom_temp: >
+                        {{ state_attr(
+                           'climate.bedroom_trv_pid_controller',
+                           'temperature') | float(19) }}
+
+                  # Store original temperatures
+                  - action: input_number.set_value
+                    target:
+                      entity_id: >
+                        input_number.away_mode_living_room_original_temp
+                    data:
+                      value: "{{ living_room_temp }}"
+                  - action: input_number.set_value
+                    target:
+                      entity_id: >
+                        input_number.away_mode_master_bedroom_original_temp
+                    data:
+                      value: "{{ master_bedroom_temp }}"
+                  - action: input_number.set_value
+                    target:
+                      entity_id: >
+                        input_number.away_mode_bedroom_original_temp
+                    data:
+                      value: "{{ bedroom_temp }}"
+
+                  # Reduce temperatures by 2°C
+                  - action: climate.set_temperature
+                    target:
+                      entity_id: climate.living_room_trv_pid_controller
+                    data:
+                      temperature: "{{ [living_room_temp - 2, 7] | max }}"
+                  - action: climate.set_temperature
+                    target:
+                      entity_id: climate.master_bedroom_trv_pid_controller
+                    data:
+                      temperature: "{{ [master_bedroom_temp - 2, 7] | max }}"
+                  - action: climate.set_temperature
+                    target:
+                      entity_id: climate.bedroom_trv_pid_controller
+                    data:
+                      temperature: "{{ [bedroom_temp - 2, 7] | max }}"
+
+              # Update state
+              - action: input_select.select_option
+                target:
+                  entity_id: input_select.climate_away_mode_state
+                data:
+                  option: away
+
+          # Transition TO far_away state
+          - conditions:
+              - condition: template
+                value_template: "{{ desired_state == 'far_away' }}"
+            sequence:
+              # Turn off heating completely
+              - action: climate.turn_off
+                target:
+                  entity_id:
+                    - climate.living_room_trv_pid_controller
+                    - climate.master_bedroom_trv_pid_controller
+                    - climate.bedroom_trv_pid_controller
+
+              # Update state
+              - action: input_select.select_option
+                target:
+                  entity_id: input_select.climate_away_mode_state
+                data:
+                  option: far_away
+    mode: queued
+    max: 5
