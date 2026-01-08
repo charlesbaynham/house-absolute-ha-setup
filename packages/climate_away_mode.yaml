@@ -11,7 +11,7 @@
 # - AWAY → FAR_AWAY: When both_far_away goes on (30min delay)
 # - FAR_AWAY → AWAY: When both_far_away goes off
 # - AWAY → HOME: When anyone_home goes on
-# - FAR_AWAY → HOME: When anyone_home goes on (goes through AWAY state)
+# - FAR_AWAY → HOME: When anyone_home goes on (direct transition)
 #
 # Components:
 # - Binary sensor to detect when both people are far away (>50km)
@@ -121,10 +121,6 @@ automation:
         entity_id: binary_sensor.both_charles_and_gaby_far_away
         to: 'off'
         id: both_far_away_off
-      # Trigger on manual state changes (for testing/override)
-      - trigger: state
-        entity_id: input_select.climate_away_mode_state
-        id: manual_state_change
     conditions: []
     actions:
       - variables:
