@@ -9,11 +9,13 @@ Chore Mode tracks household chore time for Charles and Gaby, controlled by a dua
 
 ## Core Concepts
 - **People**: Charles and Gaby.
-- **Control Device**: Aqara switch `device_id: eea20367040d6e9ad92eee3f0dc0ede2`.
-  - `single_left`: Start/renew Charles' session; if extended mode is ON, single press turns it OFF.
-  - `single_right`: Start/renew Gaby's session; if extended mode is ON, single press turns it OFF.
-  - `double_left`: Toggle Charles' extended chore mode (activate if OFF, deactivate if ON).
-  - `double_right`: Toggle Gaby's extended chore mode (activate if OFF, deactivate if ON).
+- **Control Methods**: 
+  - **Aqara switch** `device_id: eea20367040d6e9ad92eee3f0dc0ede2`:
+    - `single_left`: Start/renew Charles' session; if extended mode is ON, single press turns it OFF.
+    - `single_right`: Start/renew Gaby's session; if extended mode is ON, single press turns it OFF.
+    - `double_left`: Toggle Charles' extended chore mode (activate if OFF, deactivate if ON).
+    - `double_right`: Toggle Gaby's extended chore mode (activate if OFF, deactivate if ON).
+  - **App/Dashboard**: Extended chore mode can also be activated by toggling `input_boolean.extended_chore_mode_charles` or `input_boolean.extended_chore_mode_gaby` in the Home Assistant app or dashboard. This provides the same functionality as the physical button.
 - **Regular Mode**: Times out after `input_number.chore_timeout_minutes` of inactivity.
 - **Extended Mode**: Times out after `input_number.extended_chore_timeout_hours` (default 6 hours); plays a reminder TTS every 5 minutes; single press turns it OFF. If it times out, ALL minutes from that session are removed from the counter.
 
@@ -51,6 +53,7 @@ Create rolling aggregates for minutes:
 
 ### Automations (summary)
 - Button press handlers for start/renew and extended mode (mapped to MQTT device actions).
+- App/dashboard activation handlers: initialize extended mode when toggled ON from the app (same initialization as physical button).
 - Accumulators: add 1 minute per minute while `chore_mode_*` is ON; also track extended session minutes.
 - Timeout: turn OFF `chore_mode_*` after configured inactivity unless extended mode is ON.
 - Timeout warnings: flash lights 1 minute before timeout (when not extended).
