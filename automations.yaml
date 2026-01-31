@@ -76,7 +76,6 @@
         data: {}
         target:
           device_id: 4e798fe039ef3b748b3e8c867f3fcb68
-
 - id: '1748385723267'
   alias: Master bedroom light dimmer switch
   description: ''
@@ -290,4 +289,26 @@
       entity_id: automation.oneoff_welcome_home
     data:
       stop_actions: false
+  mode: single
+- id: '1769862562266'
+  alias: Door opened alert
+  description: ''
+  triggers:
+  - type: opened
+    device_id: 8a4c980ba6e0608c7b56fc7b9a25db16
+    entity_id: 5c680383496e884c0dffac3922c3d5d2
+    domain: binary_sensor
+    trigger: device
+  conditions:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: person.charles
+      state:
+      - home
+  actions:
+  - action: notify.mobile_app_charles_phone
+    metadata: {}
+    data:
+      message: Door opened
   mode: single
