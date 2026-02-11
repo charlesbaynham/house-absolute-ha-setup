@@ -1,0 +1,115 @@
+---
+# Rain Warning Package
+#
+# When the master bedroom lamp is turned on for the first time after 5am,
+# it turns blue if rain is forecasted for the day. Subsequent turn-ons are normal.
+#
+# Dependencies:
+# - weather.home (Met.no integration from default_config)
+# - light.master_bedroom_lamp
+#
+# Features:
+# - Detects first lamp turn-on after 5am each day
+# - Checks weather forecast for rain/precipitation
+# - Turns lamp blue for 10 seconds if rain is expected
+# - Resets at midnight for next day
+
+input_boolean:
+  rain_warning_shown_today:
+    name: Rain Warning Shown Today
+    icon: mdi:weather-rainy
+    initial: false
+
+template:
+  - binary_sensor:
+      - name: "Rain Expected Today"
+        unique_id: rain_expected_today
+        state: >
+          {% set weather_entity = 'weather.home' %}
+          {% if states(weather_entity) != 'unavailable' and states(weather_entity) != 'unknown' %}
+            {% set current_condition = states(weather_entity) %}
+            {% set forecast = state_attr(weather_entity, 'forecast') %}
+            {% set rain_conditions = ['rainy', 'pouring', 'snowy-rainy', 'lightning-rainy'] %}
+            
+            {# Check current condition #}
+            {% set current_rain = current_condition in rain_conditions %}
+            
+            {# Check forecast for today only (first forecast period) #}
+            {% set forecast_rain = false %}
+            {% if forecast and forecast|length > 0 %}
+              {% if forecast[0].condition in rain_conditions %}
+                {% set forecast_rain = true %}
+              {% endif %}
+            {% endif %}
+            
+            {{ current_rain or forecast_rain }}
+          {% else %}
+            false
+          {% endif %}
+        device_class: moisture
+        icon: >
+          {% if this.state == 'on' %}
+            mdi:weather-rainy
+          {% else %}
+            mdi:weather-sunny
+          {% endif %}
+
+automation:
+  - id: '1739240000000'
+    alias: Master bedroom rain warning on first light
+    description: Turn master bedroom lamp blue on first turn-on after 5am if rain is expected
+    triggers:
+    - trigger: state
+      entity_id: light.master_bedroom_lamp
+      to: 'on'
+    conditions:
+    - condition: time
+      after: '05:00:00'
+    - condition: state
+      entity_id: input_boolean.rain_warning_shown_today
+      state: 'off'
+    - condition: state
+      entity_id: binary_sensor.rain_expected_today
+      state: 'on'
+    actions:
+    # Mark warning as shown for today
+    - action: input_boolean.turn_on
+      metadata: {}
+      data: {}
+      target:
+        entity_id: input_boolean.rain_warning_shown_today
+    # Turn lamp blue (RGB: [0, 0, 255] = pure blue for rain warning)
+    - action: light.turn_on
+      metadata: {}
+      data:
+        rgb_color: [0, 0, 255]
+        brightness: 255
+      target:
+        entity_id: light.master_bedroom_lamp
+    # Wait 10 seconds to show the blue color
+    - delay:
+        seconds: 10
+    # Return to normal operation (user can adjust after)
+    - action: light.turn_on
+      metadata: {}
+      data:
+        brightness: 128
+        color_temp: 370
+      target:
+        entity_id: light.master_bedroom_lamp
+    mode: single
+
+  - id: '1739240000001'
+    alias: Reset rain warning flag at midnight
+    description: Reset the rain warning shown flag at midnight each day
+    triggers:
+    - trigger: time
+      at: '00:00:00'
+    conditions: []
+    actions:
+    - action: input_boolean.turn_off
+      metadata: {}
+      data: {}
+      target:
+        entity_id: input_boolean.rain_warning_shown_today
+    mode: single
