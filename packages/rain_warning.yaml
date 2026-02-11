@@ -34,14 +34,12 @@ template:
             {# Check current condition #}
             {% set current_rain = current_condition in rain_conditions %}
             
-            {# Check forecast for today if available #}
+            {# Check forecast for today only (first forecast period) #}
             {% set forecast_rain = false %}
-            {% if forecast %}
-              {% for day in forecast[0:3] %}
-                {% if day.condition in rain_conditions %}
-                  {% set forecast_rain = true %}
-                {% endif %}
-              {% endfor %}
+            {% if forecast and forecast|length > 0 %}
+              {% if forecast[0].condition in rain_conditions %}
+                {% set forecast_rain = true %}
+              {% endif %}
             {% endif %}
             
             {{ current_rain or forecast_rain }}
@@ -80,7 +78,7 @@ automation:
       data: {}
       target:
         entity_id: input_boolean.rain_warning_shown_today
-    # Turn lamp blue
+    # Turn lamp blue (RGB: [0, 0, 255] = pure blue for rain warning)
     - action: light.turn_on
       metadata: {}
       data:
