@@ -112,7 +112,7 @@ automation:
   - id: '1739471156000'
     alias: Gaby's alarm - disable on Friday
     description: >
-      Automatically disable alarm every Friday at 10:00 AM
+      Automatically disable alarm every Friday at 10:00
     triggers:
       - trigger: time
         at: '10:00:00'
@@ -129,7 +129,7 @@ automation:
   - id: '1739471156001'
     alias: Gaby's alarm - enable on Sunday
     description: >
-      Automatically enable alarm every Sunday at 12:00 PM
+      Automatically enable alarm every Sunday at 12:00 (noon)
     triggers:
       - trigger: time
         at: '12:00:00'
