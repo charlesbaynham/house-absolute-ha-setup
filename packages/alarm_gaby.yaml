@@ -2,12 +2,16 @@
 # Gaby's Morning Alarm Package
 #
 # Allows Gaby to set two alarm times and enable/disable the alarm.
-# When either alarm triggers, bedroom and hallway lights flash 3 times and stay on.
+# When either alarm triggers, bedroom and hallway lights flash 3 times
+# and stay on.
+# The alarm is automatically disabled on Fridays at 10:00 AM and
+# re-enabled on Sundays at 12:00 PM.
 #
 # Components:
 # - Two input_datetime helpers for alarm time selection
 # - input_boolean to enable/disable alarm
 # - Two automations (one for each alarm time)
+# - Two automations for weekend schedule (disable Friday, enable Sunday)
 
 input_datetime:
   gaby_alarm_time_1:
@@ -29,7 +33,9 @@ input_boolean:
 automation:
   - id: '1732500000000'
     alias: Gaby's morning alarm 1
-    description: 'Flash bedroom and hallway lights 3 times and leave on when alarm 1 triggers'
+    description: >
+      Flash bedroom and hallway lights 3 times and leave on
+      when alarm 1 triggers
     triggers:
       - trigger: time
         at: input_datetime.gaby_alarm_time_1
@@ -66,7 +72,9 @@ automation:
 
   - id: '1732500000001'
     alias: Gaby's morning alarm 2
-    description: 'Flash bedroom and hallway lights 3 times and leave on when alarm 2 triggers'
+    description: >
+      Flash bedroom and hallway lights 3 times and leave on
+      when alarm 2 triggers
     triggers:
       - trigger: time
         at: input_datetime.gaby_alarm_time_2
@@ -99,4 +107,38 @@ automation:
           area_id:
             - bedroom
             - hallway
+    mode: single
+
+  - id: '1739471156000'
+    alias: Gaby's alarm - disable on Friday
+    description: >
+      Automatically disable alarm every Friday at 10:00
+    triggers:
+      - trigger: time
+        at: '10:00:00'
+    conditions:
+      - condition: time
+        weekday:
+          - fri
+    actions:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.gaby_alarm_enabled
+    mode: single
+
+  - id: '1739471156001'
+    alias: Gaby's alarm - enable on Sunday
+    description: >
+      Automatically enable alarm every Sunday at 12:00 (noon)
+    triggers:
+      - trigger: time
+        at: '12:00:00'
+    conditions:
+      - condition: time
+        weekday:
+          - sun
+    actions:
+      - action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.gaby_alarm_enabled
     mode: single
