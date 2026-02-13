@@ -25,7 +25,7 @@ template:
       - name: "Rain Expected Today"
         unique_id: rain_expected_today
         state: >
-          {% set weather_entity = 'weather.home' %}
+          {% set weather_entity = 'weather.forecast_home' %}
           {% if states(weather_entity) != 'unavailable' and states(weather_entity) != 'unknown' %}
             {% set current_condition = states(weather_entity) %}
             {% set forecast = state_attr(weather_entity, 'forecast') %}
