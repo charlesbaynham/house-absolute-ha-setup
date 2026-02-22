@@ -861,6 +861,20 @@
       friendly_name: Master bedroom blinds
       supported_features: 15
       state: closed
+    select.master_bedroom_mode_switch:
+      options:
+      - anti_flicker_mode
+      - quick_mode
+      icon: mdi:tune
+      friendly_name: Master bedroom main lights Mode switch
+      state: unknown
+    light.master_bedroom_main_lights_right:
+      supported_color_modes:
+      - onoff
+      color_mode:
+      friendly_name: Master bedroom main lights
+      supported_features: 0
+      state: 'off'
   metadata: {}
 - id: '1767728852849'
   name: Living room cosy  brighter
