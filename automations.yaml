@@ -290,3 +290,19 @@
     data:
       message: Door opened
   mode: single
+- id: '1771800062963'
+  alias: Master bedroom main switch
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: 07ee2aa42b249d96057fbec264b7a25f
+    type: action
+    subtype: single_right
+    trigger: device
+  conditions: []
+  actions:
+  - type: toggle
+    device_id: e2e3433c00415e968dae6f242b09b5e0
+    entity_id: 33bdb23636411c0bffbbd01241f215cc
+    domain: light
+  mode: single
