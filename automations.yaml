@@ -83,7 +83,10 @@
     path: patpac9/Hue_Dimmer_Switch_Easy_Custom_Buttons.yaml
     input:
       controller: Master bedroom wireless switch
-      up_released: []
+      up_released:
+      - action: script.toggle_blinds
+        metadata: {}
+        data: {}
       on_released:
       - action: light.turn_on
         metadata: {}
@@ -310,27 +313,9 @@
     type: action
     subtype: single_left
     trigger: device
-  - domain: mqtt
-    device_id: ebfa42f8ae5872cd67f3b6927bec4709
-    type: action
-    subtype: up_hold_release
-    trigger: device
   conditions: []
   actions:
-  - if:
-    - condition: device
-      device_id: cd1b901274bc97e2b74a6f9103ea0fba
-      domain: cover
-      entity_id: d18bdfda165ce42ffccc49a58063cefd
-      type: is_open
-    then:
-    - device_id: cd1b901274bc97e2b74a6f9103ea0fba
-      domain: cover
-      entity_id: d18bdfda165ce42ffccc49a58063cefd
-      type: close
-    else:
-    - device_id: cd1b901274bc97e2b74a6f9103ea0fba
-      domain: cover
-      entity_id: d18bdfda165ce42ffccc49a58063cefd
-      type: open
+  - action: script.toggle_blinds
+    metadata: {}
+    data: {}
   mode: single

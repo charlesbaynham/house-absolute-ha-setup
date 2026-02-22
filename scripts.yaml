@@ -266,13 +266,13 @@ chore_charles_subtract_minutes:
   mode: single
 chore_initialize_yearly_meters:
   alias: 'Chores: initialize yearly meters from monthly'
-  description: >-
-    One-time initialization script to set the yearly chore meters to match
-    the current monthly meter values. Run this once when first setting up
-    the yearly meters to preserve existing monthly totals.
+  description: One-time initialization script to set the yearly chore meters to match
+    the current monthly meter values. Run this once when first setting up the yearly
+    meters to preserve existing monthly totals.
   sequence:
   - variables:
-      charles_monthly: '{{ states("sensor.chore_minutes_charles_monthly") | float(0) }}'
+      charles_monthly: '{{ states("sensor.chore_minutes_charles_monthly") | float(0)
+        }}'
       gaby_monthly: '{{ states("sensor.chore_minutes_gaby_monthly") | float(0) }}'
   - action: utility_meter.calibrate
     data:
@@ -285,3 +285,43 @@ chore_initialize_yearly_meters:
     target:
       entity_id: sensor.chore_minutes_gaby_yearly
   mode: single
+toggle_blinds:
+  sequence:
+  - if:
+    - condition: device
+      device_id: cd1b901274bc97e2b74a6f9103ea0fba
+      domain: cover
+      entity_id: d18bdfda165ce42ffccc49a58063cefd
+      type: is_open
+    then:
+    - device_id: cd1b901274bc97e2b74a6f9103ea0fba
+      domain: cover
+      entity_id: d18bdfda165ce42ffccc49a58063cefd
+      type: close
+    else:
+    - device_id: cd1b901274bc97e2b74a6f9103ea0fba
+      domain: cover
+      entity_id: d18bdfda165ce42ffccc49a58063cefd
+      type: open
+  alias: Toggle blinds
+  description: ''
+toggle_blinds_2:
+  sequence:
+  - if:
+    - condition: device
+      device_id: cd1b901274bc97e2b74a6f9103ea0fba
+      domain: cover
+      entity_id: d18bdfda165ce42ffccc49a58063cefd
+      type: is_open
+    then:
+    - device_id: cd1b901274bc97e2b74a6f9103ea0fba
+      domain: cover
+      entity_id: d18bdfda165ce42ffccc49a58063cefd
+      type: close
+    else:
+    - device_id: cd1b901274bc97e2b74a6f9103ea0fba
+      domain: cover
+      entity_id: d18bdfda165ce42ffccc49a58063cefd
+      type: open
+  alias: Toggle blinds
+  description: ''
