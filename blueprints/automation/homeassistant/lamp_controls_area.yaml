@@ -1,0 +1,49 @@
+blueprint:
+  name: Lamp controls area lights
+  description: >
+    When the lamp changes state, the other lights in the area follow:
+    lights turn on/off to match the lamp state. Use this to make main
+    ceiling lights mirror a lamp that acts as the primary light control.
+  domain: automation
+  input:
+    lamp_entity:
+      name: Lamp Entity
+      description: The lamp light entity whose state controls the area lights
+      selector:
+        entity:
+          domain: light
+    area:
+      name: Area
+      description: The area whose lights should follow the lamp state
+      selector:
+        area:
+
+mode: restart
+
+trigger:
+  - trigger: state
+    entity_id: !input lamp_entity
+    to:
+      - 'on'
+      - 'off'
+
+action:
+  - delay:
+      milliseconds: 300
+  - if:
+      - condition: state
+        entity_id: !input lamp_entity
+        state: 'off'
+    then:
+      - action: light.turn_off
+        metadata: {}
+        data: {}
+        target:
+          area_id: !input area
+    else:
+      - action: light.turn_on
+        metadata: {}
+        data:
+          effect: stop_hue_effect
+        target:
+          area_id: !input area

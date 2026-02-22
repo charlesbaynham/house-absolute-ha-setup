@@ -94,13 +94,13 @@
         metadata: {}
         data: {}
         target:
-          area_id: master_bedroom
+          entity_id: light.master_bedroom_lamp
       off_released:
       - action: light.turn_off
         metadata: {}
         data: {}
         target:
-          area_id: master_bedroom
+          entity_id: light.master_bedroom_lamp
       down_released:
       - action: cover.close_cover
         metadata: {}
@@ -188,41 +188,11 @@
 - id: '1762099115353'
   alias: Bedroom lights copy main
   description: ''
-  triggers:
-  - domain: mqtt
-    device_id: 0dac4ca1d28c7cdb4a3517b64d5aaa21
-    type: action
-    subtype: single
-    trigger: device
-  conditions: []
-  actions:
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 0
-      milliseconds: 300
-  - if:
-    - condition: device
-      type: is_off
-      device_id: 0dac4ca1d28c7cdb4a3517b64d5aaa21
-      entity_id: 45612e367dd14a46907b2f8cc54bafdc
-      domain: light
-    then:
-    - action: light.turn_off
-      metadata: {}
-      data: {}
-      target:
-        area_id:
-        - bedroom
-    else:
-    - action: light.turn_on
-      metadata: {}
-      data:
-        effect: stop_hue_effect
-      target:
-        area_id:
-        - bedroom
-  mode: restart
+  use_blueprint:
+    path: homeassistant/lamp_controls_area.yaml
+    input:
+      lamp_entity: light.bedroom_lamp
+      area: bedroom
 - id: '1730595645000'
   alias: Vacuum when everyone leaves
   description: Start the vacuum 30 minutes after the last person leaves, max once
@@ -290,6 +260,14 @@
     data:
       stop_actions: false
   mode: single
+- id: '1769862562265'
+  alias: Master bedroom lights copy main
+  description: ''
+  use_blueprint:
+    path: homeassistant/lamp_controls_area.yaml
+    input:
+      lamp_entity: light.master_bedroom_lamp
+      area: master_bedroom
 - id: '1769862562266'
   alias: Door opened alert
   description: ''
