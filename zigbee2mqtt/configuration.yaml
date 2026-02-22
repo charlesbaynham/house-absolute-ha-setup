@@ -92,6 +92,8 @@ devices:
     friendly_name: Wireless aqara
   '0x00124b0024fc163b':
     friendly_name: '0x00124b0024fc163b'
+  '0x54ef44100126145f':
+    friendly_name: Master bedroom main lights
 groups: {}
 availability:
   enabled: true
