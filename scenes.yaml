@@ -856,11 +856,6 @@
       friendly_name: Master bedroom lamp
       supported_features: 44
       state: 'on'
-    cover.master_bedroom_blinds:
-      current_position: 0
-      friendly_name: Master bedroom blinds
-      supported_features: 15
-      state: closed
     select.master_bedroom_mode_switch:
       options:
       - anti_flicker_mode
@@ -994,7 +989,7 @@
       - xy
       effect:
       color_mode: color_temp
-      brightness: 18
+      brightness: 3
       color_temp_kelvin: 2000
       color_temp: 500
       hs_color:
@@ -1010,11 +1005,6 @@
       friendly_name: Master bedroom lamp
       supported_features: 44
       state: 'on'
-    cover.master_bedroom_blinds:
-      current_position: 100
-      friendly_name: Master bedroom blinds
-      supported_features: 15
-      state: open
     select.master_bedroom_mode_switch:
       options:
       - anti_flicker_mode
@@ -1025,8 +1015,8 @@
     light.master_bedroom_main_lights_right:
       supported_color_modes:
       - onoff
-      color_mode:
+      color_mode: onoff
       friendly_name: Master bedroom main lights
       supported_features: 0
-      state: 'off'
+      state: 'on'
   metadata: {}

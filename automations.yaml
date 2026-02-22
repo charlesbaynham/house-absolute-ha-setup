@@ -88,11 +88,11 @@
         metadata: {}
         data: {}
       on_released:
-      - action: light.turn_on
+      - action: scene.turn_on
         metadata: {}
-        data: {}
         target:
-          entity_id: light.master_bedroom_lamp
+          entity_id: scene.master_bedroom_on
+        data: {}
       off_released:
       - action: light.turn_off
         metadata: {}
@@ -105,13 +105,7 @@
         target:
           entity_id: scene.master_bedroom_chill
         data: {}
-      on_hold_released:
-      - action: scene.turn_on
-        metadata: {}
-        data:
-          transition: 3
-        target:
-          entity_id: scene.master_bedroom_chill
+      on_hold_released: []
 - id: '1760784792347'
   alias: Restart let's encrypt daily
   description: ''
