@@ -306,3 +306,36 @@
     entity_id: 33bdb23636411c0bffbbd01241f215cc
     domain: light
   mode: single
+- id: '1771800897993'
+  alias: Blinds to button
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: 07ee2aa42b249d96057fbec264b7a25f
+    type: action
+    subtype: single_left
+    trigger: device
+  - domain: mqtt
+    device_id: ebfa42f8ae5872cd67f3b6927bec4709
+    type: action
+    subtype: down_press_release
+    trigger: device
+  conditions: []
+  actions:
+  - if:
+    - condition: device
+      device_id: cd1b901274bc97e2b74a6f9103ea0fba
+      domain: cover
+      entity_id: d18bdfda165ce42ffccc49a58063cefd
+      type: is_open
+    then:
+    - device_id: cd1b901274bc97e2b74a6f9103ea0fba
+      domain: cover
+      entity_id: d18bdfda165ce42ffccc49a58063cefd
+      type: close
+    else:
+    - device_id: cd1b901274bc97e2b74a6f9103ea0fba
+      domain: cover
+      entity_id: d18bdfda165ce42ffccc49a58063cefd
+      type: open
+  mode: single
