@@ -313,3 +313,28 @@
     metadata: {}
     data: {}
   mode: single
+- id: '1771885079519'
+  alias: Turn bathroom lights on when Gaby wakes up
+  description: ''
+  triggers:
+  - type: turned_on
+    device_id: 0dac4ca1d28c7cdb4a3517b64d5aaa21
+    entity_id: 45612e367dd14a46907b2f8cc54bafdc
+    domain: light
+    trigger: device
+  conditions: []
+  actions:
+  - type: turn_on
+    device_id: c00d1ba53814fe51e560e3966a522572
+    entity_id: 4d196fa93e23d18c4055121c436b6783
+    domain: switch
+  - wait_for_trigger:
+    - trigger: time
+      at: 05:00:00
+    continue_on_timeout: true
+    timeout:
+      hours: 24
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  mode: single
