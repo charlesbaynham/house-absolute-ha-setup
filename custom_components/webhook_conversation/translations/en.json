@@ -1,0 +1,166 @@
+{
+  "config_subentries": {
+    "conversation": {
+      "initiate_flow": {
+        "user": "Add conversation agent",
+        "reconfigure": "Reconfigure conversation agent"
+      },
+      "entry_type": "Conversation agent",
+      "step": {
+        "set_options": {
+          "data": {
+            "webhook_url": "Webhook URL",
+            "output_field": "Output field name",
+            "prompt": "System Prompt",
+            "timeout": "Request timeout (seconds)",
+            "enable_streaming": "Enable response streaming",
+            "auth_type": "Authentication type"
+          }
+        },
+        "auth": {
+          "title": "Authentication Configuration",
+          "description": "Configure authentication for webhook requests",
+          "data": {
+            "username": "Username",
+            "password": "Password"
+          }
+        }
+      },
+      "error": {
+        "invalid_webhook_url": "Invalid webhook URL",
+        "invalid_auth": "Invalid authentication credentials",
+        "unknown": "Unexpected error occurred"
+      },
+      "abort": {
+        "entry_not_loaded": "Cannot add things while the configuration is disabled.",
+        "reconfigure_successful": "Reconfiguration successful"
+      }
+    },
+    "ai_task": {
+      "initiate_flow": {
+        "user": "Add AI task",
+        "reconfigure": "Reconfigure AI task"
+      },
+      "entry_type": "AI task",
+      "step": {
+        "set_options": {
+          "data": {
+            "webhook_url": "Webhook URL",
+            "output_field": "Output field name",
+            "prompt": "System Prompt",
+            "timeout": "Request timeout (seconds)",
+            "enable_streaming": "Enable response streaming",
+            "auth_type": "Authentication type"
+          }
+        },
+        "auth": {
+          "title": "Authentication Configuration",
+          "description": "Configure authentication for webhook requests",
+          "data": {
+            "username": "Username",
+            "password": "Password"
+          }
+        }
+      },
+      "error": {
+        "invalid_webhook_url": "Invalid webhook URL",
+        "invalid_auth": "Invalid authentication credentials",
+        "unknown": "Unexpected error occurred"
+      },
+      "abort": {
+        "entry_not_loaded": "Cannot add things while the configuration is disabled.",
+        "reconfigure_successful": "Reconfiguration successful"
+      }
+    },
+    "tts": {
+      "initiate_flow": {
+        "user": "Add text-to-speech",
+        "reconfigure": "Reconfigure text-to-speech"
+      },
+      "entry_type": "Text-to-speech",
+      "step": {
+        "set_options": {
+          "data": {
+            "webhook_url": "Webhook URL",
+            "timeout": "Request timeout (seconds)",
+            "auth_type": "Authentication type",
+            "supported_languages": "Supported languages",
+            "voices": "Voices"
+          },
+          "data_description": {
+            "supported_languages": "Enter language codes (e.g., en-US, de-DE, fr-FR).",
+            "voices": "Enter voice names."
+          }
+        },
+        "auth": {
+          "title": "Authentication Configuration",
+          "description": "Configure authentication for webhook requests",
+          "data": {
+            "username": "Username",
+            "password": "Password"
+          }
+        }
+      },
+      "error": {
+        "invalid_webhook_url": "Invalid webhook URL",
+        "invalid_auth": "Invalid authentication credentials",
+        "invalid_language_code": "One or more language codes are invalid. Please use valid language codes like en-US, de-DE, fr-FR.",
+        "no_languages_specified": "At least one language must be specified.",
+        "unknown": "Unexpected error occurred"
+      },
+      "abort": {
+        "entry_not_loaded": "Cannot add things while the configuration is disabled.",
+        "reconfigure_successful": "Reconfiguration successful"
+      }
+    },
+    "stt": {
+      "initiate_flow": {
+        "user": "Add speech-to-text",
+        "reconfigure": "Reconfigure speech-to-text"
+      },
+      "entry_type": "Speech-to-text",
+      "step": {
+        "set_options": {
+          "data": {
+            "webhook_url": "Webhook URL",
+            "output_field": "Output field name",
+            "timeout": "Request timeout (seconds)",
+            "auth_type": "Authentication type",
+            "supported_languages": "Supported languages"
+          },
+          "data_description": {
+            "supported_languages": "Enter language codes (e.g., en-US, de-DE, fr-FR).",
+            "output_field": "The field name in the webhook response containing the transcribed text."
+          }
+        },
+        "auth": {
+          "title": "Authentication Configuration",
+          "description": "Configure authentication for webhook requests",
+          "data": {
+            "username": "Username",
+            "password": "Password"
+          }
+        }
+      },
+      "error": {
+        "invalid_webhook_url": "Invalid webhook URL",
+        "invalid_auth": "Invalid authentication credentials",
+        "invalid_language_code": "One or more language codes are invalid. Please use valid language codes like en-US, de-DE, fr-FR.",
+        "no_languages_specified": "At least one language must be specified.",
+        "unknown": "Unexpected error occurred"
+      },
+      "abort": {
+        "entry_not_loaded": "Cannot add things while the configuration is disabled.",
+        "reconfigure_successful": "Reconfiguration successful"
+      }
+    }
+  },
+  "selector": {
+    "auth_type": {
+      "options": {
+        "none": "No authentication",
+        "basic_auth": "Basic HTTP authentication"
+      }
+    }
+  }
+}
