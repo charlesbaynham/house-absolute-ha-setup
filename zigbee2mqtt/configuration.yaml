@@ -95,7 +95,7 @@ devices:
   '0x54ef44100126145f':
     friendly_name: Master bedroom main lights
   '0x842712fffe3f5a38':
-    friendly_name: '0x842712fffe3f5a38'
+    friendly_name: Bathroom lights
 groups: {}
 availability:
   enabled: true
