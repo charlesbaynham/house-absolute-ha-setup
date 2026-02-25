@@ -72,8 +72,6 @@ devices:
     friendly_name: Living room lamp 1
   '0xa4c138e23c9ad56f':
     friendly_name: Master bedroom lamp
-  '0x0017880106e8d51d':
-    friendly_name: Master bedroom wireless switch
   '0xcc86ecfffe1b2efb':
     friendly_name: Master bedroom blinds
   '0x00178801082af4a5':
@@ -90,12 +88,12 @@ devices:
     friendly_name: Sensor bedroom
   '0x54ef44100143eba1':
     friendly_name: Wireless aqara
-  '0x00124b0024fc163b':
-    friendly_name: '0x00124b0024fc163b'
   '0x54ef44100126145f':
     friendly_name: Master bedroom main lights
   '0x842712fffe3f5a38':
     friendly_name: Bathroom lights
+  '0x0017880106e8d51d':
+    friendly_name: Master bedroom wireless switch
 groups: {}
 availability:
   enabled: true
