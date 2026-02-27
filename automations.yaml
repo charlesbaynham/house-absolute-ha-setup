@@ -140,11 +140,11 @@
     target:
       area_id:
       - master_bedroom
-      - kitchen
       - hallway
       - living_room
       - bedroom
       - garden
+      - bathroom
       - kitchen
   mode: single
 - id: '1729776000000'
