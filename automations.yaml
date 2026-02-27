@@ -145,6 +145,7 @@
       - living_room
       - bedroom
       - garden
+      - kitchen
   mode: single
 - id: '1729776000000'
   alias: Auto-commit configuration changes
