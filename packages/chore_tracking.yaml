@@ -256,10 +256,10 @@ script:
       minutes:
         description: Minutes to subtract (positive number).
         example: 10
-        default: 10
+        default: 0
     sequence:
       - variables:
-          amount: "{{ (minutes | default(10)) | float(0) }}"
+          amount: "{{ (minutes | default(0)) | float(0) }}"
       - action: input_number.set_value
         data:
           value: >
@@ -294,10 +294,10 @@ script:
       minutes:
         description: Minutes to subtract (positive number).
         example: 10
-        default: 10
+        default: 0
     sequence:
       - variables:
-          amount: "{{ (minutes | default(10)) | float(0) }}"
+          amount: "{{ (minutes | default(0)) | float(0) }}"
       - action: input_number.set_value
         data:
           value: >
