@@ -245,6 +245,83 @@ utility_meter:
     offset:
       hours: 4
 
+script:
+  chore_charles_subtract_minutes:
+    alias: "Chores: subtract minutes from Charles meters"
+    description: >-
+      Subtract a specified number of minutes from all Charles chore meters
+      (all-time total, daily, weekly, monthly, yearly, quick). Uses
+      input_number.set_value and utility_meter.calibrate.
+    fields:
+      minutes:
+        description: Minutes to subtract (positive number).
+        example: 10
+        default: 0
+    sequence:
+      - variables:
+          amount: "{{ (minutes | default(0)) | float(0) }}"
+      - action: input_number.set_value
+        data:
+          value: >
+            {{ [0, states('input_number.chore_minutes_charles') | float(0) - amount] | max }}
+        target:
+          entity_id: input_number.chore_minutes_charles
+      - repeat:
+          for_each:
+            - sensor.chore_minutes_charles_quick
+            - sensor.chore_minutes_charles_daily
+            - sensor.chore_minutes_charles_weekly
+            - sensor.chore_minutes_charles_monthly
+            - sensor.chore_minutes_charles_yearly
+          sequence:
+            - variables:
+                current: "{{ states(repeat.item) | float(0) }}"
+                new_value: "{{ [0, current - amount] | max }}"
+            - action: utility_meter.calibrate
+              data:
+                value: "{{ new_value }}"
+              target:
+                entity_id: "{{ repeat.item }}"
+    mode: single
+
+  chore_gaby_subtract_minutes:
+    alias: "Chores: subtract minutes from Gaby meters"
+    description: >-
+      Subtract a specified number of minutes from all Gaby chore meters
+      (all-time total, daily, weekly, monthly, yearly, quick). Uses
+      input_number.set_value and utility_meter.calibrate.
+    fields:
+      minutes:
+        description: Minutes to subtract (positive number).
+        example: 10
+        default: 0
+    sequence:
+      - variables:
+          amount: "{{ (minutes | default(0)) | float(0) }}"
+      - action: input_number.set_value
+        data:
+          value: >
+            {{ [0, states('input_number.chore_minutes_gaby') | float(0) - amount] | max }}
+        target:
+          entity_id: input_number.chore_minutes_gaby
+      - repeat:
+          for_each:
+            - sensor.chore_minutes_gaby_quick
+            - sensor.chore_minutes_gaby_daily
+            - sensor.chore_minutes_gaby_weekly
+            - sensor.chore_minutes_gaby_monthly
+            - sensor.chore_minutes_gaby_yearly
+          sequence:
+            - variables:
+                current: "{{ states(repeat.item) | float(0) }}"
+                new_value: "{{ [0, current - amount] | max }}"
+            - action: utility_meter.calibrate
+              data:
+                value: "{{ new_value }}"
+              target:
+                entity_id: "{{ repeat.item }}"
+    mode: single
+
 automation:
   - id: "1763903316655"
     alias: Charles chore button - start/renew timer

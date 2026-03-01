@@ -87,6 +87,8 @@ Create rolling aggregates for minutes:
 
 ## Scripts
 - `script.chore_initialize_yearly_meters`: One-time initialization script to copy current monthly meter values to the yearly meters. Run this manually via the Home Assistant UI when first setting up yearly meters to preserve existing totals.
+- `script.chore_charles_subtract_minutes`: Subtracts a specified number of minutes from all Charles chore meters (all-time total `input_number.chore_minutes_charles`, plus all utility meters: quick, daily, weekly, monthly, yearly). Pass `minutes` as a field.
+- `script.chore_gaby_subtract_minutes`: Subtracts a specified number of minutes from all Gaby chore meters (all-time total `input_number.chore_minutes_gaby`, plus all utility meters: quick, daily, weekly, monthly, yearly). Pass `minutes` as a field.
 
 ## Safety Checks
 - Ensure all `entity_id` references exist after changes; mismatches will break automations.
