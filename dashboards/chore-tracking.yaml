@@ -7,10 +7,21 @@ views:
         content: |
           # 🏆 Chore Champions
           *Track your household contributions*
-      - type: gauge
-        entity: sensor.chore_minutes_charles_weekly
-        name: Charles chores this week
-        needle: false
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: >
+              {% set leader = states('sensor.chore_all_time_leader') %}
+              {% set lead = states('sensor.chore_all_time_lead_minutes') | int %}
+              {% if leader == 'Tied' %}
+              #### 🤝 All-time: Tied!
+              {% else %}
+              #### 🏆 {{ leader }} is ahead by {{ lead }} min (all-time)
+              {% endif %}
+          - type: gauge
+            entity: sensor.chore_all_time_lead_minutes
+            name: All-time lead
+            needle: false
       - square: false
         type: grid
         title: Chores today
