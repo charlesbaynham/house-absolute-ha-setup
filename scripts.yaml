@@ -305,23 +305,3 @@ toggle_blinds:
       type: open
   alias: Toggle blinds
   description: ''
-toggle_blinds_2:
-  sequence:
-  - if:
-    - condition: device
-      device_id: cd1b901274bc97e2b74a6f9103ea0fba
-      domain: cover
-      entity_id: d18bdfda165ce42ffccc49a58063cefd
-      type: is_open
-    then:
-    - device_id: cd1b901274bc97e2b74a6f9103ea0fba
-      domain: cover
-      entity_id: d18bdfda165ce42ffccc49a58063cefd
-      type: close
-    else:
-    - device_id: cd1b901274bc97e2b74a6f9103ea0fba
-      domain: cover
-      entity_id: d18bdfda165ce42ffccc49a58063cefd
-      type: open
-  alias: Toggle blinds
-  description: ''
