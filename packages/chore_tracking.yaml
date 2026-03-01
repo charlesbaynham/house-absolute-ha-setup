@@ -142,6 +142,31 @@ template:
           {% endif %}
         icon: mdi:trophy
 
+      # All-time leader badge
+      - name: "Chore All-Time Leader"
+        unique_id: chore_all_time_leader
+        state: >
+          {% set charles = states('input_number.chore_minutes_charles') | float(0) %}
+          {% set gaby = states('input_number.chore_minutes_gaby') | float(0) %}
+          {% if charles > gaby %}
+            Charles
+          {% elif gaby > charles %}
+            Gaby
+          {% else %}
+            Tied
+          {% endif %}
+        icon: mdi:trophy
+
+      # All-time lead margin in minutes
+      - name: "Chore All-Time Lead Minutes"
+        unique_id: chore_all_time_lead_minutes
+        state: >
+          {% set charles = states('input_number.chore_minutes_charles') | float(0) %}
+          {% set gaby = states('input_number.chore_minutes_gaby') | float(0) %}
+          {{ (charles - gaby) | abs | int }}
+        unit_of_measurement: "min"
+        icon: mdi:trophy-variant
+
       # Relative last activity times
       - name: "Charles Last Activity Relative"
         unique_id: charles_last_activity_relative
