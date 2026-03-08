@@ -2,16 +2,20 @@
 # Rain Warning Package
 #
 # When the master bedroom lamp is turned on for the first time after 5am,
-# it turns blue if rain is forecasted for the day. Subsequent turn-ons are normal.
+# it flashes a colour indicating the day's weather forecast:
+#   blue  = rain expected
+#   red   = no rain, but temperature forecast > 25°C
+#   green = no rain and temperature forecast ≤ 25°C
+# Subsequent turn-ons that day are normal.
 #
 # Dependencies:
-# - weather.home (Met.no integration from default_config)
+# - weather.forecast_home (Met.no integration from default_config)
 # - light.master_bedroom_lamp
 #
 # Features:
 # - Detects first lamp turn-on after 5am each day
-# - Checks weather forecast for rain/precipitation
-# - Turns lamp blue for 10 seconds if rain is expected
+# - Checks weather forecast for rain/precipitation and temperature
+# - Flashes the appropriate colour for 10 seconds
 # - Resets at midnight for next day
 
 input_boolean:
@@ -57,7 +61,9 @@ template:
 automation:
   - id: '1739240000000'
     alias: Master bedroom rain warning on first light
-    description: Turn master bedroom lamp blue on first turn-on after 5am if rain is expected
+    description: >-
+      Flash master bedroom lamp on first turn-on after 5am to indicate the
+      day's forecast: blue = rain, red = no rain but hot (>25°C), green = otherwise.
     triggers:
     - trigger: state
       entity_id: light.master_bedroom_lamp
@@ -68,9 +74,6 @@ automation:
     - condition: state
       entity_id: input_boolean.rain_warning_shown_today
       state: 'off'
-    - condition: state
-      entity_id: binary_sensor.rain_expected_today
-      state: 'on'
     actions:
     # Mark warning as shown for today
     - action: input_boolean.turn_on
@@ -78,15 +81,49 @@ automation:
       data: {}
       target:
         entity_id: input_boolean.rain_warning_shown_today
-    # Turn lamp blue (RGB: [0, 0, 255] = pure blue for rain warning)
-    - action: light.turn_on
-      metadata: {}
-      data:
-        rgb_color: [0, 0, 255]
-        brightness: 255
-      target:
-        entity_id: light.master_bedroom_lamp
-    # Wait 10 seconds to show the blue color
+    # Flash colour based on forecast
+    - choose:
+      - conditions:
+        - condition: state
+          entity_id: binary_sensor.rain_expected_today
+          state: 'on'
+        sequence:
+        # Blue = rain expected
+        - action: light.turn_on
+          metadata: {}
+          data:
+            rgb_color: [0, 0, 255]
+            brightness: 255
+          target:
+            entity_id: light.master_bedroom_lamp
+      - conditions:
+        - condition: template
+          value_template: >
+            {% set forecast = state_attr('weather.forecast_home', 'forecast') %}
+            {% if forecast and forecast | length > 0 %}
+              {{ forecast[0].temperature | float(0) > 25 }}
+            {% else %}
+              {{ state_attr('weather.forecast_home', 'temperature') | float(0) > 25 }}
+            {% endif %}
+        sequence:
+        # Red = no rain, temperature > 25°C
+        - action: light.turn_on
+          metadata: {}
+          data:
+            rgb_color: [255, 0, 0]
+            brightness: 255
+          target:
+            entity_id: light.master_bedroom_lamp
+      default:
+      # Green = no rain, temperature ≤ 25°C
+      - action: light.turn_on
+        metadata: {}
+        data:
+          rgb_color: [0, 255, 0]
+          brightness: 255
+        target:
+          entity_id: light.master_bedroom_lamp
+    # Wait 10 seconds to show the colour
     - delay:
         seconds: 10
     # Return to normal operation (user can adjust after)
