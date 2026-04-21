@@ -23,7 +23,7 @@
             or charles_lon is none
             or gaby_lat is none
             or gaby_lon is none %}
-            'unknown'
+            'unavailable'
           {% else %}
             {{ distance('person.charles', 'person.gaby') | round(2) }}
           {% endif %}
