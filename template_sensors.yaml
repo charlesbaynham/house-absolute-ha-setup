@@ -14,16 +14,14 @@
       - name: "Distance Between Lovers"
         unique_id: distance_between_lovers
         unit_of_measurement: "km"
-        state: >
+        availability: >
           {% set charles_lat = state_attr('person.charles', 'latitude') %}
           {% set charles_lon = state_attr('person.charles', 'longitude') %}
           {% set gaby_lat = state_attr('person.gaby', 'latitude') %}
           {% set gaby_lon = state_attr('person.gaby', 'longitude') %}
-          {% if charles_lat is none
-            or charles_lon is none
-            or gaby_lat is none
-            or gaby_lon is none %}
-            unavailable
-          {% else %}
-            {{ distance('person.charles', 'person.gaby') | round(2) }}
-          {% endif %}
+          {{ charles_lat is not none
+            and charles_lon is not none
+            and gaby_lat is not none
+            and gaby_lon is not none }}
+        state: >
+          {{ distance('person.charles', 'person.gaby') | round(2) }}
