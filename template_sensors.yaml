@@ -10,3 +10,18 @@
           ] %}
           {{ people | selectattr('state', 'equalto', 'home') | list | count > 0 }}
         device_class: presence
+  - sensor:
+      - name: "Distance Between Lovers"
+        unique_id: distance_between_lovers
+        unit_of_measurement: "km"
+        availability: >
+          {% set charles_lat = state_attr('person.charles', 'latitude') %}
+          {% set charles_lon = state_attr('person.charles', 'longitude') %}
+          {% set gaby_lat = state_attr('person.gaby', 'latitude') %}
+          {% set gaby_lon = state_attr('person.gaby', 'longitude') %}
+          {{ charles_lat is not none
+            and charles_lon is not none
+            and gaby_lat is not none
+            and gaby_lon is not none }}
+        state: >
+          {{ distance('person.charles', 'person.gaby') | round(2) }}
