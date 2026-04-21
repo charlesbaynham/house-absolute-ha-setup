@@ -13,6 +13,7 @@
   - sensor:
       - name: "Distance Between Lovers"
         unique_id: distance_between_lovers
+        unit_of_measurement: "km"
         state: >
           {% set charles_lat = state_attr('person.charles', 'latitude') %}
           {% set charles_lon = state_attr('person.charles', 'longitude') %}
@@ -22,7 +23,7 @@
             or charles_lon is none
             or gaby_lat is none
             or gaby_lon is none %}
-            unknown
+            'unknown'
           {% else %}
             {{ distance('person.charles', 'person.gaby') | round(2) }}
           {% endif %}
