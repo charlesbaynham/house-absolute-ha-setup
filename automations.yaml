@@ -325,10 +325,11 @@
     trigger: device
   conditions: []
   actions:
-  - type: turn_on
-    device_id: c00d1ba53814fe51e560e3966a522572
-    entity_id: 4d196fa93e23d18c4055121c436b6783
-    domain: switch
+  - action: light.turn_on
+    metadata: {}
+    target:
+      area_id: bathroom
+    data: {}
   - wait_for_trigger:
     - trigger: time
       at: 05:00:00
