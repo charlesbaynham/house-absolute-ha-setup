@@ -97,7 +97,7 @@ devices:
   '0x00124b0024fc163b':
     friendly_name: '0x00124b0024fc163b'
   '0x0017880106f61e30':
-    friendly_name: '0x0017880106f61e30'
+    friendly_name: Bathroom motion
 groups: {}
 availability:
   enabled: true
