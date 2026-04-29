@@ -314,29 +314,13 @@
     metadata: {}
     data: {}
   mode: single
-- id: '1771885079519'
-  alias: Turn bathroom lights on when Gaby wakes up
+- id: '1777494696724'
+  alias: 'Bathroom motion '
   description: ''
-  triggers:
-  - type: turned_on
-    device_id: 0dac4ca1d28c7cdb4a3517b64d5aaa21
-    entity_id: 45612e367dd14a46907b2f8cc54bafdc
-    domain: light
-    trigger: device
-  conditions: []
-  actions:
-  - action: light.turn_on
-    metadata: {}
-    target:
-      area_id: bathroom
-    data: {}
-  - wait_for_trigger:
-    - trigger: time
-      at: 05:00:00
-    continue_on_timeout: true
-    timeout:
-      hours: 24
-      minutes: 0
-      seconds: 0
-      milliseconds: 0
-  mode: single
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.bathroom_motion_occupancy
+      light_target:
+        area_id: bathroom
+      no_motion_wait: 300
