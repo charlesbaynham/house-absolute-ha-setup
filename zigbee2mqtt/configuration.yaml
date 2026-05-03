@@ -94,8 +94,6 @@ devices:
     friendly_name: Bathroom lights
   '0x0017880106e8d51d':
     friendly_name: Master bedroom wireless switch
-  '0x00124b0024fc163b':
-    friendly_name: '0x00124b0024fc163b'
   '0x0017880106f61e30':
     friendly_name: Bathroom motion
 groups: {}
