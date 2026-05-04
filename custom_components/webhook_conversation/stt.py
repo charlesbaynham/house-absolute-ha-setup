@@ -124,7 +124,6 @@ class WebhookConversationSTTEntity(
         self, metadata: stt.SpeechMetadata, stream: AsyncIterable[bytes]
     ) -> stt.SpeechResult:
         """Process an audio stream to STT service."""
-        # Collect all audio data from the stream
         audio_data = b""
         async for chunk in stream:
             audio_data += chunk
@@ -189,6 +188,8 @@ class WebhookConversationSTTEntity(
                             text.strip(),
                             stt.SpeechResultState.SUCCESS,
                         )
+                    if text == "":
+                        return stt.SpeechResult(None, stt.SpeechResultState.SUCCESS)
 
                 _LOGGER.error(
                     "STT webhook response missing or invalid output field '%s': %s",
