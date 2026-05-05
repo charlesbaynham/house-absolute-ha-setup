@@ -96,6 +96,8 @@ devices:
     friendly_name: Master bedroom wireless switch
   '0x0017880106f61e30':
     friendly_name: Bathroom motion
+  '0xa4c1384cc6082595':
+    friendly_name: '0xa4c1384cc6082595'
 groups: {}
 availability:
   enabled: true
