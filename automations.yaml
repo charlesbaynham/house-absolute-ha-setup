@@ -324,3 +324,13 @@
       light_target:
         area_id: bathroom
       no_motion_wait: 300
+- id: '1778004947632'
+  alias: Lights motion living room
+  description: ''
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.living_room_presence_presence
+      light_target:
+        area_id: living_room
+      no_motion_wait: 300
