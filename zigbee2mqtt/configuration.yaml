@@ -66,8 +66,6 @@ devices:
     friendly_name: Sensor master bedroom
   '0x54ef441000d7004f':
     friendly_name: Bedroom main lights
-  '0x00158d0007e7513c':
-    friendly_name: Hallway motion
   '0xa4c138cd1dd895d1':
     friendly_name: Living room lamp 1
   '0xa4c138e23c9ad56f':
@@ -98,6 +96,8 @@ devices:
     friendly_name: Bathroom motion
   '0xa4c1384cc6082595':
     friendly_name: Living room presence
+  '0x00158d008c7d0f83':
+    friendly_name: Hallway motion
 groups: {}
 availability:
   enabled: true
