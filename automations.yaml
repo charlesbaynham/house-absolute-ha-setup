@@ -333,4 +333,4 @@
       motion_entity: binary_sensor.living_room_presence_presence
       light_target:
         area_id: living_room
-      no_motion_wait: 300
+      no_motion_wait: 1800
