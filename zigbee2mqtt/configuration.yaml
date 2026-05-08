@@ -98,6 +98,8 @@ devices:
     friendly_name: Living room presence
   '0x00158d008c7d0f83':
     friendly_name: Hallway motion
+  '0x983268fffe625d51':
+    friendly_name: Garden motion
 groups: {}
 availability:
   enabled: true
