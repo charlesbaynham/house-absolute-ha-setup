@@ -271,6 +271,95 @@ utility_meter:
       hours: 4
 
 script:
+  chore_activate_mode:
+    alias: "Chores: activate chore mode"
+    description: >-
+      Start or renew chore mode for the selected person, update last activity,
+      and flash the kitchen lights.
+    fields:
+      person:
+        description: Person to activate chore mode for.
+        example: charles
+        required: true
+    sequence:
+      - variables:
+          chore_mode_entity: >-
+            {{ 'input_boolean.chore_mode_charles'
+            if (person | lower) == 'charles'
+            else 'input_boolean.chore_mode_gaby' }}
+          last_activity_entity: >-
+            {{ 'input_datetime.chore_last_activity_charles'
+            if (person | lower) == 'charles'
+            else 'input_datetime.chore_last_activity_gaby' }}
+      - action: input_boolean.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: "{{ chore_mode_entity }}"
+      - action: input_datetime.set_datetime
+        metadata: {}
+        data:
+          datetime: "{{ now().isoformat() }}"
+        target:
+          entity_id: "{{ last_activity_entity }}"
+      - action: script.flash_kitchen_surface_lights
+        data: {}
+    mode: single
+
+  chore_activate_extended_mode:
+    alias: "Chores: activate extended chore mode"
+    description: >-
+      Start or renew extended chore mode for the selected person, initialize
+      tracking helpers, and flash the kitchen lights.
+    fields:
+      person:
+        description: Person to activate extended chore mode for.
+        example: charles
+        required: true
+    sequence:
+      - variables:
+          chore_mode_entity: >-
+            {{ 'input_boolean.chore_mode_charles'
+            if (person | lower) == 'charles'
+            else 'input_boolean.chore_mode_gaby' }}
+          extended_mode_entity: >-
+            {{ 'input_boolean.extended_chore_mode_charles'
+            if (person | lower) == 'charles'
+            else 'input_boolean.extended_chore_mode_gaby' }}
+          extended_start_entity: >-
+            {{ 'input_datetime.extended_chore_start_charles'
+            if (person | lower) == 'charles'
+            else 'input_datetime.extended_chore_start_gaby' }}
+          extended_session_entity: >-
+            {{ 'input_number.extended_session_minutes_charles'
+            if (person | lower) == 'charles'
+            else 'input_number.extended_session_minutes_gaby' }}
+      - action: input_boolean.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: "{{ chore_mode_entity }}"
+      - action: input_boolean.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: "{{ extended_mode_entity }}"
+      - action: input_datetime.set_datetime
+        metadata: {}
+        data:
+          datetime: "{{ now().isoformat() }}"
+        target:
+          entity_id: "{{ extended_start_entity }}"
+      - action: input_number.set_value
+        metadata: {}
+        data:
+          value: 0
+        target:
+          entity_id: "{{ extended_session_entity }}"
+      - action: script.flash_kitchen_surface_lights
+        data: {}
+    mode: single
+
   chore_charles_subtract_minutes:
     alias: "Chores: subtract minutes from Charles meters"
     description: >-
@@ -378,21 +467,9 @@ automation:
           - action: script.flash_kitchen_surface_lights
             data: {}
         else:
-          # Start/renew regular chore mode
-          - action: input_boolean.turn_on
-            metadata: {}
-            data: {}
-            target:
-              entity_id: input_boolean.chore_mode_charles
-          - action: input_datetime.set_datetime
-            metadata: {}
+          - action: script.chore_activate_mode
             data:
-              datetime: "{{ now().isoformat() }}"
-            target:
-              entity_id: input_datetime.chore_last_activity_charles
-          # Flash kitchen surface lights
-          - action: script.flash_kitchen_surface_lights
-            data: {}
+              person: charles
     mode: single
 
   - id: "1763903316656"
@@ -425,21 +502,9 @@ automation:
           - action: script.flash_kitchen_surface_lights
             data: {}
         else:
-          # Start/renew regular chore mode
-          - action: input_boolean.turn_on
-            metadata: {}
-            data: {}
-            target:
-              entity_id: input_boolean.chore_mode_gaby
-          - action: input_datetime.set_datetime
-            metadata: {}
+          - action: script.chore_activate_mode
             data:
-              datetime: "{{ now().isoformat() }}"
-            target:
-              entity_id: input_datetime.chore_last_activity_gaby
-          # Flash kitchen surface lights
-          - action: script.flash_kitchen_surface_lights
-            data: {}
+              person: gaby
     mode: single
 
   - id: "1763903316668"
@@ -712,29 +777,9 @@ automation:
           - action: script.flash_kitchen_surface_lights
             data: {}
         else:
-          # Start extended chore mode
-          - action: input_boolean.turn_on
-            metadata: {}
-            data: {}
-            target:
-              entity_id:
-                - input_boolean.chore_mode_charles
-                - input_boolean.extended_chore_mode_charles
-          - action: input_datetime.set_datetime
-            metadata: {}
+          - action: script.chore_activate_extended_mode
             data:
-              datetime: "{{ now().isoformat() }}"
-            target:
-              entity_id: input_datetime.extended_chore_start_charles
-          - action: input_number.set_value
-            metadata: {}
-            data:
-              value: 0
-            target:
-              entity_id: input_number.extended_session_minutes_charles
-          # Flash kitchen surface lights
-          - action: script.flash_kitchen_surface_lights
-            data: {}
+              person: charles
     mode: single
 
   - id: "1763903316664"
@@ -769,29 +814,9 @@ automation:
           - action: script.flash_kitchen_surface_lights
             data: {}
         else:
-          # Start extended chore mode
-          - action: input_boolean.turn_on
-            metadata: {}
-            data: {}
-            target:
-              entity_id:
-                - input_boolean.chore_mode_gaby
-                - input_boolean.extended_chore_mode_gaby
-          - action: input_datetime.set_datetime
-            metadata: {}
+          - action: script.chore_activate_extended_mode
             data:
-              datetime: "{{ now().isoformat() }}"
-            target:
-              entity_id: input_datetime.extended_chore_start_gaby
-          - action: input_number.set_value
-            metadata: {}
-            data:
-              value: 0
-            target:
-              entity_id: input_number.extended_session_minutes_gaby
-          # Flash kitchen surface lights
-          - action: script.flash_kitchen_surface_lights
-            data: {}
+              person: gaby
     mode: single
 
   - id: "1763903316676"
@@ -810,29 +835,9 @@ automation:
         entity_id: input_boolean.chore_mode_charles
         state: "off"
     actions:
-      # Turn on regular chore mode
-      - action: input_boolean.turn_on
-        metadata: {}
-        data: {}
-        target:
-          entity_id: input_boolean.chore_mode_charles
-      # Set extended chore start timestamp
-      - action: input_datetime.set_datetime
-        metadata: {}
+      - action: script.chore_activate_extended_mode
         data:
-          datetime: "{{ now().isoformat() }}"
-        target:
-          entity_id: input_datetime.extended_chore_start_charles
-      # Reset session minutes counter
-      - action: input_number.set_value
-        metadata: {}
-        data:
-          value: 0
-        target:
-          entity_id: input_number.extended_session_minutes_charles
-      # Flash kitchen surface lights
-      - action: script.flash_kitchen_surface_lights
-        data: {}
+          person: charles
     mode: single
 
   - id: "1763903316677"
@@ -851,29 +856,9 @@ automation:
         entity_id: input_boolean.chore_mode_gaby
         state: "off"
     actions:
-      # Turn on regular chore mode
-      - action: input_boolean.turn_on
-        metadata: {}
-        data: {}
-        target:
-          entity_id: input_boolean.chore_mode_gaby
-      # Set extended chore start timestamp
-      - action: input_datetime.set_datetime
-        metadata: {}
+      - action: script.chore_activate_extended_mode
         data:
-          datetime: "{{ now().isoformat() }}"
-        target:
-          entity_id: input_datetime.extended_chore_start_gaby
-      # Reset session minutes counter
-      - action: input_number.set_value
-        metadata: {}
-        data:
-          value: 0
-        target:
-          entity_id: input_number.extended_session_minutes_gaby
-      # Flash kitchen surface lights
-      - action: script.flash_kitchen_surface_lights
-        data: {}
+          person: gaby
     mode: single
 
   - id: "1763903316666"
