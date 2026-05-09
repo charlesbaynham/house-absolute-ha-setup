@@ -86,6 +86,8 @@ Create rolling aggregates for minutes:
 - Modify reminder frequency: update `triggers: time_pattern minutes: /5` and wording.
 
 ## Scripts
+- `script.chore_activate_mode`: Parameterized activation entry point for regular chore mode. Pass `person: charles` or `person: gaby` to turn on that person's chore mode, refresh last activity, and flash the kitchen lights. Button automations should call this instead of duplicating the activation sequence.
+- `script.chore_activate_extended_mode`: Parameterized activation entry point for extended chore mode. Pass `person: charles` or `person: gaby` to turn on regular + extended mode together, set the extended start timestamp, reset the session counter, and flash the kitchen lights. External triggers should call this to match button behavior.
 - `script.chore_initialize_yearly_meters`: One-time initialization script to copy current monthly meter values to the yearly meters. Run this manually via the Home Assistant UI when first setting up yearly meters to preserve existing totals.
 - `script.chore_charles_subtract_minutes`: Subtracts a specified number of minutes from all Charles chore meters (all-time total `input_number.chore_minutes_charles`, plus all utility meters: quick, daily, weekly, monthly, yearly). Pass `minutes` as a field.
 - `script.chore_gaby_subtract_minutes`: Subtracts a specified number of minutes from all Gaby chore meters (all-time total `input_number.chore_minutes_gaby`, plus all utility meters: quick, daily, weekly, monthly, yearly). Pass `minutes` as a field.
