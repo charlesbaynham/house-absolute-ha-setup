@@ -278,10 +278,10 @@
       state:
       - home
   actions:
-  - action: notify.mobile_app_charles_phone
+  - action: notify.mobile_app_pixel_6
     metadata: {}
     data:
-      message: Door opened
+      message: The front door has opened
   mode: single
 - id: '1771800062963'
   alias: Master bedroom main switch

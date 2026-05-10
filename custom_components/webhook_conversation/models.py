@@ -8,11 +8,22 @@ from typing import Any, Literal, NotRequired, TypedDict
 MessageRole = Literal["assistant", "system", "tool_result", "user"]
 
 
+class WebhookConversationToolCall(TypedDict):
+    """A single tool call item."""
+
+    id: str
+    name: str
+    arguments: dict[str, Any]
+
+
 class WebhookConversationMessage(TypedDict):
     """A single message item."""
 
     role: MessageRole
     content: str
+    tool_calls: NotRequired[list[WebhookConversationToolCall]]
+    tool_call_id: NotRequired[str]
+    tool_name: NotRequired[str]
 
 
 class WebhookConversationBinaryObject(TypedDict):
@@ -22,6 +33,18 @@ class WebhookConversationBinaryObject(TypedDict):
     path: Path
     mime_type: str
     data: str
+
+
+class WebhookConversationSTTWebSocketMetadata(TypedDict):
+    """Metadata for the first STT websocket payload."""
+
+    name: str
+    mime_type: str
+    language: str
+    sample_rate: int
+    bit_rate: int
+    channels: int
+    conversation_id: NotRequired[str]
 
 
 class WebhookConversationPayload(TypedDict):
@@ -62,3 +85,4 @@ class WebhookSTTRequestPayload(TypedDict):
 
     audio: WebhookConversationBinaryObject
     language: str
+    conversation_id: NotRequired[str]

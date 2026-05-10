@@ -164,23 +164,27 @@ def _get_subentry_schema(
 
         # TTS-specific configuration
         if subentry_type == "tts":
-            schema_dict[vol.Optional(
-                CONF_VOICES,
-                description={"suggested_value": options.get(CONF_VOICES, [])},
-                default=[],
-            )] = TextSelector(TextSelectorConfig(multiple=True))
+            schema_dict[
+                vol.Optional(
+                    CONF_VOICES,
+                    description={"suggested_value": options.get(CONF_VOICES, [])},
+                    default=[],
+                )
+            ] = TextSelector(TextSelectorConfig(multiple=True))
 
         # STT-specific configuration
         elif subentry_type == "stt":
-            schema_dict[vol.Required(
-                CONF_OUTPUT_FIELD,
-                description={
-                    "suggested_value": options.get(
-                        CONF_OUTPUT_FIELD, DEFAULT_OUTPUT_FIELD
-                    )
-                },
-                default=DEFAULT_OUTPUT_FIELD,
-            )] = str
+            schema_dict[
+                vol.Required(
+                    CONF_OUTPUT_FIELD,
+                    description={
+                        "suggested_value": options.get(
+                            CONF_OUTPUT_FIELD, DEFAULT_OUTPUT_FIELD
+                        )
+                    },
+                    default=DEFAULT_OUTPUT_FIELD,
+                )
+            ] = str
 
     return vol.Schema(schema_dict)
 
@@ -290,9 +294,11 @@ class WebhookSubentryFlowHandler(ConfigSubentryFlow):
         )
 
         webhook_url: str = user_input[CONF_WEBHOOK_URL]
-        if not webhook_url.startswith("http://") and not webhook_url.startswith(
+        valid_http = webhook_url.startswith("http://") or webhook_url.startswith(
             "https://"
-        ):
+        )
+        valid_ws = webhook_url.startswith("ws://") or webhook_url.startswith("wss://")
+        if not valid_http and not (self._subentry_type == "stt" and valid_ws):
             _LOGGER.error("Invalid webhook URL: %s", webhook_url)
             errors["base"] = "invalid_webhook_url"
 
@@ -307,7 +313,7 @@ class WebhookSubentryFlowHandler(ConfigSubentryFlow):
 
                 try:
                     language_util.Dialect.parse(language_code)
-                except (ValueError, AttributeError):
+                except ValueError, AttributeError:
                     errors[CONF_SUPPORTED_LANGUAGES] = "invalid_language_code"
                     break
 
