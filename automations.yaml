@@ -314,16 +314,6 @@
     metadata: {}
     data: {}
   mode: single
-- id: '1777494696724'
-  alias: 'Bathroom motion '
-  description: ''
-  use_blueprint:
-    path: homeassistant/motion_light.yaml
-    input:
-      motion_entity: binary_sensor.bathroom_motion_occupancy
-      light_target:
-        area_id: bathroom
-      no_motion_wait: 300
 - id: '1778004947632'
   alias: Lights motion living room
   description: ''
