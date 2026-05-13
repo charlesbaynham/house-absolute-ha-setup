@@ -1,0 +1,57 @@
+---
+# Bathroom Motion Lighting Package
+#
+# Controls bathroom lights based on motion sensor with an enable/disable toggle.
+# Timeout controlled by input_number.motion_light_timeout.
+#
+# Dependencies:
+# - input_number.motion_light_timeout (defined in packages/motion_timeout.yaml)
+
+input_boolean:
+  bathroom_motion_enabled:
+    name: Bathroom Motion Enabled
+    icon: mdi:motion-sensor
+    initial: true
+
+automation:
+  - id: '1747171652000'
+    alias: Bathroom motion
+    description: ''
+    triggers:
+    - trigger: state
+      entity_id: binary_sensor.bathroom_motion_occupancy
+      from: 'off'
+      to: 'on'
+    - trigger: state
+      entity_id:
+      - input_boolean.bathroom_motion_enabled
+      to: 'on'
+    conditions:
+    - condition: state
+      entity_id: input_boolean.bathroom_motion_enabled
+      state: 'on'
+    - condition: state
+      entity_id: binary_sensor.bathroom_motion_occupancy
+      state: 'on'
+    actions:
+    - alias: Turn on all bathroom lights
+      action: light.turn_on
+      target:
+        area_id: bathroom
+      data: {}
+    - alias: Wait until there is no motion from device
+      wait_for_trigger:
+        trigger: state
+        entity_id: binary_sensor.bathroom_motion_occupancy
+        from: 'on'
+        to: 'off'
+    - alias: Wait the number of seconds that has been set
+      delay:
+        seconds: "{{ states('input_number.motion_light_timeout') | int }}"
+    - alias: Turn off all bathroom lights
+      action: light.turn_off
+      target:
+        area_id: bathroom
+      data: {}
+    mode: restart
+    max_exceeded: silent
