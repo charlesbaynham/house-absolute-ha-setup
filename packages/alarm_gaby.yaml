@@ -52,6 +52,8 @@ automation:
               target:
                 entity_id:
                   - light.bedroom_lamp
+            - action: light.turn_on
+              target:
                 area_id: hallway
             - delay:
                 milliseconds: 1000
@@ -59,6 +61,8 @@ automation:
               target:
                 entity_id:
                   - light.bedroom_lamp
+            - action: light.turn_off
+              target:
                 area_id: hallway
             - delay:
                 milliseconds: 1000
@@ -67,6 +71,8 @@ automation:
         target:
           entity_id:
             - light.bedroom_lamp
+      - action: light.turn_on
+        target:
           area_id: hallway
     mode: single
 
@@ -91,6 +97,8 @@ automation:
               target:
                 entity_id:
                   - light.bedroom_lamp
+            - action: light.turn_on
+              target:
                 area_id: hallway
             - delay:
                 milliseconds: 1000
@@ -98,6 +106,8 @@ automation:
               target:
                 entity_id:
                   - light.bedroom_lamp
+            - action: light.turn_off
+              target:
                 area_id: hallway
             - delay:
                 milliseconds: 1000
@@ -106,6 +116,8 @@ automation:
         target:
           entity_id:
             - light.bedroom_lamp
+      - action: light.turn_on
+        target:
           area_id: hallway
     mode: single
 
