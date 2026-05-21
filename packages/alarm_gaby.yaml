@@ -2,7 +2,7 @@
 # Gaby's Morning Alarm Package
 #
 # Allows Gaby to set two alarm times and enable/disable the alarm.
-# When either alarm triggers, bedroom and hallway lights flash 3 times
+# When either alarm triggers, the bedroom lamp and hallway lights flash 3 times
 # and stay on.
 # The alarm is automatically disabled on Fridays at 10:00 AM and
 # re-enabled on Sundays at 12:00 PM.
@@ -34,7 +34,7 @@ automation:
   - id: '1732500000000'
     alias: Gaby's morning alarm 1
     description: >
-      Flash bedroom and hallway lights 3 times and leave on
+      Flash bedroom lamp and hallway lights 3 times and leave on
       when alarm 1 triggers
     triggers:
       - trigger: time
@@ -50,30 +50,36 @@ automation:
           sequence:
             - action: light.turn_on
               target:
-                area_id:
-                  - bedroom
-                  - hallway
+                entity_id:
+                  - light.bedroom_lamp
+            - action: light.turn_on
+              target:
+                area_id: hallway
             - delay:
                 milliseconds: 1000
             - action: light.turn_off
               target:
-                area_id:
-                  - bedroom
-                  - hallway
+                entity_id:
+                  - light.bedroom_lamp
+            - action: light.turn_off
+              target:
+                area_id: hallway
             - delay:
                 milliseconds: 1000
       # Leave lights on
       - action: light.turn_on
         target:
-          area_id:
-            - bedroom
-            - hallway
+          entity_id:
+            - light.bedroom_lamp
+      - action: light.turn_on
+        target:
+          area_id: hallway
     mode: single
 
   - id: '1732500000001'
     alias: Gaby's morning alarm 2
     description: >
-      Flash bedroom and hallway lights 3 times and leave on
+      Flash bedroom lamp and hallway lights 3 times and leave on
       when alarm 2 triggers
     triggers:
       - trigger: time
@@ -89,24 +95,48 @@ automation:
           sequence:
             - action: light.turn_on
               target:
-                area_id:
-                  - bedroom
-                  - hallway
+                entity_id:
+                  - light.bedroom_lamp
+            - action: light.turn_on
+              target:
+                area_id: hallway
             - delay:
                 milliseconds: 1000
             - action: light.turn_off
               target:
-                area_id:
-                  - bedroom
-                  - hallway
+                entity_id:
+                  - light.bedroom_lamp
+            - action: light.turn_off
+              target:
+                area_id: hallway
             - delay:
                 milliseconds: 1000
       # Leave lights on
       - action: light.turn_on
         target:
-          area_id:
-            - bedroom
-            - hallway
+          entity_id:
+            - light.bedroom_lamp
+      - action: light.turn_on
+        target:
+          area_id: hallway
+    mode: single
+
+  - id: '1779354200000'
+    alias: Gaby bedroom lights off when away
+    description: >
+      Turn off bedroom lights when Gaby has been away from home for 5 minutes
+    triggers:
+      - trigger: state
+        entity_id: person.gaby
+        from: home
+        to: not_home
+        for:
+          minutes: 5
+    conditions: []
+    actions:
+      - action: light.turn_off
+        target:
+          area_id: bedroom
     mode: single
 
   - id: '1739471156000'
