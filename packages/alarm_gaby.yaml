@@ -131,9 +131,7 @@ automation:
         from: home
         to: not_home
         for:
-          hours: 0
           minutes: 5
-          seconds: 0
     conditions: []
     actions:
       - action: light.turn_off
