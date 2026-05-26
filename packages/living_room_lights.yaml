@@ -1,0 +1,368 @@
+---
+# Living Room Lights Package
+#
+# Controls all living room lighting through two types of light sources:
+#   - Main ceiling lights (light.living_room_light_switch_left): binary on/off, always full brightness
+#   - Lamps (hue_lamp, lamp_1, lamp_tall, lamp_bookshelf): dimmable with colour/temperature control
+#
+# CONTROLS
+#   Wall button (left press)  - Mirrors the main ceiling switch state to all lights
+#   Cosy button (single)      - Cycles through cosy lighting states (see COSY CYCLE below)
+#   Cosy button (hold)        - Full brightness on all lights, clears any Hue effects
+#   Presence sensor           - Mode-aware auto on/off (see PRESENCE BEHAVIOUR below)
+#
+# COSY CYCLE
+#   Pressing the cosy button advances through states in a loop:
+#     main_lights_on → cosy_brighter → cosy → off → cosy_again → cosy_brighter → ...
+#   Kitchen lights are turned off whenever a cosy scene activates.
+#
+# PRESENCE BEHAVIOUR
+#   The presence sensor is mode-aware: it checks input_select.living_room_cosy_state and
+#   restores the appropriate scene rather than overriding a deliberate cosy setting with
+#   full brightness. Only turns lights on from scratch (main lights) when the state is 'off'.
+#   After 30 minutes of no presence, all lights turn off. The state-sync automation then
+#   resets the tracker to 'off', so the next entry is always a fresh start.
+#
+# STATE TRACKING
+#   input_select.living_room_cosy_state is the source of truth for the current lighting mode.
+#   It is updated by the cosy cycle automation and kept in sync by two auxiliary automations
+#   that watch for lights being turned off externally or the main ceiling switch turning on.
+
+input_select:
+  living_room_cosy_state:
+    name: Living Room Cosy State
+    options:
+      - "main_lights_on"
+      - "cosy_brighter"
+      - "cosy"
+      - "off"
+      - "cosy_again"
+    initial: "cosy_again"
+    icon: mdi:lightbulb-group
+
+automation:
+
+  # ---------------------------------------------------------------------------
+  # WALL BUTTON
+  # Single left press mirrors the physical ceiling switch state to all living
+  # room lights. A 1-second delay lets the switch state settle before reading it.
+  # ---------------------------------------------------------------------------
+  - id: '1742124552238'
+    alias: Living room lights copy main
+    description: ''
+    triggers:
+    - domain: mqtt
+      device_id: b44f30835f4c82fab781ed7ca5d3c901
+      type: action
+      subtype: single_left
+      trigger: device
+    conditions: []
+    actions:
+    - delay:
+        hours: 0
+        minutes: 0
+        seconds: 1
+        milliseconds: 0
+    - if:
+      - condition: device
+        type: is_off
+        device_id: b44f30835f4c82fab781ed7ca5d3c901
+        entity_id: 2171f345562f270f7e227a2561c88b8b
+        domain: switch
+      then:
+      - action: light.turn_off
+        metadata: {}
+        data: {}
+        target:
+          area_id: living_room
+      else:
+      - action: light.turn_on
+        metadata: {}
+        data:
+          effect: stop_hue_effect
+        target:
+          area_id: living_room
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 1
+          milliseconds: 0
+      - action: light.turn_on
+        metadata: {}
+        data:
+          effect: stop_effect
+        target:
+          area_id: living_room
+    mode: restart
+
+  # ---------------------------------------------------------------------------
+  # COSY BUTTON: SINGLE PRESS — cycle through states
+  # Advances the cosy state machine by one step, applying the appropriate scene.
+  # ---------------------------------------------------------------------------
+  - id: '1745709642332_cycle'
+    alias: Living room cosy button - cycle states
+    description: Cycle through cosy brighter, cosy, off, cosy when button is pressed
+    triggers:
+    - domain: mqtt
+      device_id: d74916d94f1f149b3d2eec73d3b68b7f
+      type: action
+      subtype: single
+      trigger: device
+    actions:
+    - choose:
+      # main_lights_on → cosy_brighter
+      - conditions:
+        - condition: state
+          entity_id: input_select.living_room_cosy_state
+          state: "main_lights_on"
+        sequence:
+        - action: scene.turn_on
+          metadata: {}
+          data:
+            transition: 3
+          target:
+            entity_id: scene.living_room_cosy_brighter
+        - action: light.turn_off
+          metadata: {}
+          data: {}
+          target:
+            area_id: kitchen
+        - action: input_select.select_option
+          target:
+            entity_id: input_select.living_room_cosy_state
+          data:
+            option: "cosy_brighter"
+
+      # cosy_brighter → cosy
+      - conditions:
+        - condition: state
+          entity_id: input_select.living_room_cosy_state
+          state: "cosy_brighter"
+        sequence:
+        - action: scene.turn_on
+          metadata: {}
+          data:
+            transition: 3
+          target:
+            entity_id: scene.living_room_cosy
+        - action: light.turn_off
+          metadata: {}
+          data: {}
+          target:
+            area_id: kitchen
+        - action: input_select.select_option
+          target:
+            entity_id: input_select.living_room_cosy_state
+          data:
+            option: "cosy"
+
+      # cosy → off
+      - conditions:
+        - condition: state
+          entity_id: input_select.living_room_cosy_state
+          state: "cosy"
+        sequence:
+        - action: light.turn_off
+          metadata: {}
+          data: {}
+          target:
+            area_id: living_room
+        - action: input_select.select_option
+          target:
+            entity_id: input_select.living_room_cosy_state
+          data:
+            option: "off"
+
+      # off → cosy_again
+      - conditions:
+        - condition: state
+          entity_id: input_select.living_room_cosy_state
+          state: "off"
+        sequence:
+        - action: scene.turn_on
+          metadata: {}
+          data:
+            transition: 3
+          target:
+            entity_id: scene.living_room_cosy
+        - action: light.turn_off
+          metadata: {}
+          data: {}
+          target:
+            area_id: kitchen
+        - action: input_select.select_option
+          target:
+            entity_id: input_select.living_room_cosy_state
+          data:
+            option: "cosy_again"
+
+      # cosy_again → cosy_brighter
+      - conditions:
+        - condition: state
+          entity_id: input_select.living_room_cosy_state
+          state: "cosy_again"
+        sequence:
+        - action: scene.turn_on
+          metadata: {}
+          data:
+            transition: 3
+          target:
+            entity_id: scene.living_room_cosy_brighter
+        - action: light.turn_off
+          metadata: {}
+          data: {}
+          target:
+            area_id: kitchen
+        - action: input_select.select_option
+          target:
+            entity_id: input_select.living_room_cosy_state
+          data:
+            option: "cosy_brighter"
+    mode: single
+
+  # ---------------------------------------------------------------------------
+  # COSY BUTTON: HOLD — full brightness override
+  # Immediately turns all living room lights on at full brightness and clears
+  # any active Hue effects (useful for recovering from unexpected light states).
+  # ---------------------------------------------------------------------------
+  - id: '1762091898797'
+    alias: Cosy button long press
+    description: ''
+    triggers:
+    - domain: mqtt
+      device_id: d74916d94f1f149b3d2eec73d3b68b7f
+      type: action
+      subtype: long
+      trigger: device
+    conditions: []
+    actions:
+    - action: light.turn_on
+      metadata: {}
+      data:
+        effect: Stop_hue_effect
+      target:
+        area_id: living_room
+    mode: single
+
+  # ---------------------------------------------------------------------------
+  # STATE SYNC: all lamps off
+  # Keeps the state tracker in sync when lights are turned off by any means other
+  # than the cosy button (e.g. wall button, voice command, app). Waits 2 seconds
+  # for transient changes to settle, then checks whether every tracked lamp is off.
+  # ---------------------------------------------------------------------------
+  - id: '1745709642332_sync_off'
+    alias: Living room cosy button - sync state when lights turn off
+    description: Update state tracker when living room lights are turned off manually
+    triggers:
+    - trigger: state
+      entity_id:
+        - light.living_room_hue_lamp
+        - light.living_room_lamp_1
+        - light.living_room_lamp_tall
+        - light.living_room_christmas_lights
+      to: 'off'
+      for:
+        seconds: 2
+    conditions:
+    - condition: template
+      value_template: >
+        {% set lr_lights = expand('light.living_room_hue_lamp', 'light.living_room_lamp_1',
+                                   'light.living_room_lamp_tall', 'light.living_room_christmas_lights') %}
+        {{ lr_lights | selectattr('state', 'equalto', 'on') | list | count == 0 }}
+    actions:
+    - action: input_select.select_option
+      target:
+        entity_id: input_select.living_room_cosy_state
+      data:
+        option: "off"
+    mode: single
+
+  # ---------------------------------------------------------------------------
+  # STATE SYNC: main ceiling lights on
+  # When the main ceiling lights are turned on by any means (wall switch, voice,
+  # app), update the tracker so the cosy button knows to go to cosy_brighter next.
+  # ---------------------------------------------------------------------------
+  - id: '1745709642332_sync_main_lights'
+    alias: Living room cosy button - sync state when main lights turn on
+    description: Update state tracker when main living room lights are turned on
+    triggers:
+    - trigger: state
+      entity_id: light.living_room_light_switch_left
+      to: 'on'
+    conditions: []
+    actions:
+    - action: input_select.select_option
+      target:
+        entity_id: input_select.living_room_cosy_state
+      data:
+        option: "main_lights_on"
+    mode: single
+
+  # ---------------------------------------------------------------------------
+  # PRESENCE SENSOR: restore state on entry
+  # When someone enters the room, check the cosy state tracker and restore the
+  # correct scene rather than blindly switching to full brightness. This means
+  # a fidget in cosy mode no longer wipes your carefully chosen dim setting.
+  # If the room was fully off (state = off), turn on the main ceiling lights for
+  # a clean fresh start; the same applies when state is main_lights_on.
+  # ---------------------------------------------------------------------------
+  - id: '1748260000000'
+    alias: Living room presence - restore state on entry
+    triggers:
+    - trigger: state
+      entity_id: binary_sensor.living_room_presence_presence
+      to: "on"
+    actions:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_select.living_room_cosy_state
+              state: "cosy"
+          sequence:
+            - action: scene.turn_on
+              target:
+                entity_id: scene.living_room_cosy
+        - conditions:
+            - condition: state
+              entity_id: input_select.living_room_cosy_state
+              state: "cosy_again"
+          sequence:
+            - action: scene.turn_on
+              target:
+                entity_id: scene.living_room_cosy
+        - conditions:
+            - condition: state
+              entity_id: input_select.living_room_cosy_state
+              state: "cosy_brighter"
+          sequence:
+            - action: scene.turn_on
+              target:
+                entity_id: scene.living_room_cosy_brighter
+      default:
+        # State is 'off' or 'main_lights_on': turn on ceiling lights for a fresh entry
+        - action: light.turn_on
+          target:
+            entity_id: light.living_room_light_switch_left
+    mode: single
+
+  # ---------------------------------------------------------------------------
+  # PRESENCE SENSOR: auto-off after timeout
+  # After 30 minutes of no presence, turn off all living room lights. The state
+  # sync automation above will then reset the tracker to 'off', ensuring the next
+  # entry starts fresh with main lights rather than restoring a stale cosy scene.
+  # The 30-minute window also acts as a buffer against the presence sensor's
+  # occasional false-absent readings when the room is still occupied.
+  # ---------------------------------------------------------------------------
+  - id: '1748260000001'
+    alias: Living room presence - turn off after timeout
+    triggers:
+    - trigger: state
+      entity_id: binary_sensor.living_room_presence_presence
+      to: "off"
+      for:
+        minutes: 30
+    actions:
+    - action: light.turn_off
+      target:
+        area_id: living_room
+    mode: single
