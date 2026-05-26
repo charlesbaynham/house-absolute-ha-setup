@@ -1,50 +1,3 @@
-- id: '1742124552238'
-  alias: Living room lights copy main
-  description: ''
-  triggers:
-  - domain: mqtt
-    device_id: b44f30835f4c82fab781ed7ca5d3c901
-    type: action
-    subtype: single_left
-    trigger: device
-  conditions: []
-  actions:
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 1
-      milliseconds: 0
-  - if:
-    - condition: device
-      type: is_off
-      device_id: b44f30835f4c82fab781ed7ca5d3c901
-      entity_id: 2171f345562f270f7e227a2561c88b8b
-      domain: switch
-    then:
-    - action: light.turn_off
-      metadata: {}
-      data: {}
-      target:
-        area_id: living_room
-    else:
-    - action: light.turn_on
-      metadata: {}
-      data:
-        effect: stop_hue_effect
-      target:
-        area_id: living_room
-    - delay:
-        hours: 0
-        minutes: 0
-        seconds: 1
-        milliseconds: 0
-    - action: light.turn_on
-      metadata: {}
-      data:
-        effect: stop_effect
-      target:
-        area_id: living_room
-  mode: restart
 - id: '1742126819014'
   alias: Bedroom dimmer switch
   description: ''
@@ -159,24 +112,6 @@
     metadata: {}
     data: {}
     response_variable: response
-  mode: single
-- id: '1762091898797'
-  alias: Cosy button long press
-  description: ''
-  triggers:
-  - domain: mqtt
-    device_id: d74916d94f1f149b3d2eec73d3b68b7f
-    type: action
-    subtype: long
-    trigger: device
-  conditions: []
-  actions:
-  - action: light.turn_on
-    metadata: {}
-    data:
-      effect: Stop_hue_effect
-    target:
-      area_id: living_room
   mode: single
 - id: '1762099115353'
   alias: Bedroom lights copy main
@@ -314,13 +249,3 @@
     metadata: {}
     data: {}
   mode: single
-- id: '1778004947632'
-  alias: Lights motion living room
-  description: ''
-  use_blueprint:
-    path: homeassistant/motion_light.yaml
-    input:
-      motion_entity: binary_sensor.living_room_presence_presence
-      light_target:
-        area_id: living_room
-      no_motion_wait: 1800
