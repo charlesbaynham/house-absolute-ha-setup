@@ -819,56 +819,15 @@
   icon: mdi:cards-heart
   metadata: {}
 - id: '1751324599554'
-  name: Master bedroom chill
+  name: Master bedroom dim
   entities:
+    # Dimmed mode: lamp only (gently dimmed), main ceiling lights off.
+    # Safe to tweak the brightness/colour in the Scene editor.
     light.master_bedroom_lamp:
-      min_color_temp_kelvin: 2000
-      max_color_temp_kelvin: 6535
-      min_mireds: 153
-      max_mireds: 500
-      effect_list:
-      - blink
-      - breathe
-      - okay
-      - channel_change
-      - finish_effect
-      - stop_effect
-      - colorloop
-      - stop_colorloop
-      supported_color_modes:
-      - color_temp
-      - xy
-      effect:
-      color_mode: color_temp
-      brightness: 18
-      color_temp_kelvin: 2000
-      color_temp: 500
-      hs_color:
-      - 30.601
-      - 94.547
-      rgb_color:
-      - 255
-      - 137
-      - 14
-      xy_color:
-      - 0.598
-      - 0.383
-      friendly_name: Master bedroom lamp
-      supported_features: 44
       state: 'on'
-    select.master_bedroom_mode_switch:
-      options:
-      - anti_flicker_mode
-      - quick_mode
-      icon: mdi:tune
-      friendly_name: Master bedroom main lights Mode switch
-      state: unknown
+      brightness: 18
+      color_temp: 500
     light.master_bedroom_main_lights_right:
-      supported_color_modes:
-      - onoff
-      color_mode:
-      friendly_name: Master bedroom main lights
-      supported_features: 0
       state: 'off'
   metadata: {}
 - id: '1767728852849'
@@ -986,55 +945,24 @@
   icon: mdi:desk-lamp
   metadata: {}
 - id: '1771801736357'
-  name: Master bedroom on
+  name: Master bedroom full
   entities:
+    # Everything on: main ceiling lights on, lamp at full warm-white brightness.
     light.master_bedroom_lamp:
-      min_color_temp_kelvin: 2000
-      max_color_temp_kelvin: 6535
-      min_mireds: 153
-      max_mireds: 500
-      effect_list:
-      - blink
-      - breathe
-      - okay
-      - channel_change
-      - finish_effect
-      - stop_effect
-      - colorloop
-      - stop_colorloop
-      supported_color_modes:
-      - color_temp
-      - xy
-      effect:
-      color_mode: color_temp
-      brightness: 3
-      color_temp_kelvin: 2000
-      color_temp: 500
-      hs_color:
-      - 30.601
-      - 94.547
-      rgb_color:
-      - 255
-      - 137
-      - 14
-      xy_color:
-      - 0.598
-      - 0.383
-      friendly_name: Master bedroom lamp
-      supported_features: 44
       state: 'on'
-    select.master_bedroom_mode_switch:
-      options:
-      - anti_flicker_mode
-      - quick_mode
-      icon: mdi:tune
-      friendly_name: Master bedroom main lights Mode switch
-      state: unknown
+      brightness: 255
+      color_temp: 370
     light.master_bedroom_main_lights_right:
-      supported_color_modes:
-      - onoff
-      color_mode: onoff
-      friendly_name: Master bedroom main lights
-      supported_features: 0
       state: 'on'
+  metadata: {}
+- id: '1771801736358'
+  name: Master bedroom dim low
+  entities:
+    # Really low: lamp barely glowing, main ceiling lights off.
+    light.master_bedroom_lamp:
+      state: 'on'
+      brightness: 3
+      color_temp: 500
+    light.master_bedroom_main_lights_right:
+      state: 'off'
   metadata: {}

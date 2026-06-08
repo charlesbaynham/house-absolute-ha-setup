@@ -29,36 +29,6 @@
         data: {}
         target:
           device_id: 4e798fe039ef3b748b3e8c867f3fcb68
-- id: '1748385723267'
-  alias: Master bedroom light dimmer switch
-  description: ''
-  use_blueprint:
-    path: patpac9/Hue_Dimmer_Switch_Easy_Custom_Buttons.yaml
-    input:
-      controller: Master bedroom wireless switch
-      up_released:
-      - action: script.toggle_blinds
-        metadata: {}
-        data: {}
-      on_released:
-      - action: scene.turn_on
-        metadata: {}
-        target:
-          entity_id: scene.master_bedroom_on
-        data: {}
-      off_released:
-      - action: light.turn_off
-        metadata: {}
-        data: {}
-        target:
-          entity_id: light.master_bedroom_lamp
-      down_released:
-      - action: scene.turn_on
-        metadata: {}
-        target:
-          entity_id: scene.master_bedroom_chill
-        data: {}
-      on_hold_released: []
 - id: '1760784792347'
   alias: Restart let's encrypt daily
   description: ''
@@ -188,14 +158,6 @@
     data:
       stop_actions: false
   mode: single
-- id: '1769862562265'
-  alias: Master bedroom lights copy main
-  description: ''
-  use_blueprint:
-    path: homeassistant/lamp_controls_area.yaml
-    input:
-      lamp_entity: light.master_bedroom_lamp
-      area: master_bedroom
 - id: '1769862562266'
   alias: Door opened alert
   description: ''
@@ -217,35 +179,4 @@
     metadata: {}
     data:
       message: The front door has opened
-  mode: single
-- id: '1771800062963'
-  alias: Master bedroom main switch
-  description: ''
-  triggers:
-  - domain: mqtt
-    device_id: 07ee2aa42b249d96057fbec264b7a25f
-    type: action
-    subtype: single_right
-    trigger: device
-  conditions: []
-  actions:
-  - type: toggle
-    device_id: e2e3433c00415e968dae6f242b09b5e0
-    entity_id: 33bdb23636411c0bffbbd01241f215cc
-    domain: light
-  mode: single
-- id: '1771800897993'
-  alias: Blinds to buttons
-  description: ''
-  triggers:
-  - domain: mqtt
-    device_id: 07ee2aa42b249d96057fbec264b7a25f
-    type: action
-    subtype: single_left
-    trigger: device
-  conditions: []
-  actions:
-  - action: script.toggle_blinds
-    metadata: {}
-    data: {}
   mode: single

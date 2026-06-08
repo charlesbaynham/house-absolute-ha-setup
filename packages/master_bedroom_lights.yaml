@@ -1,0 +1,280 @@
+---
+# Master Bedroom Lights Package
+#
+# Controls the master bedroom through three light "ingredients":
+#   - Lamp  (light.master_bedroom_lamp)               dimmable + colour
+#   - Main ceiling lights (light.master_bedroom_main_lights_right)  on/off only
+#   - Curtains (cover.master_bedroom_blinds, via script.toggle_blinds)
+#
+# DESIGN
+#   A single source of truth - input_select.master_bedroom_state - tracks the
+#   current lighting mode (full / dim / dim_low / off). Nothing makes one light
+#   blindly mirror another (that was the old `lamp_controls_area` blueprint, which
+#   caused the on/off cascade - it has been removed). Instead, small scripts apply
+#   one of three USER-EDITABLE scenes (defined in scenes.yaml so they can be tweaked
+#   in the HA Scene editor) and update the state tracker:
+#     scene.master_bedroom_full     - main lights on + lamp full
+#     scene.master_bedroom_dim      - lamp only, gently dimmed (~7%)
+#     scene.master_bedroom_dim_low  - lamp only, barely glowing (~1%)
+#
+# CONTROLS (behaviour is shared across both switches; the bedside one does more)
+#   Bedside switch - 4 buttons (Hue dimmer "Master bedroom wireless switch")
+#     on    -> Full (everything on)
+#     off   -> Everything off
+#     down  -> Cycle the dimmed modes:  dim -> dim_low -> off
+#     up    -> Toggle curtains
+#   Door switch - 2 buttons (Aqara)
+#     right -> Smart cycle through every mode:  off -> full -> dim -> dim_low -> off
+#     left  -> Toggle curtains
+#
+# STATE SYNC
+#   Two auxiliary automations keep the tracker honest if the lights are changed by
+#   other means (app, voice, the rain-warning package): turning the main lights on
+#   means "full", and everything going off means "off".
+#
+# RELATED
+#   The rain-warning package (packages/rain_warning.yaml) still flashes the lamp
+#   green/blue on the first morning turn-on. With the old cascade gone it no longer
+#   drags the main lights around.
+
+input_select:
+  master_bedroom_state:
+    name: Master Bedroom Lights State
+    options:
+      - "full"
+      - "dim"
+      - "dim_low"
+      - "off"
+    initial: "off"
+    icon: mdi:lightbulb-group
+
+script:
+
+  # ---------------------------------------------------------------------------
+  # Mode-setting building blocks. Each applies one scene and records the state.
+  # ---------------------------------------------------------------------------
+  master_bedroom_full:
+    alias: Master bedroom - full
+    icon: mdi:lightbulb-on
+    sequence:
+      - action: scene.turn_on
+        target:
+          entity_id: scene.master_bedroom_full
+        data:
+          transition: 1
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.master_bedroom_state
+        data:
+          option: "full"
+
+  master_bedroom_dim:
+    alias: Master bedroom - dim
+    icon: mdi:lightbulb-on-30
+    sequence:
+      - action: scene.turn_on
+        target:
+          entity_id: scene.master_bedroom_dim
+        data:
+          transition: 2
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.master_bedroom_state
+        data:
+          option: "dim"
+
+  master_bedroom_dim_low:
+    alias: Master bedroom - dim low
+    icon: mdi:lightbulb-on-10
+    sequence:
+      - action: scene.turn_on
+        target:
+          entity_id: scene.master_bedroom_dim_low
+        data:
+          transition: 2
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.master_bedroom_state
+        data:
+          option: "dim_low"
+
+  master_bedroom_off:
+    alias: Master bedroom - all off
+    icon: mdi:lightbulb-off
+    sequence:
+      - action: light.turn_off
+        target:
+          entity_id:
+            - light.master_bedroom_lamp
+            - light.master_bedroom_main_lights_right
+        data:
+          transition: 1
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.master_bedroom_state
+        data:
+          option: "off"
+
+  # ---------------------------------------------------------------------------
+  # Bedside "down" button: cycle through the dimmed modes only.
+  #   anything bright/off -> dim -> dim_low -> off
+  # ---------------------------------------------------------------------------
+  master_bedroom_dim_cycle:
+    alias: Master bedroom - cycle dim modes
+    icon: mdi:brightness-6
+    sequence:
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_select.master_bedroom_state
+                state: "dim"
+            sequence:
+              - action: script.master_bedroom_dim_low
+          - conditions:
+              - condition: state
+                entity_id: input_select.master_bedroom_state
+                state: "dim_low"
+            sequence:
+              - action: script.master_bedroom_off
+        default:
+          # From full or off, a press of "down" drops into the first dim level.
+          - action: script.master_bedroom_dim
+
+  # ---------------------------------------------------------------------------
+  # Door single button: smart cycle that reaches every mode with one button.
+  #   off -> full -> dim -> dim_low -> off
+  # ---------------------------------------------------------------------------
+  master_bedroom_main_cycle:
+    alias: Master bedroom - cycle all modes
+    icon: mdi:rotate-right
+    sequence:
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_select.master_bedroom_state
+                state: "off"
+            sequence:
+              - action: script.master_bedroom_full
+          - conditions:
+              - condition: state
+                entity_id: input_select.master_bedroom_state
+                state: "full"
+            sequence:
+              - action: script.master_bedroom_dim
+          - conditions:
+              - condition: state
+                entity_id: input_select.master_bedroom_state
+                state: "dim"
+            sequence:
+              - action: script.master_bedroom_dim_low
+          - conditions:
+              - condition: state
+                entity_id: input_select.master_bedroom_state
+                state: "dim_low"
+            sequence:
+              - action: script.master_bedroom_off
+        default:
+          - action: script.master_bedroom_full
+
+automation:
+
+  # ---------------------------------------------------------------------------
+  # BEDSIDE SWITCH (4 buttons) - Hue dimmer via the patpac9 blueprint.
+  # ---------------------------------------------------------------------------
+  - id: "1748385723267"
+    alias: Master bedroom bedside switch
+    description: 4-button bedside Hue dimmer - full / off / cycle-dim / curtains
+    use_blueprint:
+      path: patpac9/Hue_Dimmer_Switch_Easy_Custom_Buttons.yaml
+      input:
+        controller: Master bedroom wireless switch
+        on_released:
+          - action: script.master_bedroom_full
+        off_released:
+          - action: script.master_bedroom_off
+        down_released:
+          - action: script.master_bedroom_dim_cycle
+        up_released:
+          - action: script.toggle_blinds
+        on_hold_released: []
+
+  # ---------------------------------------------------------------------------
+  # DOOR SWITCH (2 buttons) - Aqara, raw MQTT device actions.
+  # ---------------------------------------------------------------------------
+  - id: "1771800062963"
+    alias: Master bedroom door switch - lights
+    description: Right button cycles off -> full -> dim -> dim_low -> off
+    triggers:
+      - domain: mqtt
+        device_id: 07ee2aa42b249d96057fbec264b7a25f
+        type: action
+        subtype: single_right
+        trigger: device
+    conditions: []
+    actions:
+      - action: script.master_bedroom_main_cycle
+    mode: single
+
+  - id: "1771800897993"
+    alias: Master bedroom door switch - curtains
+    description: Left button toggles the curtains
+    triggers:
+      - domain: mqtt
+        device_id: 07ee2aa42b249d96057fbec264b7a25f
+        type: action
+        subtype: single_left
+        trigger: device
+    conditions: []
+    actions:
+      - action: script.toggle_blinds
+    mode: single
+
+  # ---------------------------------------------------------------------------
+  # STATE SYNC: everything off
+  # If both the lamp and the main lights end up off by any means, record "off".
+  # 2s debounce lets scene transitions settle first.
+  # ---------------------------------------------------------------------------
+  - id: "1771800062964"
+    alias: Master bedroom - sync state when all lights off
+    description: Keep the tracker correct when lights are turned off externally
+    triggers:
+      - trigger: state
+        entity_id:
+          - light.master_bedroom_lamp
+          - light.master_bedroom_main_lights_right
+        to: "off"
+        for:
+          seconds: 2
+    conditions:
+      - condition: template
+        value_template: >
+          {{ states('light.master_bedroom_lamp') == 'off'
+             and states('light.master_bedroom_main_lights_right') == 'off' }}
+    actions:
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.master_bedroom_state
+        data:
+          option: "off"
+    mode: single
+
+  # ---------------------------------------------------------------------------
+  # STATE SYNC: main lights on
+  # The main ceiling lights are only on in "full" mode, so if they come on by any
+  # means, record "full".
+  # ---------------------------------------------------------------------------
+  - id: "1771800062965"
+    alias: Master bedroom - sync state when main lights on
+    description: Keep the tracker correct when main lights are turned on externally
+    triggers:
+      - trigger: state
+        entity_id: light.master_bedroom_main_lights_right
+        to: "on"
+    conditions: []
+    actions:
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.master_bedroom_state
+        data:
+          option: "full"
+    mode: single
