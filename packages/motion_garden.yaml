@@ -2,7 +2,8 @@
 # Garden Motion Lighting Package
 #
 # Controls garden lights based on motion sensor and sun position.
-# Lights turn on when motion detected after sunset or before sunrise.
+# Lights turn on when motion detected after sunset or before sunrise,
+# provided motion control is enabled via the input_boolean toggle.
 # Timeout after motion stops controlled by input_number.motion_light_timeout,
 # max 2 hour runtime.
 #
@@ -12,6 +13,12 @@
 #
 # Dependencies:
 # - input_number.motion_light_timeout (defined in packages/motion_timeout.yaml)
+
+input_boolean:
+  garden_motion_enabled:
+    name: Garden Motion Enabled
+    icon: mdi:motion-sensor
+    initial: true
 
 automation:
   - id: gardenlightsmotinoandsun
@@ -24,7 +31,14 @@ automation:
       trigger: state
     - event: sunset
       trigger: sun
+    - entity_id:
+      - input_boolean.garden_motion_enabled
+      to: 'on'
+      trigger: state
     conditions:
+    - condition: state
+      entity_id: input_boolean.garden_motion_enabled
+      state: 'on'
     - condition: state
       entity_id: binary_sensor.garden_motion_occupancy
       state: 'on'
