@@ -27,6 +27,19 @@
 #   input_select.living_room_cosy_state is the source of truth for the current lighting mode.
 #   It is updated by the cosy cycle automation and kept in sync by two auxiliary automations
 #   that watch for lights being turned off externally or the main ceiling switch turning on.
+#
+# PRESENCE TOGGLE
+#   input_boolean.living_room_motion_enabled lets presence-based control be disabled from
+#   the dashboard (matching the motion toggles in the kitchen, bathroom, hallway and garden
+#   packages). While it is off, the presence sensor neither restores a scene on entry nor
+#   turns the lights off after the no-presence timeout; the manual button controls are
+#   unaffected.
+
+input_boolean:
+  living_room_motion_enabled:
+    name: Living Room Motion Enabled
+    icon: mdi:motion-sensor
+    initial: true
 
 input_select:
   living_room_cosy_state:
@@ -312,6 +325,16 @@ automation:
     - trigger: state
       entity_id: binary_sensor.living_room_presence_presence
       to: "on"
+    - trigger: state
+      entity_id: input_boolean.living_room_motion_enabled
+      to: "on"
+    conditions:
+    - condition: state
+      entity_id: input_boolean.living_room_motion_enabled
+      state: "on"
+    - condition: state
+      entity_id: binary_sensor.living_room_presence_presence
+      state: "on"
     actions:
     - choose:
         - conditions:
@@ -361,6 +384,10 @@ automation:
       to: "off"
       for:
         minutes: 30
+    conditions:
+    - condition: state
+      entity_id: input_boolean.living_room_motion_enabled
+      state: "on"
     actions:
     - action: light.turn_off
       target:
