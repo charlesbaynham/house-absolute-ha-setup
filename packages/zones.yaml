@@ -1,0 +1,204 @@
+# Zones (geographic locations on the map)
+# Recovered from the old Home Assistant setup .storage/zone registry
+# (final state as of 2024-12-18). Defined here in YAML so they are
+# version-controlled as part of this configuration.
+#
+# Note: YAML-defined zones are read-only in the HA UI. To make a zone
+# editable again, delete it here and re-add it via Settings > Areas & Zones.
+
+zone:
+  - name: NPL
+    latitude: 51.4230822
+    longitude: -0.3392029
+    radius: 1297.8
+    icon: mdi:death-star
+    passive: false
+
+  - name: Harris Westminster
+    latitude: 51.49964
+    longitude: -0.1312137
+    radius: 424.8
+    icon: mdi:school
+    passive: false
+
+  - name: Imperial
+    latitude: 51.4976038
+    longitude: -0.1770342
+    radius: 542.2
+    icon: mdi:book
+    passive: false
+
+  - name: South Wales
+    latitude: 51.8751989
+    longitude: -3.5147057
+    radius: 62014
+    icon: mdi:map-marker
+    passive: false
+
+  - name: Wimbledon
+    latitude: 51.4208343
+    longitude: -0.2062485
+    radius: 1307.5
+    icon: mdi:map-marker
+    passive: false
+
+  - name: Stef and John's
+    latitude: 51.5873364
+    longitude: -0.1423503
+    radius: 520.2
+    icon: mdi:party-popper
+    passive: false
+
+  - name: RAL
+    latitude: 51.5962374
+    longitude: -1.2964853
+    radius: 4654.7
+    icon: mdi:atom
+    passive: false
+
+  - name: Band practice
+    latitude: 51.4464402
+    longitude: -0.1910054
+    radius: 212
+    icon: mdi:music
+    passive: false
+
+  - name: Central london
+    latitude: 51.5025965
+    longitude: -0.1489274
+    radius: 7836.8
+    icon: mdi:city-variant
+    passive: false
+
+  - name: Norbiton station
+    latitude: 51.4122206
+    longitude: -0.2842801
+    radius: 119.4
+    icon: mdi:map-marker
+    passive: false
+
+  - name: Kingston
+    latitude: 51.4105284
+    longitude: -0.3059537
+    radius: 681.1
+    icon: mdi:crown
+    passive: false
+
+  - name: Wonastow Mill
+    latitude: 51.7913648
+    longitude: -2.7353402
+    radius: 994
+    icon: mdi:heart
+    passive: false
+
+  - name: The Sanctuary
+    latitude: 51.4995857
+    longitude: -0.1320425
+    radius: 34.5
+    icon: mdi:glass-mug-variant
+    passive: false
+
+  - name: Cambridge
+    latitude: 52.2070456
+    longitude: 0.1287532
+    radius: 6761
+    icon: mdi:castle
+    passive: false
+
+  - name: Puebla
+    latitude: 19.0759761
+    longitude: -98.218829
+    radius: 18211
+    icon: mdi:taco
+    passive: false
+
+  - name: Ines house
+    latitude: 51.5596149
+    longitude: -0.281528
+    radius: 254
+    icon: mdi:map-marker
+    passive: false
+
+  - name: Gaby Betts' house
+    latitude: 51.4330896
+    longitude: -0.1545167
+    radius: 119
+    icon: mdi:map-marker
+    passive: false
+
+  - name: CERN
+    latitude: 46.231105
+    longitude: 6.1084591
+    radius: 1252
+    icon: mdi:map-marker
+    passive: false
+
+  - name: Oxford
+    latitude: 51.754483
+    longitude: -1.2603737
+    radius: 5257
+    icon: mdi:chess-rook
+    passive: false
+
+  - name: Vauxhall
+    latitude: 51.4858479
+    longitude: -0.1218065
+    radius: 368
+    icon: mdi:train
+    passive: false
+
+  - name: Baynhams Brewery
+    latitude: 50.8040206
+    longitude: -1.5718358
+    radius: 205
+    icon: mdi:glass-mug
+    passive: false
+
+  - name: Rob's house
+    latitude: 51.4457994
+    longitude: -0.158143
+    radius: 227
+    icon: mdi:pirate
+    passive: false
+
+  - name: The Doghouse
+    latitude: 51.4681381
+    longitude: -0.1005077
+    radius: 98
+    icon: mdi:dog
+    passive: false
+
+  - name: Heathrow
+    latitude: 51.4707573
+    longitude: -0.4553853
+    radius: 3538
+    icon: mdi:airport
+    passive: false
+
+  - name: The Godhouse
+    latitude: 51.4657587
+    longitude: -0.1572311
+    radius: 177.4
+    icon: mdi:church-outline
+    passive: false
+
+  - name: Harry's house
+    latitude: 50.9164302
+    longitude: -1.4143152
+    radius: 223
+    icon: mdi:lighthouse
+    passive: false
+
+  - name: Casa de georgie
+    latitude: 51.3450798
+    longitude: -2.7794314
+    radius: 263
+    icon: mdi:cat
+    passive: false
+
+  - name: Rancho colorado
+    latitude: 19.0758944
+    longitude: -98.2187825
+    radius: 203
+    icon: mdi:account-cowboy-hat
+    passive: false
