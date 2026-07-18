@@ -966,3 +966,14 @@
     light.master_bedroom_main_lights_right:
       state: 'off'
   metadata: {}
+- id: '1771801736359'
+  name: Master bedroom cosy
+  entities:
+    # Cosy: lamp on at a warm, relaxed brightness, main ceiling lights off.
+    light.master_bedroom_lamp:
+      state: 'on'
+      brightness: 160
+      color_temp: 450
+    light.master_bedroom_main_lights_right:
+      state: 'off'
+  metadata: {}
