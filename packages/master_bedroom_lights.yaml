@@ -14,15 +14,17 @@
 #   one of three USER-EDITABLE scenes (defined in scenes.yaml so they can be tweaked
 #   in the HA Scene editor) and update the state tracker:
 #     scene.master_bedroom_full     - main lights on + lamp full
+#     scene.master_bedroom_cosy     - lamp only, warm & relaxed (~60%)
 #     scene.master_bedroom_dim      - lamp only, gently dimmed (~7%)
 #     scene.master_bedroom_dim_low  - lamp only, barely glowing (~1%)
 #
 # CONTROLS (behaviour is shared across both switches; the bedside one does more)
-#   Bedside switch - 4 buttons (Hue dimmer "Master bedroom wireless switch")
-#     on    -> Full (everything on)
-#     off   -> Everything off
-#     down  -> Cycle the dimmed modes:  dim -> dim_low -> off
-#     up    -> Toggle curtains
+#   Bedside switch - 4 buttons (Hue dimmer "Master bedroom wireless switch"),
+#   listed top to bottom. Each button is one fixed action - no cycling:
+#     on   (top)    -> Main ceiling lights on
+#     up   (2nd)    -> Toggle curtains/blinds (the ONLY button that touches them)
+#     down (3rd)    -> Cosy mode: main lights off, lamp on
+#     off  (bottom) -> Everything off (lamp + main lights; leaves the blinds alone)
 #   Door switch - 2 buttons (Aqara)
 #     right -> Smart cycle through every mode:  off -> full -> dim -> dim_low -> off
 #     left  -> Toggle curtains
@@ -42,6 +44,7 @@ input_select:
     name: Master Bedroom Lights State
     options:
       - "full"
+      - "cosy"
       - "dim"
       - "dim_low"
       - "off"
@@ -115,30 +118,33 @@ script:
         data:
           option: "off"
 
-  # ---------------------------------------------------------------------------
-  # Bedside "down" button: cycle through the dimmed modes only.
-  #   anything bright/off -> dim -> dim_low -> off
-  # ---------------------------------------------------------------------------
-  master_bedroom_dim_cycle:
-    alias: Master bedroom - cycle dim modes
-    icon: mdi:brightness-6
+  # Bedside "on" (top) button: just turn the main ceiling lights on. The lamp and
+  # blinds are left untouched. The "sync state when main lights on" automation
+  # below records the "full" tracker state, so the door switch's cycle stays sane.
+  master_bedroom_main_on:
+    alias: Master bedroom - main lights on
+    icon: mdi:ceiling-light
     sequence:
-      - choose:
-          - conditions:
-              - condition: state
-                entity_id: input_select.master_bedroom_state
-                state: "dim"
-            sequence:
-              - action: script.master_bedroom_dim_low
-          - conditions:
-              - condition: state
-                entity_id: input_select.master_bedroom_state
-                state: "dim_low"
-            sequence:
-              - action: script.master_bedroom_off
-        default:
-          # From full or off, a press of "down" drops into the first dim level.
-          - action: script.master_bedroom_dim
+      - action: light.turn_on
+        target:
+          entity_id: light.master_bedroom_main_lights_right
+
+  # Bedside "down" (3rd) button: cosy mode - main lights off, lamp on. Applies the
+  # user-editable cosy scene (scenes.yaml) and records the state. Blinds untouched.
+  master_bedroom_cosy:
+    alias: Master bedroom - cosy
+    icon: mdi:sofa
+    sequence:
+      - action: scene.turn_on
+        target:
+          entity_id: scene.master_bedroom_cosy
+        data:
+          transition: 2
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.master_bedroom_state
+        data:
+          option: "cosy"
 
   # ---------------------------------------------------------------------------
   # Door single button: smart cycle that reaches every mode with one button.
@@ -183,19 +189,23 @@ automation:
   # ---------------------------------------------------------------------------
   - id: "1748385723267"
     alias: Master bedroom bedside switch
-    description: 4-button bedside Hue dimmer - full / off / cycle-dim / curtains
+    description: 4-button bedside Hue dimmer - main-on / blinds / cosy / all-off
     use_blueprint:
       path: patpac9/Hue_Dimmer_Switch_Easy_Custom_Buttons.yaml
       input:
         controller: Master bedroom wireless switch
+        # Top: main ceiling lights on
         on_released:
-          - action: script.master_bedroom_full
-        off_released:
-          - action: script.master_bedroom_off
-        down_released:
-          - action: script.master_bedroom_dim_cycle
+          - action: script.master_bedroom_main_on
+        # 2nd: toggle the blinds (only button that touches them)
         up_released:
           - action: script.toggle_blinds
+        # 3rd: cosy mode - main lights off, lamp on
+        down_released:
+          - action: script.master_bedroom_cosy
+        # Bottom: everything off
+        off_released:
+          - action: script.master_bedroom_off
         on_hold_released: []
 
   # ---------------------------------------------------------------------------
