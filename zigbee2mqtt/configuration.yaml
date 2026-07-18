@@ -104,6 +104,8 @@ devices:
     friendly_name: '0x00124b0024fc163b'
   '0xa4c138a087e6d5a8':
     friendly_name: Dishwasher vibration
+  '0x60a423fffe035e5d':
+    friendly_name: Garden main lights
 groups: {}
 availability:
   enabled: true
