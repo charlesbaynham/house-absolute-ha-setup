@@ -102,6 +102,8 @@ devices:
     friendly_name: Garden motion
   '0x00124b0024fc163b':
     friendly_name: '0x00124b0024fc163b'
+  '0xa4c138a087e6d5a8':
+    friendly_name: Dishwasher vibration
 groups: {}
 availability:
   enabled: true
