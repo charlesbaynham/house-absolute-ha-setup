@@ -6,6 +6,12 @@ This is a **Home Assistant configuration repository** (not a development project
 
 **Key principle**: This is a configuration-as-code setup. Changes should be made through YAML edits, not code compilation or builds.
 
+**Best practices skill**: `.claude/skills/home-assistant-best-practices/` (vendored from
+[homeassistant-ai/skills](https://github.com/homeassistant-ai/skills)) has detailed guidance on
+native triggers/conditions vs. templates, helper selection, automation modes, entity_id vs
+device_id, Zigbee patterns, blueprints, and dashboard cards. Claude Code loads it automatically;
+consult it before writing or editing automations, scripts, scenes, blueprints, or dashboards.
+
 ## Architecture & Structure
 
 ### Core Configuration Pattern
