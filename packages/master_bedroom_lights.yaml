@@ -21,10 +21,11 @@
 # CONTROLS (behaviour is shared across both switches; the bedside one does more)
 #   Bedside switch - 4 buttons (Hue dimmer "Master bedroom wireless switch"),
 #   listed top to bottom. Each button is one fixed action - no cycling:
-#     on   (top)    -> Main ceiling lights on
-#     up   (2nd)    -> Toggle curtains/blinds (the ONLY button that touches them)
-#     down (3rd)    -> Cosy mode: main lights off, lamp on
-#     off  (bottom) -> Everything off (lamp + main lights; leaves the blinds alone)
+#     on   (top)      -> Main ceiling lights on
+#     up   (2nd)      -> Toggle curtains/blinds (the ONLY button that touches them)
+#     down (3rd)      -> Cosy mode: main lights off, lamp on
+#     off  (bottom)   -> Everything off (lamp + main lights; leaves the blinds alone)
+#     off  (hold)     -> Toggle the bedroom fan (fan.master_bedroom_fan)
 #   Door switch - 2 buttons (Aqara)
 #     right -> Smart cycle through every mode:  off -> full -> dim -> dim_low -> off
 #     left  -> Toggle curtains
@@ -189,7 +190,7 @@ automation:
   # ---------------------------------------------------------------------------
   - id: "1748385723267"
     alias: Master bedroom bedside switch
-    description: 4-button bedside Hue dimmer - main-on / blinds / cosy / all-off
+    description: 4-button bedside Hue dimmer - main-on / blinds / cosy / all-off / hold-off toggles fan
     use_blueprint:
       path: patpac9/Hue_Dimmer_Switch_Easy_Custom_Buttons.yaml
       input:
@@ -207,6 +208,11 @@ automation:
         off_released:
           - action: script.master_bedroom_off
         on_hold_released: []
+        # Bottom, held: toggle the bedroom fan
+        off_hold_released:
+          - action: fan.toggle
+            target:
+              entity_id: fan.master_bedroom_fan
 
   # ---------------------------------------------------------------------------
   # DOOR SWITCH (2 buttons) - Aqara, raw MQTT device actions.
