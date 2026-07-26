@@ -55,3 +55,9 @@ curl -sS -X POST -H "Authorization: Bearer $HA_TOKEN" -H "Content-Type: applicat
 `git add .` across the entire `/config` directory and auto-commits/pushes everything in it — this
 repo *is* the live HA config directory, already includes a tracked `secrets.yaml`, and has no
 secret-scanning safety net. Keep the token in the process environment only.
+
+## Names
+
+- **Gaby** is spelled with a single "b". The user dictates messages via voice, which consistently
+  mistranscribes this as "Gabby" (double b) — treat "Gabby" in dictated user messages as a
+  mistranscription of "Gaby", not a different person.
