@@ -1,15 +1,25 @@
 ---
-applyTo: "**chore**"
+name: chore-tracking
+description: >
+  How the chore-tracking feature works and how to safely modify or extend it.
+
+  TRIGGER THIS SKILL WHEN:
+  - Editing packages/chore_tracking.yaml or dashboards/chore-tracking.yaml
+  - Adding a new person to chore tracking
+  - Changing chore timeout durations, reminder cadence, or utility meter periods
+  - Debugging chore mode not starting/stopping, wrong minute counts, or the Aqara switch
+metadata:
+  version: 1
 ---
 
-# Chore Mode Configuration - AI Agent Guide
+# Chore Mode Configuration
 
 ## Purpose
 Chore Mode tracks household chore time for Charles and Gaby, controlled by a dual-button Aqara switch. It logs minutes while active, provides timeout logic, and offers an "extended" mode with periodic reminders. This guidance explains how it works and how to safely modify or extend it.
 
 ## Core Concepts
 - **People**: Charles and Gaby.
-- **Control Methods**: 
+- **Control Methods**:
   - **Aqara switch** `device_id: eea20367040d6e9ad92eee3f0dc0ede2`:
     - `single_left`: Start/renew Charles' session; if extended mode is ON, single press turns it OFF.
     - `single_right`: Start/renew Gaby's session; if extended mode is ON, single press turns it OFF.
@@ -96,7 +106,7 @@ Create rolling aggregates for minutes:
 - Ensure all `entity_id` references exist after changes; mismatches will break automations.
 - Validate templates after edits for `none`/`unavailable` handling (pattern used in file avoids errors).
 - Keep extended-mode ON/OFF logic symmetrical across both people to avoid inconsistent behavior.
-- Ensure that the instructions at `.github/instructions/chores.instructions.md` are updated if significant changes are made to functionality or entities.
+- Ensure this skill (`.claude/skills/chore-tracking/SKILL.md`) is updated if significant changes are made to functionality or entities.
 
 ## Known Design Decisions
 - `input_number.chore_minutes_*` maintains all-time totals that continuously accumulate; utility meters create rolling daily/weekly/monthly aggregates from these totals.

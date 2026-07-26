@@ -1,4 +1,6 @@
 ---
+# See .claude/skills/chore-tracking/SKILL.md before editing this file.
+#
 # Chore Tracking Package
 #
 # Tracks chore time for Charles and Gaby using a dual-button Aqara switch.
