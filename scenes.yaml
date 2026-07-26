@@ -935,13 +935,16 @@
       friendly_name: Living room lamp tall
       supported_features: 44
       state: 'on'
-    light.fairy_lights_fairy_lights:
-      supported_color_modes:
-      - onoff
-      color_mode: onoff
-      friendly_name: Fairy lights Fairy lights
-      supported_features: 0
-      state: 'on'
+    # DORMANT: the fairy lights socket was repurposed as the master bedroom fan
+    # (see FAIRY_LIGHTS_DORMANT.md). Uncomment once a replacement socket is
+    # wrapped as light.fairy_lights_fairy_lights again.
+    # light.fairy_lights_fairy_lights:
+    #   supported_color_modes:
+    #   - onoff
+    #   color_mode: onoff
+    #   friendly_name: Fairy lights Fairy lights
+    #   supported_features: 0
+    #   state: 'on'
   icon: mdi:desk-lamp
   metadata: {}
 - id: '1771801736357'

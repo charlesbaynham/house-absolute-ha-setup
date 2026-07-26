@@ -34,6 +34,12 @@
 #   packages). While it is off, the presence sensor neither restores a scene on entry nor
 #   turns the lights off after the no-presence timeout; the manual button controls are
 #   unaffected.
+#
+# FAIRY LIGHTS (DORMANT)
+#   The fairy lights socket was repurposed as the master bedroom fan; there is currently no
+#   fairy lights entity. The area_id: living_room targets below are membership-based, so a
+#   replacement socket added to the Living Room area is picked up automatically with no edits
+#   here. See FAIRY_LIGHTS_DORMANT.md for the full restore procedure.
 
 input_boolean:
   living_room_motion_enabled:
