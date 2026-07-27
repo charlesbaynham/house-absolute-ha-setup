@@ -7,11 +7,20 @@
 # The alarm is automatically disabled on Fridays at 10:00 AM and
 # re-enabled on Sundays at 12:00 PM.
 #
+# A separate "holiday mode" boolean lets you disable the alarm indefinitely
+# (e.g. school holidays) — turning it on switches the alarm off immediately
+# and blocks the Sunday auto re-enable until holiday mode is turned off again.
+# It does NOT turn itself back off, so it must be manually disabled at the
+# end of the holiday.
+#
 # Components:
 # - Two input_datetime helpers for alarm time selection
 # - input_boolean to enable/disable alarm
+# - input_boolean to disable the alarm indefinitely (holiday mode)
 # - Two automations (one for each alarm time)
-# - Two automations for weekend schedule (disable Friday, enable Sunday)
+# - Two automations for weekend schedule (disable Friday, enable Sunday,
+#   the latter gated on holiday mode being off)
+# - One automation to turn the alarm off as soon as holiday mode is enabled
 
 input_datetime:
   gaby_alarm_time_1:
@@ -29,6 +38,9 @@ input_boolean:
   gaby_alarm_enabled:
     name: Gaby's Alarm Enabled
     icon: mdi:alarm-check
+  gaby_alarm_holiday_mode:
+    name: "Gaby's Alarm - DISABLE INDEFINITELY (holiday mode - won't turn back on automatically!)"
+    icon: mdi:airplane
 
 automation:
   - id: '1732500000000'
@@ -159,7 +171,8 @@ automation:
   - id: '1739471156001'
     alias: Gaby's alarm - enable on Sunday
     description: >
-      Automatically enable alarm every Sunday at 12:00 (noon)
+      Automatically enable alarm every Sunday at 12:00 (noon), unless
+      holiday mode is on
     triggers:
       - trigger: time
         at: '12:00:00'
@@ -167,8 +180,29 @@ automation:
       - condition: time
         weekday:
           - sun
+      - condition: state
+        entity_id: input_boolean.gaby_alarm_holiday_mode
+        state: 'off'
     actions:
       - action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.gaby_alarm_enabled
+    mode: single
+
+  - id: '1785400000000'
+    alias: Gaby's alarm - holiday mode activated
+    description: >
+      Immediately turn the alarm off when holiday mode is switched on.
+      Holiday mode does not turn itself back off, and blocks the Sunday
+      auto-enable automation, so the alarm stays off indefinitely until
+      holiday mode is manually disabled again.
+    triggers:
+      - trigger: state
+        entity_id: input_boolean.gaby_alarm_holiday_mode
+        to: 'on'
+    conditions: []
+    actions:
+      - action: input_boolean.turn_off
         target:
           entity_id: input_boolean.gaby_alarm_enabled
     mode: single
