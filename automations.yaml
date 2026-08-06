@@ -180,3 +180,52 @@
     data:
       message: The front door has opened
   mode: single
+- id: gaby_online_alert_bangkok
+  alias: TEMP - Alert Charles when Gaby's phone comes online
+  description: 'Temporary (created 2026-08-06): Charles is meeting Gaby at Bangkok
+    airport and she has his boarding pass. Fires when ANY entity from Gaby''s phone
+    updates (= she found internet), pushes a high-priority notification to Charles''s
+    Pixel 6 with the connection time, sends Gaby a reminder to send the boarding pass,
+    then disables itself. Safe to delete after 2026-08-07.'
+  triggers:
+  - trigger: state
+    entity_id: device_tracker.gaby_phone
+  - trigger: state
+    entity_id: sensor.gaby_phone_battery_level
+  - trigger: state
+    entity_id: sensor.gaby_phone_battery_state
+  - trigger: state
+    entity_id: sensor.gaby_phone_charger_type
+  conditions: []
+  actions:
+  - action: notify.mobile_app_pixel_6
+    data:
+      title: GABY IS ONLINE
+      message: Gaby's phone connected at {{ now().strftime('%H:%M:%S UTC') }} ({{
+        (now().astimezone(now().tzinfo)).strftime('%H:%M') }} server time, {{ trigger.entity_id
+        }} updated). She has internet - ask her for the boarding pass NOW.
+      data:
+        priority: high
+        ttl: 0
+        importance: high
+        channel: alarm_stream
+  - action: notify.mobile_app_gaby_phone
+    data:
+      title: Message from Charles
+      message: Welcome to Thailand, I love you! Please send me my boarding pass as
+        soon as you see this - I need it for the flight. See you at Bangkok airport!
+      data:
+        priority: high
+        ttl: 0
+        importance: high
+  - action: notify.persistent_notification
+    data:
+      title: Gaby online
+      message: 'Gaby''s phone connected at {{ now() }} ({{ trigger.entity_id }}).
+        Location: {{ state_attr(''device_tracker.gaby_phone'',''latitude'') }}, {{
+        state_attr(''device_tracker.gaby_phone'',''longitude'') }}'
+  - action: automation.turn_off
+    data:
+      entity_id: '{{ this.entity_id }}'
+      stop_actions: false
+  mode: single
