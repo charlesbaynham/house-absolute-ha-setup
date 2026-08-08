@@ -41,11 +41,29 @@ curl -sS -X POST -H "Authorization: Bearer $HA_TOKEN" -H "Content-Type: applicat
 ```
 
 **Two distinct change paths — don't conflate them:**
-- Editing YAML in this repo requires a commit/push *and* an HA restart (or targeted reload) to take
-  effect, per the note above.
+- Editing YAML in this repo takes effect only once the change is merged and pulled onto the live
+  instance — see the sync mechanics below.
 - Calling the live API takes effect immediately but does **not** touch this repo — UI/API-driven
   changes (helpers, automations created via config flow, entity renames) only show up here after
   `gitsync.sh` next runs `git add . && git commit` inside `/config`.
+
+**How changes move between this repo and the live instance — two mechanisms, one direction each:**
+- **Push (live → repo):** `gitsync.sh`, invoked by the "Auto-commit configuration changes"
+  automation every 5 minutes, runs `git add .`, `git commit -am`, `git push` inside `/config`.
+  It captures UI/API-driven changes. It deliberately does **not** pull.
+- **Pull (repo → live):** the **Git pull add-on** watches the remote, pulls merged commits into
+  `/config`, and restarts Home Assistant when the config changed in a way that requires it. This
+  is what makes a merged PR take effect — you normally do **not** need to call a reload service
+  or restart HA yourself after merging.
+
+**Never add `git pull` back into `gitsync.sh`.** It creates a race: if `gitsync.sh` pulls the
+remote commits first, the add-on finds nothing new to pull, treats the config as unchanged, and
+skips the restart. The merged YAML then sits on disk, live-but-unapplied, until something else
+restarts HA. (This bug was live until 2026-07-26 and is why a merged scene change that day landed
+on disk without ever taking effect.)
+
+The add-on restarts only when the change warrants it, so *not* observing a restart after a merge
+is not by itself evidence that the mechanism is broken.
 
 **Never write `$HA_TOKEN` (or any derived credential) to a file in this repo.** `gitsync.sh` runs
 `git add .` across the entire `/config` directory and auto-commits/pushes everything in it — this
