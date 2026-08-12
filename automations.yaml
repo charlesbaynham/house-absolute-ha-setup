@@ -229,3 +229,37 @@
       entity_id: '{{ this.entity_id }}'
       stop_actions: false
   mode: single
+- id: pve_backup_notify
+  alias: PVE/PBS backup notifications
+  description: Backup runbook J.4 - push from Proxmox, PBS and ZED. Webhook id is
+    the auth; local_only.
+  triggers:
+  - platform: webhook
+    webhook_id: pve-backup-976f2988952f9c729dcc38b6
+    allowed_methods:
+    - POST
+    local_only: true
+  actions:
+  - data:
+      title: '{{ n_title }}'
+      message: '[{{ n_sev }}] {{ n_msg }}'
+      data:
+        priority: high
+        ttl: 0
+        channel: Homeserver backups
+        importance: high
+    action: notify.mobile_app_pixel_6
+  - data:
+      title: '{{ n_title }}'
+      message: '[{{ n_sev }}] {{ n_msg }}'
+      notification_id: pve_backup_{{ (now().timestamp() * 1000) | int }}
+    action: persistent_notification.create
+  variables:
+    n_title: '{{ trigger.json.title   | default(''Homeserver backup'', true) if trigger.json
+      is defined else ''Homeserver backup'' }}'
+    n_msg: '{{ trigger.json.message | default(''(no body)'', true)        if trigger.json
+      is defined else ''(no body)'' }}'
+    n_sev: '{{ trigger.json.severity | default(''unknown'', true)         if trigger.json
+      is defined else ''unknown'' }}'
+  mode: queued
+  max: 25
