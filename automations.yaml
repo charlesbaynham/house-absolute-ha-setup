@@ -235,7 +235,7 @@
     the auth; local_only.
   triggers:
   - platform: webhook
-    webhook_id: pve-backup-976f2988952f9c729dcc38b6
+    webhook_id: pve-backup-3eb59cfe775d03a292750a4d
     allowed_methods:
     - POST
     local_only: true
