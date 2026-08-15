@@ -9,3 +9,5 @@ deps
 .ha_run.lock
 automations_old.yaml
 *.swp
+
+# git_pull round-trip probe, 2026-08-15 — safe to delete
