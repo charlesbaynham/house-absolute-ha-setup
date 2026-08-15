@@ -38,12 +38,17 @@ http:
 
 template: !include template_sensors.yaml
 
+# Telemetry goes to the LAN-only container on homeserver (CT 107), not to the
+# add-on on this box. api_version 2 is the org/bucket/token shape; the token is
+# in secrets.yaml, which is deliberately untracked because this repo is public.
 influxdb:
-  host: a0d7b954-influxdb
+  api_version: 2
+  host: 10.0.1.33
   port: 8086
-  database: homeassistant
-  username: homeassistant
-  password: homeassistant
+  ssl: false
+  token: !secret influxdb_token
+  organization: house
+  bucket: homeassistant
   max_retries: 3
   default_measurement: state
 
