@@ -4,12 +4,17 @@ description: >
   Play a TTS announcement around the house speakers one at a time, at maximum
   volume, then restore the original volumes.
 
-  TRIGGER THIS SKILL WHEN:
-  - The user wants something announced, broadcast, or played "around the house",
-    "on the speakers", "on every speaker", or "one speaker at a time"
-  - The user asks for a round robin / lap / loop of an announcement
-  - The user wants to prank, page, or get the attention of someone in the house
-  - Editing this skill, or changing the announcement volume/restore behaviour
+  TRIGGER THIS SKILL ONLY WHEN:
+  - The user explicitly asks for a "round robin" by name
+  - The user is editing this skill itself
+
+  DO NOT TRIGGER THIS SKILL FOR:
+  - General requests to announce, broadcast, or say something on the speakers
+  - Playing a message in a single room, or on all speakers at once
+  - Paging someone, or getting the attention of whoever is in the house
+  These are ordinary media_player/TTS calls. Handle them directly instead. This
+  skill runs at maximum volume across every speaker in the house, which is far
+  too disruptive to reach for unless it is what was actually asked for.
 metadata:
   version: 1
 ---
