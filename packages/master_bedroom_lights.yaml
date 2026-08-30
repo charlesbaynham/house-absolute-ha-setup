@@ -35,6 +35,12 @@
 #   other means (app, voice, the rain-warning package): turning the main lights on
 #   means "full", and everything going off means "off".
 #
+# SCENE COLOUR TEMPERATURE
+#   The lamp scenes in scenes.yaml must express colour temperature as
+#   `color_temp_kelvin`. The mireds-based `color_temp` was removed in HA 2026.3;
+#   a scene still using it applies its brightness but silently ignores the
+#   colour, leaving the lamp on whatever colour it happened to be showing.
+#
 # RELATED
 #   The rain-warning package (packages/rain_warning.yaml) still flashes the lamp
 #   green/blue on the first morning turn-on. With the old cascade gone it no longer
