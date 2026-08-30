@@ -826,7 +826,7 @@
     light.master_bedroom_lamp:
       state: 'on'
       brightness: 18
-      color_temp: 500
+      color_temp_kelvin: 2000
     light.master_bedroom_main_lights_right:
       state: 'off'
   metadata: {}
@@ -954,7 +954,7 @@
     light.master_bedroom_lamp:
       state: 'on'
       brightness: 255
-      color_temp: 370
+      color_temp_kelvin: 2700
     light.master_bedroom_main_lights_right:
       state: 'on'
   metadata: {}
@@ -965,7 +965,7 @@
     light.master_bedroom_lamp:
       state: 'on'
       brightness: 3
-      color_temp: 500
+      color_temp_kelvin: 2000
     light.master_bedroom_main_lights_right:
       state: 'off'
   metadata: {}
@@ -976,7 +976,7 @@
     light.master_bedroom_lamp:
       state: 'on'
       brightness: 160
-      color_temp: 450
+      color_temp_kelvin: 2200
     light.master_bedroom_main_lights_right:
       state: 'off'
   metadata: {}

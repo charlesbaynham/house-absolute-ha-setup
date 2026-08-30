@@ -14,9 +14,29 @@
 #
 # Features:
 # - Detects first lamp turn-on after 5am each day
-# - Checks weather forecast for rain/precipitation and temperature
+# - Fetches today's forecast via the weather.get_forecasts action
 # - Flashes the appropriate colour for 10 seconds
+# - Restores the lamp to exactly how it was set before the flash
 # - Resets at midnight for next day
+#
+# HISTORY / GOTCHAS - please read before editing:
+# 1. The old restore step used `color_temp: 370` (mireds). That parameter was
+#    removed from light.turn_on in HA 2026.3, so the step raised
+#    "extra keys not allowed @ data['color_temp']", the automation aborted, and
+#    the lamp was left stuck on the flash colour indefinitely. Light colour is
+#    now ALWAYS set in Kelvin (`color_temp_kelvin`) - never mireds.
+# 2. Rather than restoring a hard-coded brightness/colour, the lamp's state is
+#    snapshotted with scene.create before the flash and restored afterwards, so
+#    whatever mode was actually being applied (cosy/dim/full/app/voice)
+#    survives.
+# 3. The forecast is fetched with weather.get_forecasts. The old code read
+#    `state_attr('weather.forecast_home', 'forecast')`, but the forecast
+#    attribute was removed from weather entities in HA 2024.4 - it returns None,
+#    so the forecast half of the logic was dead and only the *current* condition
+#    was ever consulted. That is why a day with 1.1mm of rain forecast still
+#    flashed green.
+# 4. Met.no's daily forecast has no precipitation_probability, so rain is
+#    detected from the condition OR the forecast precipitation in mm.
 
 input_boolean:
   rain_warning_shown_today:
@@ -24,129 +44,129 @@ input_boolean:
     icon: mdi:weather-rainy
     initial: false
 
-template:
-  - binary_sensor:
-      - name: "Rain Expected Today"
-        unique_id: rain_expected_today
-        state: >
-          {% set weather_entity = 'weather.forecast_home' %}
-          {% if states(weather_entity) != 'unavailable' and states(weather_entity) != 'unknown' %}
-            {% set current_condition = states(weather_entity) %}
-            {% set forecast = state_attr(weather_entity, 'forecast') %}
-            {% set rain_conditions = ['rainy', 'pouring', 'snowy-rainy', 'lightning-rainy'] %}
-            
-            {# Check current condition #}
-            {% set current_rain = current_condition in rain_conditions %}
-            
-            {# Check forecast for today only (first forecast period) #}
-            {% set forecast_rain = false %}
-            {% if forecast and forecast|length > 0 %}
-              {% if forecast[0].condition in rain_conditions %}
-                {% set forecast_rain = true %}
-              {% endif %}
-            {% endif %}
-            
-            {{ current_rain or forecast_rain }}
-          {% else %}
-            false
-          {% endif %}
-        device_class: moisture
-        icon: >
-          {% if this.state == 'on' %}
-            mdi:weather-rainy
-          {% else %}
-            mdi:weather-sunny
-          {% endif %}
-
 automation:
   - id: '1739240000000'
     alias: Master bedroom rain warning on first light
     description: >-
       Flash master bedroom lamp on first turn-on after 5am to indicate the
-      day's forecast: blue = rain, red = no rain but hot (>25°C), green = otherwise.
+      day's forecast: blue = rain, red = no rain but hot (>25°C),
+      green = otherwise.
     triggers:
-    - trigger: state
-      entity_id: light.master_bedroom_lamp
-      to: 'on'
-    conditions:
-    - condition: time
-      after: '05:00:00'
-    - condition: state
-      entity_id: input_boolean.rain_warning_shown_today
-      state: 'off'
-    actions:
-    # Mark warning as shown for today
-    - action: input_boolean.turn_on
-      metadata: {}
-      data: {}
-      target:
-        entity_id: input_boolean.rain_warning_shown_today
-    # Flash colour based on forecast
-    - choose:
-      - conditions:
-        - condition: state
-          entity_id: binary_sensor.rain_expected_today
-          state: 'on'
-        sequence:
-        # Blue = rain expected
-        - action: light.turn_on
-          metadata: {}
-          data:
-            rgb_color: [0, 0, 255]
-            brightness: 255
-          target:
-            entity_id: light.master_bedroom_lamp
-      - conditions:
-        - condition: template
-          value_template: >
-            {% set forecast = state_attr('weather.forecast_home', 'forecast') %}
-            {% if forecast and forecast | length > 0 %}
-              {{ forecast[0].temperature | float(0) > 25 }}
-            {% else %}
-              {{ state_attr('weather.forecast_home', 'temperature') | float(0) > 25 }}
-            {% endif %}
-        sequence:
-        # Red = no rain, temperature > 25°C
-        - action: light.turn_on
-          metadata: {}
-          data:
-            rgb_color: [255, 0, 0]
-            brightness: 255
-          target:
-            entity_id: light.master_bedroom_lamp
-      default:
-      # Green = no rain, temperature ≤ 25°C
-      - action: light.turn_on
-        metadata: {}
-        data:
-          rgb_color: [0, 255, 0]
-          brightness: 255
-        target:
-          entity_id: light.master_bedroom_lamp
-    # Wait 10 seconds to show the colour
-    - delay:
-        seconds: 10
-    # Return to normal operation (user can adjust after)
-    - action: light.turn_on
-      metadata: {}
-      data:
-        brightness: 128
-        color_temp: 370
-      target:
+      - trigger: state
         entity_id: light.master_bedroom_lamp
+        from: 'off'
+        to: 'on'
+    conditions:
+      - condition: time
+        after: '05:00:00'
+      - condition: state
+        entity_id: input_boolean.rain_warning_shown_today
+        state: 'off'
+    actions:
+      # Mark warning as shown for today
+      - action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.rain_warning_shown_today
+
+      # Whatever turned the lamp on may still be transitioning (the bedroom
+      # scenes use a 1-2s transition), so let it settle before snapshotting.
+      - delay:
+          seconds: 3
+
+      # Remember exactly how the lamp is set, so the flash can be undone. This
+      # runs BEFORE the flash so that a failure here means no flash at all,
+      # rather than a flash we cannot undo.
+      - action: scene.create
+        data:
+          scene_id: rain_warning_restore
+          snapshot_entities:
+            - light.master_bedroom_lamp
+
+      # Today's forecast. Fetched before the flash for the same reason.
+      - action: weather.get_forecasts
+        target:
+          entity_id: weather.forecast_home
+        data:
+          type: daily
+        response_variable: forecasts
+
+      - variables:
+          # Prefer the entry actually dated today; fall back to the first one.
+          today: >-
+            {% set day_data = forecasts.get('weather.forecast_home', {}) %}
+            {% set fc = day_data.get('forecast', []) %}
+            {% set today_iso = now().strftime('%Y-%m-%d') %}
+            {% set dated =
+                 fc | selectattr('datetime', 'match', today_iso) | list %}
+            {{ (dated | first) if dated else ((fc | first) if fc else {}) }}
+          # Met.no gives no precipitation_probability, so use condition or mm.
+          rain_expected: >-
+            {{ today.get('condition') in
+                 ['rainy', 'pouring', 'snowy-rainy',
+                  'lightning-rainy', 'hail', 'snowy']
+               or (today.get('precipitation') | float(0)) >= 0.5 }}
+          hot_day: "{{ (today.get('temperature') | float(0)) > 25 }}"
+
+      # Flash the forecast colour. continue_on_error so that a failure here can
+      # never skip the restore below and leave the lamp on a funny colour.
+      - choose:
+          # Blue = rain expected
+          - conditions: "{{ rain_expected }}"
+            sequence:
+              - action: light.turn_on
+                continue_on_error: true
+                target:
+                  entity_id: light.master_bedroom_lamp
+                data:
+                  rgb_color: [0, 0, 255]
+                  brightness: 255
+          # Red = no rain, temperature > 25°C
+          - conditions: "{{ hot_day }}"
+            sequence:
+              - action: light.turn_on
+                continue_on_error: true
+                target:
+                  entity_id: light.master_bedroom_lamp
+                data:
+                  rgb_color: [255, 0, 0]
+                  brightness: 255
+        # Green = no rain, temperature ≤ 25°C
+        default:
+          - action: light.turn_on
+            continue_on_error: true
+            target:
+              entity_id: light.master_bedroom_lamp
+            data:
+              rgb_color: [0, 255, 0]
+              brightness: 255
+
+      # Show the colour for 10 seconds
+      - delay:
+          seconds: 10
+
+      # If the lamp was switched off during the flash, leave it off rather than
+      # turning it back on to restore it.
+      - condition: state
+        entity_id: light.master_bedroom_lamp
+        state: 'on'
+
+      # Put the lamp back exactly how it was before the flash
+      - action: scene.turn_on
+        target:
+          entity_id: scene.rain_warning_restore
+        data:
+          transition: 1
     mode: single
 
   - id: '1739240000001'
     alias: Reset rain warning flag at midnight
     description: Reset the rain warning shown flag at midnight each day
     triggers:
-    - trigger: time
-      at: '00:00:00'
+      - trigger: time
+        at: '00:00:00'
     conditions: []
     actions:
-    - action: input_boolean.turn_off
-      metadata: {}
-      data: {}
-      target:
-        entity_id: input_boolean.rain_warning_shown_today
+      - action: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.rain_warning_shown_today
     mode: single
