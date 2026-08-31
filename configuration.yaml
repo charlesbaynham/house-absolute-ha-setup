@@ -30,10 +30,18 @@ scene: !include scenes.yaml
 shell_command:
   git_commit_push: /config/gitsync.sh
 
-# for nginx reverse proxy
+# Reverse proxies allowed to set X-Forwarded-For. ⚠️ A proxy that is not listed
+# has its requests REJECTED, not merely mistrusted — this list is what makes a
+# route work at all, not just what makes the client IP correct.
 http:
   use_x_forwarded_for: true
   trusted_proxies:
+    # wallfacer (VM 102), the border router. It terminates TLS for
+    # automation.houseabsolute.co.uk and proxies here over plain HTTP, which is
+    # why HA's own listener needs no certificate.
+    - 10.0.1.31/32
+    # The add-on network, for the NGINX SSL proxy add-on on :443. Redundant once
+    # wallfacer serves the name; remove it when that add-on is uninstalled.
     - 172.30.33.0/24
 
 template: !include template_sensors.yaml
