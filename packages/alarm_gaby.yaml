@@ -10,8 +10,10 @@
 # A separate "holiday mode" boolean lets you disable the alarm indefinitely
 # (e.g. school holidays) — turning it on switches the alarm off immediately
 # and blocks the Sunday auto re-enable until holiday mode is turned off again.
-# It does NOT turn itself back off, so it must be manually disabled at the
-# end of the holiday.
+# Turning the alarm back ON by hand (e.g. at the end of the holiday) clears
+# holiday mode automatically, so the Sunday schedule resumes without a
+# separate step to remember. Holiday mode itself still does NOT turn itself
+# off — the alarm has to be switched on for that to happen.
 #
 # Components:
 # - Two input_datetime helpers for alarm time selection
@@ -21,6 +23,9 @@
 # - Two automations for weekend schedule (disable Friday, enable Sunday,
 #   the latter gated on holiday mode being off)
 # - One automation to turn the alarm off as soon as holiday mode is enabled
+# - One automation to clear holiday mode as soon as the alarm is switched
+#   back on by hand, so re-enabling after a holiday doesn't leave the Sunday
+#   auto-enable silently blocked
 
 input_datetime:
   gaby_alarm_time_1:
@@ -205,4 +210,27 @@ automation:
       - action: input_boolean.turn_off
         target:
           entity_id: input_boolean.gaby_alarm_enabled
+    mode: single
+
+  - id: '1785400000001'
+    alias: Gaby's alarm - clear holiday mode when alarm re-enabled
+    description: >
+      Turn holiday mode off as soon as the alarm is switched back on by
+      hand. Without this, re-enabling the alarm at the end of a holiday
+      leaves holiday mode on, and the following Sunday's auto-enable
+      silently does nothing because it is gated on holiday mode being off
+      (the alarm then quietly turns itself off again on the next Friday
+      and never comes back). Found the hard way, 2026-09-07.
+    triggers:
+      - trigger: state
+        entity_id: input_boolean.gaby_alarm_enabled
+        to: 'on'
+    conditions:
+      - condition: state
+        entity_id: input_boolean.gaby_alarm_holiday_mode
+        state: 'on'
+    actions:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.gaby_alarm_holiday_mode
     mode: single
