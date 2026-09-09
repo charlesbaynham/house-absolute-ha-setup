@@ -141,20 +141,34 @@ automation:
   - id: '1779354200000'
     alias: Gaby bedroom lights off when away
     description: >
-      Turn off bedroom lights when Gaby has been away from home for 5 minutes
+      Turn off bedroom lights when Gaby has been away from home for 5 minutes.
+
+      NOTE: person.gaby almost never reports the literal state "not_home" —
+      the overlapping zones in packages/zones.yaml (The Sanctuary, Harris
+      Westminster, Westminster, Central london, ...) mean that leaving home
+      nearly always lands her in one of those named zones instead, so a
+      trigger looking for `to: not_home` essentially never fires. Trigger on
+      leaving the "home" state instead (any destination state), then use a
+      delay + recheck so a same-day return within 5 minutes cancels the
+      light-off. Found 2026-09-09: lights were still on because this
+      automation had never once fired.
     triggers:
       - trigger: state
         entity_id: person.gaby
         from: home
-        to: not_home
-        for:
-          minutes: 5
     conditions: []
     actions:
+      - delay:
+          minutes: 5
+      - condition: not
+        conditions:
+          - condition: state
+            entity_id: person.gaby
+            state: home
       - action: light.turn_off
         target:
           area_id: bedroom
-    mode: single
+    mode: restart
 
   - id: '1739471156000'
     alias: Gaby's alarm - disable on Friday
