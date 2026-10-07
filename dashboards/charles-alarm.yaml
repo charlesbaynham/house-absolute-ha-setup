@@ -1,0 +1,109 @@
+# Dashboard for Charles's alarm (packages/alarm_charles.yaml).
+title: Charles's alarm
+views:
+  - title: Alarm
+    path: alarm
+    icon: mdi:alarm
+    type: sections
+    max_columns: 2
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Alarm
+            icon: mdi:alarm
+          - type: markdown
+            content: |
+              {% set on = is_state('input_boolean.charles_alarm_enabled', 'on') %}
+              {% set times = [states('input_datetime.charles_alarm_time_1'),
+                              states('input_datetime.charles_alarm_time_2')]
+                 | reject('in', ['unknown', 'unavailable']) | sort | list %}
+              {% if is_state('input_boolean.charles_alarm_holiday_mode', 'on') %}
+              ## ✈️ Holiday mode — alarm off until switched back on
+              {% elif not on %}
+              ## 💤 Alarm off
+              Turns back on automatically Sunday at 12:00.
+              {% elif not times %}
+              ## ⚠️ Alarm on, but no time set
+              {% else %}
+              {% set now_t = now().strftime('%H:%M:%S') %}
+              {% set later = times | select('>', now_t) | list %}
+              {% set next = (later | first) if later else (times | first) %}
+              ## ⏰ Next: {{ next[:5] }} {{ 'today' if later else 'tomorrow' }}
+              {% if now().weekday() == 4 and now().hour < 10 %}
+              Switches off at 10:00 today for the weekend.
+              {% endif %}
+              {% endif %}
+          - type: tile
+            entity: input_boolean.charles_alarm_enabled
+            name: Alarm on
+            features_position: inline
+            features:
+              - type: toggle
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: input_datetime.charles_alarm_time_1
+            name: Time 1
+            icon: mdi:alarm
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: input_datetime.charles_alarm_time_2
+            name: Time 2
+            icon: mdi:alarm-multiple
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: input_boolean.charles_alarm_holiday_mode
+            name: Holiday mode (stays off until alarm re-enabled)
+            features_position: inline
+            features:
+              - type: toggle
+            grid_options:
+              columns: 12
+          - type: button
+            name: Test alarm now
+            icon: mdi:play-circle
+            tap_action:
+              action: perform-action
+              perform_action: automation.trigger
+              target:
+                entity_id: automation.charles_s_morning_alarm
+              data:
+                skip_condition: true
+              confirmation:
+                text: Flash the lamp and open the blinds now?
+            grid_options:
+              columns: 12
+              rows: 2
+
+      - type: grid
+        cards:
+          - type: heading
+            heading: Master bedroom
+            icon: mdi:bed-king
+          - type: tile
+            entity: light.master_bedroom_lamp
+            name: Lamp
+            features_position: inline
+            features:
+              - type: toggle
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: cover.master_bedroom_blinds
+            name: Blinds
+            features_position: inline
+            features:
+              - type: cover-open-close
+            grid_options:
+              columns: 12
+          - type: logbook
+            title: Recent alarms
+            target:
+              entity_id:
+                - automation.charles_s_morning_alarm
+            hours_to_show: 168
+            grid_options:
+              columns: full
