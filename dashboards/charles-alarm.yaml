@@ -14,22 +14,16 @@ views:
             icon: mdi:alarm
           - type: markdown
             content: |
-              {% set on = is_state('input_boolean.charles_alarm_enabled', 'on') %}
-              {% set times = [states('input_datetime.charles_alarm_time_1'),
-                              states('input_datetime.charles_alarm_time_2')]
-                 | reject('in', ['unknown', 'unavailable']) | sort | list %}
+              {% set t = states('input_datetime.charles_alarm_time_1') %}
               {% if is_state('input_boolean.charles_alarm_holiday_mode', 'on') %}
               ## ✈️ Holiday mode — alarm off until switched back on
-              {% elif not on %}
+              {% elif is_state('input_boolean.charles_alarm_enabled', 'off') %}
               ## 💤 Alarm off
               Turns back on automatically Sunday at 12:00.
-              {% elif not times %}
+              {% elif t in ['unknown', 'unavailable'] %}
               ## ⚠️ Alarm on, but no time set
               {% else %}
-              {% set now_t = now().strftime('%H:%M:%S') %}
-              {% set later = times | select('>', now_t) | list %}
-              {% set next = (later | first) if later else (times | first) %}
-              ## ⏰ Next: {{ next[:5] }} {{ 'today' if later else 'tomorrow' }}
+              ## ⏰ Next: {{ t[:5] }} {{ 'today' if t > now().strftime('%H:%M:%S') else 'tomorrow' }}
               {% if now().weekday() == 4 and now().hour < 10 %}
               Switches off at 10:00 today for the weekend.
               {% endif %}
@@ -44,16 +38,10 @@ views:
               columns: 12
           - type: tile
             entity: input_datetime.charles_alarm_time_1
-            name: Time 1
+            name: Alarm time
             icon: mdi:alarm
             grid_options:
-              columns: 6
-          - type: tile
-            entity: input_datetime.charles_alarm_time_2
-            name: Time 2
-            icon: mdi:alarm-multiple
-            grid_options:
-              columns: 6
+              columns: 12
           - type: tile
             entity: input_boolean.charles_alarm_holiday_mode
             name: Holiday mode (stays off until alarm re-enabled)
@@ -73,7 +61,7 @@ views:
               data:
                 skip_condition: true
               confirmation:
-                text: Flash the lamp and open the blinds now?
+                text: Turn on the lamp and open the blinds now?
             grid_options:
               columns: 12
               rows: 2

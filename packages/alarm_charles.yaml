@@ -1,34 +1,26 @@
 ---
 # Charles's Morning Alarm Package
 #
-# A copy of Gaby's alarm (packages/alarm_gaby.yaml) for the master bedroom.
-# When either alarm time triggers, the master bedroom lamp flashes 3 times,
-# then is left on (cosy scene) and the blinds open. The main ceiling lights
-# and the hallway are not touched.
+# Based on Gaby's alarm (packages/alarm_gaby.yaml), for the master bedroom, but
+# with a single alarm time and no flashing: when the alarm triggers, the master
+# bedroom lamp turns on (cosy scene) and stays on, and the blinds open. The main
+# ceiling lights and the hallway are not touched.
+#
+# The helper keeps the entity ID input_datetime.charles_alarm_time_1 from when
+# this package had two alarm times, so an already-set time survives the change.
 #
 # The weekend schedule and holiday mode behave exactly as Gaby's do:
 # disabled Fridays at 10:00, re-enabled Sundays at 12:00 unless holiday mode
 # is on; turning holiday mode on switches the alarm off; switching the alarm
 # back on by hand clears holiday mode.
 #
-# RAIN WARNING INTERACTION
-#   packages/rain_warning.yaml flashes the forecast colour on the lamp's first
-#   turn-on after 5am, snapshotting the lamp first and restoring it 10s later.
-#   Left alone it would fire on the first flash of the alarm, snapshot the
-#   lamp mid-flash (possibly "off"), and restore it to off once the alarm had
-#   finished. So the alarm holds rain_warning_shown_today on while it flashes,
-#   then releases it just before the final turn-on - the forecast colour then
-#   shows cleanly as the alarm's last word, and the lamp is restored to the
-#   cosy scene afterwards.
+# The lamp coming on after 5am also triggers the rain warning
+# (packages/rain_warning.yaml), which briefly shows the forecast colour before
+# restoring the cosy scene.
 
 input_datetime:
   charles_alarm_time_1:
-    name: Charles's Alarm Time 1
-    has_date: false
-    has_time: true
-    icon: mdi:alarm
-  charles_alarm_time_2:
-    name: Charles's Alarm Time 2
+    name: Charles's Alarm Time
     has_date: false
     has_time: true
     icon: mdi:alarm
@@ -45,50 +37,20 @@ automation:
   - id: '1791360000000'
     alias: Charles's morning alarm
     description: >
-      Flash the master bedroom lamp 3 times, leave it on and open the blinds
-      when either of Charles's alarm times triggers
+      Turn on the master bedroom lamp and open the blinds when Charles's
+      alarm time is reached
     triggers:
       - trigger: time
         at: input_datetime.charles_alarm_time_1
-      - trigger: time
-        at: input_datetime.charles_alarm_time_2
     conditions:
       - condition: state
         entity_id: input_boolean.charles_alarm_enabled
         state: 'on'
     actions:
-      - variables:
-          rain_warning_pending: "{{ is_state('input_boolean.rain_warning_shown_today', 'off') }}"
-      # Keep the rain warning from firing mid-flash (see header)
-      - action: input_boolean.turn_on
-        target:
-          entity_id: input_boolean.rain_warning_shown_today
       - action: cover.open_cover
         target:
           entity_id: cover.master_bedroom_blinds
-      # Flash lamp 3 times
-      - repeat:
-          count: 3
-          sequence:
-            - action: light.turn_on
-              target:
-                entity_id: light.master_bedroom_lamp
-            - delay:
-                milliseconds: 1000
-            - action: light.turn_off
-              target:
-                entity_id: light.master_bedroom_lamp
-            - delay:
-                milliseconds: 1000
-      # Hand the rain warning back, so it fires on the final turn-on below
-      - if:
-          - condition: template
-            value_template: "{{ rain_warning_pending }}"
-        then:
-          - action: input_boolean.turn_off
-            target:
-              entity_id: input_boolean.rain_warning_shown_today
-      # Leave the lamp on (also records the state tracker)
+      # Lamp on and left on (also records the state tracker)
       - action: script.master_bedroom_cosy
     mode: single
 
