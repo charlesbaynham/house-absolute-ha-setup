@@ -104,6 +104,8 @@ devices:
     friendly_name: '0x00124b0024fc163b'
   '0xa4c138a087e6d5a8':
     friendly_name: Dishwasher vibration
+  '0xa4c138bf96499ac8':
+    friendly_name: Sensor boiler
 groups: {}
 availability:
   enabled: true
