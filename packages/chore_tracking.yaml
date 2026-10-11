@@ -362,6 +362,51 @@ script:
         data: {}
     mode: single
 
+  chore_add_minutes:
+    alias: "Chores: add one-off minutes"
+    description: >-
+      Credit a one-off block of chore minutes to a person (e.g. for chores
+      done away from the switch). Raising the all-time total is enough: the
+      utility meters pick up the increase on their own.
+    fields:
+      person:
+        description: Person to credit.
+        example: charles
+        required: true
+        selector:
+          select:
+            options:
+              - charles
+              - gaby
+      minutes:
+        description: Minutes to add.
+        example: 30
+        default: 30
+        selector:
+          number:
+            min: 1
+            max: 600
+            unit_of_measurement: min
+    sequence:
+      - variables:
+          who: "{{ person | lower }}"
+          total_entity: "input_number.chore_minutes_{{ who }}"
+          amount: "{{ (minutes | default(30)) | int(0) }}"
+      - condition: template
+        value_template: "{{ who in ['charles', 'gaby'] and amount > 0 }}"
+      - action: input_number.set_value
+        data:
+          value: "{{ states(total_entity) | float(0) + amount }}"
+        target:
+          entity_id: "{{ total_entity }}"
+      - action: logbook.log
+        data:
+          name: Chore tracking
+          message: "added {{ amount }} one-off minutes for {{ who | title }}"
+          entity_id: "{{ total_entity }}"
+    mode: queued
+    max: 10
+
   chore_charles_subtract_minutes:
     alias: "Chores: subtract minutes from Charles meters"
     description: >-

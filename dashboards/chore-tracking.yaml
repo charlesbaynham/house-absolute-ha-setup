@@ -1,150 +1,257 @@
 # See .claude/skills/chore-tracking/SKILL.md before editing this file.
 title: Chore Champions
 views:
-  - title: Overview
-    icon: mdi:trophy
-    cards:
-      - type: markdown
+  - title: Chores
+    path: chores
+    icon: mdi:broom
+    type: sections
+    max_columns: 3
+    header:
+      layout: center
+      card:
+        type: markdown
+        text_only: true
         content: |
+          {% set c = states('sensor.chore_minutes_charles_weekly') | int(0) %}
+          {% set g = states('sensor.chore_minutes_gaby_weekly') | int(0) %}
           # 🏆 Chore Champions
-          *Track your household contributions*
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: >
-              {% set leader = states('sensor.chore_all_time_leader') %}
-              {% set lead = states('sensor.chore_all_time_lead_minutes') | int %}
-              {% if leader == 'Tied' %}
-              #### 🤝 All-time: Tied!
-              {% else %}
-              #### 🏆 {{ leader }} is ahead by {{ lead }} min (all-time)
-              {% endif %}
-          - type: gauge
-            entity: sensor.chore_all_time_lead_minutes
-            name: All-time lead
-            needle: false
-      - square: false
-        type: grid
-        title: Chores today
-        cards:
-          - graph: line
-            type: sensor
-            detail: 1
-            entity: sensor.chore_minutes_charles_daily
-            name: Charles
-          - graph: line
-            type: sensor
-            detail: 1
-            entity: sensor.chore_minutes_gaby_daily
-            name: Gaby
-        columns: 1
+
+          {% if c == g %}
+          **This week: tied on {{ c }} min each**
+          {% else %}
+          **This week: {{ 'Charles' if c > g else 'Gaby' }} leads by {{ (c - g) | abs }} min**
+          {% endif %}
+    sections:
+      # ---------------------------------------------------------------- Scoreboard
       - type: grid
-        title: Chores this week
+        column_span: 3
         cards:
-          - type: gauge
+          - type: heading
+            heading: Scoreboard
+            icon: mdi:trophy
+          - type: markdown
+            content: |
+              {% set periods = [
+                ('Today', 'daily'),
+                ('This week', 'weekly'),
+                ('This month', 'monthly'),
+                ('This year', 'yearly'),
+              ] %}
+              {% macro hm(m) -%}
+              {{ (m // 60) }}h {{ '%02d' | format(m % 60) }}m
+              {%- endmacro %}
+
+              | | Charles | Gaby | Lead |
+              |:--|--:|--:|:--|
+              {% for label, p in periods -%}
+              {% set c = states('sensor.chore_minutes_charles_' ~ p) | int(0) -%}
+              {% set g = states('sensor.chore_minutes_gaby_' ~ p) | int(0) -%}
+              | **{{ label }}** | {{ hm(c) }} | {{ hm(g) }} | {{ 'Tied' if c == g else ('Charles' if c > g else 'Gaby') ~ ' +' ~ hm((c - g) | abs) }} |
+              {% endfor -%}
+              {% set c = states('input_number.chore_minutes_charles') | int(0) -%}
+              {% set g = states('input_number.chore_minutes_gaby') | int(0) -%}
+              | **All time** | {{ hm(c) }} | {{ hm(g) }} | {{ 'Tied' if c == g else ('Charles' if c > g else 'Gaby') ~ ' +' ~ hm((c - g) | abs) }} |
+
+      # ---------------------------------------------------------------- Charles
+      - type: grid
+        cards:
+          - type: heading
+            heading: Charles
+            icon: mdi:account
+            badges:
+              - type: entity
+                entity: sensor.charles_last_activity_relative
+                show_state: true
+                show_icon: true
+          - type: tile
+            entity: input_boolean.chore_mode_charles
+            name: Chore mode
+            icon: mdi:broom
+            color: blue
+            features_position: inline
+            features:
+              - type: toggle
+          - type: tile
+            entity: input_boolean.extended_chore_mode_charles
+            name: Extended mode
+            icon: mdi:timer-lock-outline
+            color: blue
+            features_position: inline
+            features:
+              - type: toggle
+          - type: tile
+            entity: sensor.chore_minutes_charles_daily
+            name: Today
+            icon: mdi:calendar-today
+            grid_options:
+              columns: 6
+          - type: tile
             entity: sensor.chore_minutes_charles_weekly
-            name: Charles
-            needle: false
-          - type: gauge
+            name: This week
+            icon: mdi:calendar-week
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: input_number.extended_session_minutes_charles
+            name: Extended session so far
+            icon: mdi:timer-sand
+            visibility:
+              - condition: state
+                entity: input_boolean.extended_chore_mode_charles
+                state: "on"
+          - type: button
+            name: Add 30 min
+            icon: mdi:plus-circle-outline
+            show_state: false
+            grid_options:
+              columns: 6
+              rows: 2
+            tap_action:
+              action: perform-action
+              perform_action: script.chore_add_minutes
+              data:
+                person: charles
+                minutes: 30
+              confirmation:
+                text: Add 30 one-off chore minutes to Charles?
+          - type: button
+            name: Remove 30 min
+            icon: mdi:minus-circle-outline
+            show_state: false
+            grid_options:
+              columns: 6
+              rows: 2
+            tap_action:
+              action: perform-action
+              perform_action: script.chore_charles_subtract_minutes
+              data:
+                minutes: 30
+              confirmation:
+                text: Remove 30 chore minutes from Charles?
+
+      # ---------------------------------------------------------------- Gaby
+      - type: grid
+        cards:
+          - type: heading
+            heading: Gaby
+            icon: mdi:account
+            badges:
+              - type: entity
+                entity: sensor.gaby_last_activity_relative
+                show_state: true
+                show_icon: true
+          - type: tile
+            entity: input_boolean.chore_mode_gaby
+            name: Chore mode
+            icon: mdi:broom
+            color: pink
+            features_position: inline
+            features:
+              - type: toggle
+          - type: tile
+            entity: input_boolean.extended_chore_mode_gaby
+            name: Extended mode
+            icon: mdi:timer-lock-outline
+            color: pink
+            features_position: inline
+            features:
+              - type: toggle
+          - type: tile
+            entity: sensor.chore_minutes_gaby_daily
+            name: Today
+            icon: mdi:calendar-today
+            grid_options:
+              columns: 6
+          - type: tile
             entity: sensor.chore_minutes_gaby_weekly
-            name: Gaby
-            needle: false
-
-        columns: 2
-      - type: entities
-        title: Charles
-        icon: mdi:account
-        entities:
-          - entity: input_boolean.chore_mode_charles
-            name: Status
-            icon: mdi:circle
-          - entity: input_boolean.extended_chore_mode_charles
-            name: Extended Mode
-            icon: mdi:timer-lock-outline
-          - type: section
-          - entity: sensor.chore_minutes_charles_quick
-            name: This Quarter-Hour
-            icon: mdi:clock-outline
-          - entity: sensor.chore_minutes_charles_daily
-            name: Today
-            icon: mdi:calendar-today
-          - entity: sensor.chore_minutes_charles_weekly
-            name: This Week
+            name: This week
             icon: mdi:calendar-week
-          - entity: sensor.chore_minutes_charles_monthly
-            name: This Month
-            icon: mdi:calendar-month
-          - entity: sensor.chore_minutes_charles_yearly
-            name: This Year
-            icon: mdi:calendar
-          - entity: sensor.chore_minutes_charles
-            name: All-Time Total
-            icon: mdi:timer-sand-complete
-          - type: section
-          - entity: sensor.charles_last_activity_relative
-            name: Last Activity
-            icon: mdi:clock-outline
-      - type: entities
-        title: Gaby
-        icon: mdi:account
-        entities:
-          - entity: input_boolean.chore_mode_gaby
-            name: Status
-            icon: mdi:circle
-          - entity: input_boolean.extended_chore_mode_gaby
-            name: Extended Mode
-            icon: mdi:timer-lock-outline
-          - type: section
-          - entity: sensor.chore_minutes_gaby_quick
-            name: This Quarter-Hour
-            icon: mdi:clock-outline
-          - entity: sensor.chore_minutes_gaby_daily
-            name: Today
-            icon: mdi:calendar-today
-          - entity: sensor.chore_minutes_gaby_weekly
-            name: This Week
-            icon: mdi:calendar-week
-          - entity: sensor.chore_minutes_gaby_monthly
-            name: This Month
-            icon: mdi:calendar-month
-          - entity: sensor.chore_minutes_gaby_yearly
-            name: This Year
-            icon: mdi:calendar
-          - entity: sensor.chore_minutes_gaby
-            name: All-Time Total
-            icon: mdi:timer-sand-complete
-          - type: section
-          - entity: sensor.gaby_last_activity_relative
-            name: Last Activity
-            icon: mdi:clock-outline
-      - type: conditional
-        conditions:
-          - entity: sensor.chore_weekly_leader
-            state_not: Tied
-        card:
-          type: markdown
-          content: >
-            ### 🏆 This Week's Leader: {{ states('sensor.chore_weekly_leader')
-            }}
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: input_number.extended_session_minutes_gaby
+            name: Extended session so far
+            icon: mdi:timer-sand
+            visibility:
+              - condition: state
+                entity: input_boolean.extended_chore_mode_gaby
+                state: "on"
+          - type: button
+            name: Add 30 min
+            icon: mdi:plus-circle-outline
+            show_state: false
+            grid_options:
+              columns: 6
+              rows: 2
+            tap_action:
+              action: perform-action
+              perform_action: script.chore_add_minutes
+              data:
+                person: gaby
+                minutes: 30
+              confirmation:
+                text: Add 30 one-off chore minutes to Gaby?
+          - type: button
+            name: Remove 30 min
+            icon: mdi:minus-circle-outline
+            show_state: false
+            grid_options:
+              columns: 6
+              rows: 2
+            tap_action:
+              action: perform-action
+              perform_action: script.chore_gaby_subtract_minutes
+              data:
+                minutes: 30
+              confirmation:
+                text: Remove 30 chore minutes from Gaby?
 
-            Keep up the great work!
+      # ---------------------------------------------------------------- History
+      - type: grid
+        cards:
+          - type: heading
+            heading: Last two weeks
+            icon: mdi:chart-bar
+          # Per-day change in the all-time totals, so one-off additions and
+          # removals show up on the day they were made.
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.chore_minutes_charles
+                name: Charles
+                color: "#0066FF"
+              - entity: sensor.chore_minutes_gaby
+                name: Gaby
+                color: "#FF69B4"
+            hours_to_show: 336
+            group_by: date
+            aggregate_func: delta
+            lower_bound: 0
+            show:
+              graph: bar
+              state: false
+              legend: true
+              icon: false
+              name: false
+            grid_options:
+              columns: full
+              rows: 4
 
-      - type: custom:mini-graph-card
-        name: 15-minute Chore Minutes
-        icon: mdi:chart-line
-        entities:
-          - entity: sensor.chore_minutes_charles_quick
-            name: Charles
-            color: "#0066FF"
-          - entity: sensor.chore_minutes_gaby_quick
-            name: Gaby
-            color: "#FF69B4"
-        hours_to_show: 2
-        points_per_hour: 4
-        aggregate_func: max
-        line_width: 3
-        animate: true
-        show:
-          graph: bar
-          fill: true
-          legend: true
+      # ---------------------------------------------------------------- Settings
+      - type: grid
+        cards:
+          - type: heading
+            heading: Settings
+            heading_style: subtitle
+            icon: mdi:cog
+          - type: tile
+            entity: input_number.chore_timeout_minutes
+            name: Session timeout
+            features:
+              - type: numeric-input
+                style: buttons
+          - type: tile
+            entity: input_number.extended_chore_timeout_hours
+            name: Extended mode timeout
+            features:
+              - type: numeric-input
+                style: buttons

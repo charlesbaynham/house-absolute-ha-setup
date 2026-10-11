@@ -73,12 +73,15 @@ Create rolling aggregates for minutes:
 - Session counter reset: when extended mode is turned off, reset the session minutes counter.
 
 ### Dashboard
-`dashboards/chore-tracking.yaml` renders gauges and entities:
-- Status and extended mode toggles per person.
-- Time period displays: quarter-hourly (quick), daily, weekly, monthly, yearly, and all-time total meters.
-- Last activity relative.
-- Weekly leader banner when not tied.
-- Mini graph card for quick meters.
+`dashboards/chore-tracking.yaml` is a single `sections` view:
+- Header: this week's leader and margin (markdown).
+- Scoreboard: markdown table of today / week / month / year / all-time per person with the lead.
+- One section per person: chore-mode and extended-mode toggles, today and this-week tiles, the
+  running extended-session count (only while extended mode is on), last activity, and
+  **Add 30 min** / **Remove 30 min** buttons (both with confirmation) calling
+  `script.chore_add_minutes` and `script.chore_<person>_subtract_minutes`.
+- Last two weeks: `mini-graph-card` bar chart of the per-day delta of the all-time totals.
+- Settings: session and extended-mode timeout helpers.
 
 ## Editing Guidelines
 - Use 2-space indentation and standard Home Assistant YAML conventions.
@@ -99,6 +102,7 @@ Create rolling aggregates for minutes:
 - `script.chore_activate_mode`: Parameterized activation entry point for regular chore mode. Pass `person: charles` or `person: gaby` to turn on that person's chore mode, refresh last activity, and flash the kitchen lights. Button automations should call this instead of duplicating the activation sequence.
 - `script.chore_activate_extended_mode`: Parameterized activation entry point for extended chore mode. Pass `person: charles` or `person: gaby` to turn on regular + extended mode together, set the extended start timestamp, reset the session counter, and flash the kitchen lights. External triggers should call this to match button behavior.
 - `script.chore_initialize_yearly_meters`: One-time initialization script to copy current monthly meter values to the yearly meters. Run this manually via the Home Assistant UI when first setting up yearly meters to preserve existing totals.
+- `script.chore_add_minutes`: Credits a one-off block of minutes (`person`, `minutes`, default 30) by raising `input_number.chore_minutes_<person>`; the utility meters absorb the increase without calibration. Logs a logbook entry. `mode: queued` so repeated taps all count.
 - `script.chore_charles_subtract_minutes`: Subtracts a specified number of minutes from all Charles chore meters (all-time total `input_number.chore_minutes_charles`, plus all utility meters: quick, daily, weekly, monthly, yearly). Pass `minutes` as a field.
 - `script.chore_gaby_subtract_minutes`: Subtracts a specified number of minutes from all Gaby chore meters (all-time total `input_number.chore_minutes_gaby`, plus all utility meters: quick, daily, weekly, monthly, yearly). Pass `minutes` as a field.
 
