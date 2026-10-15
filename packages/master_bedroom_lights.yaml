@@ -1,39 +1,40 @@
 ---
 # Master Bedroom Lights Package
 #
-# Controls the master bedroom through three light "ingredients":
+# Controls the master bedroom through three "ingredients":
 #   - Lamp  (light.master_bedroom_lamp)               dimmable + colour
 #   - Main ceiling lights (light.master_bedroom_main_lights_right)  on/off only
 #   - Curtains (cover.master_bedroom_blinds, via script.toggle_blinds)
 #
-# DESIGN
-#   A single source of truth - input_select.master_bedroom_state - tracks the
-#   current lighting mode (full / dim / dim_low / off). Nothing makes one light
-#   blindly mirror another (that was the old `lamp_controls_area` blueprint, which
-#   caused the on/off cascade - it has been removed). Instead, small scripts apply
-#   one of three USER-EDITABLE scenes (defined in scenes.yaml so they can be tweaked
-#   in the HA Scene editor) and update the state tracker:
+# MODES
+#   Three lighting modes, each a USER-EDITABLE scene in scenes.yaml (tweak them in
+#   the HA Scene editor), plus off:
 #     scene.master_bedroom_full     - main lights on + lamp full
 #     scene.master_bedroom_cosy     - lamp only, warm & relaxed (~60%)
-#     scene.master_bedroom_dim      - lamp only, gently dimmed (~7%)
-#     scene.master_bedroom_dim_low  - lamp only, barely glowing (~1%)
+#     scene.master_bedroom_minimum  - lamp only, warmest colour, lowest brightness
+#   Every button decides what to do from the lights' actual state - there is no
+#   separate state tracker to drift out of sync.
 #
-# CONTROLS (behaviour is shared across both switches; the bedside one does more)
+# CONTROLS
 #   Bedside switch - 4 buttons (Hue dimmer "Master bedroom wireless switch"),
-#   listed top to bottom. Each button is one fixed action - no cycling:
-#     on   (top)      -> Main ceiling lights on
-#     up   (2nd)      -> Toggle curtains/blinds (the ONLY button that touches them)
-#     down (3rd)      -> Cosy mode: main lights off, lamp on
-#     off  (bottom)   -> Everything off (lamp + main lights; leaves the blinds alone)
+#   listed top to bottom:
+#     on   (top)      -> Full
+#     up   (2nd)      -> Toggle curtains/blinds
+#     down (3rd)      -> Cosy
+#     off  (bottom)   -> Everything off; if everything is already off -> Minimum
 #     off  (hold)     -> Toggle the bedroom fan (fan.master_bedroom_fan)
 #   Door switch - 2 buttons (Aqara)
-#     right -> Smart cycle through every mode:  off -> full -> dim -> dim_low -> off
+#     right -> Full <-> off
 #     left  -> Toggle curtains
 #
-# STATE SYNC
-#   Two auxiliary automations keep the tracker honest if the lights are changed by
-#   other means (app, voice, the rain-warning package): turning the main lights on
-#   means "full", and everything going off means "off".
+# DOOR SWITCH RELAY COUPLING
+#   The Aqara's right button is in `control_relay` mode (set in Zigbee2MQTT), so a
+#   press physically toggles the ceiling relay *before* HA sees the button event -
+#   the main lights keep working even if HA is down. The automation therefore must
+#   not toggle anything itself: it reads the relay's new state and brings the lamp
+#   in line (relay on -> full, relay off -> everything off). An earlier version ran
+#   an independent mode cycle here, which got out of step with the relay and
+#   turned the lamp ON to ~1% when the lights were switched off at the door.
 #
 # SCENE COLOUR TEMPERATURE
 #   The lamp scenes in scenes.yaml must express colour temperature as
@@ -42,27 +43,12 @@
 #   colour, leaving the lamp on whatever colour it happened to be showing.
 #
 # RELATED
-#   The rain-warning package (packages/rain_warning.yaml) still flashes the lamp
-#   green/blue on the first morning turn-on. With the old cascade gone it no longer
-#   drags the main lights around.
-
-input_select:
-  master_bedroom_state:
-    name: Master Bedroom Lights State
-    options:
-      - "full"
-      - "cosy"
-      - "dim"
-      - "dim_low"
-      - "off"
-    initial: "off"
-    icon: mdi:lightbulb-group
+#   The rain-warning package (packages/rain_warning.yaml) flashes the lamp
+#   green/blue on the first morning turn-on. Charles's alarm
+#   (packages/alarm_charles.yaml) uses script.master_bedroom_cosy.
 
 script:
 
-  # ---------------------------------------------------------------------------
-  # Mode-setting building blocks. Each applies one scene and records the state.
-  # ---------------------------------------------------------------------------
   master_bedroom_full:
     alias: Master bedroom - full
     icon: mdi:lightbulb-on
@@ -72,41 +58,26 @@ script:
           entity_id: scene.master_bedroom_full
         data:
           transition: 1
-      - action: input_select.select_option
-        target:
-          entity_id: input_select.master_bedroom_state
-        data:
-          option: "full"
 
-  master_bedroom_dim:
-    alias: Master bedroom - dim
-    icon: mdi:lightbulb-on-30
+  master_bedroom_cosy:
+    alias: Master bedroom - cosy
+    icon: mdi:sofa
     sequence:
       - action: scene.turn_on
         target:
-          entity_id: scene.master_bedroom_dim
+          entity_id: scene.master_bedroom_cosy
         data:
           transition: 2
-      - action: input_select.select_option
-        target:
-          entity_id: input_select.master_bedroom_state
-        data:
-          option: "dim"
 
-  master_bedroom_dim_low:
-    alias: Master bedroom - dim low
-    icon: mdi:lightbulb-on-10
+  master_bedroom_minimum:
+    alias: Master bedroom - minimum
+    icon: mdi:lightbulb-night
     sequence:
       - action: scene.turn_on
         target:
-          entity_id: scene.master_bedroom_dim_low
+          entity_id: scene.master_bedroom_minimum
         data:
-          transition: 2
-      - action: input_select.select_option
-        target:
-          entity_id: input_select.master_bedroom_state
-        data:
-          option: "dim_low"
+          transition: 1
 
   master_bedroom_off:
     alias: Master bedroom - all off
@@ -119,75 +90,23 @@ script:
             - light.master_bedroom_main_lights_right
         data:
           transition: 1
-      - action: input_select.select_option
-        target:
-          entity_id: input_select.master_bedroom_state
-        data:
-          option: "off"
 
-  # Bedside "on" (top) button: just turn the main ceiling lights on. The lamp and
-  # blinds are left untouched. The "sync state when main lights on" automation
-  # below records the "full" tracker state, so the door switch's cycle stays sane.
-  master_bedroom_main_on:
-    alias: Master bedroom - main lights on
-    icon: mdi:ceiling-light
+  # Bedside bottom button: off if anything is on, otherwise a night-light.
+  master_bedroom_off_or_minimum:
+    alias: Master bedroom - off, or minimum if already off
+    icon: mdi:lightbulb-night-outline
     sequence:
-      - action: light.turn_on
-        target:
-          entity_id: light.master_bedroom_main_lights_right
-
-  # Bedside "down" (3rd) button: cosy mode - main lights off, lamp on. Applies the
-  # user-editable cosy scene (scenes.yaml) and records the state. Blinds untouched.
-  master_bedroom_cosy:
-    alias: Master bedroom - cosy
-    icon: mdi:sofa
-    sequence:
-      - action: scene.turn_on
-        target:
-          entity_id: scene.master_bedroom_cosy
-        data:
-          transition: 2
-      - action: input_select.select_option
-        target:
-          entity_id: input_select.master_bedroom_state
-        data:
-          option: "cosy"
-
-  # ---------------------------------------------------------------------------
-  # Door single button: smart cycle that reaches every mode with one button.
-  #   off -> full -> dim -> dim_low -> off
-  # ---------------------------------------------------------------------------
-  master_bedroom_main_cycle:
-    alias: Master bedroom - cycle all modes
-    icon: mdi:rotate-right
-    sequence:
-      - choose:
-          - conditions:
-              - condition: state
-                entity_id: input_select.master_bedroom_state
-                state: "off"
-            sequence:
-              - action: script.master_bedroom_full
-          - conditions:
-              - condition: state
-                entity_id: input_select.master_bedroom_state
-                state: "full"
-            sequence:
-              - action: script.master_bedroom_dim
-          - conditions:
-              - condition: state
-                entity_id: input_select.master_bedroom_state
-                state: "dim"
-            sequence:
-              - action: script.master_bedroom_dim_low
-          - conditions:
-              - condition: state
-                entity_id: input_select.master_bedroom_state
-                state: "dim_low"
-            sequence:
-              - action: script.master_bedroom_off
-        default:
-          - action: script.master_bedroom_full
+      - if:
+          - condition: state
+            entity_id: light.master_bedroom_lamp
+            state: "off"
+          - condition: state
+            entity_id: light.master_bedroom_main_lights_right
+            state: "off"
+        then:
+          - action: script.master_bedroom_minimum
+        else:
+          - action: script.master_bedroom_off
 
 automation:
 
@@ -196,25 +115,22 @@ automation:
   # ---------------------------------------------------------------------------
   - id: "1748385723267"
     alias: Master bedroom bedside switch
-    description: 4-button bedside Hue dimmer - main-on / blinds / cosy / all-off / hold-off toggles fan
+    description: >
+      4-button bedside Hue dimmer - full / blinds / cosy / off-or-minimum,
+      hold bottom toggles fan
     use_blueprint:
       path: patpac9/Hue_Dimmer_Switch_Easy_Custom_Buttons.yaml
       input:
         controller: Master bedroom wireless switch
-        # Top: main ceiling lights on
         on_released:
-          - action: script.master_bedroom_main_on
-        # 2nd: toggle the blinds (only button that touches them)
+          - action: script.master_bedroom_full
         up_released:
           - action: script.toggle_blinds
-        # 3rd: cosy mode - main lights off, lamp on
         down_released:
           - action: script.master_bedroom_cosy
-        # Bottom: everything off
         off_released:
-          - action: script.master_bedroom_off
+          - action: script.master_bedroom_off_or_minimum
         on_hold_released: []
-        # Bottom, held: toggle the bedroom fan
         off_hold_released:
           - action: fan.toggle
             target:
@@ -222,10 +138,11 @@ automation:
 
   # ---------------------------------------------------------------------------
   # DOOR SWITCH (2 buttons) - Aqara, raw MQTT device actions.
+  # Right button is relay-coupled: see "DOOR SWITCH RELAY COUPLING" above.
   # ---------------------------------------------------------------------------
   - id: "1771800062963"
     alias: Master bedroom door switch - lights
-    description: Right button cycles off -> full -> dim -> dim_low -> off
+    description: Right button - follow the ceiling relay (on -> full, off -> all off)
     triggers:
       - domain: mqtt
         device_id: 07ee2aa42b249d96057fbec264b7a25f
@@ -234,8 +151,17 @@ automation:
         trigger: device
     conditions: []
     actions:
-      - action: script.master_bedroom_main_cycle
-    mode: single
+      - if:
+          - condition: state
+            entity_id: light.master_bedroom_main_lights_right
+            state: "on"
+        then:
+          - action: script.master_bedroom_full
+        else:
+          - action: script.master_bedroom_off
+    # Queued so rapid presses each follow the relay state at the time they land.
+    mode: queued
+    max: 5
 
   - id: "1771800897993"
     alias: Master bedroom door switch - curtains
@@ -249,54 +175,4 @@ automation:
     conditions: []
     actions:
       - action: script.toggle_blinds
-    mode: single
-
-  # ---------------------------------------------------------------------------
-  # STATE SYNC: everything off
-  # If both the lamp and the main lights end up off by any means, record "off".
-  # 2s debounce lets scene transitions settle first.
-  # ---------------------------------------------------------------------------
-  - id: "1771800062964"
-    alias: Master bedroom - sync state when all lights off
-    description: Keep the tracker correct when lights are turned off externally
-    triggers:
-      - trigger: state
-        entity_id:
-          - light.master_bedroom_lamp
-          - light.master_bedroom_main_lights_right
-        to: "off"
-        for:
-          seconds: 2
-    conditions:
-      - condition: template
-        value_template: >
-          {{ states('light.master_bedroom_lamp') == 'off'
-             and states('light.master_bedroom_main_lights_right') == 'off' }}
-    actions:
-      - action: input_select.select_option
-        target:
-          entity_id: input_select.master_bedroom_state
-        data:
-          option: "off"
-    mode: single
-
-  # ---------------------------------------------------------------------------
-  # STATE SYNC: main lights on
-  # The main ceiling lights are only on in "full" mode, so if they come on by any
-  # means, record "full".
-  # ---------------------------------------------------------------------------
-  - id: "1771800062965"
-    alias: Master bedroom - sync state when main lights on
-    description: Keep the tracker correct when main lights are turned on externally
-    triggers:
-      - trigger: state
-        entity_id: light.master_bedroom_main_lights_right
-        to: "on"
-    conditions: []
-    actions:
-      - action: input_select.select_option
-        target:
-          entity_id: input_select.master_bedroom_state
-        data:
-          option: "full"
     mode: single

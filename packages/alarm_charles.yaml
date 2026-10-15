@@ -50,7 +50,7 @@ automation:
       - action: cover.open_cover
         target:
           entity_id: cover.master_bedroom_blinds
-      # Lamp on and left on (also records the state tracker)
+      # Lamp on and left on
       - action: script.master_bedroom_cosy
     mode: single
 
