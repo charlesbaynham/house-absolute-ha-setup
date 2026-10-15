@@ -818,18 +818,6 @@
       state: 'on'
   icon: mdi:cards-heart
   metadata: {}
-- id: '1751324599554'
-  name: Master bedroom dim
-  entities:
-    # Dimmed mode: lamp only (gently dimmed), main ceiling lights off.
-    # Safe to tweak the brightness/colour in the Scene editor.
-    light.master_bedroom_lamp:
-      state: 'on'
-      brightness: 18
-      color_temp_kelvin: 2000
-    light.master_bedroom_main_lights_right:
-      state: 'off'
-  metadata: {}
 - id: '1767728852849'
   name: Living room cosy  brighter
   entities:
@@ -958,13 +946,15 @@
     light.master_bedroom_main_lights_right:
       state: 'on'
   metadata: {}
-- id: '1771801736358'
-  name: Master bedroom dim low
+# New id (was '1771801736358', "dim low") so the entity_id becomes
+# scene.master_bedroom_minimum rather than keeping the old registry entry.
+- id: '1771801736360'
+  name: Master bedroom minimum
   entities:
-    # Really low: lamp barely glowing, main ceiling lights off.
+    # Minimum: lamp at its warmest colour and lowest brightness, main lights off.
     light.master_bedroom_lamp:
       state: 'on'
-      brightness: 3
+      brightness: 1
       color_temp_kelvin: 2000
     light.master_bedroom_main_lights_right:
       state: 'off'
