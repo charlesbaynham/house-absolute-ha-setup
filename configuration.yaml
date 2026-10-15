@@ -25,6 +25,7 @@ lovelace:
       title: Charles's alarm
       icon: mdi:alarm
       show_in_sidebar: true
+      require_admin: true
       filename: dashboards/charles-alarm.yaml
       
 
