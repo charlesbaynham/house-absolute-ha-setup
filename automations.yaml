@@ -263,3 +263,26 @@
       is defined else ''unknown'' }}'
   mode: queued
   max: 25
+- id: '1760600000000'
+  alias: TEMP - Alert Charles when Gaby leaves Central London
+  description: 'One-shot (created 2026-10-16): urgent push to Charles''s Pixel 6 the
+    moment Gaby leaves the Central london zone, then disables itself.'
+  triggers:
+  - trigger: state
+    entity_id: person.gaby
+    from: Central london
+  conditions: []
+  actions:
+  - action: notify.mobile_app_pixel_6
+    data:
+      title: GABY HAS LEFT CENTRAL LONDON
+      message: Gaby left Central london at {{ now().strftime('%H:%M') }} (now {{ states('person.gaby') }}).
+      data:
+        priority: high
+        ttl: 0
+        importance: high
+        channel: alarm_stream
+  - action: automation.turn_off
+    target:
+      entity_id: automation.temp_alert_charles_when_gaby_leaves_central_london
+  mode: single
