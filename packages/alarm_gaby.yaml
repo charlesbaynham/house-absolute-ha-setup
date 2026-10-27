@@ -15,6 +15,9 @@
 # separate step to remember. Holiday mode itself still does NOT turn itself
 # off — the alarm has to be switched on for that to happen.
 #
+# The alarm does not fire when the person is confirmed away from home by a
+# fresh location report (see the "confirmed away" binary_sensor below).
+#
 # Components:
 # - Two input_datetime helpers for alarm time selection
 # - input_boolean to enable/disable alarm
@@ -47,6 +50,37 @@ input_boolean:
     name: "Gaby's Alarm - DISABLE INDEFINITELY (holiday mode - won't turn back on automatically!)"
     icon: mdi:airplane
 
+# "Confirmed away" check used to skip the alarm. Deliberately strict, because
+# a wrongly skipped alarm means missing work: it is only 'on' when the most
+# recent location report for person.gaby is
+#   - not home (and not unknown/unavailable),
+#   - more than 10 km from home (so GPS jitter at home can't trip it), and
+#   - fresh: received in the last 2 hours. A stale "away" (e.g. we came home
+#     but the phone never reported it) does not count.
+# Any missing data or template error leaves the sensor off/unavailable, and
+# the alarm fires as normal. Phones usually report every ~15 min overnight,
+# but multi-hour gaps happen; then the alarm simply fires.
+template:
+  - binary_sensor:
+      - name: "Gaby confirmed away"
+        unique_id: gaby_confirmed_away
+        icon: mdi:map-marker-off
+        state: >
+          {% set p = states.person.gaby %}
+          {% if p is none or p.state in ['home', 'unknown', 'unavailable'] %}
+            false
+          {% else %}
+            {% set d = distance('person.gaby') %}
+            {{ d is number and d > 10
+                and (now() - p.last_reported) < timedelta(hours=2) }}
+          {% endif %}
+        attributes:
+          distance_km: >
+            {{ distance('person.gaby') | round(1, default=none) }}
+          last_report: >
+            {% set p = states.person.gaby %}
+            {{ p.last_reported if p else none }}
+
 automation:
   - id: '1732500000000'
     alias: Gaby's morning alarm 1
@@ -60,6 +94,13 @@ automation:
       - condition: state
         entity_id: input_boolean.gaby_alarm_enabled
         state: 'on'
+      # Skip only if confirmed away (see binary_sensor above); 'off',
+      # 'unknown' or 'unavailable' all let the alarm fire.
+      - condition: not
+        conditions:
+          - condition: state
+            entity_id: binary_sensor.gaby_confirmed_away
+            state: 'on'
     actions:
       # Flash lights 3 times
       - repeat:
@@ -105,6 +146,13 @@ automation:
       - condition: state
         entity_id: input_boolean.gaby_alarm_enabled
         state: 'on'
+      # Skip only if confirmed away (see binary_sensor above); 'off',
+      # 'unknown' or 'unavailable' all let the alarm fire.
+      - condition: not
+        conditions:
+          - condition: state
+            entity_id: binary_sensor.gaby_confirmed_away
+            state: 'on'
     actions:
       # Flash lights 3 times
       - repeat:
