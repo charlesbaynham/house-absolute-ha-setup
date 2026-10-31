@@ -59,29 +59,20 @@ views:
           - type: heading
             heading: Accumulated chore time, last 3 months
             icon: mdi:chart-line
-          - type: custom:mini-graph-card
+          # Uses long-term statistics (daily), since the recorder's state history
+          # is purged after ~10 days and would only show a flat line.
+          - type: statistics-graph
             entities:
-              - entity: sensor.chore_minutes_charles
-                name: Charles
-                color: "#0066FF"
-              - entity: sensor.chore_minutes_gaby
-                name: Gaby
-                color: "#FF69B4"
-            hours_to_show: 2160
-            group_by: date
-            aggregate_func: last
-            line_width: 3
-            smoothing: false
-            show:
-              graph: line
-              state: false
-              legend: true
-              icon: false
-              name: false
-              points: false
+              - sensor.chore_minutes_charles
+              - sensor.chore_minutes_gaby
+            chart_type: line
+            period: day
+            days_to_show: 90
+            stat_types:
+              - state
             grid_options:
               columns: full
-              rows: 4
+              rows: 5
 
       # ---------------------------------------------------------------- Charles
       - type: grid
