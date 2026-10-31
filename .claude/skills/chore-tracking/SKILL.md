@@ -76,8 +76,8 @@ Create rolling aggregates for minutes:
 `dashboards/chore-tracking.yaml` is a single `sections` view:
 - Header: this week's leader and margin (markdown).
 - Scoreboard: markdown table of today / week / month / year / all-time per person with the lead.
-- Trend: full-width `mini-graph-card` line chart of the all-time totals
-  (`sensor.chore_minutes_<person>`) over the last 3 months (2160 h, daily last value).
+- Trend: full-width `statistics-graph` line chart (daily long-term statistics, so it has dated x-axis and survives recorder purges) of the all-time totals
+  (`sensor.chore_minutes_<person>`) over the last 90 days.
 - One section per person: chore-mode and extended-mode toggles, today and this-week tiles, the
   running extended-session count (only while extended mode is on), last activity, and
   **Add 30 min** / **Remove 30 min** buttons (both with confirmation) calling
