@@ -160,9 +160,7 @@ automation:
 
   - id: '1739240000001'
     alias: Reset rain warning flag at midnight
-    description: >-
-      Daily midnight reset: clears the rain warning shown flag and re-enables
-      bathroom motion control.
+    description: Reset the rain warning shown flag at midnight each day
     triggers:
       - trigger: time
         at: '00:00:00'
@@ -171,7 +169,4 @@ automation:
       - action: input_boolean.turn_off
         target:
           entity_id: input_boolean.rain_warning_shown_today
-      - action: input_boolean.turn_on
-        target:
-          entity_id: input_boolean.bathroom_motion_enabled
     mode: single
