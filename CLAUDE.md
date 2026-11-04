@@ -168,7 +168,8 @@ Each room with PID-controlled TRV heating is a single package file,
    an hour old; deactivating re-enables valve sync and the smart mode automation (item 7) restores
    the right state.
 7. **Smart mode** — `input_boolean.smart_mode_{room_name}` plus an "apply smart mode" automation.
-   On: PID control (`set_pid_mode: auto`). Off: PID stopped and the valve helper parked at 50%.
+   On: PID control (`set_pid_mode: auto`). Off: PID stopped and the valve helper set to
+   `input_number.{room_name}_trv_parked_valve_position` (user-adjustable).
    Re-applied on HA start and when boost ends; skipped while boost is on. The Z2M "smart
    temperature control" switches on the TRVs are a different, built-in feature and are hidden.
    Note `set_pid_mode` only accepts `auto`/`off`.

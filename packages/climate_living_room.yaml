@@ -26,6 +26,14 @@ input_number:
     max: 100
     step: 1
 
+  living_room_trv_parked_valve_position:
+    name: Living room TRV parked valve position
+    icon: mdi:valve
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+
 input_boolean:
   smart_mode_living_room:
     name: Smart mode - Living room
@@ -144,13 +152,15 @@ automation:
     alias: Living room TRV - apply smart mode
     description: >-
       Smart mode on: PID control. Smart mode off: PID stopped and valve parked
-      at 50%. Re-applied on startup and when boost ends. Skipped during boost.
+      at the user-set parked position. Re-applied on startup and when boost ends. Skipped during boost.
     triggers:
     - trigger: state
       entity_id: input_boolean.smart_mode_living_room
     - trigger: state
       entity_id: input_boolean.boost_mode_living_room
       to: 'off'
+    - trigger: state
+      entity_id: input_number.living_room_trv_parked_valve_position
     - trigger: homeassistant
       event: start
     conditions:
@@ -188,7 +198,7 @@ automation:
         target:
           entity_id: input_number.living_room_trv_valve_position
         data:
-          value: 50
+          value: "{{ states('input_number.living_room_trv_parked_valve_position') | float(50) }}"
     mode: restart
 
   - id: '1736044800000'
