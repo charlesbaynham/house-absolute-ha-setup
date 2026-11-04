@@ -27,6 +27,9 @@ input_number:
     step: 1
 
 input_boolean:
+  smart_mode_living_room:
+    name: Smart mode - Living room
+    icon: mdi:thermostat-auto
   boost_mode_living_room:
     name: Boost Mode - Living Room
     icon: mdi:rocket-launch
@@ -137,6 +140,57 @@ automation:
         entity_id: climate.trv_living_room
     mode: single
 
+  - id: '1740000000002'
+    alias: Living room TRV - apply smart mode
+    description: >-
+      Smart mode on: PID control. Smart mode off: PID stopped and valve parked
+      at 50%. Re-applied on startup and when boost ends. Skipped during boost.
+    triggers:
+    - trigger: state
+      entity_id: input_boolean.smart_mode_living_room
+    - trigger: state
+      entity_id: input_boolean.boost_mode_living_room
+      to: 'off'
+    - trigger: homeassistant
+      event: start
+    conditions:
+    - condition: state
+      entity_id: input_boolean.boost_mode_living_room
+      state: 'off'
+    actions:
+    - action: automation.turn_on
+      target:
+        entity_id: automation.living_room_trv_sync_valve_with_helper
+    - action: climate.set_hvac_mode
+      target:
+        entity_id: climate.living_room_trv_pid_controller
+      data:
+        hvac_mode: heat
+    - choose:
+      - conditions:
+        - condition: state
+          entity_id: input_boolean.smart_mode_living_room
+          state: 'on'
+        sequence:
+        - action: smart_thermostat.set_pid_mode
+          target:
+            entity_id: climate.living_room_trv_pid_controller
+          data:
+            mode: auto
+      default:
+      - action: smart_thermostat.set_pid_mode
+        target:
+          entity_id: climate.living_room_trv_pid_controller
+        data:
+          mode: 'off'
+      - delay: '00:00:01'
+      - action: input_number.set_value
+        target:
+          entity_id: input_number.living_room_trv_valve_position
+        data:
+          value: 50
+    mode: restart
+
   - id: '1736044800000'
     alias: Living room TRV - activate boost mode
     description: 'When boost mode is activated, set valve to 100% and stop PID updates'
@@ -167,7 +221,7 @@ automation:
 
   - id: '1736044800001'
     alias: Living room TRV - deactivate boost mode
-    description: 'When boost mode is turned off, restore PID control'
+    description: 'When boost mode is turned off, re-enable valve sync (PID/parked state is restored by the smart mode automation)'
     triggers:
     - trigger: state
       entity_id: input_boolean.boost_mode_living_room
@@ -177,11 +231,6 @@ automation:
     - action: automation.turn_on
       target:
         entity_id: automation.living_room_trv_sync_valve_with_helper
-    - action: smart_thermostat.set_pid_mode
-      target:
-        entity_id: climate.living_room_trv_pid_controller
-      data:
-        mode: "auto"
     mode: single
 
   - id: '1736044800002'
