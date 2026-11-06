@@ -1,0 +1,16 @@
+# The boiler sensor is strapped to the outside of the cylinder, so it under-reads
+# the water temperature by an amount that grows with temperature. Calibrated
+# against a probe at 47, 52 and 56 degC (sensor 43.88, 48.33, 51.38; least-squares
+# fit, residuals <0.25 degC). Valid only for ~44-52 degC raw; the gap may be
+# nonlinear, so re-check with a low reading before trusting it below that.
+template:
+  - sensor:
+      - name: "Boiler temperature calibrated"
+        unique_id: boiler_temperature_calibrated
+        device_class: temperature
+        state_class: measurement
+        unit_of_measurement: "°C"
+        state: >
+          {{ (1.194 * states('sensor.sensor_boiler_temperature') | float - 5.49) | round(1) }}
+        availability: >
+          {{ states('sensor.sensor_boiler_temperature') | is_number }}
