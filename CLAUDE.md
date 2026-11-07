@@ -40,6 +40,15 @@ curl -sS -X POST -H "Authorization: Bearer $HA_TOKEN" -H "Content-Type: applicat
   https://automation.houseabsolute.co.uk/api/services/light/turn_on
 ```
 
+If `HA_TOKEN` is not set, fetch it from the Secrets MCP server — see the `ha-api-token` skill
+(`.claude/skills/ha-api-token/`).
+
+**Never guess entity IDs. Always look them up on the live instance** (`/api/states`) before using
+them in YAML or service calls. Don't infer them from Z2M friendly names, other rooms' naming
+patterns, or the repo — they can differ from what you expect, and entities defined in the repo may
+not exist live (e.g. a platform that failed to load, or a device temporarily repurposed). Check
+that every `entity_id` you reference exists, and say so if one doesn't.
+
 **Two distinct change paths — don't conflate them:**
 - Editing YAML in this repo takes effect only once the change is merged and pulled onto the live
   instance — see the sync mechanics below.
