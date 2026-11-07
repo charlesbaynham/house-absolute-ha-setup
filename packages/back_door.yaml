@@ -1,0 +1,157 @@
+---
+# Back Door Package
+#
+# 1. Alert: push notification when the back door opens and Charles is not home
+#    (mirrors the "Door opened alert" for the front door in automations.yaml).
+# 2. Heating pause: all PID-controlled TRV heating is turned off while the back
+#    door is open, and restored when it closes.
+#
+# Sensor: binary_sensor.backdoor_sensor_contact (Z2M "Backdoor sensor")
+#
+# Heating pause design:
+# - On open, remember which PID climate entities were in `heat` (so anything
+#   already off, e.g. by far-away mode, stays off), then climate.turn_off them.
+#   Setpoints are untouched by turn_off.
+# - On close, put the remembered rooms back to `heat`. Per room, the existing
+#   "apply smart mode" automation re-applies PID / parked valve; rooms in boost
+#   get their valve forced back to 100%.
+# - Remembered rooms live in an input_text, so they survive an HA restart.
+# - Single queued automation so rapid open/close events are serialised.
+
+input_boolean:
+  back_door_heating_paused:
+    name: Back door - heating paused
+    icon: mdi:door-open
+
+input_text:
+  back_door_heating_resume:
+    name: Back door - rooms to resume heating
+    max: 255
+    icon: mdi:radiator
+
+automation:
+  - id: '1762500000001'
+    alias: Back door opened alert
+    description: Notify Charles's phone when the back door opens and he is not home
+    triggers:
+      - trigger: state
+        entity_id: binary_sensor.backdoor_sensor_contact
+        from: 'off'
+        to: 'on'
+    conditions:
+      - condition: not
+        conditions:
+          - condition: state
+            entity_id: person.charles
+            state: home
+    actions:
+      - action: notify.mobile_app_pixel_6
+        data:
+          message: The back door has opened
+    mode: single
+
+  - id: '1762500000002'
+    alias: Back door - pause heating while open
+    description: >-
+      Turn off all TRV heating while the back door is open; restore the rooms
+      that were heating when it closes.
+    triggers:
+      - trigger: state
+        entity_id: binary_sensor.backdoor_sensor_contact
+        to: 'on'
+        id: opened
+      - trigger: state
+        entity_id: binary_sensor.backdoor_sensor_contact
+        to: 'off'
+        id: closed
+    conditions: []
+    actions:
+      - choose:
+          # Door opened: remember what was heating, then switch it all off
+          - conditions:
+              - condition: trigger
+                id: opened
+              - condition: state
+                entity_id: input_boolean.back_door_heating_paused
+                state: 'off'
+            sequence:
+              - variables:
+                  heating: >-
+                    {{ [
+                         'climate.living_room_trv_pid_controller',
+                         'climate.master_bedroom_trv_pid_controller',
+                         'climate.bedroom_trv_pid_controller'
+                       ] | select('is_state', 'heat') | list }}
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.back_door_heating_resume
+                data:
+                  value: "{{ heating | join(',') }}"
+              - action: input_boolean.turn_on
+                target:
+                  entity_id: input_boolean.back_door_heating_paused
+              - action: climate.turn_off
+                target:
+                  entity_id:
+                    - climate.living_room_trv_pid_controller
+                    - climate.master_bedroom_trv_pid_controller
+                    - climate.bedroom_trv_pid_controller
+
+          # Door closed: put back the rooms that were heating
+          - conditions:
+              - condition: trigger
+                id: closed
+              - condition: state
+                entity_id: input_boolean.back_door_heating_paused
+                state: 'on'
+            sequence:
+              - variables:
+                  resume: >-
+                    {{ states('input_text.back_door_heating_resume').split(',')
+                       | select('match', 'climate\.') | list }}
+                  rooms:
+                    climate.living_room_trv_pid_controller:
+                      apply: automation.living_room_trv_apply_smart_mode
+                      boost: input_boolean.boost_mode_living_room
+                      valve: input_number.living_room_trv_valve_position
+                    climate.master_bedroom_trv_pid_controller:
+                      apply: automation.master_bedroom_trv_apply_smart_mode
+                      boost: input_boolean.boost_mode_master_bedroom
+                      valve: input_number.master_bedroom_trv_valve_position
+                    climate.bedroom_trv_pid_controller:
+                      apply: automation.bedroom_trv_apply_smart_mode
+                      boost: input_boolean.boost_mode_bedroom
+                      valve: input_number.bedroom_trv_valve_position
+              - repeat:
+                  for_each: "{{ resume }}"
+                  sequence:
+                    - action: climate.set_hvac_mode
+                      target:
+                        entity_id: "{{ repeat.item }}"
+                      data:
+                        hvac_mode: heat
+                    - choose:
+                        # Boost active: valve was zeroed by turn_off, force it back open
+                        - conditions:
+                            - condition: template
+                              value_template: >-
+                                {{ is_state(rooms[repeat.item].boost, 'on') }}
+                          sequence:
+                            - delay: '00:00:01'
+                            - action: input_number.set_value
+                              target:
+                                entity_id: "{{ rooms[repeat.item].valve }}"
+                              data:
+                                value: 100
+                      # Otherwise re-apply smart mode (PID auto, or parked valve)
+                      default:
+                        - action: automation.trigger
+                          target:
+                            entity_id: "{{ rooms[repeat.item].apply }}"
+                          data:
+                            skip_condition: true
+              - action: input_boolean.turn_off
+                target:
+                  entity_id: input_boolean.back_door_heating_paused
+    mode: queued
+    max: 5
