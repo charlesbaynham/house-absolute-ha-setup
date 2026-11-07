@@ -40,6 +40,9 @@ curl -sS -X POST -H "Authorization: Bearer $HA_TOKEN" -H "Content-Type: applicat
   https://automation.houseabsolute.co.uk/api/services/light/turn_on
 ```
 
+If `HA_TOKEN` is not set, fetch it from the Secrets MCP server — see the `ha-api-token` skill
+(`.claude/skills/ha-api-token/`).
+
 **Two distinct change paths — don't conflate them:**
 - Editing YAML in this repo takes effect only once the change is merged and pulled onto the live
   instance — see the sync mechanics below.
