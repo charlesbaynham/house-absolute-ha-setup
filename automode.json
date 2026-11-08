@@ -1,0 +1,8 @@
+{
+  "autoMode": {
+    "environment": [
+      "$defaults",
+      "This repository is the owner's own Home Assistant configuration (config-as-code for their house) plus an agent memory workspace. The live instance at https://automation.houseabsolute.co.uk is the owner's; reading its state through the REST API with the HA_TOKEN environment variable is routine work here."
+    ]
+  }
+}
