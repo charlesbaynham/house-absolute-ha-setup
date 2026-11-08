@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "minor_version": 2,
+  "key": "core.label_registry",
+  "data": {
+    "labels": [
+      {
+        "color": null,
+        "description": null,
+        "icon": "mdi:alarm-light",
+        "label_id": "lights",
+        "name": "Lights",
+        "created_at": "2025-03-16T11:29:46.413193+00:00",
+        "modified_at": "2025-03-16T11:29:46.413211+00:00"
+      },
+      {
+        "color": "purple",
+        "description": null,
+        "icon": "mdi:nintendo-game-boy",
+        "label_id": "game",
+        "name": "Game",
+        "created_at": "2025-04-22T12:55:48.155415+00:00",
+        "modified_at": "2025-04-22T12:55:48.155423+00:00"
+      },
+      {
+        "color": "deep-orange",
+        "description": null,
+        "icon": "mdi:desk-lamp",
+        "label_id": "lamp",
+        "name": "lamp",
+        "created_at": "2025-04-26T15:27:28.570704+00:00",
+        "modified_at": "2025-04-26T15:27:28.570712+00:00"
+      },
+      {
+        "color": "green",
+        "description": null,
+        "icon": "mdi:format-color-fill",
+        "label_id": "colour",
+        "name": "Colour",
+        "created_at": "2025-05-11T16:20:47.923510+00:00",
+        "modified_at": "2025-05-11T16:20:47.923523+00:00"
+      },
+      {
+        "color": null,
+        "description": null,
+        "icon": "mdi:gesture-tap-button",
+        "label_id": "switch",
+        "name": "Switch",
+        "created_at": "2025-05-27T22:42:50.215213+00:00",
+        "modified_at": "2025-05-27T22:42:50.215221+00:00"
+      }
+    ]
+  }
+}

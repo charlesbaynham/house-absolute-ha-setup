@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "frontend.user_data_548c42f7f03c4461b3e5f96d9d44c7eb",
+  "data": {
+    "language": {
+      "language": "en-GB",
+      "number_format": "language",
+      "time_format": "language",
+      "date_format": "language",
+      "time_zone": "local",
+      "first_weekday": "sunday"
+    },
+    "core": {
+      "showAdvanced": true,
+      "default_panel": "dashboard-home"
+    }
+  }
+}

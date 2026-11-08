@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace.dashboard_map",
+  "data": {
+    "config": {
+      "views": [
+        {
+          "type": "panel",
+          "title": "Map",
+          "icon": "mdi:map",
+          "cards": [
+            {
+              "type": "map",
+              "auto_fit": true,
+              "hours_to_show": 48,
+              "show_all": true,
+              "theme_mode": "auto"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

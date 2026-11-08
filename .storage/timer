@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "timer",
+  "data": {
+    "items": [
+      {
+        "id": "water_filter_time_left",
+        "name": "Water filter time left",
+        "duration": "1080:00:00",
+        "restore": true
+      }
+    ]
+  }
+}

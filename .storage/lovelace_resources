@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace_resources",
+  "data": {
+    "items": [
+      {
+        "id": "ed85aa88c9f14e2093a3b0e2b1fda871",
+        "url": "/hacsfiles/lovelace-valetudo-map-card/valetudo-map-card.js?hacstag=2030361082023040",
+        "type": "module"
+      },
+      {
+        "id": "31045158896b4093a4e25c54bfb0c92e",
+        "url": "/hacsfiles/mini-graph-card/mini-graph-card-bundle.js?hacstag=1512800620130",
+        "type": "module"
+      }
+    ]
+  }
+}

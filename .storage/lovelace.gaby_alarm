@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace.gaby_alarm",
+  "data": {
+    "config": {
+      "views": [
+        {
+          "title": "Home",
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading_style": "title",
+                  "heading": "Alarm settings"
+                },
+                {
+                  "type": "tile",
+                  "entity": "input_boolean.gaby_alarm_enabled",
+                  "grid_options": {
+                    "columns": "full"
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "input_datetime.gaby_alarm_time_1"
+                },
+                {
+                  "type": "tile",
+                  "entity": "input_datetime.gaby_alarm_time_2"
+                },
+                {
+                  "type": "tile",
+                  "entity": "input_boolean.gaby_alarm_holiday_mode",
+                  "name": "Disable alarm indefinitely (holiday mode)",
+                  "grid_options": {
+                    "columns": "full"
+                  }
+                },
+                {
+                  "type": "markdown",
+                  "content": "> ⚠️ **Warning:** turning the toggle above on switches Gaby's alarm off **immediately and indefinitely**. It will **not** turn itself back on at the weekend — you must turn it off manually when the holidays end. **Do not use during term time.**"
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading_style": "title",
+                  "heading": "Extras"
+                },
+                {
+                  "type": "tile",
+                  "entity": "switch.tasmota"
+                },
+                {
+                  "type": "tile",
+                  "entity": "switch.adaptive_lighting_adapt_brightness_gaby"
+                },
+                {
+                  "type": "tile",
+                  "entity": "switch.adaptive_lighting_adapt_color_gaby"
+                }
+              ]
+            }
+          ],
+          "header": {
+            "card": {
+              "type": "markdown",
+              "text_only": true,
+              "content": "# Gaby dashboard "
+            }
+          }
+        }
+      ]
+    }
+  }
+}

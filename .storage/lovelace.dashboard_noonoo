@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace.dashboard_noonoo",
+  "data": {
+    "config": {
+      "views": [
+        {
+          "title": "Home",
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "NooNoo"
+                },
+                {
+                  "type": "custom:valetudo-map-card",
+                  "vacuum": "valetudo_noonoo"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

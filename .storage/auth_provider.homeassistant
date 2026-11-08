@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "auth_provider.homeassistant",
+  "data": {
+    "users": [
+      {
+        "username": "charles",
+        "password": "JDJiJDEyJC9LZW5CQTdRT2ZrckNnREtGLklsd2VrVUt6cmRUWkdLNDlPdDVCNG44ZGEyejJZRmVVREFx"
+      },
+      {
+        "username": "gaby",
+        "password": "JDJiJDEyJHphbG1jeWowR254U2cvbldraEhjT08vUlQ0ejNhMU9LMUN4aldkUzFNQnhBM2szcy5lOHVL"
+      },
+      {
+        "username": "harry",
+        "password": "JDJiJDEyJDUzSEZoWEk1dUN4TWFHbUI0b2hINi4ueTdTdmFxTFJoelNLTFhENElHUEw3N29Nc05Wek1D"
+      }
+    ]
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace_dashboards",
+  "data": {
+    "items": [
+      {
+        "id": "dashboard_map",
+        "show_in_sidebar": true,
+        "icon": "mdi:map-marker-radius",
+        "title": "Map",
+        "require_admin": false,
+        "mode": "storage",
+        "url_path": "dashboard-map"
+      },
+      {
+        "id": "dashboard_tech",
+        "show_in_sidebar": true,
+        "icon": "mdi:desktop-classic",
+        "title": "Tech",
+        "require_admin": true,
+        "mode": "storage",
+        "url_path": "dashboard-tech"
+      },
+      {
+        "id": "dashboard_all",
+        "show_in_sidebar": true,
+        "title": "All",
+        "require_admin": true,
+        "mode": "storage",
+        "url_path": "dashboard-all"
+      },
+      {
+        "id": "dashboard_areas",
+        "show_in_sidebar": true,
+        "title": "Areas",
+        "require_admin": false,
+        "mode": "storage",
+        "url_path": "dashboard-areas",
+        "icon": "mdi:home"
+      },
+      {
+        "id": "dashboard_home",
+        "show_in_sidebar": true,
+        "icon": "mdi:hoop-house",
+        "title": "Home",
+        "require_admin": false,
+        "mode": "storage",
+        "url_path": "dashboard-home"
+      },
+      {
+        "id": "dashboard_noonoo",
+        "show_in_sidebar": true,
+        "icon": "mdi:robot-vacuum",
+        "title": "Noonoo",
+        "require_admin": false,
+        "mode": "storage",
+        "url_path": "dashboard-noonoo"
+      },
+      {
+        "id": "gaby_alarm",
+        "show_in_sidebar": true,
+        "icon": "mdi:home-heart",
+        "title": "Gaby dashboard ",
+        "require_admin": false,
+        "mode": "storage",
+        "url_path": "gaby-alarm"
+      },
+      {
+        "id": "sleep_stats",
+        "show_in_sidebar": true,
+        "icon": "mdi:bed",
+        "title": "Sleep stats",
+        "require_admin": true,
+        "mode": "storage",
+        "url_path": "sleep-stats"
+      },
+      {
+        "id": "lovelace",
+        "icon": "mdi:view-dashboard",
+        "title": "Overview",
+        "url_path": "lovelace",
+        "require_admin": false,
+        "mode": "storage",
+        "show_in_sidebar": true
+      }
+    ]
+  }
+}

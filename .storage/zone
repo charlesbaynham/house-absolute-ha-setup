@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "zone",
+  "data": {
+    "items": [
+      {
+        "id": "joni_s_house",
+        "latitude": 53.2394706,
+        "longitude": -2.0905193,
+        "name": "Joni's house ",
+        "passive": false,
+        "radius": 139.0,
+        "icon": "mdi:image-filter-hdr-outline"
+      },
+      {
+        "id": "westminster",
+        "latitude": 51.49614261516585,
+        "longitude": -0.13422327793771727,
+        "name": "Westminster",
+        "icon": "mdi:map-marker",
+        "passive": false,
+        "radius": 943.0
+      },
+      {
+        "id": "st_james_station",
+        "latitude": 51.4992826,
+        "longitude": -0.134639,
+        "name": "St James station",
+        "icon": "mdi:map-marker",
+        "passive": false,
+        "radius": 100.0
+      },
+      {
+        "id": "gatwick",
+        "latitude": 51.15369111743398,
+        "longitude": -0.18390727173368093,
+        "name": "Gatwick",
+        "passive": false,
+        "radius": 3468.0,
+        "icon": "mdi:airplane"
+      },
+      {
+        "id": "harris_westminster",
+        "latitude": 51.49952647167268,
+        "longitude": -0.13103127479553225,
+        "name": "Harris Westminster",
+        "icon": "mdi:book",
+        "passive": false,
+        "radius": 133.79755571076458
+      },
+      {
+        "id": "steph_and_john",
+        "latitude": 51.5874268,
+        "longitude": -0.1420468,
+        "name": "Steph and John",
+        "icon": "mdi:map-marker",
+        "passive": false,
+        "radius": 129.0
+      },
+      {
+        "id": "kidlington",
+        "latitude": 51.823992528384295,
+        "longitude": -1.290444822491159,
+        "name": "Kidlington",
+        "icon": "mdi:map-marker",
+        "passive": false,
+        "radius": 2049.0
+      },
+      {
+        "id": "oxford_ionics",
+        "latitude": 51.82862944726362,
+        "longitude": -1.310625239340071,
+        "name": "Oxford Ionics ",
+        "icon": "mdi:atom-variant",
+        "passive": false,
+        "radius": 440.0
+      }
+    ]
+  }
+}

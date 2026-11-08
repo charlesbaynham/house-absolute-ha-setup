@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "auth_module.totp",
+  "data": {
+    "users": {
+      "548c42f7f03c4461b3e5f96d9d44c7eb": "NY22TH4GGGY5CCDBIRF2GACCB36XBJDR"
+    }
+  }
+}
