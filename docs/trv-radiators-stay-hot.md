@@ -1,6 +1,6 @@
 # TRV radiators stay hot although HA has closed the valve
 
-Status: **open**. Mitigations merged/pending in PR #97. Cause not yet confirmed.
+Status: **open**. Mitigations merged and live (PR #97). Sync gap confirmed for the living room; drift not ruled out elsewhere.
 Last updated: 2026-11-08.
 
 ## Symptom
@@ -43,6 +43,15 @@ Helper value `v` (0-100) → `closing = 100 - v`, `opening = min(v + 5, 100)` on
 `number.trv_<room>_valve_closing_degree` / `_opening_degree`. At `v = 0` that is closing 100 /
 opening 5. Changes smaller than `min_step` are ignored unless `v` is 0 or 100.
 
+Meaning of the two TRVZB settings (the `closing = 100 - v` / `opening = v + 5` mapping is inherited
+from the upstream blueprint; the reason for the `+5` is **unverified**, probably to avoid an opening of 0):
+- `valve_closing_degree`: how closed the valve is when the TRV decides to close. 100 = fully shut;
+  0 = valve stays fully open even when it "closes".
+- `valve_opening_degree`: cap on how far it opens when the TRV decides to heat.
+- Consequence (untested): at `v = 0` the valve is not fully shut if the TRV's own thermostat logic asks
+  for heat; it can crack open to 5%. Community reports suggest flow often only starts at 10-18%, so this
+  is probably minor. If a radiator still runs warm at `v = 0`, test opening 0 (check the TRV accepts it).
+
 ## Watchdog
 `blueprints/automation/charlesbaynham/trv-hot-while-closed-watchdog.yaml`, one instance per room
 in `packages/climate_<room>.yaml`. Fires when helper < 1, TRV closing degree ≥ 99, and
@@ -63,6 +72,21 @@ push to `notify.mobile_app_pixel_6`.
 - `sensor.trv_<room>_idle_steps` / `_closing_steps` were flat over the 8 days of history available
   on 2026-11-08 (living 234/296, master 58/279, bedroom 78/263). They look like adaptation-time
   values, not a live drift detector. A change in them would indicate a re-adaptation happened.
+
+## Observation log
+- **2026-11-08, living room: sync gap confirmed as the cause of that radiator being hot.** Before the
+  restart the TRV had closing 0 / opening 100 (fully open) while the helper was 0, and its local
+  temperature sat at about 28.4-28.9 °C against 24.1 °C in the room. PR #97 was pulled and HA restarted
+  at ~11:31. When the TRV came back online at 11:31:52, opening went 100 → 5 and closing was reported
+  100, i.e. the blueprint corrected it with no manual action. The owner then pulled the batteries,
+  reseated the head and re-ran adaptation at ~11:40; `idle_steps` changed 234 → 79 and `closing_steps`
+  296 → 232 (so these do change on re-adaptation), and the owner manually cycled the helper 100 → 0 at
+  11:42:33-36. So the first proper test was contaminated by the manual re-adaptation. **Not yet
+  known:** whether the radiator now actually cools with the valve closed (TRV local temperature was
+  still 28.6 °C at 11:42, only ~10 min after closing; a radiator takes tens of minutes to cool). Check
+  `sensor.trv_living_room_local_temperature` falling towards the room temperature after ~1 h closed.
+- Whether the living room would have been stuck anyway (the original cause of the dropped command) is
+  unknown. The restart mechanism in hypothesis 1 is still a hypothesis.
 
 ## Data limits
 - Recorder history on the live instance only went back to about 2026-10-31 when checked
