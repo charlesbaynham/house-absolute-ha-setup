@@ -6,11 +6,13 @@
 #
 # Components:
 # - PID controller climate entity
-# - Helper for valve position (0-100)
+# - Helpers: PID output (the PID's heater) and valve position (0-100, written
+#   only by the room control automation)
 # - Valve position sync automation (blueprint)
 # - External sensor sync automation (blueprint)
 # - Room control automation (blueprint): bidirectional setpoint sync
-#   (physical TRV ↔ PID controller), smart mode, boost and boost timeout
+#   (physical TRV ↔ PID controller), smart mode, boost, boost timeout and valve
+#   arbitration (off → 0, boost → 100, smart → PID output, else parked)
 # - One-time 4am heating restart automation (self-disabling)
 #
 # Physical device: climate.trv_master_bedroom
@@ -23,12 +25,23 @@
 # - photomoose/sonoff-trvzb-external-temperature-sensor-calibration.yaml
 
 input_number:
+  # Written ONLY by the room control automation (blueprint): boost / off / smart /
+  # parked arbitration. The valve-sync automation copies this onto the TRV.
   master_bedroom_trv_valve_position:
     name: Master bedroom TRV Valve Position
     initial: 0
     min: 0
     max: 100
     step: 1
+
+  # The PID controller's heater. It must not write the valve helper directly:
+  # with pid_mode off it keeps re-writing its frozen last output every keep_alive.
+  master_bedroom_trv_pid_output:
+    name: Master bedroom TRV PID output
+    icon: mdi:chart-line
+    min: 0
+    max: 100
+    step: 0.1
 
   master_bedroom_trv_parked_valve_position:
     name: Master bedroom TRV parked valve position
@@ -70,7 +83,7 @@ climate:
   - platform: smart_thermostat
     name: Master bedroom TRV PID controller
     unique_id: trv_pid_master_bedroom
-    heater: input_number.master_bedroom_trv_valve_position
+    heater: input_number.master_bedroom_trv_pid_output
     target_sensor: sensor.sensor_master_bedroom_temperature
     min_temp: 7
     max_temp: 28
@@ -132,6 +145,7 @@ automation:
       input:
         trv_climate: climate.trv_master_bedroom
         pid_climate: climate.master_bedroom_trv_pid_controller
+        pid_output_helper: input_number.master_bedroom_trv_pid_output
         valve_helper: input_number.master_bedroom_trv_valve_position
         parked_valve_helper: input_number.master_bedroom_trv_parked_valve_position
         smart_mode: input_boolean.smart_mode_master_bedroom
