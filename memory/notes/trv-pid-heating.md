@@ -8,7 +8,7 @@ updated: 2026-11-08
 # TRV PID controller pattern
 
 Migrated from the old `CLAUDE.md` on 2026-11-08; `[found: CLAUDE.md, 2026-11-08]` throughout.
-Reference implementation: `packages/climate_living_room.yaml`. Implemented for living room, master
+Reference implementation: `packages/climate_living_room.yaml` (collapsed onto the room-control blueprint on 2026-11-08). Implemented for living room, master
 bedroom and bedroom (all with boost). Open investigation of radiators staying hot:
 [docs/trv-radiators-stay-hot.md](docs/trv-radiators-stay-hot.md).
 
@@ -23,23 +23,30 @@ bedroom and bedroom (all with boost). Open investigation of radiators staying ho
 4. **External temperature sync** — blueprint
    `photomoose/sonoff-trvzb-external-temperature-sensor-calibration.yaml`; feeds the external
    sensor into the TRV.
-5. **Two setpoint sync automations** (TRV → PID, PID → TRV), each triggered by the other's
-   `temperature` attribute and gated by a template condition that fires only when the two differ,
-   to avoid an infinite loop.
-6. **Boost** — `input_boolean.boost_mode_{room}`, `input_datetime.boost_start_{room}`, template
-   `button.boost_{room}`, and activate/deactivate/timeout automations. Activating sets the valve
-   to 100% and calls `smart_thermostat.set_pid_mode` with `mode: "off"`; timeout polls every 5 min
-   and ends boost once `boost_start` is over an hour old; deactivating re-enables valve sync and
-   smart mode restores the right state.
-7. **Smart mode** — `input_boolean.smart_mode_{room}` plus an "apply smart mode" automation. On:
-   `set_pid_mode: auto`. Off: PID stopped and the valve helper set to
-   `input_number.{room}_trv_parked_valve_position` (user-adjustable). Re-applied on HA start and
-   when boost ends; skipped during boost. The TRVs' Z2M "smart temperature control" switches are a
-   different built-in feature and are hidden. `set_pid_mode` accepts only `auto`/`off`.
+5. **Room control automation** — blueprint `charlesbaynham/trv-room-control.yaml`, one automation
+   per room (`<Room> TRV - control`, `mode: queued`). Branches by trigger id: *setpoint sync* (TRV
+   → PID and PID → TRV, each gated by a "setpoints differ" check to avoid a loop), *boost on*,
+   *boost timeout* and *smart mode*. All checks are made at run time, not as automation conditions.
+   - **Boost** — helpers `input_boolean.boost_mode_{room}`, `input_datetime.boost_start_{room}`,
+     template `button.boost_{room}`. On: stamp start, `smart_thermostat.set_pid_mode` `off`, valve to
+     100%. Timeout polls every 5 min and ends boost once `boost_start` is over `boost_duration`
+     (default 60 min) old. Boost end re-applies smart mode.
+   - **Smart mode** — `input_boolean.smart_mode_{room}`. This is the blueprint's default branch: runs
+     on smart-mode/parked-position change, boost end, HA start, or a **manual trigger**
+     (`back_door.yaml` uses that). Turns the valve-sync automation on, sets the PID to `heat`; smart
+     on → `set_pid_mode: auto`; off → PID stopped and valve helper set to
+     `input_number.{room}_trv_parked_valve_position`. Skipped during boost. The TRVs' Z2M "smart
+     temperature control" switches are a different built-in feature and are hidden.
+     `set_pid_mode` accepts only `auto`/`off`.
+
+What stays per room (blueprints cannot create them): the helpers, the template button and the
+`smart_thermostat` climate entity.
 
 ## Adding a room
 
-Copy an existing `packages/climate_{room}.yaml` and rename entities and blueprint inputs.
+Copy an existing `packages/climate_{room}.yaml` and rename entities and blueprint inputs (the
+control automation takes the valve-sync automation's entity id as an input, so keep its alias).
+Also add the room to the hardcoded per-room lists in `back_door.yaml` and `climate_away_mode.yaml`.
 Prerequisites: TRV paired in HA, an external temperature sensor available, TRV set to
 external-sensor mode in Z2M, the Smart Thermostat (PID) HACS integration installed.
 
@@ -59,5 +66,5 @@ untuned).
 - Not responding → is the valve sync automation running?
 - Inaccurate temperature → is the external sensor sync active?
 - Fail-safe mode → the external sensor must report at least every 2 hours.
-- Setpoints not syncing → both setpoint sync automations enabled?
+- Setpoints not syncing, boost or smart mode not applying → is the `<Room> TRV - control` automation enabled?
 - Setpoint loop → check the "setpoints differ" template condition first.
