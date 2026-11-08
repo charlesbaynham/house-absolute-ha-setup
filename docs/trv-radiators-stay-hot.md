@@ -82,8 +82,8 @@ push to `notify.mobile_app_pixel_6`.
   does not exist live (living room and bedroom PID entities do). Smart mode / PID cannot run until it
   does. Cause unknown: HA error log is not exposed over REST; check Settings > System > Logs for
   `smart_thermostat` / `master_bedroom` errors, and the entity registry for a disabled entry.
-  Also: `sensor.sensor_master_bedroom_battery` reads 0 % (living room 3 %), last updated 11:51 (restart
-  time), so it may be stale; recheck after the next report.
+  Sensor battery was replaced by the owner; its reported 0 % (last updated 11:51) is expected to be
+  stale until the sensor next reports the battery attribute.
 - **2026-11-08, living room: sync gap confirmed as the cause of that radiator being hot.** Before the
   restart the TRV had closing 0 / opening 100 (fully open) while the helper was 0, and its local
   temperature sat at about 28.4-28.9 °C against 24.1 °C in the room. PR #97 was pulled and HA restarted
