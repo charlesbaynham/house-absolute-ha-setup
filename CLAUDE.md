@@ -14,6 +14,15 @@ triggers/conditions vs. templates, helper selection, automation modes, `entity_i
 Zigbee patterns, blueprints, and dashboard cards. It loads automatically — consult it before writing
 or editing automations, scripts, scenes, blueprints, or dashboards.
 
+## docs/ — agent-maintained notes (read and write them)
+
+`docs/` is yours: the owner rarely reads it, so it is the memory shared between agents working in
+this repo. **Before starting work, check `docs/README.md` (the index) and read any note on the topic.
+While working, record what you learn; before finishing, update the notes in the same commit as the
+change.** Add a new `docs/<topic>.md` (and an index entry) when you investigate something non-trivial
+(a bug, a design decision, why config is the way it is). Keep verified facts (dated, with how they
+were checked) separate from hypotheses, keep notes short, and never put tokens or secrets in them.
+
 ## Commands
 
 - Validate YAML syntax: `yamllint *.yaml packages/*.yaml`
