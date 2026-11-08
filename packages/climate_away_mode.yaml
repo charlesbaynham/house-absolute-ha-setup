@@ -21,7 +21,7 @@
 #
 # Affected climate entities:
 # - climate.living_room_trv_pid_controller
-# - climate.master_bedroom_trv_pid_controller
+# - climate.master_bedroom_trv_pid_controller_v2
 # - climate.bedroom_trv_pid_controller
 
 template:
@@ -163,7 +163,7 @@ automation:
                     target:
                       entity_id:
                         - climate.living_room_trv_pid_controller
-                        - climate.master_bedroom_trv_pid_controller
+                        - climate.master_bedroom_trv_pid_controller_v2
                         - climate.bedroom_trv_pid_controller
 
               # Restore original temperatures
@@ -177,7 +177,7 @@ automation:
                        | float(19) }}
               - action: climate.set_temperature
                 target:
-                  entity_id: climate.master_bedroom_trv_pid_controller
+                  entity_id: climate.master_bedroom_trv_pid_controller_v2
                 data:
                   temperature: >
                     {{ states(
@@ -213,7 +213,7 @@ automation:
                     target:
                       entity_id:
                         - climate.living_room_trv_pid_controller
-                        - climate.master_bedroom_trv_pid_controller
+                        - climate.master_bedroom_trv_pid_controller_v2
                         - climate.bedroom_trv_pid_controller
 
               # If coming from home, store current temperatures and reduce
@@ -229,7 +229,7 @@ automation:
                            'temperature') | float(19) }}
                       master_bedroom_temp: >
                         {{ state_attr(
-                           'climate.master_bedroom_trv_pid_controller',
+                           'climate.master_bedroom_trv_pid_controller_v2',
                            'temperature') | float(19) }}
                       bedroom_temp: >
                         {{ state_attr(
@@ -264,7 +264,7 @@ automation:
                       temperature: "{{ [living_room_temp - 2, 7] | max }}"
                   - action: climate.set_temperature
                     target:
-                      entity_id: climate.master_bedroom_trv_pid_controller
+                      entity_id: climate.master_bedroom_trv_pid_controller_v2
                     data:
                       temperature: "{{ [master_bedroom_temp - 2, 7] | max }}"
                   - action: climate.set_temperature
@@ -290,7 +290,7 @@ automation:
                 target:
                   entity_id:
                     - climate.living_room_trv_pid_controller
-                    - climate.master_bedroom_trv_pid_controller
+                    - climate.master_bedroom_trv_pid_controller_v2
                     - climate.bedroom_trv_pid_controller
 
               # Update state

@@ -84,6 +84,9 @@ push to `notify.mobile_app_pixel_6`.
   `smart_thermostat` / `master_bedroom` errors, and the entity registry for a disabled entry.
   Sensor battery was replaced by the owner; its reported 0 % (last updated 11:51) is expected to be
   stale until the sensor next reports the battery attribute.
+  - **Follow-up, 2026-11-08:** YAML `unique_id` and name changed to request a fresh registry entry,
+    expected entity ID `climate.master_bedroom_trv_pid_controller_v2`. This has not yet been
+    confirmed live; the old registry entry may remain separately.
 - **2026-11-08, living room: sync gap confirmed as the cause of that radiator being hot.** Before the
   restart the TRV had closing 0 / opening 100 (fully open) while the helper was 0, and its local
   temperature sat at about 28.4-28.9 °C against 24.1 °C in the room. PR #97 was pulled and HA restarted

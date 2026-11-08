@@ -65,8 +65,8 @@ button:
 
 climate:
   - platform: smart_thermostat
-    name: Master bedroom TRV PID controller
-    unique_id: trv_pid_master_bedroom
+    name: Master bedroom TRV PID controller v2
+    unique_id: trv_pid_master_bedroom_v2
     heater: input_number.master_bedroom_trv_valve_position
     target_sensor: sensor.sensor_master_bedroom_temperature
     min_temp: 7
@@ -132,7 +132,7 @@ automation:
     - condition: template
       value_template: >
         {% set trv_temp = state_attr('climate.trv_master_bedroom', 'temperature') %}
-        {% set pid_temp = state_attr('climate.master_bedroom_trv_pid_controller', 'temperature') %}
+        {% set pid_temp = state_attr('climate.master_bedroom_trv_pid_controller_v2', 'temperature') %}
         {{ trv_temp != none and pid_temp != none and trv_temp != pid_temp }}
     actions:
     - action: climate.set_temperature
@@ -141,7 +141,7 @@ automation:
         temperature: >
           {{ state_attr('climate.trv_master_bedroom', 'temperature') }}
       target:
-        entity_id: climate.master_bedroom_trv_pid_controller
+        entity_id: climate.master_bedroom_trv_pid_controller_v2
     mode: single
 
   - id: '1732372800003'
@@ -149,20 +149,20 @@ automation:
     description: 'When user changes setpoint on PID controller, copy it to the physical TRV'
     triggers:
     - trigger: state
-      entity_id: climate.master_bedroom_trv_pid_controller
+      entity_id: climate.master_bedroom_trv_pid_controller_v2
       attribute: temperature
     conditions:
     - condition: template
       value_template: >
         {% set trv_temp = state_attr('climate.trv_master_bedroom', 'temperature') %}
-        {% set pid_temp = state_attr('climate.master_bedroom_trv_pid_controller', 'temperature') %}
+        {% set pid_temp = state_attr('climate.master_bedroom_trv_pid_controller_v2', 'temperature') %}
         {{ trv_temp != none and pid_temp != none and trv_temp != pid_temp }}
     actions:
     - action: climate.set_temperature
       metadata: {}
       data:
         temperature: >
-          {{ state_attr('climate.master_bedroom_trv_pid_controller', 'temperature') }}
+          {{ state_attr('climate.master_bedroom_trv_pid_controller_v2', 'temperature') }}
       target:
         entity_id: climate.trv_master_bedroom
     mode: single
@@ -181,7 +181,7 @@ automation:
         temperature: 22
         hvac_mode: heat
       target:
-        entity_id: climate.master_bedroom_trv_pid_controller
+        entity_id: climate.master_bedroom_trv_pid_controller_v2
     - action: automation.turn_off
       metadata: {}
       data:
@@ -215,7 +215,7 @@ automation:
         entity_id: automation.master_bedroom_trv_sync_valve_with_helper
     - action: climate.set_hvac_mode
       target:
-        entity_id: climate.master_bedroom_trv_pid_controller
+        entity_id: climate.master_bedroom_trv_pid_controller_v2
       data:
         hvac_mode: heat
     - choose:
@@ -226,13 +226,13 @@ automation:
         sequence:
         - action: smart_thermostat.set_pid_mode
           target:
-            entity_id: climate.master_bedroom_trv_pid_controller
+            entity_id: climate.master_bedroom_trv_pid_controller_v2
           data:
             mode: auto
       default:
       - action: smart_thermostat.set_pid_mode
         target:
-          entity_id: climate.master_bedroom_trv_pid_controller
+          entity_id: climate.master_bedroom_trv_pid_controller_v2
         data:
           mode: 'off'
       - delay: '00:00:01'
@@ -259,7 +259,7 @@ automation:
         timestamp: '{{ now().timestamp() }}'
     - action: smart_thermostat.set_pid_mode
       target:
-        entity_id: climate.master_bedroom_trv_pid_controller
+        entity_id: climate.master_bedroom_trv_pid_controller_v2
       data:
         mode: "off"
     # Wait 1s to ensure PID controller has stopped before forcing valve position
