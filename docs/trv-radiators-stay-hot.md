@@ -85,6 +85,14 @@ push to `notify.mobile_app_pixel_6`.
   known:** whether the radiator now actually cools with the valve closed (TRV local temperature was
   still 28.6 °C at 11:42, only ~10 min after closing; a radiator takes tens of minutes to cool). Check
   `sensor.trv_living_room_local_temperature` falling towards the room temperature after ~1 h closed.
+- **2026-11-08 12:44 UTC, living room, ~1 h after the re-adaptation:** valve settings stayed consistent
+  with the helper (closing 100 / opening 5, helper 0; a Z2M/HA restart at 11:50:36-55 came back with the
+  same values). TRV local temperature fell 28.6 (11:42) → 28.1 (11:52) → 27.6 (12:08) with no further
+  report to 12:44 (the sensor only reports on ~0.5 °C changes), while the room sensor read 24.2-24.3.
+  So it is cooling, not holding at a hot value, but it was still ~3.3 °C above room temperature (the
+  idle baseline on 10-31/11-01 was about -1.0 °C below room), i.e. not yet cold. The watchdog had not
+  fired (the difference dropped below its 4 °C threshold at ~11:52). **Verdict: encouraging, not
+  conclusive.** A hand check of the radiator is the definitive test; the TRV head sensor is slow.
 - Whether the living room would have been stuck anyway (the original cause of the dropped command) is
   unknown. The restart mechanism in hypothesis 1 is still a hypothesis.
 
