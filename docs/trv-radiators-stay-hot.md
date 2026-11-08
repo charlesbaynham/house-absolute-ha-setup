@@ -34,7 +34,7 @@ Radiators (Sonoff TRVZB, PID-driven via `packages/climate_*.yaml`) stay hot when
    - `valve_closing_degree` < 100 means "closed" is partly open. Currently 100 when closed.
    - `smart_temperature_control` (TRV built-in) keeps the valve partly open until setpoint +2 °C. It
      is **off** on living room and bedroom, **on** for master bedroom (2026-11-08).
-   - Master bedroom also had `open_window` = on on 2026-11-08, which is unexpected and unchecked.
+   - Master bedroom had `open_window` = on on 2026-11-08; switched off during recommissioning (see log).
 4. **Mechanical** (adapter slip, pin under-reach, worn insert): only worth chasing if a fresh,
    correct adaptation still leaks. Sonoff publishes no stroke/force specs.
 
@@ -74,6 +74,16 @@ push to `notify.mobile_app_pixel_6`.
   values, not a live drift detector. A change in them would indicate a re-adaptation happened.
 
 ## Observation log
+- **2026-11-08, master bedroom: TRV reinstalled and sensor batteries replaced (recommission).**
+  Live checks: `climate.trv_master_bedroom` present; helper 0, closing 100, opening 5 (consistent,
+  valve sync running). Changes made to match living room/bedroom: `smart_temperature_control` and
+  `open_window` switched **off** (were on); setpoint sync automations (physical <-> PID) switched
+  **on** (were off, last triggered 2025-11). **Blocker, not diagnosed:** `climate.master_bedroom_trv_pid_controller`
+  does not exist live (living room and bedroom PID entities do). Smart mode / PID cannot run until it
+  does. Cause unknown: HA error log is not exposed over REST; check Settings > System > Logs for
+  `smart_thermostat` / `master_bedroom` errors, and the entity registry for a disabled entry.
+  Also: `sensor.sensor_master_bedroom_battery` reads 0 % (living room 3 %), last updated 11:51 (restart
+  time), so it may be stale; recheck after the next report.
 - **2026-11-08, living room: sync gap confirmed as the cause of that radiator being hot.** Before the
   restart the TRV had closing 0 / opening 100 (fully open) while the helper was 0, and its local
   temperature sat at about 28.4-28.9 °C against 24.1 °C in the room. PR #97 was pulled and HA restarted
