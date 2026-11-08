@@ -1,6 +1,8 @@
 # TRV radiators stay hot although HA has closed the valve
 
-Status: **open**. Mitigations merged and live (PR #97). Sync gap confirmed for the living room; drift not ruled out elsewhere.
+Status: **open** for radiator closure/drift (not fully ruled out); master-bedroom PID registration:
+**closed 2026-11-08**. Mitigations merged and live (PR #97). Sync gap confirmed for the living room;
+drift not ruled out elsewhere.
 Last updated: 2026-11-08.
 
 ## Symptom
@@ -78,10 +80,9 @@ push to `notify.mobile_app_pixel_6`.
   Live checks: `climate.trv_master_bedroom` present; helper 0, closing 100, opening 5 (consistent,
   valve sync running). Changes made to match living room/bedroom: `smart_temperature_control` and
   `open_window` switched **off** (were on); setpoint sync automations (physical <-> PID) switched
-  **on** (were off, last triggered 2025-11). **Blocker, not diagnosed:** `climate.master_bedroom_trv_pid_controller`
-  does not exist live (living room and bedroom PID entities do). Smart mode / PID cannot run until it
-  does. The cause was later found in the copied entity registry: this old entity is marked
-  `disabled_by: user`.
+  **on** (were off, last triggered 2025-11). At the time, `climate.master_bedroom_trv_pid_controller`
+  did not exist live (living room and bedroom PID entities did). The registration issue is now closed;
+  its cause was found in the entity registry: the old entity was marked `disabled_by: user`.
   Sensor battery was replaced by the owner; its reported 0 % (last updated 11:51) is expected to be
   stale until the sensor next reports the battery attribute.
   - **Follow-up, 2026-11-08:** The copied `.storage/core.entity_registry` confirms the old entity
@@ -91,10 +92,10 @@ push to `notify.mobile_app_pixel_6`.
     confirms the GUI-disabled registry entry was why the original controller did not load. The
     copied `.storage/core.restore_state` snapshot from 15:35 also shows the room sensor as `unknown`
     and the new controller `off` with `pid_mode: auto`; those values describe that snapshot only.
-  - **Recovery, 2026-11-08:** Restored the YAML name/unique ID to the original values and removed
-    both master PID records from the supplied `.storage/core.entity_registry` copy, plus the v2
-    entry from its restore-state cache. These are offline copy edits; HA must reload the restored
-    package to recreate the original entity.
+  - **Recovery, 2026-11-08:** The original YAML name and unique ID were restored. The disabled
+    registry entry and stale v2 restore-state entry were removed while Core was stopped; HA then
+    recreated the original entity. The owner confirmed this fixed registration. The copied
+    `.storage` files were removed from the repository and `.storage` remains ignored by Git.
 - **2026-11-08, living room: sync gap confirmed as the cause of that radiator being hot.** Before the
   restart the TRV had closing 0 / opening 100 (fully open) while the helper was 0, and its local
   temperature sat at about 28.4-28.9 °C against 24.1 °C in the room. PR #97 was pulled and HA restarted
