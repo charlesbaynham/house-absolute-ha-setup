@@ -23,6 +23,12 @@ change.** Add a new `docs/<topic>.md` (and an index entry) when you investigate 
 (a bug, a design decision, why config is the way it is). Keep verified facts (dated, with how they
 were checked) separate from hypotheses, keep notes short, and never put tokens or secrets in them.
 
+## Scheduling waits and check-ins
+
+When you schedule a wait (`send_later`, wakeups, check-ins), keep it **slightly under an hour**
+(e.g. 55 minutes, not 60) so the prompt cache stays warm. Only waits that genuinely need to be much
+longer (several hours) are exempt. Don't set up repeating PR check-ins; rely on the PR subscription.
+
 ## Commands
 
 - Validate YAML syntax: `yamllint *.yaml packages/*.yaml`
