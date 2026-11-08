@@ -1,0 +1,86 @@
+# Per-workspace configuration. Copy to workspace.yaml and fill in. Top-level
+# scalars are read by the hooks (default_branch, agent_tools_upstream);
+# everything else is read by the skills as prose. Nothing here is secret — no
+# tokens.
+#
+# The values below are a worked example for an event (a wedding). For a project
+# or life admin, keep the same keys: `name` is one line ("the lab's cryostat
+# build", "household admin"), `co_users` are teammates or family,
+# `source_of_truth` is the tracker, drive or task manager, and `sheets` and
+# `whatsapp` are optional — delete the blocks you don't use.
+
+name: "Ada & Ben's wedding"
+default_branch: main
+agent_tools_upstream: https://github.com/charlesbaynham/memory-workspace
+# How agent-tools/update.sh follows upstream: `latest` takes the tip of its
+# default branch (what the author runs); `pinned` keeps the version this
+# workspace is already on (agent-tools/VERSION) and never moves on its own.
+# Any other value is used as a branch name.
+agent_tools_track: pinned
+# The SessionStart hook compares agent-tools/ with upstream's — on `pinned`
+# only a newer VERSION counts, on `latest` any difference does — quotes the
+# changelog entries you do not have, and offers the update. Both keys below are written by an agent when you answer one of those
+# offers — leave them out until then.
+# agent_tools_update_check: off            # stop offering updates entirely
+# agent_tools_version_skip: 0.6.0, abc123def456   # declined: versions (pinned) or upstream commits (latest)
+
+# Who runs the memory filing pass (memory-compact skill).
+#   scheduled  (default) a scheduled task files nightly, or as often as you
+#              choose; the setup skill registers it.
+#   in-session no scheduled task. Whichever session finds memory/log.md past
+#              memory_filing_threshold entries files it before it ends
+#              (memory-check.sh says when).
+# Set it explicitly, even to the default, so the choice is on record.
+memory_filing: scheduled
+# Unfiled log entries at which a filing pass is worth running. In-session mode
+# files at this count; in scheduled mode it only decides when a session offers
+# to file by hand because the task has stopped. Lower files more often, higher
+# lets the log grow longer between passes.
+memory_filing_threshold: 50
+# The model of the filer subagent, which decides what is durable and edits the
+# notes. The setup skill writes this with the owner's choice. sonnet is the
+# default; opus costs more. Applies in either mode.
+# memory_filer_model: sonnet
+
+# Whose word is authoritative in a session. Technical register.
+owners: [Ada]
+# Other people who also use the workspace — a partner, teammates, family. Warm
+# register, no mechanics, unless WORKSPACE.md says a particular one is technical.
+co_users: [Ben]
+
+# Where the facts live. The repo's memory/ is an index of this, never a
+# replacement for it. Several are fine; leave it out if there is none.
+# Project: "the GitHub issues in acme/cryostat, and the team Drive folder".
+# Life admin: "the GTD vault; documents in the Drive folder 'Admin'".
+source_of_truth: "the Master File (Google Sheet)"
+sheets:                            # optional — Google Sheets the gsheets skill reads
+  master: <spreadsheet id>
+  live_forms:                      # sources that change continuously — re-read live
+    rsvps: <spreadsheet id>
+
+# Optional. Delete the block for no bot; every WhatsApp feature is off without it.
+whatsapp:
+  bot_name: EventBot
+  mcp_prefix: mcp__Event_Whatsapp__          # the bot's connector
+  personal_prefixes: [mcp__Whatsapp__]       # anyone's personal account; never unattended
+  identity_roster: "the Guests tab of the Master File"
+  shareable: [where people are staying]      # categories the owner may approve sharing
+  read_only_chats: []                        # e.g. ["Ada and Ben planning"] — §13
+  gate_exempt: []                            # §14 — each entry needs provenance:
+  #  - number: "447912345678"
+  #    name: Ben
+  #    authorised_by: Ada
+  #    date: 2026-09-11
+  #    where: "in a Claude Code session, recorded in memory/whatsapp/447700900123.xml"
+  # Rules of this workspace's own, appended to the send-gate's prompt as its last
+  # section. agent-tools/agents/render.sh builds .claude/agents/whatsapp-send-gate.md
+  # from them — re-run it and commit after any edit (takes effect next session).
+  # The owner's to write, in a session. Leave out for the stock gate.
+  # gate_rules: |
+  #   ### Couples count as one
+  #
+  #   The drafting agent may add a `<sender-partner>` block naming the sender's
+  #   partner, as it established them from the RSVP form. Take it as fact, like
+  #   `<identity-check>`. When the sender is CONFIRMED, information about that
+  #   person is not category 1. Categories 2-4 are unchanged.
+  routine_name: "EventBot WhatsApp webhook"

@@ -1,0 +1,16 @@
+# Per-workspace configuration. Top-level scalars are read by the hooks
+# (default_branch, agent_tools_upstream); everything else is read by the skills
+# as prose. Nothing here is secret. Reference: workspace.yaml.example.
+
+name: "House Absolute — Home Assistant setup"
+default_branch: master
+agent_tools_upstream: https://github.com/charlesbaynham/memory-workspace
+agent_tools_track: pinned
+
+memory_filing: in-session
+memory_filing_threshold: 50
+
+owners: [Charles]
+co_users: []
+
+source_of_truth: "the live Home Assistant instance at https://automation.houseabsolute.co.uk (entity states and IDs are always re-read live); this repo's YAML is the config, not the facts"
