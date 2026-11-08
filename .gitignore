@@ -1,6 +1,6 @@
 .cache
 .cloud
-# .storage
+.storage
 deps
 *.log
 *.log.*
