@@ -14,8 +14,10 @@ bedroom and bedroom (all with boost). Open investigation of radiators staying ho
 
 ## One package per room — `packages/climate_{room_name}.yaml`
 
-1. **Input Number** `input_number.{room}_trv_valve_position` — 0–100 valve position the PID drives.
-2. **`smart_thermostat` climate entity** — `heater:` is the input_number above, `target_sensor:`
+1. **Two input numbers**: `input_number.{room}_trv_pid_output` (0–100, the PID's heater) and
+   `input_number.{room}_trv_valve_position` (0–100, what the valve-sync automation copies onto the
+   TRV). The PID never writes the valve helper; only the room control automation does (see below).
+2. **`smart_thermostat` climate entity** — `heater:` is the PID output helper, `target_sensor:`
    the room's external temperature sensor. Gains used in every room: `kp: 30`, `ki: 0.005`,
    `kd: 2000`, `pwm: 0`.
 3. **Valve sync automation** — blueprint `arnie580/sonoff-trv-pid.yaml`; copies the helper onto the
@@ -42,18 +44,19 @@ bedroom and bedroom (all with boost). Open investigation of radiators staying ho
 What stays per room (blueprints cannot create them): the helpers, the template button and the
 `smart_thermostat` climate entity.
 
-## Known limitation: `pid_mode: off` does not hold the valve
+## Why the PID writes a separate output helper
 
 `[found: live test, living room, 2026-11-08]` With `pid_mode: off` the smart_thermostat freezes its
-output at the last value, but its 60 s `keep_alive` tick keeps writing that frozen value to the
-heater (`input_number.{room}_trv_valve_position`). So **boost (valve forced to 100) is overwritten
-within ≤60 s**, and **with smart mode off the parked position is overwritten the same way** (parked 10
-→ 22.4, the last PID output, after ~55 s). Not caused by the blueprint migration: the same revert is in
-the 12:52 UTC history from before it. Today's rooms look right only because their frozen output was 0.
-To park a room at a known position, first drive the PID output to 0 (smart mode on, low setpoint),
-then switch smart mode off. Candidate fix (not done): point the PID `heater:` at a separate
-`{room}_trv_pid_output` helper and let the room-control blueprint derive the valve helper from
-boost / smart mode / parked / PID output.
+output at the last value but its 60 s `keep_alive` tick keeps writing that frozen value to its
+heater. When the heater was the valve helper itself, **boost (valve 100) and the parked position
+(smart mode off) were overwritten within ≤60 s** (parked 10 → 22.4 after ~55 s; also visible in the
+12:52 UTC history before the migration). Fixed on 2026-11-08: the PID now drives
+`{room}_trv_pid_output`, and the room control blueprint is the only writer of the valve helper:
+**0** if the PID climate is `off` (back door, far-away mode) → else **100** if boost → else the
+**PID output** if smart mode is on → else the **parked position**. It re-evaluates on PID output
+changes, PID climate off/on, smart mode, boost, parked position, HA start and manual trigger.
+Verified in a real HA 2026.10 core (mocked PID, 23 checks incl. keep-alive rewrites during boost and
+with a parked position) and live after merge, see the log.
 
 ## Adding a room
 
@@ -76,7 +79,7 @@ untuned).
 
 ## Troubleshooting
 
-- Not responding → is the valve sync automation running?
+- Not responding → is the valve sync automation running? Valve wrong → the room control automation is the only writer of the valve helper; read its arbitration order above.
 - Inaccurate temperature → is the external sensor sync active?
 - Fail-safe mode → the external sensor must report at least every 2 hours.
 - Setpoints not syncing, boost or smart mode not applying → is the `<Room> TRV - control` automation enabled?
