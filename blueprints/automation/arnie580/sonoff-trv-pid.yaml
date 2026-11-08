@@ -1,7 +1,23 @@
 blueprint:
   name: Sonoff TRV PID
-  description: Automation to enable PID control of Sonoff TRV in conjuction with Smart
-    Thermostat PID (available from HACS)
+  description: >-
+    Automation to enable PID control of Sonoff TRV in conjuction with Smart
+    Thermostat PID (available from HACS).
+
+
+    Modified from the upstream blueprint to be self-healing and gentler on the
+    TRVZB motor (which can lose its travel calibration after many small valve
+    moves):
+
+    - The 0-100 helper is re-applied on HA start, when the TRV comes back
+    online and every 10 minutes, so a dropped Zigbee write (or a restart that
+    leaves the helper unchanged) can no longer leave the valve stuck open.
+
+    - Writes are only sent if the TRV's reported value is wrong.
+
+    - Small PID wiggles are ignored (dead-band of "Minimum step"). Fully
+    closed (0) and fully open (100) are always applied exactly, so the valve
+    always finishes with a full-stroke close.
   domain: automation
   input:
     thermostat_value:
@@ -31,22 +47,74 @@ blueprint:
             - number
           reorder: false
           multiple: false
+    min_step:
+      name: Minimum step
+      description: >-
+        Ignore changes smaller than this many percent (except to fully
+        closed / fully open). Sonoff and Versatile Thermostat advise at least
+        3% to avoid the TRVZB losing calibration.
+      default: 3
+      selector:
+        number:
+          min: 1
+          max: 20
+          step: 1
+          unit_of_measurement: "%"
   source_url: https://github.com/arnie580/hass-blueprints/blob/main/sonoff-trv-pid.yaml
 variables:
   thermostat_value: !input thermostat_value
+  max_valve_opening: !input max_valve_opening
+  max_valve_closing: !input max_valve_closing
+  min_step: !input min_step
+  value_valid: "{{ states(thermostat_value) | is_number }}"
+  demand: "{{ [[states(thermostat_value) | float(0), 0] | max, 100] | min }}"
+  at_edge: "{{ demand <= 0 or demand >= 100 }}"
+  target_closing: "{{ (100 - demand) | round(0) | int }}"
+  target_opening: "{{ ([demand + 5, 100] | min) | round(0) | int }}"
+  write_closing: >-
+    {% set cur = states(max_valve_closing) | float(none) %}
+    {{ cur is none or (cur != target_closing if at_edge
+       else (cur - target_closing) | abs >= (min_step | float(3))) }}
+  write_opening: >-
+    {% set cur = states(max_valve_opening) | float(none) %}
+    {{ cur is none or (cur != target_opening if at_edge
+       else (cur - target_opening) | abs >= (min_step | float(3))) }}
 triggers:
-  trigger: state
+- trigger: state
   entity_id: !input thermostat_value
+- trigger: state
+  entity_id:
+  - !input max_valve_closing
+  - !input max_valve_opening
+  from:
+  - unavailable
+  - unknown
+- trigger: homeassistant
+  event: start
+- trigger: time_pattern
+  minutes: /10
+conditions:
+- condition: template
+  value_template: "{{ value_valid }}"
 actions:
-- action: number.set_value
-  data:
-    value: '{{100.0-states(thermostat_value)| float}}'
-  target:
-    entity_id: !input max_valve_closing
-- action: number.set_value
-  data:
-    value: "{% if (states(thermostat_value) | float + 5) < 100 %}\n    {{states(thermostat_value)|
-      float+5}} \n{% else %}\n    100\n{% endif %}"
-  target:
-    entity_id: !input max_valve_opening
-mode: single
+- if:
+  - condition: template
+    value_template: "{{ write_closing }}"
+  then:
+  - action: number.set_value
+    data:
+      value: "{{ target_closing }}"
+    target:
+      entity_id: !input max_valve_closing
+    continue_on_error: true
+- if:
+  - condition: template
+    value_template: "{{ write_opening }}"
+  then:
+  - action: number.set_value
+    data:
+      value: "{{ target_opening }}"
+    target:
+      entity_id: !input max_valve_opening
+    continue_on_error: true
+mode: restart

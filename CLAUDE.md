@@ -190,6 +190,14 @@ inputs for the new room. Prerequisites: the TRV must be paired in HA, an externa
 sensor must be available, the TRV must be set to external-sensor mode in Zigbee2MQTT, and the
 Smart Thermostat (PID) HACS integration must be installed.
 
+TRV calibration drift: the TRVZB motor can lose its travel calibration (radiator stays hot with the
+valve "closed"). There is no Zigbee command to recalibrate it; the only cure is a manual re-adaptation
+(remove a battery, refit, seat the head firmly, short-press the middle button). Mitigations in this repo:
+the valve sync blueprint re-asserts the commanded position every 10 minutes and on start, ignores PID
+changes smaller than 3% (except fully closed/open), and
+`blueprints/automation/charlesbaynham/trv-hot-while-closed-watchdog.yaml` notifies when the TRV
+temperature stays above room temperature while the valve is commanded closed (per-room threshold, untuned).
+
 TRV troubleshooting:
 - **Not responding** → check the valve sync automation is running
 - **Inaccurate temperature** → check the external sensor sync automation is active

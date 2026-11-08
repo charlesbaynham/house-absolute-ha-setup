@@ -92,6 +92,24 @@ automation:
         max_valve_opening: number.trv_living_room_valve_opening_degree
         max_valve_closing: number.trv_living_room_valve_closing_degree
 
+  - id: '1790000000001'
+    alias: Living room TRV - hot while closed watchdog
+    description: 'Notify if the radiator stays hot although the valve is commanded closed (TRV has probably lost calibration and needs a manual re-adaptation).'
+    use_blueprint:
+      path: charlesbaynham/trv-hot-while-closed-watchdog.yaml
+      input:
+        room_name: Living room
+        valve_helper: input_number.living_room_trv_valve_position
+        closing_degree: number.trv_living_room_valve_closing_degree
+        trv_temperature: sensor.trv_living_room_local_temperature
+        room_temperature: sensor.sensor_living_room_temperature
+        threshold: 4
+        notify_actions:
+        - action: notify.mobile_app_pixel_6
+          data:
+            title: "Living room TRV needs recalibrating"
+            message: "{{ message }}"
+
   - id: '1761512302799'
     alias: Sync living room TRV with external sensor
     description: ''
