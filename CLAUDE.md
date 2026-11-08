@@ -14,6 +14,15 @@ triggers/conditions vs. templates, helper selection, automation modes, `entity_i
 Zigbee patterns, blueprints, and dashboard cards. It loads automatically — consult it before writing
 or editing automations, scripts, scenes, blueprints, or dashboards.
 
+## docs/ — agent-maintained notes (read and write them)
+
+`docs/` is yours: the owner rarely reads it, so it is the memory shared between agents working in
+this repo. **Before starting work, check `docs/README.md` (the index) and read any note on the topic.
+While working, record what you learn; before finishing, update the notes in the same commit as the
+change.** Add a new `docs/<topic>.md` (and an index entry) when you investigate something non-trivial
+(a bug, a design decision, why config is the way it is). Keep verified facts (dated, with how they
+were checked) separate from hypotheses, keep notes short, and never put tokens or secrets in them.
+
 ## Commands
 
 - Validate YAML syntax: `yamllint *.yaml packages/*.yaml`
@@ -189,6 +198,14 @@ To add a new room, copy an existing `packages/climate_{room}.yaml` and rename en
 inputs for the new room. Prerequisites: the TRV must be paired in HA, an external temperature
 sensor must be available, the TRV must be set to external-sensor mode in Zigbee2MQTT, and the
 Smart Thermostat (PID) HACS integration must be installed.
+
+TRV calibration drift: the TRVZB motor can lose its travel calibration (radiator stays hot with the
+valve "closed"). There is no Zigbee command to recalibrate it; the only cure is a manual re-adaptation
+(remove a battery, refit, seat the head firmly, short-press the middle button). Mitigations in this repo:
+the valve sync blueprint re-asserts the commanded position every 10 minutes and on start, ignores PID
+changes smaller than 3% (except fully closed/open), and
+`blueprints/automation/charlesbaynham/trv-hot-while-closed-watchdog.yaml` notifies when the TRV
+temperature stays above room temperature while the valve is commanded closed (per-room threshold, untuned).
 
 TRV troubleshooting:
 - **Not responding** → check the valve sync automation is running

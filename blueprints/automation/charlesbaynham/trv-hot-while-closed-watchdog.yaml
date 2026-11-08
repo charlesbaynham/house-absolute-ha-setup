@@ -1,0 +1,125 @@
+blueprint:
+  name: TRV hot while closed watchdog
+  description: >-
+    Notifies when a Sonoff TRVZB reports a hot radiator even though the valve
+    has been commanded fully closed for a while. That means the TRV has most
+    likely lost its motor-travel calibration and needs a manual re-adaptation
+    (take out one battery, refit it, screw the head on firmly while the install
+    icon flashes, short-press the middle button so "Ad" runs). The TRVZB has no
+    Zigbee command to do this remotely.
+
+
+    Detection: the valve helper is ~0, the TRV reports closing degree 100, and
+    the TRV's own (radiator-side) temperature has been more than the threshold
+    above the room temperature for the whole duration.
+  domain: automation
+  input:
+    room_name:
+      name: Room name
+      description: Used in the notification text.
+      selector:
+        text:
+    valve_helper:
+      name: Valve position helper
+      description: The 0-100 input_number the PID controller drives.
+      selector:
+        entity:
+          filter:
+          - domain:
+            - input_number
+    closing_degree:
+      name: TRV valve closing degree
+      selector:
+        entity:
+          filter:
+          - domain:
+            - number
+    trv_temperature:
+      name: TRV local temperature
+      description: The temperature sensor on the TRV itself (next to the radiator).
+      selector:
+        entity:
+          filter:
+          - domain:
+            - sensor
+            device_class:
+            - temperature
+    room_temperature:
+      name: Room temperature sensor
+      selector:
+        entity:
+          filter:
+          - domain:
+            - sensor
+            device_class:
+            - temperature
+    threshold:
+      name: Temperature difference threshold
+      description: >-
+        TRV temperature minus room temperature above which the radiator is
+        considered hot. Each TRV has a different baseline offset, so tune this
+        per room.
+      default: 4
+      selector:
+        number:
+          min: 1
+          max: 15
+          step: 0.5
+          unit_of_measurement: °C
+    duration:
+      name: Duration
+      description: >-
+        How long the condition must hold. Must be longer than the time a
+        radiator takes to cool after the valve closes.
+      default:
+        hours: 1
+        minutes: 0
+        seconds: 0
+      selector:
+        duration:
+    notify_actions:
+      name: Extra notification actions
+      description: >-
+        Optional. Runs in addition to the persistent notification. The text is
+        available as the template variable `message`.
+      default: []
+      selector:
+        action:
+  source_url: https://github.com/charlesbaynham/house-absolute-ha-setup
+trigger_variables:
+  valve_helper: !input valve_helper
+  closing_degree: !input closing_degree
+  trv_temperature: !input trv_temperature
+  room_temperature: !input room_temperature
+  threshold: !input threshold
+variables:
+  room_name: !input room_name
+  valve_helper: !input valve_helper
+  trv_temperature: !input trv_temperature
+  room_temperature: !input room_temperature
+  message: >-
+    {{ room_name }} radiator is hot ({{ states(trv_temperature) }} °C at the
+    TRV vs {{ states(room_temperature) }} °C in the room) although the valve
+    has been commanded closed. The TRV has probably lost its calibration:
+    remove a battery, refit it, seat the head firmly and short-press the
+    middle button to re-run adaptation.
+triggers:
+- trigger: template
+  value_template: >-
+    {% set pos = states(valve_helper) | float(none) %}
+    {% set closing = states(closing_degree) | float(none) %}
+    {% set trv = states(trv_temperature) | float(none) %}
+    {% set room = states(room_temperature) | float(none) %}
+    {{ none not in [pos, closing, trv, room]
+       and pos < 1 and closing >= 99
+       and (trv - room) > (threshold | float(4)) }}
+  for: !input duration
+actions:
+- action: persistent_notification.create
+  data:
+    title: "{{ room_name }} TRV needs recalibrating"
+    message: "{{ message }}"
+    notification_id: "trv_hot_while_closed_{{ valve_helper }}"
+- alias: Extra notifications
+  sequence: !input notify_actions
+mode: single

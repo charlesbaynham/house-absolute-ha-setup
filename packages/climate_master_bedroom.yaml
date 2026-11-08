@@ -93,6 +93,24 @@ automation:
         max_valve_opening: number.trv_master_bedroom_valve_opening_degree
         max_valve_closing: number.trv_master_bedroom_valve_closing_degree
 
+  - id: '1790000000002'
+    alias: Master bedroom TRV - hot while closed watchdog
+    description: 'Notify if the radiator stays hot although the valve is commanded closed (TRV has probably lost calibration and needs a manual re-adaptation).'
+    use_blueprint:
+      path: charlesbaynham/trv-hot-while-closed-watchdog.yaml
+      input:
+        room_name: Master bedroom
+        valve_helper: input_number.master_bedroom_trv_valve_position
+        closing_degree: number.trv_master_bedroom_valve_closing_degree
+        trv_temperature: sensor.trv_master_bedroom_local_temperature
+        room_temperature: sensor.sensor_master_bedroom_temperature
+        threshold: 4
+        notify_actions:
+        - action: notify.mobile_app_pixel_6
+          data:
+            title: "Master bedroom TRV needs recalibrating"
+            message: "{{ message }}"
+
   - id: '1761479998275'
     alias: Sync master bedroom TRV with external sensor
     description: ''
