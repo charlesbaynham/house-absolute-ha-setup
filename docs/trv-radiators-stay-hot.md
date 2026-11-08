@@ -80,13 +80,21 @@ push to `notify.mobile_app_pixel_6`.
   `open_window` switched **off** (were on); setpoint sync automations (physical <-> PID) switched
   **on** (were off, last triggered 2025-11). **Blocker, not diagnosed:** `climate.master_bedroom_trv_pid_controller`
   does not exist live (living room and bedroom PID entities do). Smart mode / PID cannot run until it
-  does. Cause unknown: HA error log is not exposed over REST; check Settings > System > Logs for
-  `smart_thermostat` / `master_bedroom` errors, and the entity registry for a disabled entry.
+  does. The cause was later found in the copied entity registry: this old entity is marked
+  `disabled_by: user`.
   Sensor battery was replaced by the owner; its reported 0 % (last updated 11:51) is expected to be
   stale until the sensor next reports the battery attribute.
-  - **Follow-up, 2026-11-08:** YAML `unique_id` and name changed to request a fresh registry entry,
-    expected entity ID `climate.master_bedroom_trv_pid_controller_v2`. This has not yet been
-    confirmed live; the old registry entry may remain separately.
+  - **Follow-up, 2026-11-08:** The copied `.storage/core.entity_registry` confirms the old entity
+    (`unique_id: trv_pid_master_bedroom`) is disabled by the user; its registry record was last
+    modified 2026-05-16 21:59 UTC. The YAML name and unique ID were changed, and a fresh enabled
+    `climate.master_bedroom_trv_pid_controller_v2` entry was created at 15:35 UTC on Nov 8. This
+    confirms the GUI-disabled registry entry was why the original controller did not load. The
+    copied `.storage/core.restore_state` snapshot from 15:35 also shows the room sensor as `unknown`
+    and the new controller `off` with `pid_mode: auto`; those values describe that snapshot only.
+  - **Recovery, 2026-11-08:** Restored the YAML name/unique ID to the original values and removed
+    both master PID records from the supplied `.storage/core.entity_registry` copy, plus the v2
+    entry from its restore-state cache. These are offline copy edits; HA must reload the restored
+    package to recreate the original entity.
 - **2026-11-08, living room: sync gap confirmed as the cause of that radiator being hot.** Before the
   restart the TRV had closing 0 / opening 100 (fully open) while the helper was 0, and its local
   temperature sat at about 28.4-28.9 °C against 24.1 °C in the room. PR #97 was pulled and HA restarted

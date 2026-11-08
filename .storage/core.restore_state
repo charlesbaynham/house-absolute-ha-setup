@@ -679,11 +679,6 @@
       "last_seen": "2026-11-08T15:36:11.047690+00:00"
     },
     {
-      "state": {"entity_id":"climate.master_bedroom_trv_pid_controller_v2","state":"off","attributes":{"hvac_modes":["heat","off"],"min_temp":7.0,"max_temp":28.0,"current_temperature":null,"temperature":19.0,"hvac_action":"off","away_temp":null,"eco_temp":null,"boost_temp":null,"comfort_temp":null,"home_temp":null,"sleep_temp":null,"activity_temp":null,"control_output":0.0,"kp":30.0,"ki":0.005,"kd":2000.0,"ke":0.0,"pid_mode":"auto","pid_i":0,"friendly_name":"Master bedroom TRV PID controller v2","supported_features":385},"last_changed":"2026-11-08T15:35:50.814163+00:00","last_reported":"2026-11-08T15:35:53.814951+00:00","last_updated":"2026-11-08T15:35:50.814163+00:00","context":{"id":"01M6XWTDRYCRBDE9VAX9SNBZEC","parent_id":null,"user_id":null}},
-      "extra_data": null,
-      "last_seen": "2026-11-08T15:36:11.047690+00:00"
-    },
-    {
       "state": {"entity_id":"device_tracker.an8_0","state":"not_home","attributes":{"tracking_type":"position","in_zones":[],"source_type":"gps","latitude":50.9259161,"longitude":-1.409222,"gps_accuracy":122.0,"altitude":80.0,"course":0,"speed":0,"vertical_accuracy":7,"friendly_name":"an8&@0"},"last_changed":"2026-11-08T15:35:50.832674+00:00","last_reported":"2026-11-08T15:35:50.832674+00:00","last_updated":"2026-11-08T15:35:50.832674+00:00","context":{"id":"01M6XWTDSGF4PPY1JTW4VW2XPJ","parent_id":null,"user_id":null}},
       "extra_data": {
         "data": {
