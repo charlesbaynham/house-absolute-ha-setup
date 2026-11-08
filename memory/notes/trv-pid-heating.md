@@ -42,6 +42,19 @@ bedroom and bedroom (all with boost). Open investigation of radiators staying ho
 What stays per room (blueprints cannot create them): the helpers, the template button and the
 `smart_thermostat` climate entity.
 
+## Known limitation: `pid_mode: off` does not hold the valve
+
+`[found: live test, living room, 2026-11-08]` With `pid_mode: off` the smart_thermostat freezes its
+output at the last value, but its 60 s `keep_alive` tick keeps writing that frozen value to the
+heater (`input_number.{room}_trv_valve_position`). So **boost (valve forced to 100) is overwritten
+within ≤60 s**, and **with smart mode off the parked position is overwritten the same way** (parked 10
+→ 22.4, the last PID output, after ~55 s). Not caused by the blueprint migration: the same revert is in
+the 12:52 UTC history from before it. Today's rooms look right only because their frozen output was 0.
+To park a room at a known position, first drive the PID output to 0 (smart mode on, low setpoint),
+then switch smart mode off. Candidate fix (not done): point the PID `heater:` at a separate
+`{room}_trv_pid_output` helper and let the room-control blueprint derive the valve helper from
+boost / smart mode / parked / PID output.
+
 ## Adding a room
 
 Copy an existing `packages/climate_{room}.yaml` and rename entities and blueprint inputs (the
