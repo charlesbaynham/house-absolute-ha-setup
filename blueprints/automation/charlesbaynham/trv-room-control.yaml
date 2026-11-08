@@ -1,0 +1,278 @@
+blueprint:
+  name: TRV room control (setpoint sync, smart mode, boost)
+  description: >-
+    The per-room control logic for a Sonoff TRVZB driven by a Smart Thermostat
+    (PID) climate entity, as one automation:
+
+
+    - **Setpoint sync** - the physical TRV and the PID controller mirror each
+    other's target temperature (a "differ" check stops the two syncs
+    ping-ponging).
+
+    - **Smart mode** - on: PID in auto. Off: PID stopped and the valve helper
+    set to the user-adjustable parked position. Re-applied when smart mode or
+    the parked position changes, when boost ends and on HA start. Skipped
+    during boost. *Triggering this automation manually (or via
+    automation.trigger) re-applies smart mode.*
+
+    - **Boost** - valve forced to 100% with the PID stopped; ends by itself
+    after the configured time (checked every 5 minutes).
+
+
+    The helpers (valve position, parked position, smart mode, boost mode, boost
+    start), the PID climate entity and the valve-sync automation must exist
+    already; they are inputs here. Mode is `queued` and every check is made when
+    a run starts, so rapid toggles settle on the latest state.
+  domain: automation
+  author: Charles Baynham
+  source_url: https://github.com/charlesbaynham/house-absolute-ha-setup/blob/master/blueprints/automation/charlesbaynham/trv-room-control.yaml
+  homeassistant:
+    min_version: "2024.10.0"
+  input:
+    devices:
+      name: Climate entities
+      icon: mdi:thermostat
+      input:
+        trv_climate:
+          name: Physical TRV
+          description: The TRV's own climate entity (setpoint is mirrored with the PID controller).
+          selector:
+            entity:
+              filter:
+              - domain:
+                - climate
+        pid_climate:
+          name: PID controller
+          description: The smart_thermostat climate entity for this room.
+          selector:
+            entity:
+              filter:
+              - domain:
+                - climate
+    helpers:
+      name: Helpers and automations
+      icon: mdi:toggle-switch
+      input:
+        valve_helper:
+          name: Valve position helper
+          description: The 0-100 input_number the PID controller drives.
+          selector:
+            entity:
+              filter:
+              - domain:
+                - input_number
+        parked_valve_helper:
+          name: Parked valve position helper
+          description: The 0-100 input_number holding the valve position used when smart mode is off.
+          selector:
+            entity:
+              filter:
+              - domain:
+                - input_number
+        smart_mode:
+          name: Smart mode switch
+          selector:
+            entity:
+              filter:
+              - domain:
+                - input_boolean
+        boost_mode:
+          name: Boost mode switch
+          selector:
+            entity:
+              filter:
+              - domain:
+                - input_boolean
+        boost_start:
+          name: Boost start time helper
+          description: input_datetime (date and time) recording when boost began.
+          selector:
+            entity:
+              filter:
+              - domain:
+                - input_datetime
+        valve_sync_automation:
+          name: Valve sync automation
+          description: >-
+            The arnie580/sonoff-trv-pid automation for this room. It is switched
+            on whenever smart mode is applied.
+          selector:
+            entity:
+              filter:
+              - domain:
+                - automation
+    settings:
+      name: Settings
+      icon: mdi:cog
+      collapsed: true
+      input:
+        boost_duration:
+          name: Boost duration
+          description: Boost is switched off once it has been running this long.
+          default: 60
+          selector:
+            number:
+              min: 5
+              max: 480
+              step: 5
+              unit_of_measurement: min
+mode: queued
+max: 10
+variables:
+  trv_climate: !input trv_climate
+  pid_climate: !input pid_climate
+  parked_valve_helper: !input parked_valve_helper
+  boost_start: !input boost_start
+  boost_duration: !input boost_duration
+triggers:
+- trigger: state
+  entity_id: !input trv_climate
+  attribute: temperature
+  id: trv_setpoint
+- trigger: state
+  entity_id: !input pid_climate
+  attribute: temperature
+  id: pid_setpoint
+- trigger: state
+  entity_id: !input smart_mode
+  id: smart_mode_changed
+- trigger: state
+  entity_id: !input parked_valve_helper
+  id: parked_valve_changed
+- trigger: state
+  entity_id: !input boost_mode
+  to: 'on'
+  id: boost_on
+- trigger: state
+  entity_id: !input boost_mode
+  to: 'off'
+  id: boost_off
+- trigger: time_pattern
+  minutes: /5
+  id: boost_timeout
+- trigger: homeassistant
+  event: start
+  id: ha_start
+actions:
+- choose:
+  # Physical TRV setpoint changed -> copy to PID
+  - conditions:
+    - condition: trigger
+      id: trv_setpoint
+    - condition: template
+      value_template: >-
+        {% set trv_temp = state_attr(trv_climate, 'temperature') %}
+        {% set pid_temp = state_attr(pid_climate, 'temperature') %}
+        {{ trv_temp != none and pid_temp != none and trv_temp != pid_temp }}
+    sequence:
+    - action: climate.set_temperature
+      target:
+        entity_id: !input pid_climate
+      data:
+        temperature: "{{ state_attr(trv_climate, 'temperature') }}"
+
+  # PID setpoint changed -> copy to physical TRV
+  - conditions:
+    - condition: trigger
+      id: pid_setpoint
+    - condition: template
+      value_template: >-
+        {% set trv_temp = state_attr(trv_climate, 'temperature') %}
+        {% set pid_temp = state_attr(pid_climate, 'temperature') %}
+        {{ trv_temp != none and pid_temp != none and trv_temp != pid_temp }}
+    sequence:
+    - action: climate.set_temperature
+      target:
+        entity_id: !input trv_climate
+      data:
+        temperature: "{{ state_attr(pid_climate, 'temperature') }}"
+
+  # Boost switched on -> stamp the start time, stop the PID, open the valve
+  - conditions:
+    - condition: trigger
+      id: boost_on
+    sequence:
+    - action: input_datetime.set_datetime
+      target:
+        entity_id: !input boost_start
+      data:
+        timestamp: "{{ now().timestamp() }}"
+    - action: smart_thermostat.set_pid_mode
+      target:
+        entity_id: !input pid_climate
+      data:
+        mode: "off"
+    # Wait 1s to ensure the PID controller has stopped before forcing the valve
+    - delay: '00:00:01'
+    - action: input_number.set_value
+      target:
+        entity_id: !input valve_helper
+      data:
+        value: 100
+
+  # Boost running longer than the configured duration -> switch it off
+  - conditions:
+    - condition: trigger
+      id: boost_timeout
+    - condition: state
+      entity_id: !input boost_mode
+      state: 'on'
+    - condition: template
+      value_template: >-
+        {% set start = states(boost_start) %}
+        {% if start not in ['unknown', 'unavailable', ''] %}
+          {{ (now().timestamp() - as_timestamp(start)) >= (boost_duration | float(60)) * 60 }}
+        {% else %}
+          false
+        {% endif %}
+    sequence:
+    - action: input_boolean.turn_off
+      target:
+        entity_id: !input boost_mode
+
+  # Everything else (smart mode / parked position changed, boost ended, HA
+  # start, manual trigger) -> (re-)apply smart mode, unless boost is active
+  default:
+  # (a setpoint echo or an unfinished boost timeout poll that failed its
+  # branch conditions above must not land here)
+  - condition: not
+    conditions:
+    - condition: trigger
+      id:
+      - trv_setpoint
+      - pid_setpoint
+      - boost_timeout
+  - condition: state
+    entity_id: !input boost_mode
+    state: 'off'
+  - action: automation.turn_on
+    target:
+      entity_id: !input valve_sync_automation
+  - action: climate.set_hvac_mode
+    target:
+      entity_id: !input pid_climate
+    data:
+      hvac_mode: heat
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: !input smart_mode
+        state: 'on'
+      sequence:
+      - action: smart_thermostat.set_pid_mode
+        target:
+          entity_id: !input pid_climate
+        data:
+          mode: auto
+    default:
+    - action: smart_thermostat.set_pid_mode
+      target:
+        entity_id: !input pid_climate
+      data:
+        mode: "off"
+    - delay: '00:00:01'
+    - action: input_number.set_value
+      target:
+        entity_id: !input valve_helper
+      data:
+        value: "{{ states(parked_valve_helper) | float(50) }}"

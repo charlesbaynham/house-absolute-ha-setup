@@ -9,12 +9,15 @@
 # - Helper for valve position (0-100)
 # - Valve position sync automation (blueprint)
 # - External sensor sync automation (blueprint)
-# - Bidirectional setpoint sync (physical TRV ↔ PID controller)
+# - Room control automation (blueprint): bidirectional setpoint sync
+#   (physical TRV ↔ PID controller), smart mode, boost and boost timeout
 #
 # Physical device: climate.trv_living_room
 # External sensor: sensor.sensor_living_room_temperature
 #
 # Blueprints used:
+# - charlesbaynham/trv-room-control.yaml
+# - charlesbaynham/trv-hot-while-closed-watchdog.yaml
 # - arnie580/sonoff-trv-pid.yaml
 # - photomoose/sonoff-trvzb-external-temperature-sensor-calibration.yaml
 
@@ -120,169 +123,17 @@ automation:
         trv_external_temperature_input:
         - number.trv_living_room_external_temperature_input
 
-  - id: '1732372800000'
-    alias: Living room TRV - sync physical setpoint to PID
-    description: 'When user changes setpoint on physical TRV, copy it to the PID controller'
-    triggers:
-    - trigger: state
-      entity_id: climate.trv_living_room
-      attribute: temperature
-    conditions:
-    - condition: template
-      value_template: >
-        {% set trv_temp = state_attr('climate.trv_living_room', 'temperature') %}
-        {% set pid_temp = state_attr('climate.living_room_trv_pid_controller', 'temperature') %}
-        {{ trv_temp != none and pid_temp != none and trv_temp != pid_temp }}
-    actions:
-    - action: climate.set_temperature
-      metadata: {}
-      data:
-        temperature: >
-          {{ state_attr('climate.trv_living_room', 'temperature') }}
-      target:
-        entity_id: climate.living_room_trv_pid_controller
-    mode: single
-
-  - id: '1732372800001'
-    alias: Living room TRV - sync PID setpoint to physical
-    description: 'When user changes setpoint on PID controller, copy it to the physical TRV'
-    triggers:
-    - trigger: state
-      entity_id: climate.living_room_trv_pid_controller
-      attribute: temperature
-    conditions:
-    - condition: template
-      value_template: >
-        {% set trv_temp = state_attr('climate.trv_living_room', 'temperature') %}
-        {% set pid_temp = state_attr('climate.living_room_trv_pid_controller', 'temperature') %}
-        {{ trv_temp != none and pid_temp != none and trv_temp != pid_temp }}
-    actions:
-    - action: climate.set_temperature
-      metadata: {}
-      data:
-        temperature: >
-          {{ state_attr('climate.living_room_trv_pid_controller', 'temperature') }}
-      target:
-        entity_id: climate.trv_living_room
-    mode: single
-
-  - id: '1740000000002'
-    alias: Living room TRV - apply smart mode
-    description: >-
-      Smart mode on: PID control. Smart mode off: PID stopped and valve parked
-      at the user-set parked position. Re-applied on startup and when boost ends. Skipped during boost.
-    triggers:
-    - trigger: state
-      entity_id: input_boolean.smart_mode_living_room
-    - trigger: state
-      entity_id: input_boolean.boost_mode_living_room
-      to: 'off'
-    - trigger: state
-      entity_id: input_number.living_room_trv_parked_valve_position
-    - trigger: homeassistant
-      event: start
-    conditions:
-    - condition: state
-      entity_id: input_boolean.boost_mode_living_room
-      state: 'off'
-    actions:
-    - action: automation.turn_on
-      target:
-        entity_id: automation.living_room_trv_sync_valve_with_helper
-    - action: climate.set_hvac_mode
-      target:
-        entity_id: climate.living_room_trv_pid_controller
-      data:
-        hvac_mode: heat
-    - choose:
-      - conditions:
-        - condition: state
-          entity_id: input_boolean.smart_mode_living_room
-          state: 'on'
-        sequence:
-        - action: smart_thermostat.set_pid_mode
-          target:
-            entity_id: climate.living_room_trv_pid_controller
-          data:
-            mode: auto
-      default:
-      - action: smart_thermostat.set_pid_mode
-        target:
-          entity_id: climate.living_room_trv_pid_controller
-        data:
-          mode: 'off'
-      - delay: '00:00:01'
-      - action: input_number.set_value
-        target:
-          entity_id: input_number.living_room_trv_valve_position
-        data:
-          value: "{{ states('input_number.living_room_trv_parked_valve_position') | float(50) }}"
-    mode: restart
-
-  - id: '1736044800000'
-    alias: Living room TRV - activate boost mode
-    description: 'When boost mode is activated, set valve to 100% and stop PID updates'
-    triggers:
-    - trigger: state
-      entity_id: input_boolean.boost_mode_living_room
-      to: 'on'
-    conditions: []
-    actions:
-    - action: input_datetime.set_datetime
-      target:
-        entity_id: input_datetime.boost_start_living_room
-      data:
-        timestamp: '{{ now().timestamp() }}'
-    - action: smart_thermostat.set_pid_mode
-      target:
-        entity_id: climate.living_room_trv_pid_controller
-      data:
-        mode: "off"
-    # Wait 1s to ensure PID controller has stopped before forcing valve position
-    - delay: '00:00:01'
-    - action: input_number.set_value
-      target:
-        entity_id: input_number.living_room_trv_valve_position
-      data:
-        value: 100
-    mode: single
-
-  - id: '1736044800001'
-    alias: Living room TRV - deactivate boost mode
-    description: 'When boost mode is turned off, re-enable valve sync (PID/parked state is restored by the smart mode automation)'
-    triggers:
-    - trigger: state
-      entity_id: input_boolean.boost_mode_living_room
-      to: 'off'
-    conditions: []
-    actions:
-    - action: automation.turn_on
-      target:
-        entity_id: automation.living_room_trv_sync_valve_with_helper
-    mode: single
-
-  - id: '1736044800002'
-    alias: Living room TRV - boost timeout
-    description: 'Turn off boost mode after 1 hour'
-    triggers:
-    - trigger: time_pattern
-      minutes: /5
-    conditions:
-    - condition: state
-      entity_id: input_boolean.boost_mode_living_room
-      state: 'on'
-    - condition: template
-      value_template: >
-        {% set boost_start = states('input_datetime.boost_start_living_room') %}
-        {% if boost_start not in ['unknown', 'unavailable', ''] %}
-          {% set start_time = as_timestamp(boost_start) %}
-          {% set current_time = now().timestamp() %}
-          {{ (current_time - start_time) >= 3600 }}
-        {% else %}
-          false
-        {% endif %}
-    actions:
-    - action: input_boolean.turn_off
-      target:
-        entity_id: input_boolean.boost_mode_living_room
-    mode: single
+  - id: '1790000000011'
+    alias: Living room TRV - control
+    description: 'Setpoint sync (physical TRV <-> PID), smart mode and boost for this room. See the blueprint. Triggering it manually re-applies smart mode.'
+    use_blueprint:
+      path: charlesbaynham/trv-room-control.yaml
+      input:
+        trv_climate: climate.trv_living_room
+        pid_climate: climate.living_room_trv_pid_controller
+        valve_helper: input_number.living_room_trv_valve_position
+        parked_valve_helper: input_number.living_room_trv_parked_valve_position
+        smart_mode: input_boolean.smart_mode_living_room
+        boost_mode: input_boolean.boost_mode_living_room
+        boost_start: input_datetime.boost_start_living_room
+        valve_sync_automation: automation.living_room_trv_sync_valve_with_helper

@@ -13,8 +13,9 @@
 #   already off, e.g. by far-away mode, stays off), then climate.turn_off them.
 #   Setpoints are untouched by turn_off.
 # - On close, put the remembered rooms back to `heat`. Per room, the existing
-#   "apply smart mode" automation re-applies PID / parked valve; rooms in boost
-#   get their valve forced back to 100%.
+#   room control automation (triggered manually, which runs its smart mode
+#   branch) re-applies PID / parked valve; rooms in boost get their valve
+#   forced back to 100%.
 # - Remembered rooms live in an input_text, so they survive an HA restart.
 # - Single queued automation so rapid open/close events are serialised.
 
@@ -111,15 +112,15 @@ automation:
                        | select('match', 'climate\.') | list }}
                   rooms:
                     climate.living_room_trv_pid_controller:
-                      apply: automation.living_room_trv_apply_smart_mode
+                      apply: automation.living_room_trv_control
                       boost: input_boolean.boost_mode_living_room
                       valve: input_number.living_room_trv_valve_position
                     climate.master_bedroom_trv_pid_controller:
-                      apply: automation.master_bedroom_trv_apply_smart_mode
+                      apply: automation.master_bedroom_trv_control
                       boost: input_boolean.boost_mode_master_bedroom
                       valve: input_number.master_bedroom_trv_valve_position
                     climate.bedroom_trv_pid_controller:
-                      apply: automation.bedroom_trv_apply_smart_mode
+                      apply: automation.bedroom_trv_control
                       boost: input_boolean.boost_mode_bedroom
                       valve: input_number.bedroom_trv_valve_position
               - repeat:
@@ -143,7 +144,8 @@ automation:
                                 entity_id: "{{ rooms[repeat.item].valve }}"
                               data:
                                 value: 100
-                      # Otherwise re-apply smart mode (PID auto, or parked valve)
+                      # Otherwise re-apply smart mode (PID auto, or parked valve) via a manual
+                      # trigger of the room control automation
                       default:
                         - action: automation.trigger
                           target:

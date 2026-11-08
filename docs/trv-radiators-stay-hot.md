@@ -18,7 +18,7 @@ Radiators (Sonoff TRVZB, PID-driven via `packages/climate_*.yaml`) stay hot when
      while `input_number.living_room_trv_valve_position` was 0 and the PID was off (smart mode off,
      parked position 0). Master bedroom and bedroom were consistent (opening 5 / closing 100).
    - *Plausible mechanism for the living room (not proven):* HA restarted 2026-11-07 ~17:19. The
-     helper has `initial: 0`, so it resets to 0 on restart. The "apply smart mode" automation then
+     helper has `initial: 0`, so it resets to 0 on restart. The smart-mode branch of the room control automation (formerly a separate "apply smart mode" automation) then
      writes the parked value (0), which is no change, so the sync automation never fires and the TRV
      keeps its old 100/0. The sync automation's `last_triggered` was 2026-11-07 15:30, before the
      restart.
