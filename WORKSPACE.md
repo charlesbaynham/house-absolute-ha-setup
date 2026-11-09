@@ -78,6 +78,17 @@ Charles's decision (2026-11-08), split by path. The default branch is `master`.
 - Adding or changing TRV heating for a room: read
   [memory/notes/trv-pid-heating.md](memory/notes/trv-pid-heating.md) first.
 
+## After a merge: test it live
+
+Charles's standing instruction (2026-11-09): after a change that alters Home Assistant behaviour
+is merged and live, **simulate the states and test it through the live API without being asked**.
+If the test would be disruptive (e.g. it would really move heating for the whole house, trigger
+alarms, locks, or notify people), offer it to Charles instead; he may say yes anyway. Snapshot the
+affected entities first, restore everything in a `finally`, and report what passed and what could
+not be exercised. Check who else is home before spoofing any presence entity: `anyone_home`
+drives the house-wide away-mode state machine
+([packages/climate_away_mode.yaml](packages/climate_away_mode.yaml)).
+
 ## Scheduling waits and check-ins
 
 A scheduled wait (`send_later`, wakeups) is **slightly under an hour** (55 minutes) so the prompt
