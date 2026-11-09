@@ -34,3 +34,13 @@ def ha(hass, enable_custom_integrations, tmp_path):
     yield hass
     if str(cfg) in sys.path:
         sys.path.remove(str(cfg))
+
+
+@pytest.fixture(autouse=True)
+def clock(freezer):
+    """One frozen clock per test, shared by every house the test boots (restarts included)."""
+    from . import harness
+
+    harness.CLOCK = freezer
+    yield freezer
+    harness.CLOCK = None

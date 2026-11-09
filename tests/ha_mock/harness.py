@@ -138,12 +138,15 @@ def set_room_temp(hass, room: str, value: float) -> None:
 import asyncio
 import contextlib
 import importlib
+import json
 import sys
 from datetime import timedelta
 
 from homeassistant import loader
+from homeassistant.helpers import restore_state
+from homeassistant.helpers.json import json_bytes
 from homeassistant.const import EVENT_HOMEASSISTANT_START, EVENT_HOMEASSISTANT_STARTED
-from homeassistant.core import CoreState
+from homeassistant.core import Context, CoreState
 from homeassistant.util import dt as dt_util
 from pytest_homeassistant_custom_component.common import (
     async_fire_time_changed,
@@ -156,6 +159,13 @@ BOOT_SETTLE_S = 60
 LIVE_DISABLED = ["automation.master_bedroom_restart_heating_at_4am"]
 
 
+CLOCK = None  # set by the autouse `clock` fixture in conftest.py (pytest-freezer)
+
+
+def tick(seconds: float) -> None:
+    CLOCK.tick(timedelta(seconds=seconds))
+
+
 async def _yield_loop(n: int = 20) -> None:
     for _ in range(n):
         await asyncio.sleep(0)
@@ -165,13 +175,15 @@ class House:
     """One running mock house. `restart()` returns a fresh house primed with this one's states
     as restore data, which is what HA does across a real restart."""
 
-    def __init__(self, hass, tmp: Path, packages: dict, templates, persons, temps):
+    def __init__(self, hass, tmp: Path, packages: dict, templates, persons, temps, calls=None):
         self.hass = hass
         self.tmp = tmp
         self.packages = packages
         self.templates = templates
         self.persons = persons
         self.temps = temps
+        self._calls: list = calls if calls is not None else []
+        self._user = None
 
     # state helpers ----------------------------------------------------------------------
     def state(self, entity_id: str) -> str:
@@ -181,18 +193,41 @@ class House:
         return self.hass.states.get(entity_id).attributes.get(name)
 
     async def settle(self, seconds: float = 0.0) -> None:
-        """Advance the mock clock by `seconds` (firing due timers and `delay`s), then let the
-        queued automation runs finish. Note `async_block_till_done` alone would wait in real time
-        for any automation sitting in a `delay`, so the clock is advanced first."""
+        """Advance the (frozen, cumulative) mock clock by `seconds`, fire due timers and
+        `delay`s, then wait for the queued automation runs. Time only moves through here, so
+        `for:` debounces and delays behave exactly as in production. (`async_block_till_done`
+        alone would wait in real time for an automation sitting in a `delay`.)"""
         await _yield_loop()
         if seconds:
-            async_fire_time_changed(self.hass, dt_util.utcnow() + timedelta(seconds=seconds))
+            tick(seconds)
+            async_fire_time_changed(self.hass)
             await _yield_loop()
         await self.hass.async_block_till_done()
 
-    async def call(self, domain, service, **data):
-        await self.hass.services.async_call(domain, service, data, blocking=True)
+    async def call(self, domain, service, *, by_hand: bool = False, **data):
+        """Call a service. `by_hand=True` gives it a user context, like the dashboard, the app or
+        a REST call with a token; without it the call looks like an automation's."""
+        if by_hand and self._user is None:
+            self._user = await self.hass.auth.async_create_user("Charles", group_ids=["system-admin"])
+        ctx = Context(user_id=self._user.id) if by_hand else Context()
+        await self.hass.services.async_call(domain, service, data, blocking=True, context=ctx)
         await self.hass.async_block_till_done()
+
+    def service_calls(self, domain: str) -> list:
+        """Every `<domain>.*` service call seen since `watch_calls()`."""
+        return [c for c in self._calls if c[0] == domain]
+
+    def climate_modes_seen(self, entity_id: str) -> list:
+        """Every distinct hvac state the climate entity went through since boot, in order."""
+        seen: list = []
+        for eid, st, _ in self.history:
+            if eid == entity_id and (not seen or seen[-1] != st):
+                seen.append(st)
+        return seen
+
+    def watch_calls(self) -> None:
+        """Forget the calls so far (everything since boot is kept until you do)."""
+        self._calls.clear()
 
     def person(self, who, state, km=None):
         set_person(self.hass, who, state, km)
@@ -215,6 +250,8 @@ async def house(
     persons: dict | None = None,
     restore_from: House | None = None,
     live_disabled: bool = True,
+    extra_states: dict | None = None,
+    restore_filter=None,
 ):
     """Boot a mock house. `persons` maps name -> (state, km_from_home)."""
     persons = persons or {}
@@ -231,11 +268,44 @@ async def house(
         hass.data.pop(loader.DATA_CUSTOM_COMPONENTS, None)
 
         if restore_from is not None:
-            mock_restore_cache(hass, list(restore_from.hass.states.async_all()))
+            # What a real shutdown writes and the next boot reads: states AND the extra stored
+            # data some entities (trigger-based templates, ...) restore from.
+            stored = restore_state.async_get(restore_from.hass).async_get_stored_states()
+            data = restore_state.RestoreStateData(hass)
+            # Through JSON, like the real Store write + read, so datetimes become strings etc.
+            dumped = json.loads(json_bytes([st.as_dict() for st in stored]))
+            data.last_states = {
+                d["state"]["entity_id"]: restore_state.StoredState.from_dict(d)
+                for d in dumped
+                if restore_filter is None or restore_filter(d["state"]["entity_id"])
+            }
+            hass.data[restore_state.DATA_RESTORE_STATE] = data
         for who, (st, km) in persons.items():
             set_person(hass, who, st, km)
         for room in ROOMS:
             set_room_temp(hass, room, 20.0)
+        # Hardware that lives outside HA's own config: the back door contact starts closed
+        hass.states.async_set("binary_sensor.backdoor_sensor_contact", "off")
+        for ent, (st, attrs) in (extra_states or {}).items():
+            hass.states.async_set(ent, st, attrs)
+
+        calls: list = []
+
+        def _record(event):
+            d = event.data
+            calls.append((d["domain"], d["service"], dict(d.get("service_data", {}))))
+
+        hass.bus.async_listen("call_service", _record)
+
+        history: list = []
+
+        def _hist(event):
+            eid = event.data["entity_id"]
+            if eid.startswith("climate."):
+                new = event.data.get("new_state")
+                history.append((eid, new.state if new else None, new.attributes.get("temperature") if new else None))
+
+        hass.bus.async_listen("state_changed", _hist)
 
         hass.set_state(CoreState.starting)  # like HA's own boot: start-triggers fire on setup
         await setup_house(hass, packages, templates=templates)
@@ -245,10 +315,12 @@ async def house(
         hass.bus.async_fire(EVENT_HOMEASSISTANT_STARTED)
         await _yield_loop()
         # Run out the start-up delays (e.g. the away-mode machine's 30 s re-assert)
-        async_fire_time_changed(hass, dt_util.utcnow() + timedelta(seconds=BOOT_SETTLE_S))
+        tick(BOOT_SETTLE_S)
+        async_fire_time_changed(hass)
         await _yield_loop()
         await hass.async_block_till_done()
-        h = House(hass, tmp, packages, templates, persons, None)
+        h = House(hass, tmp, packages, templates, persons, None, calls)
+        h.history = history
         if live_disabled and restore_from is None:
             for ent in LIVE_DISABLED:
                 if hass.states.get(ent):
@@ -259,3 +331,23 @@ async def house(
             await hass.async_stop(force=True)
             if str(cfg) in sys.path:
                 sys.path.remove(str(cfg))
+
+
+def trv_stubs() -> dict:
+    """Stand-ins for the physical Sonoff TRVs, `climate.trv_<room>` (the room control blueprint
+    mirrors their setpoint with the PID). A generic thermostat on a dummy heater is enough:
+    it has a settable target temperature, which is all the mirror needs."""
+    pkg: dict = {"climate": [], "input_boolean": {}}
+    for room in ROOMS:
+        pkg["input_boolean"][f"trv_stub_heater_{room}"] = {}
+        pkg["climate"].append(
+            {
+                "platform": "generic_thermostat",
+                "name": "TRV " + room.replace("_", " ").capitalize(),
+                "heater": f"input_boolean.trv_stub_heater_{room}",
+                "target_sensor": f"sensor.sensor_{room}_temperature",
+                "min_temp": 5,
+                "max_temp": 30,
+            }
+        )
+    return pkg

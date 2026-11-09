@@ -13,7 +13,8 @@
 # - Room control automation (blueprint): bidirectional setpoint sync
 #   (physical TRV ↔ PID controller), smart mode, boost, boost timeout and valve
 #   arbitration (off → 0, boost → 100, smart → PID output, else parked)
-# - One-time 4am heating restart automation (self-disabling)
+# - Heating policy automation (blueprint): off / setback / comfort from presence,
+#   the back door and the occupied switch; this room follows Charles
 #
 # Physical device: climate.trv_master_bedroom
 # External sensor: sensor.sensor_master_bedroom_temperature
@@ -51,6 +52,27 @@ input_number:
     step: 1
     unit_of_measurement: "%"
 
+  # The user's setpoint. The PID setpoint is derived from it (minus the setback
+  # offset while nobody is home). No `initial:`: it must survive restarts.
+  master_bedroom_comfort_setpoint:
+    name: Master bedroom comfort setpoint
+    icon: mdi:thermometer
+    min: 7
+    max: 28
+    step: 0.5
+    mode: box
+    unit_of_measurement: "°C"
+
+  # The setpoint the room policy automation last wrote to the PID (0 = never), so
+  # its own echo is not mistaken for someone changing the setpoint.
+  master_bedroom_policy_last_setpoint:
+    name: Master bedroom policy last written setpoint
+    icon: mdi:pencil
+    min: 0
+    max: 40
+    step: 0.01
+    mode: box
+
 input_boolean:
   smart_mode_master_bedroom:
     name: Smart mode - Master bedroom
@@ -60,12 +82,29 @@ input_boolean:
     icon: mdi:rocket-launch
     initial: false
 
+  # Keeps this room heated whatever the presence rules say (not the back door)
+  master_bedroom_occupied:
+    name: Master bedroom occupied
+    icon: mdi:bed
+
+  # Keeps this room off (e.g. a summer shutdown). Turned on by switching the heating
+  # off by hand; turned off by switching it on by hand.
+  master_bedroom_heating_disabled:
+    name: Master bedroom heating switched off
+    icon: mdi:radiator-off
+
 input_datetime:
   boost_start_master_bedroom:
     name: Boost Start - Master Bedroom
     has_date: true
     has_time: true
     icon: mdi:clock-start
+
+input_text:
+  master_bedroom_heating_status:
+    name: Master bedroom heating status
+    icon: mdi:information-outline
+    max: 100
 
 button:
   - platform: template
@@ -153,25 +192,20 @@ automation:
         boost_start: input_datetime.boost_start_master_bedroom
         valve_sync_automation: automation.master_bedroom_trv_sync_valve_with_helper
 
-  - id: '1763508383336'
-    alias: Master bedroom restart heating at 4am
-    description: ''
-    triggers:
-    - trigger: time
-      at: 04:00:00
-    conditions: []
-    actions:
-    - action: climate.set_temperature
-      metadata: {}
-      data:
-        temperature: 22
-        hvac_mode: heat
-      target:
-        entity_id: climate.master_bedroom_trv_pid_controller
-    - action: automation.turn_off
-      metadata: {}
-      data:
-        stop_actions: false
-      target:
-        entity_id: automation.master_bedroom_restart_heating_at_4am
-    mode: single
+
+  - id: '1791600000002'
+    alias: Master bedroom heating - policy
+    description: 'Decides off / setback / comfort for this room from presence, the back door and the occupied switch, and applies it. See the blueprint.'
+    use_blueprint:
+      path: charlesbaynham/trv-room-policy.yaml
+      input:
+        pid_climate: climate.master_bedroom_trv_pid_controller
+        comfort_setpoint: input_number.master_bedroom_comfort_setpoint
+        last_written: input_number.master_bedroom_policy_last_setpoint
+        occupied: input_boolean.master_bedroom_occupied
+        disabled: input_boolean.master_bedroom_heating_disabled
+        status: input_text.master_bedroom_heating_status
+        boost_mode:
+          - input_boolean.boost_mode_master_bedroom
+        follow_away:
+          - binary_sensor.charles_away_for_heating
