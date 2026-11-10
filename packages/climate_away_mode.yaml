@@ -66,20 +66,23 @@ template:
 input_select:
   climate_away_mode_state:
     name: Climate Away Mode State
+    # No `initial:` - it would reset the state to `home` on every HA restart
+    # (including the Git pull add-on's restarts after a merge) while the rooms
+    # are still reduced or off, and the machine would never restore them.
     options:
       - home
       - away
       - far_away
-    initial: home
     icon: mdi:home-thermometer
 
+# No `initial:` on these either: they hold the comfort setpoints saved when
+# leaving home and must survive a restart (restored from the last state).
 input_number:
   away_mode_living_room_original_temp:
     name: Living Room Original Temperature (Away Mode)
     min: 7
     max: 28
     step: 0.5
-    initial: 19
     mode: box
 
   away_mode_master_bedroom_original_temp:
@@ -87,7 +90,6 @@ input_number:
     min: 7
     max: 28
     step: 0.5
-    initial: 19
     mode: box
 
   away_mode_bedroom_original_temp:
@@ -95,7 +97,6 @@ input_number:
     min: 7
     max: 28
     step: 0.5
-    initial: 19
     mode: box
 
 automation:
@@ -121,8 +122,26 @@ automation:
         entity_id: binary_sensor.both_charles_and_gaby_far_away
         to: 'off'
         id: both_far_away_off
+      # After a restart: presence may have changed while HA was down
+      - trigger: homeassistant
+        event: start
+        id: ha_start
     conditions: []
     actions:
+      # At start, let the people entities restore before judging presence
+      - if:
+          - condition: trigger
+            id: ha_start
+        then:
+          - wait_template: >-
+              {{ ['person.charles', 'person.gaby', 'person.harry']
+                 | map('states') | reject('in', ['unknown', 'unavailable'])
+                 | list | length == 3 }}
+            timeout: '00:02:00'
+            continue_on_timeout: true
+          # The room control blueprints put every PID climate back to `heat`
+          # at HA start; let them finish before re-asserting far_away below.
+          - delay: '00:00:30'
       - variables:
           current_state: >
             {{ states('input_select.climate_away_mode_state') }}
@@ -137,15 +156,19 @@ automation:
           desired_state: >
             {% if anyone_home %}
               home
-            {% elif both_far_away %}
+            {% elif both_far_away and (trigger.id != 'ha_start'
+                or current_state == 'far_away') %}
               far_away
             {% else %}
               away
             {% endif %}
 
-      # Only act if state needs to change
+      # Only act if state needs to change. Exception: at start, far_away is
+      # re-asserted (the room control blueprints have just set `heat` again).
       - condition: template
-        value_template: "{{ current_state != desired_state }}"
+        value_template: >-
+          {{ current_state != desired_state
+             or (trigger.id == 'ha_start' and desired_state == 'far_away') }}
 
       # Execute state transition
       - choose:
@@ -285,6 +308,39 @@ automation:
               - condition: template
                 value_template: "{{ desired_state == 'far_away' }}"
             sequence:
+              # Everyone can go from home straight to far away (one location
+              # jump), skipping `away`: save the comfort setpoints here too, or
+              # the return would restore whatever the helpers last held.
+              - if:
+                  - condition: template
+                    value_template: "{{ current_state == 'home' }}"
+                then:
+                  - action: input_number.set_value
+                    target:
+                      entity_id: >
+                        input_number.away_mode_living_room_original_temp
+                    data:
+                      value: >
+                        {{ state_attr('climate.living_room_trv_pid_controller',
+                           'temperature') | float(19) }}
+                  - action: input_number.set_value
+                    target:
+                      entity_id: >
+                        input_number.away_mode_master_bedroom_original_temp
+                    data:
+                      value: >
+                        {{ state_attr(
+                           'climate.master_bedroom_trv_pid_controller',
+                           'temperature') | float(19) }}
+                  - action: input_number.set_value
+                    target:
+                      entity_id: >
+                        input_number.away_mode_bedroom_original_temp
+                    data:
+                      value: >
+                        {{ state_attr('climate.bedroom_trv_pid_controller',
+                           'temperature') | float(19) }}
+
               # Turn off heating completely
               - action: climate.turn_off
                 target:
