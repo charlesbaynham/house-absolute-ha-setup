@@ -21,6 +21,9 @@ shared helpers. A test is a story: people move, time advances (`await h.settle(s
 climate modes and setpoints.
 
 Notes:
+- Restarts go through HA's own restore store (JSON round trip, including the extra stored data that
+  trigger-based template entities restore from), and the clock is frozen: it only moves through
+  `await h.settle(seconds)`, so `for:` debounces and `delay`s behave as in production.
 - `await h.settle(n)` advances the mock clock then waits for automation runs. Never rely on
   `async_block_till_done` alone: an automation sitting in a `delay` would block it in real time.
 - The mock follows HA's own boot: `homeassistant: start` triggers fire on `STARTED`, and the

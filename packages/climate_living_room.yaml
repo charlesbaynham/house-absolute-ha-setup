@@ -13,6 +13,8 @@
 # - Room control automation (blueprint): bidirectional setpoint sync
 #   (physical TRV ↔ PID controller), smart mode, boost, boost timeout and valve
 #   arbitration (off → 0, boost → 100, smart → PID output, else parked)
+# - Heating policy automation (blueprint): off / setback / comfort from presence,
+#   the back door and the occupied switch
 #
 # Physical device: climate.trv_living_room
 # External sensor: sensor.sensor_living_room_temperature
@@ -50,6 +52,27 @@ input_number:
     step: 1
     unit_of_measurement: "%"
 
+  # The user's setpoint. The PID setpoint is derived from it (minus the setback
+  # offset while nobody is home). No `initial:`: it must survive restarts.
+  living_room_comfort_setpoint:
+    name: Living room comfort setpoint
+    icon: mdi:thermometer
+    min: 7
+    max: 28
+    step: 0.5
+    mode: box
+    unit_of_measurement: "°C"
+
+  # The setpoint the room policy automation last wrote to the PID (0 = never), so
+  # its own echo is not mistaken for someone changing the setpoint.
+  living_room_policy_last_setpoint:
+    name: Living room policy last written setpoint
+    icon: mdi:pencil
+    min: 0
+    max: 40
+    step: 0.01
+    mode: box
+
 input_boolean:
   smart_mode_living_room:
     name: Smart mode - Living room
@@ -59,12 +82,29 @@ input_boolean:
     icon: mdi:rocket-launch
     initial: false
 
+  # Keeps this room heated whatever the presence rules say (not the back door)
+  living_room_occupied:
+    name: Living room occupied
+    icon: mdi:bed
+
+  # Keeps this room off (e.g. a summer shutdown). Turned on by switching the heating
+  # off by hand; turned off by switching it on by hand.
+  living_room_heating_disabled:
+    name: Living room heating switched off
+    icon: mdi:radiator-off
+
 input_datetime:
   boost_start_living_room:
     name: Boost Start - Living Room
     has_date: true
     has_time: true
     icon: mdi:clock-start
+
+input_text:
+  living_room_heating_status:
+    name: Living room heating status
+    icon: mdi:information-outline
+    max: 100
 
 button:
   - platform: template
@@ -151,3 +191,18 @@ automation:
         boost_mode: input_boolean.boost_mode_living_room
         boost_start: input_datetime.boost_start_living_room
         valve_sync_automation: automation.living_room_trv_sync_valve_with_helper
+
+  - id: '1791600000001'
+    alias: Living room heating - policy
+    description: 'Decides off / setback / comfort for this room from presence, the back door and the occupied switch, and applies it. See the blueprint.'
+    use_blueprint:
+      path: charlesbaynham/trv-room-policy.yaml
+      input:
+        pid_climate: climate.living_room_trv_pid_controller
+        comfort_setpoint: input_number.living_room_comfort_setpoint
+        last_written: input_number.living_room_policy_last_setpoint
+        occupied: input_boolean.living_room_occupied
+        disabled: input_boolean.living_room_heating_disabled
+        status: input_text.living_room_heating_status
+        boost_mode:
+          - input_boolean.boost_mode_living_room

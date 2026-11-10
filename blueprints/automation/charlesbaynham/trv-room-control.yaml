@@ -13,7 +13,8 @@ blueprint:
     boost or a parked position within a minute. The valve helper is set to:
 
 
-    1. **0** if the PID climate entity is off (back door open, far-away mode);
+    1. **0** if the PID climate entity is off (room heating policy: back door,
+    far away, person away, switched off);
 
     2. else **100** if boost is on;
 
@@ -37,8 +38,11 @@ blueprint:
 
     - **Re-apply** - when smart mode or the parked position changes, when boost
     ends, on HA start, or when this automation is triggered manually (or via
-    automation.trigger), it also turns the valve-sync automation on and sets the
-    PID climate entity to `heat` (skipped during boost).
+    automation.trigger), it also turns the valve-sync automation on (skipped
+    during boost). It no longer sets the PID climate entity to `heat`: whether a
+    room is `off` or `heat` is decided by the room heating policy blueprint
+    (trv-room-policy.yaml), and forcing `heat` here made every switched-off room
+    flick on at each HA restart.
 
 
     The helpers, the PID climate entity and the valve-sync automation must exist
@@ -301,11 +305,6 @@ actions:
     - action: automation.turn_on
       target:
         entity_id: !input valve_sync_automation
-    - action: climate.set_hvac_mode
-      target:
-        entity_id: !input pid_climate
-      data:
-        hvac_mode: heat
 
   # PID mode: auto only while smart mode is on and boost is off. Not for PID
   # output ticks, and not while the climate entity is off.

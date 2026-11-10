@@ -1,0 +1,102 @@
+---
+# Heating presence facts
+#
+# The facts the per-room heating policy (blueprints/automation/charlesbaynham/
+# trv-room-policy.yaml) decides from. One definition of each "away":
+#
+# - binary_sensor.anyone_home (template_sensors.yaml): any of Charles, Gaby,
+#   Harry is `home`.
+# - binary_sensor.both_charles_and_gaby_far_away: instantaneous, both more
+#   than 50 km from home.
+# - binary_sensor.house_far_away: both of the above AND nobody home, held for
+#   30 minutes (delay_on); off as soon as either drops. After a restart the
+#   30 minutes count from the restart.
+# - binary_sensor.charles_confirmed_away (alarm_charles.yaml): more than 10 km
+#   from home with a fresh location report.
+# - binary_sensor.charles_away_for_heating: LATCHED. On once the sensor above
+#   has been on for 10 minutes (same mechanism and first-deployment rule as
+#   above), off only when person.charles is `home`. It is not cleared by the
+#   sensor going off, which also happens when location reports go stale or he
+#   is under 10 km away: the heating stays off until he is back.
+
+template:
+  - binary_sensor:
+      - name: "Both Charles and Gaby Far Away"
+        unique_id: both_charles_gaby_far_away
+        device_class: presence
+        state: >
+          {% set charles = states.person.charles %}
+          {% set gaby = states.person.gaby %}
+          {% set home_lat = state_attr('zone.home', 'latitude') %}
+          {% set home_lon = state_attr('zone.home', 'longitude') %}
+
+          {# Check if all required data is available #}
+          {% if charles.state == 'unavailable' or gaby.state == 'unavailable' %}
+            false
+          {% elif home_lat is none or home_lon is none %}
+            false
+          {% else %}
+            {# Calculate distances using haversine formula #}
+            {% set charles_lat = state_attr('person.charles',
+                'latitude') %}
+            {% set charles_lon = state_attr('person.charles',
+                'longitude') %}
+            {% set gaby_lat = state_attr('person.gaby', 'latitude') %}
+            {% set gaby_lon = state_attr('person.gaby', 'longitude') %}
+
+            {% if charles_lat is none or charles_lon is none or
+                gaby_lat is none or gaby_lon is none %}
+              false
+            {% else %}
+              {% set charles_dist = distance(home_lat, home_lon,
+                  charles_lat, charles_lon) %}
+              {% set gaby_dist = distance(home_lat, home_lon,
+                  gaby_lat, gaby_lon) %}
+
+              {# Both must be more than 50km away #}
+              {{ charles_dist > 50 and gaby_dist > 50 }}
+            {% endif %}
+          {% endif %}
+
+
+  # Both far away AND nobody home (Harry home alone still needs heating), held
+  # for 30 minutes. A plain state-based sensor with delay_on: after a restart the
+  # 30 minutes count from the restart.
+  - binary_sensor:
+      - name: "House far away"
+        unique_id: house_far_away
+        icon: mdi:airplane
+        delay_on:
+          minutes: 30
+        state: >-
+          {{ is_state('binary_sensor.both_charles_and_gaby_far_away', 'on')
+             and is_state('binary_sensor.anyone_home', 'off') }}
+
+  - triggers:
+      - trigger: template
+        value_template: >-
+          {% set s = states.binary_sensor.charles_confirmed_away %}
+          {{ s is not none and s.state == 'on'
+             and (now() - s.last_changed).total_seconds() >= 600 }}
+        id: away
+      - trigger: state
+        entity_id: person.charles
+        id: person
+      - trigger: homeassistant
+        event: start
+        id: start
+    binary_sensor:
+      - name: "Charles away for heating"
+        unique_id: charles_away_for_heating
+        icon: mdi:map-marker-off
+        state: >-
+          {% if is_state('person.charles', 'home') %}
+            false
+          {% elif trigger.id == 'away' %}
+            true
+          {% elif trigger.id == 'start' and this.state not in ['on', 'off'] %}
+            {# first ever start: adopt the current value #}
+            {{ is_state('binary_sensor.charles_confirmed_away', 'on') }}
+          {% else %}
+            {{ this.state == 'on' }}
+          {% endif %}

@@ -1,0 +1,481 @@
+blueprint:
+  name: TRV room heating policy (presence, back door, comfort / setback)
+  description: >-
+    One room's heating **policy**: what the room's PID climate entity should be doing
+    right now, worked out from the current facts and applied. It replaces the old
+    "remember what I changed and undo it later" state machines (away mode, back door
+    pause, master-bedroom-follows-Charles). It never remembers what it switched off,
+    so it cannot get out of step with the house: a restart, a missed event or another
+    automation switching the heating back on is corrected on the next run.
+
+
+    **Rules, first match wins**
+
+    1. Room switched off (the "switched off" switch) -> `off`.
+
+    2. Back door open -> `off`.
+
+    3. Room occupied (the "occupied" switch, or boost running) -> `comfort`. This
+    overrides every presence rule below, for a guest staying while the household is
+    away.
+
+    4. The room follows people (e.g. the master bedroom follows Charles) and all of
+    them are away -> `off`.
+
+    5. House far away (Charles and Gaby both more than 50 km away, and nobody home, for
+    30 min) -> `off`.
+
+    6. Nobody home -> `setback`.
+
+    7. Otherwise `comfort`.
+
+
+    A sensor that is unknown or unavailable never counts as "away". Runs are skipped
+    while a presence fact has no value yet (boot), except the 10-minute reconcile.
+
+
+    **Setpoints.** The user's setpoint lives in the *comfort setpoint* helper. The PID
+    holds comfort in every mode except setback, where it holds comfort minus the offset
+    (an `off` room also holds comfort, so the TRV never shows a stale setback value).
+    Nothing is stored to restore later. If someone changes the PID setpoint (directly,
+    or via the physical TRV which the room control blueprint mirrors) it is taken as the
+    new comfort setpoint (plus the offset in setback). The *last written* helper records
+    the value this automation last wrote so that its own echo is not mistaken for a change;
+    value 0 means "never run", and the first run adopts the PID's current setpoint as the
+    comfort setpoint (plus the offset if the room is in setback).
+
+
+    **Occupied clears itself** when the person the room follows gets home (the "follow"
+    sensor goes off); for a room that follows nobody, when the house goes from empty to
+    someone home. So a guest's switch is not left on for the next trip.
+
+
+    **By hand** (a call with a user context: dashboard, app, voice). Turning the PID
+    climate on while the policy wants it off for a presence reason switches the room's
+    occupied switch on, so a person standing in the room can always get heat; if the room
+    is "switched off" it switches that off instead; an open back door still wins. Turning
+    it off switches the room's "switched off" switch on.
+
+
+    The room control blueprint (setpoint mirror, boost, valve arbitration) is separate.
+    This one decides only the PID climate's `off` / `heat` and its setpoint.
+  domain: automation
+  author: Charles Baynham
+  source_url: https://github.com/charlesbaynham/house-absolute-ha-setup/blob/master/blueprints/automation/charlesbaynham/trv-room-policy.yaml
+  homeassistant:
+    min_version: "2024.10.0"
+  input:
+    room:
+      name: Room
+      icon: mdi:radiator
+      input:
+        pid_climate:
+          name: PID controller
+          description: The smart_thermostat climate entity for this room.
+          selector:
+            entity:
+              filter:
+              - domain:
+                - climate
+        comfort_setpoint:
+          name: Comfort setpoint helper
+          description: >-
+            input_number (no `initial`) holding the user's setpoint. The PID's
+            setpoint is derived from it.
+          selector:
+            entity:
+              filter:
+              - domain:
+                - input_number
+        last_written:
+          name: Last written setpoint helper
+          description: >-
+            input_number, min 0 (no `initial`). The setpoint this automation last
+            wrote to the PID; 0 means never.
+          selector:
+            entity:
+              filter:
+              - domain:
+                - input_number
+        occupied:
+          name: Occupied switch
+          description: Keeps this room heated whatever the presence rules say (not the back door).
+          selector:
+            entity:
+              filter:
+              - domain:
+                - input_boolean
+        disabled:
+          name: Switched-off switch
+          description: Keeps this room off (e.g. a summer shutdown). Turned on by turning the heating off by hand.
+          selector:
+            entity:
+              filter:
+              - domain:
+                - input_boolean
+        status:
+          name: Status text helper
+          description: input_text (max 100) showing the current mode and the reason.
+          selector:
+            entity:
+              filter:
+              - domain:
+                - input_text
+        boost_mode:
+          name: Boost switch (optional)
+          description: While boost runs the room counts as occupied.
+          default: []
+          selector:
+            entity:
+              multiple: true
+              filter:
+              - domain:
+                - input_boolean
+        follow_away:
+          name: People this room follows (optional)
+          description: >-
+            Binary sensors that are on when a person is away (e.g. "Charles away for
+            heating"). The room is switched off only when ALL of them are on. Leave
+            empty for rooms that follow nobody.
+          default: []
+          selector:
+            entity:
+              multiple: true
+              filter:
+              - domain:
+                - binary_sensor
+    facts:
+      name: House facts
+      icon: mdi:home-account
+      collapsed: true
+      input:
+        anyone_home:
+          name: Anyone home
+          default: binary_sensor.anyone_home
+          selector:
+            entity:
+              filter:
+              - domain:
+                - binary_sensor
+        house_far_away:
+          name: House far away (latched, debounced)
+          default: binary_sensor.house_far_away
+          selector:
+            entity:
+              filter:
+              - domain:
+                - binary_sensor
+        back_door:
+          name: Back door contact (on = open)
+          default: binary_sensor.backdoor_sensor_contact
+          selector:
+            entity:
+              filter:
+              - domain:
+                - binary_sensor
+    settings:
+      name: Settings
+      icon: mdi:cog
+      collapsed: true
+      input:
+        setback_offset:
+          name: Setback offset
+          description: Degrees below comfort while nobody is home.
+          default: 2
+          selector:
+            number:
+              min: 0
+              max: 6
+              step: 0.5
+              unit_of_measurement: °C
+        min_temp:
+          name: Lowest setpoint
+          default: 7
+          selector:
+            number:
+              min: 5
+              max: 15
+              step: 0.5
+              unit_of_measurement: °C
+        max_temp:
+          name: Highest setpoint
+          default: 28
+          selector:
+            number:
+              min: 20
+              max: 35
+              step: 0.5
+              unit_of_measurement: °C
+mode: queued
+max: 20
+variables:
+  pid: !input pid_climate
+  comfort_helper: !input comfort_setpoint
+  last_helper: !input last_written
+  occupied_switch: !input occupied
+  disabled_switch: !input disabled
+  status_helper: !input status
+  boost_switches: !input boost_mode
+  follow_sensors: !input follow_away
+  anyone_home: !input anyone_home
+  house_far_away: !input house_far_away
+  back_door: !input back_door
+  offset: !input setback_offset
+  lowest: !input min_temp
+  highest: !input max_temp
+triggers:
+  # Facts and switches that decide the mode
+  - trigger: state
+    entity_id: !input anyone_home
+    id: facts
+  - trigger: state
+    entity_id: !input house_far_away
+    id: facts
+  - trigger: state
+    entity_id: !input back_door
+    id: facts
+  - trigger: state
+    entity_id: !input occupied
+    id: facts
+  - trigger: state
+    entity_id: !input disabled
+    id: facts
+  - trigger: state
+    entity_id: !input boost_mode
+    id: facts
+  - trigger: state
+    entity_id: !input follow_away
+    id: facts
+  # The user's setpoint
+  - trigger: state
+    entity_id: !input comfort_setpoint
+    id: comfort
+  # Someone or something changed the PID climate entity
+  - trigger: state
+    entity_id: !input pid_climate
+    to: ~
+    id: pid_state
+  - trigger: state
+    entity_id: !input pid_climate
+    attribute: temperature
+    id: pid_setpoint
+  # Self-heal: HA start and a periodic reconcile
+  - trigger: homeassistant
+    event: start
+    id: start
+  - trigger: time_pattern
+    minutes: /10
+    id: tick
+conditions: []
+actions:
+  # Nothing to do while the PID climate is not up
+  - condition: template
+    value_template: "{{ states(pid) in ['off', 'heat'] }}"
+  # While the presence facts have no value yet (they appear during boot), a run would
+  # judge a half-built house. Skip those runs; the periodic tick still acts (treating
+  # an unknown fact as "not away") so a broken sensor cannot freeze the heating.
+  - condition: template
+    value_template: >-
+      {{ trigger.id == 'tick'
+         or ([anyone_home, house_far_away] + follow_sensors)
+            | map('states') | select('in', ['unknown', 'unavailable'])
+            | list | length == 0 }}
+
+  # ---- 1. the mode, from the facts ------------------------------------------------
+  - variables:
+      occupied_now: >-
+        {{ is_state(occupied_switch, 'on')
+           or (boost_switches | select('is_state', 'on') | list | length > 0) }}
+      follow_all_away: >-
+        {{ follow_sensors | length > 0
+           and (follow_sensors | select('is_state', 'on') | list | length)
+               == (follow_sensors | length) }}
+      presence_rule: >-
+        {% if is_state(back_door, 'on') %}off|back door open
+        {% elif occupied_now %}comfort|room occupied
+        {% elif follow_all_away %}off|the person this room follows is away
+        {% elif is_state(house_far_away, 'on') %}off|house far away
+        {% elif is_state(anyone_home, 'off') %}setback|nobody home
+        {% else %}comfort|someone home{% endif %}
+  - variables:
+      mode_reason: >-
+        {{ 'off|room switched off' if is_state(disabled_switch, 'on')
+           else presence_rule }}
+  - variables:
+      mode: "{{ mode_reason.split('|')[0] }}"
+      reason: "{{ mode_reason.split('|')[1] }}"
+      # The PID holds comfort minus the offset only in setback; in every other mode
+      # (including off) it holds the comfort setpoint itself.
+      reduced_now: "{{ mode == 'setback' }}"
+      presence_off: "{{ presence_rule.split('|')[0] == 'off' }}"
+      presence_door: "{{ presence_rule.split('|')[1] == 'back door open' }}"
+      pid_hvac: "{{ states(pid) }}"
+      pid_sp: "{{ state_attr(pid, 'temperature') | float(0) }}"
+      last_sp: "{{ states(last_helper) | float(0) }}"
+      comfort: "{{ states(comfort_helper) | float(0) }}"
+      by_hand: >-
+        {{ trigger.id == 'pid_state' and trigger.from_state is not none
+           and trigger.to_state.context.user_id is not none }}
+      pid_turned_on: >-
+        {{ trigger.id == 'pid_state' and trigger.from_state is not none
+           and trigger.from_state.state == 'off' and trigger.to_state.state == 'heat' }}
+      pid_turned_off: >-
+        {{ trigger.id == 'pid_state' and trigger.from_state is not none
+           and trigger.from_state.state == 'heat' and trigger.to_state.state == 'off' }}
+
+  # ---- 1b. the person is back (or, for a room that follows nobody, someone is home) --
+  - if:
+      - condition: trigger
+        id: facts
+      - condition: template
+        value_template: >-
+          {{ is_state(occupied_switch, 'on')
+             and trigger.to_state.state in ['off', 'on']
+             and (
+               (trigger.entity_id in follow_sensors
+                and trigger.to_state.state == 'off')
+               or (follow_sensors | length == 0
+                   and trigger.entity_id == anyone_home
+                   and trigger.from_state.state == 'off'
+                   and trigger.to_state.state == 'on')) }}
+    then:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: !input occupied
+      # That re-runs this automation with the new facts
+      - stop: Someone is back; occupied cleared
+
+  # ---- 2. a person switched the heating on / off by hand ---------------------------
+  - choose:
+      # On, while the room is "switched off": switch it back on
+      - conditions:
+          - condition: template
+            value_template: "{{ by_hand and pid_turned_on and reason == 'room switched off' }}"
+        sequence:
+          - action: input_boolean.turn_off
+            target:
+              entity_id: !input disabled
+          # One press must be enough: if a presence rule would still keep it off,
+          # the room is also occupied (an open back door still wins)
+          - if:
+              - condition: template
+                value_template: "{{ presence_off and not presence_door }}"
+            then:
+              - action: input_boolean.turn_on
+                target:
+                  entity_id: !input occupied
+          - stop: Heating turned on by hand; room no longer switched off
+      # On, against a presence rule: someone is in the room (the back door still wins)
+      - conditions:
+          - condition: template
+            value_template: "{{ by_hand and pid_turned_on and mode == 'off' and reason != 'back door open' }}"
+        sequence:
+          - action: input_boolean.turn_on
+            target:
+              entity_id: !input occupied
+          - stop: Heating turned on by hand; room marked occupied
+      # Off, while the policy wanted it on: switch the room off until told otherwise
+      - conditions:
+          - condition: template
+            value_template: "{{ by_hand and pid_turned_off and mode != 'off' }}"
+        sequence:
+          - action: input_boolean.turn_on
+            target:
+              entity_id: !input disabled
+          - stop: Heating turned off by hand; room switched off
+
+  # ---- 3. the PID setpoint was changed by someone else (or first run) -------------
+  - if:
+      - condition: template
+        value_template: >-
+          {{ pid_sp > 0 and (last_sp == 0 or (pid_sp - last_sp) | abs > 0.05) }}
+    then:
+      - variables:
+          comfort: >-
+            {{ [[pid_sp + (offset | float(0) if reduced_now else 0),
+                 lowest | float(7)] | max, highest | float(28)] | min }}
+      - action: input_number.set_value
+        target:
+          entity_id: !input comfort_setpoint
+        data:
+          value: "{{ comfort }}"
+      - action: input_number.set_value
+        target:
+          entity_id: !input last_written
+        data:
+          value: "{{ pid_sp }}"
+      - variables:
+          last_sp: "{{ pid_sp }}"
+
+  # ---- 4. apply -------------------------------------------------------------------
+  - variables:
+      want_sp: >-
+        {{ [[comfort - (offset | float(0) if mode == 'setback' else 0),
+             lowest | float(7)] | max, highest | float(28)] | min }}
+  - choose:
+      - conditions:
+          - condition: template
+            value_template: "{{ mode == 'off' }}"
+        sequence:
+          # Off rooms hold the comfort setpoint, so the TRV never shows a stale
+          # setback value and an edit made while off is read correctly
+          - if:
+              - condition: template
+                value_template: "{{ (pid_sp - want_sp) | abs > 0.01 }}"
+            then:
+              - action: input_number.set_value
+                target:
+                  entity_id: !input last_written
+                data:
+                  value: "{{ want_sp }}"
+              - action: climate.set_temperature
+                target:
+                  entity_id: !input pid_climate
+                data:
+                  temperature: "{{ want_sp }}"
+          - if:
+              - condition: template
+                value_template: "{{ pid_hvac != 'off' }}"
+            then:
+              - action: climate.turn_off
+                target:
+                  entity_id: !input pid_climate
+    default:
+      # Setpoint first so the PID never heats towards a stale value
+      - if:
+          - condition: template
+            value_template: "{{ (pid_sp - want_sp) | abs > 0.01 }}"
+        then:
+          # Record before writing: the echo of this write must look like our own
+          - action: input_number.set_value
+            target:
+              entity_id: !input last_written
+            data:
+              value: "{{ want_sp }}"
+          - action: climate.set_temperature
+            target:
+              entity_id: !input pid_climate
+            data:
+              temperature: "{{ want_sp }}"
+      - if:
+          - condition: template
+            value_template: "{{ pid_hvac != 'heat' }}"
+        then:
+          - action: climate.set_hvac_mode
+            target:
+              entity_id: !input pid_climate
+            data:
+              hvac_mode: heat
+  # ---- 5. say what it is doing and why --------------------------------------------
+  - variables:
+      status_text: >-
+        {{ (mode ~ ' - ' ~ reason ~ ((' (comfort ' ~ comfort ~ ')') if mode != 'off' else ''))[:100] }}
+  - if:
+      - condition: template
+        value_template: "{{ states(status_helper) != status_text }}"
+    then:
+      - action: input_text.set_value
+        target:
+          entity_id: !input status
+        data:
+          value: "{{ status_text }}"
