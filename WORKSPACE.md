@@ -62,7 +62,8 @@ Charles's decision (2026-11-08), split by path. The default branch is `master`.
 
 - **Consult the `home-assistant-best-practices` skill** (`.claude/skills/`) before writing or
   editing automations, scripts, scenes, blueprints or dashboards. Other skills: `chore-tracking`
-  (editing `packages/chore_tracking.yaml` or its dashboard), `ha-api-token`.
+  (editing `packages/chore_tracking.yaml` or its dashboard), `ha-api-token`, `ha-test-harness`
+  (the mock house, mutation testing and the live-API helpers for post-merge simulations).
 - Validate syntax with `yamllint *.yaml packages/*.yaml`. That checks YAML only; HA's custom tags
   (`!include`, `!secret`, …) and semantics are validated on restart, which happens outside this
   repo.
