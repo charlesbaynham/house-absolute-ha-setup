@@ -60,8 +60,8 @@ template:
 
 
   # Both far away AND nobody home (Harry home alone still needs heating), held
-  # for 30 minutes. A plain state-based sensor with delay_on: it restores like any
-  # template sensor, and after a restart the 30 minutes count from the restart.
+  # for 30 minutes. A plain state-based sensor with delay_on: after a restart the
+  # 30 minutes count from the restart.
   - binary_sensor:
       - name: "House far away"
         unique_id: house_far_away
