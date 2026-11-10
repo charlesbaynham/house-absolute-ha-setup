@@ -16,7 +16,9 @@ pattern are in `memory/notes/`.
 
 ## Current state
 
-*(empty)*
+- Heating is decided per room by one policy (off / setback / comfort) from presence, back door and
+  occupied / switched-off switches; live since 2026-11-10 (PR #106). Look at `input_text.<room>_heating_status`
+  for "why". Known open limitation: a stale TRV setpoint after a TRV outage can inflate comfort by 2 °C.
 
 ## On the horizon
 
@@ -24,13 +26,17 @@ pattern are in `memory/notes/`.
 
 ## Key learnings & principles
 
-*(empty)*
+- Test heating/presence changes on the mock house (`tests/ha_mock`) before a PR, then live after the merge.
+- Don't spoof `anyone_home` live (vacuum 20 h guard, lights-off automation). Don't write a PID's
+  `hvac_mode` from another automation: the policy owns it.
 
 ## Tools & resources
 
 - Live API: `$HA_TOKEN` (or the `ha-api-token` skill); entity IDs always looked up live.
 - Skills in `.claude/skills/`: `home-assistant-best-practices`, `chore-tracking`, `ha-api-token`.
 - Repo: `charlesbaynham/house-absolute-ha-setup`, default branch `master`.
+- Mock house: `tests/ha_mock` (real HA 2026.10 core + this repo's YAML); design record
+  `docs/heating-control-state-machines.md`.
 - Notes: [ha-sync-and-deploy](memory/notes/ha-sync-and-deploy.md),
   [ha-repo-architecture](memory/notes/ha-repo-architecture.md),
   [trv-pid-heating](memory/notes/trv-pid-heating.md); investigations in `docs/`.

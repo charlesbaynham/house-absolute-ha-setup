@@ -2,7 +2,7 @@
 name: ha-repo-architecture
 description: Layout of this Home Assistant config repo — root files, packages, custom components, Zigbee2MQTT, automation/blueprint and template-sensor shapes, dashboards. Read when finding where a feature is wired or adding config.
 aliases: [repo layout, configuration.yaml, packages, custom components, blueprints, zigbee2mqtt]
-updated: 2026-11-08
+updated: 2026-11-10
 ---
 
 # Repo architecture
@@ -50,6 +50,13 @@ section is auto-managed by HA/Z2M; new devices appear with a `friendly_name`.
 
 Jinja2 computed states in `template_sensors.yaml`, e.g. the "Anyone Home" binary sensor counting
 `person.charles`, `person.gaby`, `person.harry` in state `home`.
+
+## Heating packages and the mock house
+
+`packages/heating_presence.yaml` holds the presence facts the heating policy reads;
+`packages/climate_{room}.yaml` hold each room's PID, helpers and policy instance (details in
+[trv-pid-heating](memory/notes/trv-pid-heating.md)). `tests/ha_mock/` is a pytest mock house (a real HA core
+running this repo's YAML); it is not loaded by HA. `docs/heating-control-state-machines.md` is the design record.
 
 ## Other features with their own docs
 

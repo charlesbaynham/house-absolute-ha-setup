@@ -162,3 +162,23 @@ delay and the unreachable "seed by hand" path were removed.
   `input_text.back_door_heating_resume`, `input_boolean.master_bedroom_heating_away_override` and
   `..._off_for_away`, and the automations `climate_state_machine`, `back_door_pause_heating_while_open`,
   `master_bedroom_heating_off_while_charles_is_away`, `master_bedroom_restart_heating_at_4am`.
+
+## Outcome (2026-11-10)
+
+PR #105 (restart fix) and PR #106 (unified policy) are merged and live.
+
+Verified live after #106 (HA restart ~20:27Z; read-only first, then a simulation restored exactly): living
+room and bedroom did not move or blink; comfort equalled the previous setpoints; statuses correct; the 12
+orphaned old entities (all `unavailable`, `restored`) removed via the entity registry; 14/14 simulated
+checks passed: occupied on/off in the master bedroom while Charles is away, a by-hand turn-on through the
+real API user context sets `occupied`, by-hand off sets `heating_disabled` and stays off, by-hand on clears it,
+a dashboard comfort edit moves the PID and the physical TRV, a physical TRV edit flows back into comfort.
+
+One deviation: `binary_sensor.charles_away_for_heating` came up `off` at the first start (an early
+`person.charles` event gave it its first value before the confirmed-away sensor was on, so the "adopt the
+current value at start" branch never ran), so the master bedroom heated from 20:27:56 until the latch turned
+on at ~20:38 and the policy switched it off again. First deployment only (the latch is restored from then on).
+The adoption branch is misleading and could be removed; not done.
+
+Not exercised live (mock only): setback, far away, back door (the entities are real hardware or arm other
+automations), a restart while away.

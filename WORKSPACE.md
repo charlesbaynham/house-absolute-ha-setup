@@ -77,6 +77,8 @@ Charles's decision (2026-11-08), split by path. The default branch is `master`.
   is not modified directly.
 - Adding or changing TRV heating for a room: read
   [memory/notes/trv-pid-heating.md](memory/notes/trv-pid-heating.md) first.
+- **Heating and presence logic is tested on the mock house before a PR**: `tests/ha_mock` runs a real HA
+  core with this repo's YAML (README there). Restarts, debounces and race conditions are what it is for.
 
 ## After a merge: test it live
 
@@ -85,9 +87,10 @@ is merged and live, **simulate the states and test it through the live API witho
 If the test would be disruptive (e.g. it would really move heating for the whole house, trigger
 alarms, locks, or notify people), offer it to Charles instead; he may say yes anyway. Snapshot the
 affected entities first, restore everything in a `finally`, and report what passed and what could
-not be exercised. Check who else is home before spoofing any presence entity: `anyone_home`
-drives the house-wide away-mode state machine
-([packages/climate_away_mode.yaml](packages/climate_away_mode.yaml)).
+not be exercised. Check who else is home before spoofing any presence entity, and **do not spoof
+`binary_sensor.anyone_home` live**: it drives the heating policy (setback) and also arms "Vacuum when
+everyone leaves" (a 20 h `last_triggered` guard, so a spoofed trip blocks the real run) and "Turn off all
+lights when everyone leaves". Test those rules on the mock house instead.
 
 ## Scheduling waits and check-ins
 
