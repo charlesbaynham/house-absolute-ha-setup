@@ -8,12 +8,11 @@ This is for checking heating/presence logic **before** it touches the house: res
 between automations, the 30 min debounces. It does not replace a live check after a merge.
 
 ```bash
-uv python install 3.14
-uv venv --python 3.14 /tmp/hamock/venv
-uv pip install --python /tmp/hamock/venv/bin/python homeassistant==2026.10.0 \
-    pytest-homeassistant-custom-component
-/tmp/hamock/venv/bin/pytest tests/ha_mock
+.claude/skills/ha-test-harness/scripts/setup_mock.sh --run     # venv + HA core + tests (see that skill)
+.claude/skills/ha-test-harness/scripts/run_mock_tests.sh       # later runs
 ```
+
+The skill `ha-test-harness` also has the mutation-testing runner and the live-API helpers.
 
 `harness.py` builds a `House` (with `restart()` semantics: `house(..., restore_from=old)` boots a
 fresh core primed with the old one's states, exactly what HA restores). `scenarios.py` holds the
@@ -26,7 +25,8 @@ Notes:
   `await h.settle(seconds)`, so `for:` debounces and `delay`s behave as in production.
 - `await h.settle(n)` advances the mock clock then waits for automation runs. Never rely on
   `async_block_till_done` alone: an automation sitting in a `delay` would block it in real time.
-- The mock follows HA's own boot: `homeassistant: start` triggers fire on `STARTED`, and the
-  room control blueprints re-apply `heat` at start, like production.
-- Keep the HA version in step with the live box (`ha core info` / Settings, About).
+- The mock follows HA's own boot: `homeassistant: start` triggers fire on `STARTED`. People exist
+  before boot here, unlike a real start where `person.*` can change during boot: expect first-deploy
+  blips the mock cannot show.
+- Keep the HA version in step with the live box (`ha_live.py version`, or Settings, About).
 - Nothing here may contain tokens. The live API is never used by these tests.
