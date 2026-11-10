@@ -114,8 +114,10 @@ Decisions that went beyond the proposal (flag if you disagree):
    off: turning a room off by hand sets `<room>_heating_disabled`; turning it on by hand clears it.
 4. **Edits to the setpoint (TRV or dashboard) set the comfort setpoint**, plus the 2 degC offset while
    nobody is home. Comfort is never overwritten by the machinery.
-5. **After a restart the far-away debounce counts from the restart**, so the rooms sit in setback (not
-   off) for up to 30 minutes if everyone was already far away. The latch itself is restored.
+5. **After a restart the far-away 30 minutes count from the restart**: `binary_sensor.house_far_away` is a
+   plain template sensor with `delay_on: 30 min` that also requires nobody home. Until it is on the rooms sit
+   in setback, not off. (Harry home alone with Charles and Gaby far away is a normal house: heating on.)
+6. **An off room holds the comfort setpoint** (not a stale setback value), so a later edit is never guessed.
 
 Verified on the mock (real HA 2026.10, this repo's YAML, the real smart_thermostat; 62 scenarios):
 presence rules and debounces, overrides, back door (including open through far-away), a restart in
@@ -127,11 +129,34 @@ the blueprint and latches were all caught by the suite.
 Not verifiable on the mock: real `person`/device tracker behaviour, real Zigbee timing, the physical TRV.
 Hence the post-merge live test.
 
+## Changes after an independent review (2026-11-10)
+
+A separate reviewer found, and the mock confirmed: (1) Harry home alone while Charles and Gaby were far away
+got no heating (the far-away rule ignored `anyone_home`; the old machine checked it first); (2) an edit made
+while an off room's PID held a reduced value, or made by a stale TRV echo, inflated comfort by the offset;
+(3) `occupied` never cleared in rooms that follow nobody; (4) the by-hand "on" needed two presses when the
+room was both switched off and person-away; (5) the policy ran on every sensor report. Fixed in this PR, each
+with a regression test. Also simplified: the far-away latch became a state-based sensor, the 30 s start
+delay and the unreachable "seed by hand" path were removed.
+
+## Known limitations (not fixed here)
+
+- **A stale TRV echo can still inflate comfort.** If the physical TRV is unavailable (Z2M/broker restart)
+  while everyone leaves, it comes back still holding the old setpoint; the existing mirror writes that onto
+  the PID, and during setback the policy reads it as someone turning the dial, so comfort becomes old + 2.
+  Rare, mild (2 degC warmer until someone sets it), but silent. The real cure is to stop writing the setback
+  into the setpoint the TRV displays (a bigger redesign); a cheap mitigation is to ignore an "edit" that
+  arrives while the TRV has just left `unavailable`.
+- An unavailable back door sensor counts as closed (the old pause flag held the last state).
+- Deploying while everyone is already far away: nothing runs until the first 10 minute reconcile, the rooms
+  stay as they were, then sit in setback until the 30 minutes pass.
+
 ## Deployment notes
 
-- The comfort helpers are new, so the first run reconstructs them from the PID setpoint (+2 while nobody
-  is home): living room 19 -> 21, bedroom 17 -> 19. The master bedroom's 21.0 would read as 23; set its
-  comfort to 22 (the old machine's stored original) straight after the first start.
+- The comfort helpers are new, so the first run reconstructs them from the PID setpoints (plus 2 degC only
+  while the room is in setback). With someone home nothing moves: comfort equals the current setpoints. If
+  nobody is home at that moment, check all three comfort values afterwards (an off room reads its setpoint
+  as comfort).
 - Old entities become unavailable in the registry and need removing: `input_select.climate_away_mode_state`,
   `input_number.away_mode_*_original_temp`, `input_boolean.back_door_heating_paused`,
   `input_text.back_door_heating_resume`, `input_boolean.master_bedroom_heating_away_override` and

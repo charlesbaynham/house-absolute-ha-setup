@@ -8,15 +8,9 @@
 #   Harry is `home`.
 # - binary_sensor.both_charles_and_gaby_far_away: instantaneous, both more
 #   than 50 km from home.
-# - binary_sensor.house_far_away: LATCHED + debounced. On once the sensor
-#   above has been on for 30 minutes, off as soon as it drops. Trigger-based
-#   template entities restore their state, so this survives an HA restart (the
-#   old away-mode input_select did not). The debounce is "on for 30 minutes
-#   according to last_changed", as a template trigger rather than a `for:`
-#   state trigger, because a `for:` trigger never fires when the sensor is
-#   already on at start; after a restart the 30 minutes count from the
-#   restart. A latch that has never existed (first deployment) adopts the
-#   current value at start instead.
+# - binary_sensor.house_far_away: both of the above AND nobody home, held for
+#   30 minutes (delay_on); off as soon as either drops. After a restart the
+#   30 minutes count from the restart.
 # - binary_sensor.charles_confirmed_away (alarm_charles.yaml): more than 10 km
 #   from home with a fresh location report.
 # - binary_sensor.charles_away_for_heating: LATCHED. On once the sensor above
@@ -65,36 +59,18 @@ template:
           {% endif %}
 
 
-  - triggers:
-      - trigger: template
-        value_template: >-
-          {% set s = states.binary_sensor.both_charles_and_gaby_far_away %}
-          {{ s is not none and s.state == 'on'
-             and (now() - s.last_changed).total_seconds() >= 1800 }}
-        id: far_on
-      - trigger: state
-        entity_id: binary_sensor.both_charles_and_gaby_far_away
-        to: 'off'
-        id: far_off
-      - trigger: homeassistant
-        event: start
-        id: start
-    binary_sensor:
+  # Both far away AND nobody home (Harry home alone still needs heating), held
+  # for 30 minutes. A plain state-based sensor with delay_on: it restores like any
+  # template sensor, and after a restart the 30 minutes count from the restart.
+  - binary_sensor:
       - name: "House far away"
         unique_id: house_far_away
         icon: mdi:airplane
+        delay_on:
+          minutes: 30
         state: >-
-          {% if trigger.id == 'far_on' %}
-            true
-          {% elif is_state('binary_sensor.both_charles_and_gaby_far_away',
-                           'off') %}
-            false
-          {% elif trigger.id == 'start' and this.state not in ['on', 'off'] %}
-            {# first ever start: adopt the current value #}
-            {{ is_state('binary_sensor.both_charles_and_gaby_far_away', 'on') }}
-          {% else %}
-            {{ this.state == 'on' }}
-          {% endif %}
+          {{ is_state('binary_sensor.both_charles_and_gaby_far_away', 'on')
+             and is_state('binary_sensor.anyone_home', 'off') }}
 
   - triggers:
       - trigger: template

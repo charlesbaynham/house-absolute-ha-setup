@@ -58,9 +58,8 @@ async def test_live_state_today_is_adopted_without_a_single_change(tmp_path):
             # and the comfort setpoints were reconstructed (setpoint + setback while nobody is home)
             assert float(b.state("input_number.living_room_comfort_setpoint")) == 21.0
             assert float(b.state("input_number.bedroom_comfort_setpoint")) == 19.0
-            # master: 21.0 while nobody is home reads as comfort 23 (the old machine had reduced
-            # it too). This is why the deployment seeds the comfort helpers by hand instead.
-            assert float(b.state("input_number.master_bedroom_comfort_setpoint")) == 23.0
+            # master is off: an off room holds comfort, so its 21.0 is read as comfort 21
+            assert float(b.state("input_number.master_bedroom_comfort_setpoint")) == 21.0
             # the latches adopted the live values at once (no 10 / 30 minute wait)
             assert b.state("binary_sensor.charles_away_for_heating") == "on"
             # nothing was switched on, even briefly, and no setpoint was written
@@ -68,37 +67,9 @@ async def test_live_state_today_is_adopted_without_a_single_change(tmp_path):
             assert not [c for c in writes if c[1] in ("turn_on", "set_hvac_mode") and c[2].get("hvac_mode") != "off"
                         or c[1] == "turn_on"], writes
             assert not [c for c in writes if c[1] == "set_temperature"], writes
-            # Gaby gets home: everything returns to comfort
+            # Gaby gets home: the rooms that were heating return to comfort; master stays off
             await b.set_person("gaby", "home")
             assert pid_setpoints(b) == {"living_room": 21.0, "master_bedroom": 21.0, "bedroom": 19.0}
-        finally:
-            await cm2.__aexit__(None, None, None)
-    finally:
-        await cm.__aexit__(None, None, None)
-
-
-async def test_seeded_comfort_setpoints_are_kept_exactly(tmp_path):
-    """The deployment plan: comfort helpers are seeded (21 / 22 / 19, the old machine's stored
-    originals) before the merge. The first run keeps them and just adopts the PID setpoints."""
-    cm, a = await old_world(tmp_path, living=19.0, master=21.0, bedroom=17.0)
-    try:
-        for room, v in COMFORT.items():
-            await a.call("input_number", "set_value", entity_id=f"input_number.{room}_comfort_setpoint", value=v)
-        persons = {"charles": ("not_home", 15), "gaby": ("not_home", 5), "harry": ("not_home", 5)}
-        seed = lambda e: only_old_world(e) or e.endswith("_comfort_setpoint")  # noqa: E731
-        cm2 = house(tmp_path, policy_packages(), templates=load_repo_templates(), persons=persons,
-                    restore_from=a, restore_filter=seed)
-        b = await cm2.__aenter__()
-        try:
-            await b.settle(60)
-            assert {r: float(b.state(f"input_number.{r}_comfort_setpoint")) for r in ROOMS} == COMFORT
-            assert modes(b) == {"living_room": "heat", "master_bedroom": "off", "bedroom": "heat"}
-            assert pid_setpoints(b) == {"living_room": 19.0, "master_bedroom": 21.0, "bedroom": 17.0}
-            assert not [c for c in climate_writes(b) if c[1] == "set_temperature"]
-            # Charles gets home: the master bedroom goes to its real comfort setpoint, 22
-            await b.set_person("charles", "home")
-            await b.set_person("gaby", "home")
-            assert pid_setpoints(b) == COMFORT
         finally:
             await cm2.__aexit__(None, None, None)
     finally:
@@ -130,6 +101,9 @@ async def test_migration_on_an_ordinary_day_changes_nothing(tmp_path):
 
 
 async def test_migration_while_far_away(tmp_path):
+    """Deploying while everyone is already far away. The far-away sensor is new, so it only turns
+    on after its 30 minutes; until then the 10 minute reconcile treats it as 'not far away' and the
+    rooms sit in setback, then they go off."""
     cm, a = await old_world(tmp_path, living=19.0, master=20.0, bedroom=17.0, master_mode="off")
     try:
         for r in ROOMS:
@@ -145,11 +119,12 @@ async def test_migration_while_far_away(tmp_path):
         )
         b = await cm2.__aenter__()
         try:
-            await b.settle(60)
-            assert b.state("binary_sensor.house_far_away") == "on", "adopted: no 30 minute wait"
-            assert set(modes(b).values()) == {"off"}
-            # the old machine had reduced 21 -> 19 before going far away: reconstruct 21
+            await b.settle(11 * 60)  # nothing runs until the first 10 minute reconcile
+            # the old machine reduced 21 -> 19 before going far away: reconstructed as 21
             assert float(b.state("input_number.living_room_comfort_setpoint")) == 21.0
+            await b.settle(40 * 60)
+            assert b.state("binary_sensor.house_far_away") == "on"
+            assert set(modes(b).values()) == {"off"}
         finally:
             await cm2.__aexit__(None, None, None)
     finally:

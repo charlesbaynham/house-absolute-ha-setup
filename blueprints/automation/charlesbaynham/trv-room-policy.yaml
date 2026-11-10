@@ -22,7 +22,8 @@ blueprint:
     4. The room follows people (e.g. the master bedroom follows Charles) and all of
     them are away -> `off`.
 
-    5. House far away (both away more than 50 km for 30 min) -> `off`.
+    5. House far away (Charles and Gaby both more than 50 km away, and nobody home, for
+    30 min) -> `off`.
 
     6. Nobody home -> `setback`.
 
@@ -34,18 +35,19 @@ blueprint:
 
 
     **Setpoints.** The user's setpoint lives in the *comfort setpoint* helper. The PID
-    setpoint is derived: comfort, or comfort minus the setback offset. Nothing is
-    stored to restore later. If someone changes the PID setpoint (directly, or via the
-    physical TRV which the room control blueprint mirrors) it is taken as the new
-    comfort setpoint (plus the offset while nobody is home and the room is not occupied).
-    The *last written* helper records the value this automation last wrote so that its
-    own echo is not mistaken for a change; value 0 means "never run". On the first run the
-    comfort setpoint is reconstructed from the PID's current setpoint, unless the helper
-    already holds a value (seed it by hand when deploying), which is kept.
+    holds comfort in every mode except setback, where it holds comfort minus the offset
+    (an `off` room also holds comfort, so the TRV never shows a stale setback value).
+    Nothing is stored to restore later. If someone changes the PID setpoint (directly,
+    or via the physical TRV which the room control blueprint mirrors) it is taken as the
+    new comfort setpoint (plus the offset in setback). The *last written* helper records
+    the value this automation last wrote so that its own echo is not mistaken for a change;
+    value 0 means "never run", and the first run adopts the PID's current setpoint as the
+    comfort setpoint (plus the offset if the room is in setback).
 
 
     **Occupied clears itself** when the person the room follows gets home (the "follow"
-    sensor goes off), so a guest's switch is not left on for the next trip.
+    sensor goes off); for a room that follows nobody, when the house goes from empty to
+    someone home. So a guest's switch is not left on for the next trip.
 
 
     **By hand** (a call with a user context: dashboard, app, voice). Turning the PID
@@ -251,13 +253,13 @@ triggers:
   # Someone or something changed the PID climate entity
   - trigger: state
     entity_id: !input pid_climate
+    to: ~
     id: pid_state
   - trigger: state
     entity_id: !input pid_climate
     attribute: temperature
     id: pid_setpoint
-  # Self-heal: HA start (after the presence facts have settled) and a periodic
-  # reconcile
+  # Self-heal: HA start and a periodic reconcile
   - trigger: homeassistant
     event: start
     id: start
@@ -266,12 +268,6 @@ triggers:
     id: tick
 conditions: []
 actions:
-  # The presence facts (latched sensors) settle at HA start; let them
-  - if:
-      - condition: trigger
-        id: start
-    then:
-      - delay: '00:00:30'
   # Nothing to do while the PID climate is not up
   - condition: template
     value_template: "{{ states(pid) in ['off', 'heat'] }}"
@@ -294,22 +290,25 @@ actions:
         {{ follow_sensors | length > 0
            and (follow_sensors | select('is_state', 'on') | list | length)
                == (follow_sensors | length) }}
-      mode_reason: >-
-        {% if is_state(disabled_switch, 'on') %}off|room switched off
-        {% elif is_state(back_door, 'on') %}off|back door open
+      presence_rule: >-
+        {% if is_state(back_door, 'on') %}off|back door open
         {% elif occupied_now %}comfort|room occupied
         {% elif follow_all_away %}off|the person this room follows is away
         {% elif is_state(house_far_away, 'on') %}off|house far away
         {% elif is_state(anyone_home, 'off') %}setback|nobody home
         {% else %}comfort|someone home{% endif %}
   - variables:
+      mode_reason: >-
+        {{ 'off|room switched off' if is_state(disabled_switch, 'on')
+           else presence_rule }}
+  - variables:
       mode: "{{ mode_reason.split('|')[0] }}"
       reason: "{{ mode_reason.split('|')[1] }}"
-      # The PID setpoint is reduced by the offset while nobody is home, unless the
-      # room is occupied. This is a fact, not the mode, so it does not depend on
-      # which other rule happens to apply (off rules leave the setpoint alone).
-      reduced_now: >-
-        {{ is_state(anyone_home, 'off') and not occupied_now }}
+      # The PID holds comfort minus the offset only in setback; in every other mode
+      # (including off) it holds the comfort setpoint itself.
+      reduced_now: "{{ mode == 'setback' }}"
+      presence_off: "{{ presence_rule.split('|')[0] == 'off' }}"
+      presence_door: "{{ presence_rule.split('|')[1] == 'back door open' }}"
       pid_hvac: "{{ states(pid) }}"
       pid_sp: "{{ state_attr(pid, 'temperature') | float(0) }}"
       last_sp: "{{ states(last_helper) | float(0) }}"
@@ -324,21 +323,27 @@ actions:
         {{ trigger.id == 'pid_state' and trigger.from_state is not none
            and trigger.from_state.state == 'heat' and trigger.to_state.state == 'off' }}
 
-  # ---- 1b. the person this room follows is home again: no longer "occupied" --------
+  # ---- 1b. the person is back (or, for a room that follows nobody, someone is home) --
   - if:
       - condition: trigger
         id: facts
       - condition: template
         value_template: >-
-          {{ trigger.entity_id in follow_sensors
-             and trigger.to_state.state == 'off'
-             and is_state(occupied_switch, 'on') }}
+          {{ is_state(occupied_switch, 'on')
+             and trigger.to_state.state in ['off', 'on']
+             and (
+               (trigger.entity_id in follow_sensors
+                and trigger.to_state.state == 'off')
+               or (follow_sensors | length == 0
+                   and trigger.entity_id == anyone_home
+                   and trigger.from_state.state == 'off'
+                   and trigger.to_state.state == 'on')) }}
     then:
       - action: input_boolean.turn_off
         target:
           entity_id: !input occupied
       # That re-runs this automation with the new facts
-      - stop: The person this room follows is home; occupied cleared
+      - stop: Someone is back; occupied cleared
 
   # ---- 2. a person switched the heating on / off by hand ---------------------------
   - choose:
@@ -350,6 +355,15 @@ actions:
           - action: input_boolean.turn_off
             target:
               entity_id: !input disabled
+          # One press must be enough: if a presence rule would still keep it off,
+          # the room is also occupied (an open back door still wins)
+          - if:
+              - condition: template
+                value_template: "{{ presence_off and not presence_door }}"
+            then:
+              - action: input_boolean.turn_on
+                target:
+                  entity_id: !input occupied
           - stop: Heating turned on by hand; room no longer switched off
       # On, against a presence rule: someone is in the room (the back door still wins)
       - conditions:
@@ -377,22 +391,14 @@ actions:
           {{ pid_sp > 0 and (last_sp == 0 or (pid_sp - last_sp) | abs > 0.05) }}
     then:
       - variables:
-          # First run with a comfort setpoint already in the helper (seeded by hand
-          # when deploying): keep it, only record what the PID currently holds.
-          adopt_only: "{{ last_sp == 0 and comfort > (lowest | float(7)) + 0.01 }}"
-      - if:
-          - condition: template
-            value_template: "{{ not adopt_only }}"
-        then:
-          - variables:
-              comfort: >-
-                {{ [[pid_sp + (offset | float(0) if reduced_now else 0),
-                     lowest | float(7)] | max, highest | float(28)] | min }}
-          - action: input_number.set_value
-            target:
-              entity_id: !input comfort_setpoint
-            data:
-              value: "{{ comfort }}"
+          comfort: >-
+            {{ [[pid_sp + (offset | float(0) if reduced_now else 0),
+                 lowest | float(7)] | max, highest | float(28)] | min }}
+      - action: input_number.set_value
+        target:
+          entity_id: !input comfort_setpoint
+        data:
+          value: "{{ comfort }}"
       - action: input_number.set_value
         target:
           entity_id: !input last_written
@@ -411,6 +417,22 @@ actions:
           - condition: template
             value_template: "{{ mode == 'off' }}"
         sequence:
+          # Off rooms hold the comfort setpoint, so the TRV never shows a stale
+          # setback value and an edit made while off is read correctly
+          - if:
+              - condition: template
+                value_template: "{{ (pid_sp - want_sp) | abs > 0.01 }}"
+            then:
+              - action: input_number.set_value
+                target:
+                  entity_id: !input last_written
+                data:
+                  value: "{{ want_sp }}"
+              - action: climate.set_temperature
+                target:
+                  entity_id: !input pid_climate
+                data:
+                  temperature: "{{ want_sp }}"
           - if:
               - condition: template
                 value_template: "{{ pid_hvac != 'off' }}"
