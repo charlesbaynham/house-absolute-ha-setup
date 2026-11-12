@@ -2,7 +2,7 @@
 name: trv-pid-heating
 description: The per-room TRV PID heating pattern (packages/climate_{room}.yaml) and the heating policy that decides off / setback / comfort per room (presence, back door, occupied, manual off) — components, gains, boost and smart modes, adding a room, calibration drift, troubleshooting. Read before touching any room's heating.
 aliases: [TRV, PID, smart_thermostat, boost mode, smart mode, Sonoff TRVZB, radiator, heating policy, setback, away mode, occupied]
-updated: 2026-11-10
+updated: 2026-11-12
 ---
 
 # TRV PID controller pattern
@@ -99,6 +99,10 @@ The copy already carries the policy helpers and automation (see "Heating policy"
 hardcoded per-room lists elsewhere any more. Add the room's own mock-house scenarios if its rules differ.
 Prerequisites: TRV paired in HA, an external temperature sensor available, TRV set to
 external-sensor mode in Z2M, the Smart Thermostat (PID) HACS integration installed.
+
+After the merge, give the room's user-facing helpers an area (standing rule in `WORKSPACE.md`): smart mode, boost,
+occupied, switched off, comfort setpoint, heating status, parked valve position and valve position. The PID output,
+last-written setpoint and boost start helpers stay area-less (internal).
 
 ## Calibration drift
 
