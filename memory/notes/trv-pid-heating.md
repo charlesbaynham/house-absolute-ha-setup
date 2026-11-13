@@ -66,6 +66,8 @@ with a parked position) and live after merge, see the log.
 
 ## Smart mode off: valves are parked, the PID's demand is ignored
 
+`[found: live, 2026-11-13]` Smart mode is now **on** in all three rooms (the booleans' `last_changed` is the 09:57 HA start; living room and bedroom valves followed the PID at 100 % while heating). The section below is the history of the off period.
+
 `[found: live state + git history, 2026-11-12]` `input_boolean.smart_mode_{room}` was off in all three rooms
 (since at least 2026-11-04). With it off the room-control blueprint holds the valve at the parked position
 (0), so a room below setpoint with the PID in `heat` and `control_output` 100 still gets no hot water (master

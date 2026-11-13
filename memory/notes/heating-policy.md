@@ -36,6 +36,21 @@ bedroom follows Charles); `house_far_away` → off; nobody home → setback (com
   Charles latch took `off` from an early `person` event, so the master bedroom heated for ~10 min that evening
   (self-corrected; first deployment only). Do not spoof `binary_sensor.anyone_home` live: it arms "Vacuum when
   everyone leaves" (20 h `last_triggered` guard) and "Turn off all lights when everyone leaves".
+- **Live observation 2026-11-13 (train trip, people leaving London)** `[found: live API monitor]`: Charles and
+  Gaby left; `anyone_home` off 18:29:03; rooms went to setback; `charles_away_for_heating` on 19:53:00 (10 min
+  after `person.charles` became `not_home` 19:42) and the master bedroom went off at once; both people >50 km
+  at 20:15:44; `house_far_away` on 20:46:03 (+30 min), living room and bedroom PIDs off in the same second,
+  valve helpers 0, status "off - house far away". Held across the 10-minute reconciles for 30+ minutes.
+  Not verifiable from HA: whether the valves are physically shut. The bedroom TRV kept reporting
+  `hvac_action: heating` (its own sensor 21.6 < target 25) after the valve helper went to 0.
+- **Setback was a no-op that day (the stale-echo bug, new trigger)** `[found: history + logbook, 2026-11-13]`:
+  at 18:29:52 `anyone_home` flickered on for 0.2 s and off again. The policy wrote comfort (24) then setback
+  (22) to the PID; the physical TRV echoed the 24 0.8 s late, the mirror wrote that onto the PID at 18:29:53.593,
+  and the policy (in setback, last-written 22) read it as a hand edit: comfort became 26 (and 25, 24 in the
+  other rooms). Setback then held 24 / 23, i.e. the user's original comfort, so nothing was saved until
+  far-away, and after return the rooms will target 2 °C above what was set. `[inferred]` Any presence flicker
+  (on then off within about a second) can do this, not just a TRV outage. Not fixed; comfort helpers are
+  `input_number.{room}_comfort_setpoint` (original values: living room 24, bedroom 23, master bedroom 22).
 - Test heating/presence logic on the mock house first: `tests/ha_mock` (README there). Valve behaviour and the open smart-mode-off issue are in [trv-pid-heating](memory/notes/trv-pid-heating.md).
 
 ## Open follow-ups (context, not an agenda)
