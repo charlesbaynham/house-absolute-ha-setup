@@ -36,8 +36,8 @@ pattern are in `memory/notes/`.
 
 ## Tools & resources
 
-- Live API: `$HA_TOKEN` (or the `ha-api-token` skill); entity IDs always looked up live.
-- Skills in `.claude/skills/`: `home-assistant-best-practices`, `chore-tracking`, `ha-api-token`,
+- Live API: `$HA_TOKEN` (or the `fetching-secrets` skill); entity IDs always looked up live.
+- Skills in `.claude/skills/`: `home-assistant-best-practices`, `chore-tracking`, `fetching-secrets`,
   `ha-test-harness` (mock house, mutation runner, live-API helpers).
 - Repo: `charlesbaynham/house-absolute-ha-setup` (public on GitHub), default branch `master`.
 - Mock house: `tests/ha_mock` (real HA 2026.10 core + this repo's YAML); design record

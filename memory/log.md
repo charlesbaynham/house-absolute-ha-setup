@@ -28,3 +28,4 @@ Rules for writers:
 -->
 
 <!-- compaction-baseline: filed 2026-11-13T01:25:30Z -->
+- [2026-11-13] STATE: replaced the `ha-api-token` skill with `fetching-secrets` (ported from ha-workspace, trimmed of lab-only content, HA-token recipe kept); WORKSPACE.md, digest and ha-sync-and-deploy updated. `ha-test-harness` keeps its own ephemeral-key flow (`live_keygen.sh`/`ha_live.py`) — not merged.

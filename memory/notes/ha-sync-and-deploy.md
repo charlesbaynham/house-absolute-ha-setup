@@ -31,7 +31,7 @@ The rules that bind agents (never guess entity IDs, never write `$HA_TOKEN` to a
 ## Live API
 
 `https://automation.houseabsolute.co.uk`, with a long-lived token in `$HA_TOKEN` (else the
-`ha-api-token` skill fetches it from the Secrets MCP). Useful calls:
+`fetching-secrets` skill fetches it from the Secrets MCP). Useful calls:
 
 ```bash
 curl -sS -H "Authorization: Bearer $HA_TOKEN" https://automation.houseabsolute.co.uk/api/states

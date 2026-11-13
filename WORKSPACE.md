@@ -28,7 +28,7 @@ device repurposed). Facts about entity states and IDs are re-read live every tim
 - **Never guess an entity ID.** Look it up in `/api/states` before using it in YAML or a service
   call — not inferred from Z2M friendly names, other rooms' naming, or the repo. Say so if one
   doesn't exist.
-- Token: `$HA_TOKEN`, else fetch it with the `ha-api-token` skill. **Never write it (or anything
+- Token: `$HA_TOKEN`, else fetch it with the `fetching-secrets` skill. **Never write it (or anything
   derived) to a file in this repo** — `gitsync.sh` runs `git add .` on all of `/config` and
   auto-commits and pushes it, and there is no secret scanning.
 - `secrets.yaml` is git-ignored and exists only live; reference values with `!secret`.
@@ -62,7 +62,7 @@ Charles's decision (2026-11-08), split by path. The default branch is `master`.
 
 - **Consult the `home-assistant-best-practices` skill** (`.claude/skills/`) before writing or
   editing automations, scripts, scenes, blueprints or dashboards. Other skills: `chore-tracking`
-  (editing `packages/chore_tracking.yaml` or its dashboard), `ha-api-token`, `ha-test-harness`
+  (editing `packages/chore_tracking.yaml` or its dashboard), `fetching-secrets`, `ha-test-harness`
   (the mock house, mutation testing and the live-API helpers for post-merge simulations).
 - Validate syntax with `yamllint *.yaml packages/*.yaml`. That checks YAML only; HA's custom tags
   (`!include`, `!secret`, …) and semantics are validated on restart, which happens outside this
