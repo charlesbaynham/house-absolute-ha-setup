@@ -29,3 +29,4 @@ Rules for writers:
 
 <!-- compaction-baseline: filed 2026-11-13T01:25:30Z -->
 - [2026-11-13] STATE: replaced the `ha-api-token` skill with `fetching-secrets` (ported from ha-workspace, trimmed of lab-only content, HA-token recipe kept); WORKSPACE.md, digest and ha-sync-and-deploy updated. `ha-test-harness` keeps its own ephemeral-key flow (`live_keygen.sh`/`ha_live.py`) — not merged.
+- [2026-11-13] DECISION: Charles asked for ha-workspace's secret-handling auto-mode soft_deny rules in automode.json (plaintext-in-tool-result, Secret Server gate bypass), trimmed of lab-host specifics. Rules load only via agent-tools/automode/install.sh at environment setup; `automode-check` reports drift until the environment is re-installed.
