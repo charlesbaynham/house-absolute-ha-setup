@@ -1,8 +1,8 @@
 ---
 name: trv-pid-heating
-description: The per-room TRV PID heating pattern (packages/climate_{room}.yaml) and the heating policy that decides off / setback / comfort per room (presence, back door, occupied, manual off) — components, gains, boost and smart modes, adding a room, calibration drift, troubleshooting. Read before touching any room's heating.
-aliases: [TRV, PID, smart_thermostat, boost mode, smart mode, Sonoff TRVZB, radiator, heating policy, setback, away mode, occupied]
-updated: 2026-11-12
+description: The per-room TRV PID heating pattern (packages/climate_{room}.yaml) — components, gains, valve arbitration, boost and smart modes (incl. the open smart-mode-off issue), adding a room, calibration drift, troubleshooting. Read before touching any room's heating; the off/setback/comfort policy is in heating-policy.
+aliases: [TRV, PID, smart_thermostat, boost mode, smart mode, Sonoff TRVZB, radiator, parked valve]
+updated: 2026-11-13
 ---
 
 # TRV PID controller pattern
@@ -44,38 +44,11 @@ bedroom and bedroom (all with boost). Open investigation of radiators staying ho
 What stays per room (blueprints cannot create them): the helpers, the template button and the
 `smart_thermostat` climate entity.
 
-## Heating policy — off / setback / comfort (since 2026-11-10, PR #106)
+## Heating policy
 
-`[found: repo + live, 2026-11-10]` One blueprint, `blueprints/automation/charlesbaynham/trv-room-policy.yaml`,
-instantiated per room in `packages/climate_{room}.yaml`, decides each PID climate's `off`/`heat` and setpoint
-from the current facts (level-triggered; nothing is remembered to undo later, so restarts and missed events
-self-heal). It replaced the away-mode state machine, the back-door pause, the master-bedroom-follows-Charles
-automation (#104) and the 4am automation. Rules, first match wins: room switched off → off; back door open →
-off; room occupied (switch, or boost running) → comfort; room follows a person who is away → off (master
-bedroom follows Charles); `house_far_away` → off; nobody home → setback (comfort − 2 °C); else comfort.
-
-- Per room helpers: `{room}_comfort_setpoint` (the user's number; the PID setpoint is derived),
-  `{room}_policy_last_setpoint` (echo guard), `{room}_occupied`, `{room}_heating_disabled`,
-  `{room}_heating_status` (text: mode and why: look here first when asking "why is it off?").
-- Facts, `packages/heating_presence.yaml`: `binary_sensor.house_far_away` (both Charles and Gaby >50 km
-  AND nobody home, `delay_on` 30 min; after a restart the 30 min count from the restart),
-  `binary_sensor.charles_away_for_heating` (trigger-based latch: on once `charles_confirmed_away` has held 10
-  min, off only when `person.charles` is `home`, so a stale location never brings the heating back).
-- By hand (a service call with a user context): turning the PID on against a presence rule sets `occupied`;
-  turning it off sets `heating_disabled`; turning it on again clears it. An off room holds the comfort setpoint.
-  `occupied` clears when the person the room follows gets home (or, for other rooms, when an empty house gets
-  someone home). The back door beats everything.
-- Do NOT write a PID's `hvac_mode` from another automation: the policy reverts anything that is not a human.
-  Express the new rule as a fact or a switch the policy reads.
-- Edits to the setpoint (physical TRV via the room-control mirror, or dashboard) become the comfort setpoint
-  (+2 °C while in setback). Known limitation: a stale TRV setpoint after the TRV was unavailable during a
-  presence change can inflate comfort by 2 °C (see docs/heating-control-state-machines.md).
-- Gotchas learned: a `for:` state trigger never fires if the entity is already in the state at HA start;
-  trigger-based template entities restore from extra stored data, not just state; on the very first start the
-  Charles latch took `off` from an early `person` event, so the master bedroom heated for ~10 min that evening
-  (self-corrected; first deployment only). Do not spoof `binary_sensor.anyone_home` live: it arms "Vacuum when
-  everyone leaves" (20 h `last_triggered` guard) and "Turn off all lights when everyone leaves".
-- Test heating/presence logic on the mock house first: `tests/ha_mock` (README there).
+The per-room off / setback / comfort policy (PR #106), its facts, by-hand rules and gotchas are in
+[heating-policy](memory/notes/heating-policy.md). Do NOT write a PID's `hvac_mode` from another automation: the
+policy reverts anything that is not a human.
 
 ## Why the PID writes a separate output helper
 
@@ -91,11 +64,22 @@ changes, PID climate off/on, smart mode, boost, parked position, HA start and ma
 Verified in a real HA 2026.10 core (mocked PID, 23 checks incl. keep-alive rewrites during boost and
 with a parked position) and live after merge, see the log.
 
+## Smart mode off: valves are parked, the PID's demand is ignored
+
+`[found: live state + git history, 2026-11-12]` `input_boolean.smart_mode_{room}` was off in all three rooms
+(since at least 2026-11-04). With it off the room-control blueprint holds the valve at the parked position
+(0), so a room below setpoint with the PID in `heat` and `control_output` 100 still gets no hot water (master
+bedroom 20.9 °C against 22, valve 0; bedroom the same). `[inferred]` Before #103 the smart-off thermostat ran
+as a plain on/off controller whose output reached the valve, so the rooms heated by accident; #103 removed that
+side effect. **Open, Charles to choose:** (1) turn smart mode on in the affected rooms (no code; the session
+recommended it for the master bedroom), or (2) change `trv-room-control` so smart-off follows the thermostat
+output (restores the old behaviour, makes the parked position meaningless). Not answered as of 2026-11-12.
+
 ## Adding a room
 
 Copy an existing `packages/climate_{room}.yaml` and rename entities and blueprint inputs (the
 control automation takes the valve-sync automation's entity id as an input, so keep its alias).
-The copy already carries the policy helpers and automation (see "Heating policy"); there are no
+The copy already carries the policy helpers and automation (see [heating-policy](memory/notes/heating-policy.md)); there are no
 hardcoded per-room lists elsewhere any more. Add the room's own mock-house scenarios if its rules differ.
 Prerequisites: TRV paired in HA, an external temperature sensor available, TRV set to
 external-sensor mode in Z2M, the Smart Thermostat (PID) HACS integration installed.

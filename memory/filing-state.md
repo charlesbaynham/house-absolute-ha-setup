@@ -10,8 +10,8 @@ version migrations this memory has been through; a workspace born on a major
 already has that major's structure. Git history keeps the earlier values.
 -->
 
-last_run: never
-last_commit: none
-last_sessions: 0
-retry:
+last_run: 2026-11-13T01:21:02Z
+last_commit: ba62dc3d757f7c74afacf7dc188dfcf77a392903
+last_sessions: 4
+retry: 
 migrated: 1.0.0

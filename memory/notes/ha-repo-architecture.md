@@ -53,7 +53,7 @@ Jinja2 computed states in `template_sensors.yaml`, e.g. the "Anyone Home" binary
 
 ## Heating packages and the mock house
 
-`packages/heating_presence.yaml` holds the presence facts the heating policy reads;
+`packages/heating_presence.yaml` holds the presence facts the [heating policy](memory/notes/heating-policy.md) reads;
 `packages/climate_{room}.yaml` hold each room's PID, helpers and policy instance (details in
 [trv-pid-heating](memory/notes/trv-pid-heating.md)). `tests/ha_mock/` is a pytest mock house (a real HA core
 running this repo's YAML); it is not loaded by HA. `docs/heating-control-state-machines.md` is the design record.
