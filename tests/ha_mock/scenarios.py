@@ -4,6 +4,7 @@ from .harness import ROOMS, House, load_repo_packages, trv_stubs
 
 COMFORT = {"living_room": 21.0, "master_bedroom": 22.0, "bedroom": 19.0}
 SETBACK = 2.0
+DEAD_TIME = 10  # seconds after a policy write during which a different PID setpoint is read as an echo
 
 EVERYONE_HOME = {"charles": ("home", None), "gaby": ("home", None), "harry": ("home", None)}
 NOBODY_HOME = {"charles": ("not_home", 5), "gaby": ("not_home", 5), "harry": ("not_home", 5)}
