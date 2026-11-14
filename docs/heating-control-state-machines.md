@@ -141,12 +141,26 @@ delay and the unreachable "seed by hand" path were removed.
 
 ## Known limitations (not fixed here)
 
-- **A stale TRV echo can still inflate comfort.** If the physical TRV is unavailable (Z2M/broker restart)
-  while everyone leaves, it comes back still holding the old setpoint; the existing mirror writes that onto
-  the PID, and during setback the policy reads it as someone turning the dial, so comfort becomes old + 2.
+- **A stale TRV echo from an outage can still inflate comfort.** If the physical TRV is unavailable (Z2M/broker
+  restart) while everyone leaves, it comes back still holding the old setpoint; the existing mirror writes that
+  onto the PID, and during setback the policy reads it as someone turning the dial, so comfort becomes old + 2.
   Rare, mild (2 degC warmer until someone sets it), but silent. The real cure is to stop writing the setback
   into the setpoint the TRV displays (a bigger redesign); a cheap mitigation is to ignore an "edit" that
   arrives while the TRV has just left `unavailable`.
+
+## Dead time after a write (2026-11-14)
+
+Seen live 2026-11-13: `anyone_home` flickered on for 0.2 s (18:29:52). The policy wrote comfort to the PID
+(24), then setback (22) 0.23 s later. The physical TRV, which reports about a second after it is told,
+echoed the 24; the mirror copied that onto the PID at 18:29:53.593, and the policy (setback, last written 22)
+took it as an edit: comfort 26. All three rooms, setback held the user's own comfort for the rest of the trip.
+
+Fix, in `trv-room-policy`: for `echo_dead_time` seconds (default 10) after the *last written* helper changes, a
+PID setpoint that differs from it is not an edit; step 4 overwrites it with the wanted value. Only step 3
+(adopting an edit) is gated; mode changes, the comfort helper and the 10-minute reconcile are not.
+Cost: a real edit made within 10 s of a policy write (someone leaving, a presence change) is overwritten and
+has to be made again. The mock's TRV stand-in answers instantly, so `test_policy_echo.py` injects the late
+echo by hand. Not covered: an echo later than the dead time (a TRV outage, above).
 - An unavailable back door sensor counts as closed (the old pause flag held the last state).
 - Deploying while everyone is already far away: nothing runs until the first 10 minute reconcile, the rooms
   stay as they were, then sit in setback until the 30 minutes pass.

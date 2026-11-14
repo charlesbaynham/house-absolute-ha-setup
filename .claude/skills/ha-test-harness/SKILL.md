@@ -34,7 +34,10 @@ scripts/run_mock_tests.sh                    # whole suite (~70 s); extra pytest
 scripts/run_mock_tests.sh -k restart -x
 ```
 
-Without a token yet, `--ha-version 2026.10.0` (the default) is right until HA is upgraded. Python 3.14 comes
+Without a token yet, `--ha-version 2026.10.0` (the default) is right until HA is upgraded.
+⚠️ A newer HA may have no matching `pytest-homeassistant-custom-component` yet: with 2026.11.1 `uv` resolved
+0.2.1 and pytest died on import (`legacy_api_password`, `ast.Str`). Use the newest HA the plugin has a release
+for (2026.10.0 on 2026-11-14) and say in the PR that the mock runs an older core than the live box. Python 3.14 comes
 from `uv`; the venv is `$HAMOCK_DIR/venv` (default `/tmp/hamock`) and is rebuilt per container.
 
 Writing a scenario (copy a file in `tests/ha_mock/`): `house(...)` boots a house with people in given

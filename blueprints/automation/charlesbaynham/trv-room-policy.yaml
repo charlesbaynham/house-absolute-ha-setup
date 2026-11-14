@@ -45,6 +45,14 @@ blueprint:
     comfort setpoint (plus the offset if the room is in setback).
 
 
+    **Dead time.** For a few seconds after the *last written* helper changes, a different
+    PID setpoint is not taken as an edit: it is the late echo of an earlier write (the
+    physical TRV reports its setpoint about a second after it is told), and it is
+    overwritten with the wanted value. Without this, presence flickering on and off
+    within a second left the TRV echoing the old setpoint after the new one was written,
+    and the policy read that as someone turning the dial up by the setback offset.
+
+
     **Occupied clears itself** when the person the room follows gets home (the "follow"
     sensor goes off); for a room that follows nobody, when the house goes from empty to
     someone home. So a guest's switch is not left on for the next trip.
@@ -197,6 +205,19 @@ blueprint:
               max: 15
               step: 0.5
               unit_of_measurement: °C
+        echo_dead_time:
+          name: Dead time after a write
+          description: >-
+            Seconds after this automation last wrote the PID setpoint during which a
+            different PID setpoint is treated as a late echo, not as someone changing it.
+            A real edit inside this window is overwritten and has to be made again.
+          default: 10
+          selector:
+            number:
+              min: 0
+              max: 60
+              step: 1
+              unit_of_measurement: s
         max_temp:
           name: Highest setpoint
           default: 28
@@ -221,6 +242,7 @@ variables:
   house_far_away: !input house_far_away
   back_door: !input back_door
   offset: !input setback_offset
+  dead_time: !input echo_dead_time
   lowest: !input min_temp
   highest: !input max_temp
 triggers:
@@ -313,6 +335,10 @@ actions:
       pid_sp: "{{ state_attr(pid, 'temperature') | float(0) }}"
       last_sp: "{{ states(last_helper) | float(0) }}"
       comfort: "{{ states(comfort_helper) | float(0) }}"
+      echoing: >-
+        {% set written = states[last_helper] %}
+        {{ written is not none
+           and (now() - written.last_changed).total_seconds() < dead_time | float(10) }}
       by_hand: >-
         {{ trigger.id == 'pid_state' and trigger.from_state is not none
            and trigger.to_state.context.user_id is not none }}
@@ -385,10 +411,13 @@ actions:
           - stop: Heating turned off by hand; room switched off
 
   # ---- 3. the PID setpoint was changed by someone else (or first run) -------------
+  # Not while a write of ours is fresh: a differing setpoint is then a late echo, and
+  # step 4 puts the wanted value back.
   - if:
       - condition: template
         value_template: >-
-          {{ pid_sp > 0 and (last_sp == 0 or (pid_sp - last_sp) | abs > 0.05) }}
+          {{ pid_sp > 0
+             and (last_sp == 0 or ((pid_sp - last_sp) | abs > 0.05 and not echoing)) }}
     then:
       - variables:
           comfort: >-

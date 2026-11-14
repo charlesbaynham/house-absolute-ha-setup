@@ -1,7 +1,7 @@
 """Setpoints: comfort is the user's number, the PID's is derived, TRV edits flow back."""
 
 from .harness import house, load_repo_templates
-from .scenarios import COMFORT, EVERYONE_HOME, SETBACK, modes, pid, pid_setpoints, policy_packages, set_comfort, trv, trv_setpoints
+from .scenarios import COMFORT, DEAD_TIME, EVERYONE_HOME, SETBACK, modes, pid, pid_setpoints, policy_packages, set_comfort, trv, trv_setpoints
 
 LR = "living_room"
 
@@ -31,6 +31,7 @@ async def test_the_physical_trv_follows_the_pid_setpoint(tmp_path):
 
 async def test_editing_the_trv_in_comfort_changes_the_comfort_setpoint(tmp_path):
     async with Boot(tmp_path) as h:
+        await h.settle(DEAD_TIME + 1)
         await h.call("climate", "set_temperature", entity_id=trv(LR), temperature=23.0)
         assert h.attr(pid(LR), "temperature") == 23.0
         assert comfort(h) == 23.0
@@ -43,6 +44,7 @@ async def test_editing_the_trv_during_setback_stores_comfort_plus_the_offset(tmp
         for who in ("charles", "gaby", "harry"):
             await h.set_person(who, "not_home", 5)
         assert h.attr(pid(LR), "temperature") == COMFORT[LR] - SETBACK  # 19
+        await h.settle(DEAD_TIME + 1)
         await h.call("climate", "set_temperature", entity_id=trv(LR), temperature=20.0)
         assert h.attr(pid(LR), "temperature") == 20.0
         assert comfort(h) == 22.0, "the 20 they asked for now, 22 when someone is home again"
@@ -69,6 +71,7 @@ async def test_edit_while_the_room_is_off_becomes_the_comfort_setpoint(tmp_path)
     async with Boot(tmp_path) as h:
         await h.call("input_boolean", "turn_on", entity_id="input_boolean.living_room_heating_disabled")
         assert modes(h)[LR] == "off"
+        await h.settle(DEAD_TIME + 1)
         await h.call("climate", "set_temperature", entity_id=trv(LR), temperature=18.5)
         assert comfort(h) == 18.5
         assert modes(h)[LR] == "off"
