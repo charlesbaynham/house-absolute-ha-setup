@@ -49,7 +49,7 @@ bedroom follows Charles); `house_far_away` → off; nobody home → setback (com
   and the policy (in setback, last-written 22) read it as a hand edit: comfort became 26 (and 25, 24 in the
   other rooms). Setback then held 24 / 23, i.e. the user's original comfort, so nothing was saved until
   far-away, and after return the rooms will target 2 °C above what was set. `[inferred]` Any presence flicker
-  (on then off within about a second) can do this, not just a TRV outage. Fix proposed 2026-11-14 in PR #108 (10 s dead time, `echo_dead_time`, Charles's proposal: a differing PID setpoint within 10 s of the policy's last write is an echo, not an edit); not merged when written. Comfort helpers are
+  (on then off within about a second) can do this, not just a TRV outage. Fixed 2026-11-14 by PR #108 (merged): blueprint input `echo_dead_time` (default 10 s, Charles's proposal) makes a PID setpoint that differs from the policy's last write, within 10 s of it, an echo instead of an edit; step 4 overwrites it. Verified live 2026-11-14 on the living room (rooms off, nobody home): the TRV echoed the old value 0.65 s after a policy write, the mirror put it on the PID, and the policy restored the wanted value 20 ms later with comfort untouched; a PID edit 14 s after a write was adopted. Cost: a real edit within 10 s of a policy write is overwritten. An echo later than 10 s (TRV outage) is still the open limitation. Comfort helpers are
   `input_number.{room}_comfort_setpoint` (original values: living room 24, bedroom 23, master bedroom 22).
 - Test heating/presence logic on the mock house first: `tests/ha_mock` (README there). Valve behaviour and the open smart-mode-off issue are in [trv-pid-heating](memory/notes/trv-pid-heating.md).
 
