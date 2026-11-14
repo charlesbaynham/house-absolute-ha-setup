@@ -14,6 +14,8 @@ MUTATIONS = [
      "reduced_now: \"{{ mode == 'setback' }}\"", "reduced_now: \"{{ false }}\""),
     ("PID setpoint edits are ignored", BP,
      "(pid_sp - last_sp) | abs > 0.05", "(pid_sp - last_sp) | abs > 500"),
+    ("no dead time after a write (a late TRV echo is read as an edit)", BP,
+     "> 0.05 and not echoing)", "> 0.05)"),
     ("no guard against half-built (unknown) presence facts", BP,
      "{{ trigger.id == 'tick'\n         or ([anyone_home, house_far_away] + follow_sensors)",
      "{{ true or ([anyone_home, house_far_away] + follow_sensors)"),
