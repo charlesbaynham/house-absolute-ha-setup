@@ -20,7 +20,7 @@ pattern are in `memory/notes/`.
   occupied / switched-off switches; live since 2026-11-10 (PR #106). Look at `input_text.<room>_heating_status`
   for "why". Echo guard: a PID setpoint differing from the policy's last write within 10 s is an echo, not an edit (PR #108, live
   2026-11-14; a presence flicker had inflated comfort by 2 °C on 2026-11-13, see [heating-policy](memory/notes/heating-policy.md)).
-  Open: the comfort helpers still read 26/25/24 (were 24/23/22) until reset; an echo later than 10 s (TRV outage) can still inflate.
+  Open: an echo later than 10 s (TRV outage) can still inflate comfort.
 - Smart mode is on in all three rooms (live 2026-11-13; it was off until at least 2026-11-12), so the PID's
   demand reaches the valves again (see [trv-pid-heating](memory/notes/trv-pid-heating.md)).
 
