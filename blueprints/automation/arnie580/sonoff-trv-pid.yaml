@@ -18,6 +18,10 @@ blueprint:
     - Small PID wiggles are ignored (dead-band of "Minimum step"). Fully
     closed (0) and fully open (100) are always applied exactly, so the valve
     always finishes with a full-stroke close.
+
+    - The opening limit is the helper value + 1 (upstream: + 5), so with the
+    helper at 0 the TRV's own thermostat can only crack the valve to 1 %
+    when its local sensor is below its setpoint.
   domain: automation
   input:
     thermostat_value:
@@ -70,7 +74,7 @@ variables:
   demand: "{{ [[states(thermostat_value) | float(0), 0] | max, 100] | min }}"
   at_edge: "{{ demand <= 0 or demand >= 100 }}"
   target_closing: "{{ (100 - demand) | round(0) | int }}"
-  target_opening: "{{ ([demand + 5, 100] | min) | round(0) | int }}"
+  target_opening: "{{ ([demand + 1, 100] | min) | round(0) | int }}"
   write_closing: >-
     {% set cur = states(max_valve_closing) | float(none) %}
     {{ cur is none or (cur != target_closing if at_edge
