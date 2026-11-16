@@ -117,6 +117,29 @@ push to `notify.mobile_app_pixel_6`.
   conclusive.** A hand check of the radiator is the definitive test; the TRV head sensor is slow.
 - Whether the living room would have been stuck anyway (the original cause of the dropped command) is
   unknown. The restart mechanism in hypothesis 1 is still a hypothesis.
+- **2026-11-16, master bedroom: TRV sensor fell from ~22 to 19.1 °C at 12:00 UTC after days at 23.6-25.4 with the
+  valve helper at 0.** `[found: live history + logbook, 2026-11-16]` No HA-side cause found. Checked: the whole-instance
+  logbook 11:30-12:35 (only time-pattern automation runs; no service call, restart, state change or presence event);
+  every master-bedroom entity's history 11:00-13:00 (blinds, lights, window switch, room sensor all quiet);
+  PID off, valve helper 0, closing 100 / opening 5 and setpoint 22 unchanged since 2026-11-14/15; `idle_steps` /
+  `closing_steps` unchanged (no re-adaptation). TRV `local_temperature`: 25.4 at 04:32, falling to 21.9 by 08:59,
+  flat 21.9-22.2 until 12:00:45, then 21.8 (12:23), 21.1 (12:43), 20.6 (13:01), 20.1 (13:33), 19.6 (14:27), 19.1 (18:15).
+  Room sensor stayed 22.2-22.3 throughout. 19.1 is the cold-radiator baseline for this TRV (19.3-19.5 all day on
+  2026-11-10, room 22): the head sits about 3 °C below room air when nothing warms it. So what ended at 12:00 was the
+  warmth reaching the valve body, not anything the TRV was told.
+  - **Why it was warm with the valve "off":** (a) until 2026-11-15 14:39 the TRV's own thermostat was regulating: the
+    mirrored setpoint was 24 and `valve_motor_running_voltage` events line up with `hvac_action` flips at 23.6 (heating,
+    accuracy -0.4) and 24.0 (idle), i.e. it cracked the valve to its 5 % opening degree and held its own sensor near 24.
+    The PID being off does not stop that. (b) After the setpoint became 22 there were no motor events from 2026-11-15
+    09:53 to 2026-11-16 12:28, yet the sensor rose again overnight 23.4 -> 25.4 (00:00-04:32) and fell from ~06:00: heat
+    reached the valve body with the valve closed (leak-by or conduction), with a daily rhythm. The living room TRV
+    (27-28 °C, room 22.4) shows the same overnight rise and 06:00 fall, so the supply is common, and that radiator did
+    not cool at 12:00 (26.8 -> 26.3).
+  - 12:28:50 the TRV went `heating` (local 21.6 < setpoint 22 - 0.4) and the motor ran once: this is the TRV's own
+    thermostat opening to 5 % after the drop had started, not the cause. The sensor kept falling, so no meaningful hot
+    flow arrived. `[inferred]` the hot supply to this radiator's pipework stopped at ~12:00 for a reason outside HA
+    (boiler programmer / zone valve, a manual valve touched, pipework). Not confirmed; boiler heat-call data is not in HA
+    (the "boiler" sensor is on the hot-water cylinder, 51 °C and flat, so it does not show it).
 
 ## Data limits
 - Recorder history on the live instance only went back to about 2026-10-31 when checked
