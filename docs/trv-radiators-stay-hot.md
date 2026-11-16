@@ -41,12 +41,12 @@ Radiators (Sonoff TRVZB, PID-driven via `packages/climate_*.yaml`) stay hot when
    correct adaptation still leaks. Sonoff publishes no stroke/force specs.
 
 ## How the valve is driven (as of PR #97)
-Helper value `v` (0-100) → `closing = 100 - v`, `opening = min(v + 5, 100)` on the TRV's
+Helper value `v` (0-100) → `closing = 100 - v`, `opening = min(v + 1, 100)` (was `v + 5` until 2026-11-16) on the TRV's
 `number.trv_<room>_valve_closing_degree` / `_opening_degree`. At `v = 0` that is closing 100 /
-opening 5. Changes smaller than `min_step` are ignored unless `v` is 0 or 100.
+opening 1 (5 before 2026-11-16). Changes smaller than `min_step` are ignored unless `v` is 0 or 100.
 
-Meaning of the two TRVZB settings (the `closing = 100 - v` / `opening = v + 5` mapping is inherited
-from the upstream blueprint; the reason for the `+5` is **unverified**, probably to avoid an opening of 0):
+Meaning of the two TRVZB settings (the `closing = 100 - v` / `opening = v + 5` mapping was inherited
+from the upstream blueprint; the reason for the `+5` is **unverified**, probably to avoid an opening of 0; changed to `+1` on 2026-11-16 at Charles's request, see the observation log):
 - `valve_closing_degree`: how closed the valve is when the TRV decides to close. 100 = fully shut;
   0 = valve stays fully open even when it "closes".
 - `valve_opening_degree`: cap on how far it opens when the TRV decides to heat.
@@ -140,6 +140,12 @@ push to `notify.mobile_app_pixel_6`.
     flow arrived. `[inferred]` the hot supply to this radiator's pipework stopped at ~12:00 for a reason outside HA
     (boiler programmer / zone valve, a manual valve touched, pipework). Not confirmed; boiler heat-call data is not in HA
     (the "boiler" sensor is on the hot-water cylinder, 51 °C and flat, so it does not show it).
+- **2026-11-16: opening offset reduced from +5 to +1** `[stated]` (Charles, after the 12:00 drop above). Rationale: with
+  the helper at 0 the TRV's own thermostat still opens the valve to its opening degree whenever its local sensor is
+  below setpoint - 0.4, so 5 % let hot water through while the PID was "off". 1 % is the smallest non-zero opening
+  (0 left untested: the TRV may refuse or treat it as unconfigured). Applies to all three rooms (shared blueprint);
+  takes effect within 10 min of the restart / merge, when the sync re-asserts. Check afterwards that
+  `number.trv_<room>_valve_opening_degree` reads 1 at helper 0, and watch whether the TRV still flips to `heating`.
 
 ## Data limits
 - Recorder history on the live instance only went back to about 2026-10-31 when checked
