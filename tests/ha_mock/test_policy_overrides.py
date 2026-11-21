@@ -1,7 +1,7 @@
 """Occupied switch, boost, turning the heating on by hand, and the back door."""
 
 from .harness import house, load_repo_templates
-from .scenarios import COMFORT, EVERYONE_HOME, SETBACK, modes, pid_setpoints, policy_packages, set_comfort, status
+from .scenarios import COMFORT, HOLD, HOLD_TIMER, close_door_and_end_hold, EVERYONE_HOME, SETBACK, modes, pid_setpoints, policy_packages, set_comfort, status
 
 ALL = ("living_room", "master_bedroom", "bedroom")
 DOOR = "binary_sensor.backdoor_sensor_contact"
@@ -141,7 +141,7 @@ async def test_back_door_open_switches_everything_off_and_closing_restores(tmp_p
         await h.set_state(DOOR, "on")
         assert set(modes(h).values()) == {"off"}
         assert status(h, "bedroom").startswith("off - back door open")
-        await h.set_state(DOOR, "off")
+        await close_door_and_end_hold(h)
         assert set(modes(h).values()) == {"heat"}
         assert pid_setpoints(h) == COMFORT
 
@@ -151,7 +151,7 @@ async def test_back_door_beats_occupied(tmp_path):
         await h.call("input_boolean", "turn_on", entity_id="input_boolean.living_room_occupied")
         await h.set_state(DOOR, "on")
         assert modes(h)["living_room"] == "off"
-        await h.set_state(DOOR, "off")
+        await close_door_and_end_hold(h)
         assert modes(h)["living_room"] == "heat"
 
 
@@ -163,7 +163,7 @@ async def test_closing_the_door_returns_each_room_to_its_own_mode_not_a_saved_li
             await h.set_person(who, "not_home", 5)
         await h.set_person("charles", "not_home", 15)
         await h.settle(11 * 60)
-        await h.set_state(DOOR, "off")
+        await close_door_and_end_hold(h)
         assert modes(h) == {"living_room": "heat", "master_bedroom": "off", "bedroom": "heat"}
         assert pid_setpoints(h)["living_room"] == COMFORT["living_room"] - SETBACK
 

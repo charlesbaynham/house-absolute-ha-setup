@@ -10,6 +10,18 @@ EVERYONE_HOME = {"charles": ("home", None), "gaby": ("home", None), "harry": ("h
 NOBODY_HOME = {"charles": ("not_home", 5), "gaby": ("not_home", 5), "harry": ("not_home", 5)}
 
 
+DOOR = "binary_sensor.backdoor_sensor_contact"
+HOLD = "input_boolean.back_door_heating_hold"
+HOLD_TIMER = "timer.back_door_heating_hold"
+
+
+async def close_door_and_end_hold(h: House) -> None:
+    """Close the back door and switch the 1 h hold off at once (as a person would), so a test about
+    what happens after the door is closed does not have to wait out the hour."""
+    await h.set_state(DOOR, "off")
+    await h.call("input_boolean", "turn_off", entity_id=HOLD)
+
+
 def pid(room: str) -> str:
     return f"climate.{room}_trv_pid_controller"
 

@@ -6,9 +6,26 @@
 #
 # Sensor: binary_sensor.backdoor_sensor_contact (Z2M "Backdoor sensor")
 #
-# The heating pause while the door is open is no longer here: it is rule 1 of the
-# per-room heating policy (blueprints/automation/charlesbaynham/trv-room-policy.yaml),
-# which has no "rooms to resume" list to lose or get out of step.
+# The heating pause while the door is open is not here: it is a rule of the per-room
+# heating policy (blueprints/automation/charlesbaynham/trv-room-policy.yaml), which has
+# no "rooms to resume" list to lose or get out of step.
+#
+# Hold: the heating also stays off for an hour after the door closes (the room is still
+# cold-soaked and the TRVs would run flat out). `input_boolean.back_door_heating_hold`
+# is on while that hour runs and the policy reads it like an open door. Turn it off to
+# end the hold early. The hour is `timer.back_door_heating_hold` (restores across
+# restarts); the boolean is the switch, the timer only counts.
+
+input_boolean:
+  back_door_heating_hold:
+    name: Back door heating hold
+    icon: mdi:door-closed-lock
+
+timer:
+  back_door_heating_hold:
+    name: Back door heating hold timer
+    duration: "01:00:00"
+    restore: true
 
 automation:
   - id: '1762500000001'
@@ -30,3 +47,89 @@ automation:
         data:
           message: The back door has opened
     mode: single
+
+  - id: '1791600000010'
+    alias: Back door heating hold
+    description: >-
+      Switches the heating hold on when the back door closes, for an hour (the timer),
+      and off when the timer ends or someone switches it off. Self-heals: a hold
+      with no running timer (expired during a restart) is cleared.
+    triggers:
+      - trigger: state
+        entity_id: binary_sensor.backdoor_sensor_contact
+        from: 'on'
+        to: 'off'
+        id: door_closed
+      - trigger: state
+        entity_id: input_boolean.back_door_heating_hold
+        to: 'on'
+        id: hold_on
+      - trigger: state
+        entity_id: input_boolean.back_door_heating_hold
+        from: 'on'
+        to: 'off'
+        id: hold_off
+      - trigger: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.back_door_heating_hold
+        id: timer_done
+      - trigger: homeassistant
+        event: start
+        id: reconcile
+      - trigger: time_pattern
+        minutes: /10
+        id: reconcile
+    conditions: []
+    actions:
+      - choose:
+          # Start the timer first, so a run that sees the hold on also sees it counting
+          - conditions:
+              - condition: trigger
+                id: door_closed
+            sequence:
+              - action: timer.start
+                target:
+                  entity_id: timer.back_door_heating_hold
+              - action: input_boolean.turn_on
+                target:
+                  entity_id: input_boolean.back_door_heating_hold
+          # Switched on by hand: count the hour from now
+          - conditions:
+              - condition: trigger
+                id: hold_on
+              - condition: state
+                entity_id: timer.back_door_heating_hold
+                state: idle
+            sequence:
+              - action: timer.start
+                target:
+                  entity_id: timer.back_door_heating_hold
+          - conditions:
+              - condition: trigger
+                id:
+                  - hold_off
+                  - timer_done
+            sequence:
+              - action: timer.cancel
+                target:
+                  entity_id: timer.back_door_heating_hold
+              - action: input_boolean.turn_off
+                target:
+                  entity_id: input_boolean.back_door_heating_hold
+          # Hold on but nothing counting: it expired while HA was down
+          - conditions:
+              - condition: trigger
+                id: reconcile
+              - condition: state
+                entity_id: input_boolean.back_door_heating_hold
+                state: 'on'
+              - condition: state
+                entity_id: timer.back_door_heating_hold
+                state: idle
+            sequence:
+              - action: input_boolean.turn_off
+                target:
+                  entity_id: input_boolean.back_door_heating_hold
+    mode: queued
+    max: 10
