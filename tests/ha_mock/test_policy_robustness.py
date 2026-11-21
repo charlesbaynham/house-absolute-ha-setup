@@ -1,7 +1,7 @@
 """Quietness, flapping, valve interplay, restart flicker."""
 
 from .harness import house, load_repo_templates
-from .scenarios import COMFORT, EVERYONE_HOME, SETBACK, climate_writes, modes, pid, pid_setpoints, policy_packages, set_comfort
+from .scenarios import close_door_and_end_hold, COMFORT, EVERYONE_HOME, SETBACK, climate_writes, modes, pid, pid_setpoints, policy_packages, set_comfort
 
 ALL = ("living_room", "master_bedroom", "bedroom")
 DOOR = "binary_sensor.backdoor_sensor_contact"
@@ -70,6 +70,8 @@ async def test_door_flapping_settles(tmp_path):
         for _ in range(8):
             await h.set_state(DOOR, "on")
             await h.set_state(DOOR, "off")
+        assert set(modes(h).values()) == {"off"}, "hold after the last close"
+        await close_door_and_end_hold(h)
         assert modes(h) == {r: "heat" for r in ALL}
         await h.set_state(DOOR, "on")
         assert set(modes(h).values()) == {"off"}
@@ -87,6 +89,7 @@ async def test_all_inputs_at_once(tmp_path):
         assert set(modes(h).values()) == {"off"}
         h.hass.states.async_set(DOOR, "off")
         await h.settle(60)
+        await close_door_and_end_hold(h)
         # Charles is back under 10 km but still not home: master stays off; others setback
         assert modes(h) == {"living_room": "heat", "master_bedroom": "off", "bedroom": "heat"}
 
@@ -102,7 +105,7 @@ async def test_valve_helper_follows_the_policy(tmp_path):
         assert float(h.state(valve)) > 0, "heating: valve follows the PID output"
         await h.set_state(DOOR, "on")
         assert float(h.state(valve)) == 0.0, "door open: valve closed"
-        await h.set_state(DOOR, "off")
+        await close_door_and_end_hold(h)
         await h.settle(60)
         assert float(h.state(valve)) > 0
 

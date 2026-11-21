@@ -65,4 +65,14 @@ MUTATIONS = [
     ("by-hand on needs two presses", BP,
      "value_template: \"{{ presence_off and not presence_door }}\"",
      "value_template: \"{{ false }}\""),
+    # --- back door hold (1 h off after the door closes) ---
+    ("no back door hold rule", BP,
+     "{% elif is_state(back_door_hold, 'on') %}off|back door recently closed (hold)\n", ""),
+    ("closing the door does not start the hold", "packages/back_door.yaml",
+     "        to: 'off'\n        id: door_closed\n", "        to: 'off'\n        id: door_closed_ignored\n"),
+    ("switching the hold off does not cancel the timer", "packages/back_door.yaml",
+     "              - action: timer.cancel\n", "              - action: timer.start\n"),
+    ("a hold with no timer is never cleared", "packages/back_door.yaml",
+     "                state: idle\n            sequence:\n              - action: input_boolean.turn_off",
+     "                state: paused\n            sequence:\n              - action: input_boolean.turn_off"),
 ]

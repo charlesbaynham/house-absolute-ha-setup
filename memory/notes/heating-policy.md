@@ -2,7 +2,7 @@
 name: heating-policy
 description: The heating policy blueprint that decides off / setback / comfort per room from presence, back door, occupied and switched-off switches (PR #106) — rules, helpers, by-hand behaviour, gotchas, open follow-ups. Read when asking why a room's heating is on or off, or adding a presence rule.
 aliases: [heating policy, setback, away mode, occupied, presence heating, far away, back door, trv-room-policy]
-updated: 2026-11-13
+updated: 2026-11-21
 ---
 
 # Heating policy — off / setback / comfort (since 2026-11-10, PR #106)
@@ -11,10 +11,18 @@ updated: 2026-11-13
 instantiated per room in `packages/climate_{room}.yaml`, decides each PID climate's `off`/`heat` and setpoint
 from the current facts (level-triggered; nothing is remembered to undo later, so restarts and missed events
 self-heal). It replaced the away-mode state machine, the back-door pause, the master-bedroom-follows-Charles
-automation (#104) and the 4am automation. Rules, first match wins: room switched off → off; back door open →
+automation (#104) and the 4am automation. Rules, first match wins: room switched off → off; back door open, or the back door hold on →
 off; room occupied (switch, or boost running) → comfort; room follows a person who is away → off (master
 bedroom follows Charles); `house_far_away` → off; nobody home → setback (comfort − 2 °C); else comfort.
 
+- **Back door hold** `[stated]` (Charles, 2026-11-21: stay off for 1 h after the living room door closes, with a boolean to cancel):
+  `packages/back_door.yaml` has `input_boolean.back_door_heating_hold` (on from the door closing; the policy reads it
+  like an open door, status "off - back door recently closed (hold)"), `timer.back_door_heating_hold` (1 h, `restore: true`;
+  the hour restarts on each close) and the automation "Back door heating hold" (door closes → timer + boolean on; boolean
+  off or timer finished → both off; boolean on by hand → timer starts; HA start / 10 min: hold on with an idle timer is cleared).
+  Turning the boolean off ends the hold at once. A by-hand "heat on" during the hold is reverted like during an open door.
+  The only door sensor live is `binary_sensor.backdoor_sensor_contact`; `[inferred]` it is the "living room door".
+  Needs an area on the boolean (WORKSPACE.md rule), set live after the merge.
 - Per room helpers: `{room}_comfort_setpoint` (the user's number; the PID setpoint is derived),
   `{room}_policy_last_setpoint` (echo guard), `{room}_occupied`, `{room}_heating_disabled`,
   `{room}_heating_status` (text: mode and why: look here first when asking "why is it off?").

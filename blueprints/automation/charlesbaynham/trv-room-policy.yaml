@@ -13,7 +13,8 @@ blueprint:
 
     1. Room switched off (the "switched off" switch) -> `off`.
 
-    2. Back door open -> `off`.
+    2. Back door open, or the back door hold on (the heating stays off for an hour after
+    the door closes; see `packages/back_door.yaml`) -> `off`.
 
     3. Room occupied (the "occupied" switch, or boost running) -> `comfort`. This
     overrides every presence rule below, for a guest staying while the household is
@@ -61,7 +62,7 @@ blueprint:
     **By hand** (a call with a user context: dashboard, app, voice). Turning the PID
     climate on while the policy wants it off for a presence reason switches the room's
     occupied switch on, so a person standing in the room can always get heat; if the room
-    is "switched off" it switches that off instead; an open back door still wins. Turning
+    is "switched off" it switches that off instead; an open back door (or its hold) still wins. Turning
     it off switches the room's "switched off" switch on.
 
 
@@ -181,6 +182,14 @@ blueprint:
               filter:
               - domain:
                 - binary_sensor
+        back_door_hold:
+          name: Back door heating hold (on = off for a while after the door closes)
+          default: input_boolean.back_door_heating_hold
+          selector:
+            entity:
+              filter:
+              - domain:
+                - input_boolean
     settings:
       name: Settings
       icon: mdi:cog
@@ -241,6 +250,7 @@ variables:
   anyone_home: !input anyone_home
   house_far_away: !input house_far_away
   back_door: !input back_door
+  back_door_hold: !input back_door_hold
   offset: !input setback_offset
   dead_time: !input echo_dead_time
   lowest: !input min_temp
@@ -255,6 +265,9 @@ triggers:
     id: facts
   - trigger: state
     entity_id: !input back_door
+    id: facts
+  - trigger: state
+    entity_id: !input back_door_hold
     id: facts
   - trigger: state
     entity_id: !input occupied
@@ -314,6 +327,7 @@ actions:
                == (follow_sensors | length) }}
       presence_rule: >-
         {% if is_state(back_door, 'on') %}off|back door open
+        {% elif is_state(back_door_hold, 'on') %}off|back door recently closed (hold)
         {% elif occupied_now %}comfort|room occupied
         {% elif follow_all_away %}off|the person this room follows is away
         {% elif is_state(house_far_away, 'on') %}off|house far away
@@ -330,7 +344,7 @@ actions:
       # (including off) it holds the comfort setpoint itself.
       reduced_now: "{{ mode == 'setback' }}"
       presence_off: "{{ presence_rule.split('|')[0] == 'off' }}"
-      presence_door: "{{ presence_rule.split('|')[1] == 'back door open' }}"
+      presence_door: "{{ presence_rule.split('|')[1].startswith('back door') }}"
       pid_hvac: "{{ states(pid) }}"
       pid_sp: "{{ state_attr(pid, 'temperature') | float(0) }}"
       last_sp: "{{ states(last_helper) | float(0) }}"
@@ -394,7 +408,7 @@ actions:
       # On, against a presence rule: someone is in the room (the back door still wins)
       - conditions:
           - condition: template
-            value_template: "{{ by_hand and pid_turned_on and mode == 'off' and reason != 'back door open' }}"
+            value_template: "{{ by_hand and pid_turned_on and mode == 'off' and not presence_door }}"
         sequence:
           - action: input_boolean.turn_on
             target:
