@@ -341,8 +341,10 @@ class SchedulerCoordinator(DataUpdateCoordinator):
             # if the name has been changed, the entity ID must change hence the entity should be destroyed
             entity_registry = get_entity_registry(self.hass)
             entity_registry.async_remove(entity.entity_id)
-            # drop the stale entity too: async_add_entity skips ids it already knows, so
-            # without this the renamed schedule's entity is never re-created (it vanishes)
+            # LOCAL PATCH (vendored 3.3.9): drop the stale entity too. async_add_entity skips ids
+            # it already knows, so without this the renamed schedule's entity is never re-created.
+            # Upstream: nielsfaber/scheduler-component PR #555 / issue #556 (open at 2026-11-22).
+            # Remove this line when a release containing that fix is vendored.
             self.hass.data[const.DOMAIN]["schedules"].pop(schedule_id, None)
             async_dispatcher_send(self.hass, const.EVENT_ITEM_CREATED, entry)
         else:
