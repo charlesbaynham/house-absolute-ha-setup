@@ -29,7 +29,8 @@ Config-as-code: YAML edits, no build. Home Assistant validates on restart.
 - `adaptive_lighting/` — colour/brightness by time of day; config-flow integration. `__init__.py`
   entry, `switch.py` logic.
 - `scheduler/` — Scheduler component 3.3.9, vendored by hand (PR #111), with one marked local patch
-  (PR #112, upstream nielsfaber/scheduler-component #555). Not tracked by the marketplace.
+  (PR #112, upstream nielsfaber/scheduler-component #555). Not tracked by the marketplace. Plan [stated: Charles,
+  2026-11-22]: stay vendored until #555 is merged and released upstream, then switch to the marketplace version.
 - No `hacs/`: HACS was replaced by HA's built-in `marketplace` integration (config entry on the live
   instance; update + pre-release switch entities for adaptive_lighting, smart_thermostat PID,
   webhook_conversation and the valetudo-map and mini-graph cards). Installed items land in

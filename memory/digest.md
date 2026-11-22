@@ -26,7 +26,9 @@ pattern are in `memory/notes/`.
 
 ## On the horizon
 
-*(empty)*
+- Scheduler: stay on the vendored copy (`custom_components/scheduler`, with a local rename-bug patch, PR #112) until
+  upstream nielsfaber/scheduler-component PR #555 is merged and released; then move to the marketplace version and
+  drop the vendored copy (Charles, stated 2026-11-22). Check marketplace can install it first.
 
 ## Key learnings & principles
 
