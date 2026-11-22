@@ -84,7 +84,7 @@ control automation takes the valve-sync automation's entity id as an input, so k
 The copy already carries the policy helpers and automation (see [heating-policy](memory/notes/heating-policy.md)); there are no
 hardcoded per-room lists elsewhere any more. Add the room's own mock-house scenarios if its rules differ.
 Prerequisites: TRV paired in HA, an external temperature sensor available, TRV set to
-external-sensor mode in Z2M, the Smart Thermostat (PID) HACS integration installed.
+external-sensor mode in Z2M, the Smart Thermostat (PID) integration installed (via the marketplace).
 
 After the merge, give the room's user-facing helpers an area (standing rule in `WORKSPACE.md`): smart mode, boost,
 occupied, switched off, comfort setpoint, heating status, parked valve position and valve position. The PID output,

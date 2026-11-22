@@ -2,7 +2,7 @@
 name: ha-repo-architecture
 description: Layout of this Home Assistant config repo — root files, packages, custom components, Zigbee2MQTT, automation/blueprint and template-sensor shapes, dashboards. Read when finding where a feature is wired or adding config.
 aliases: [repo layout, configuration.yaml, packages, custom components, blueprints, zigbee2mqtt]
-updated: 2026-11-10
+updated: 2026-11-22
 ---
 
 # Repo architecture
@@ -28,7 +28,13 @@ Config-as-code: YAML edits, no build. Home Assistant validates on restart.
   `const.py`.
 - `adaptive_lighting/` — colour/brightness by time of day; config-flow integration. `__init__.py`
   entry, `switch.py` logic.
-- `hacs/` — HACS package manager; not modified directly.
+- `scheduler/` — Scheduler component 3.3.9, vendored by hand (PR #111), with one marked local patch
+  (PR #112, upstream nielsfaber/scheduler-component #555). Not tracked by the marketplace.
+- No `hacs/`: HACS was replaced by HA's built-in `marketplace` integration (config entry on the live
+  instance; update + pre-release switch entities for adaptive_lighting, smart_thermostat PID,
+  webhook_conversation and the valetudo-map and mini-graph cards). Installed items land in
+  `custom_components/` / `www/community/` and are committed by gitsync like everything else.
+  [stated: Charles, 2026-11-22] [found: live API, 2026-11-22]
 
 ## Zigbee2MQTT
 
