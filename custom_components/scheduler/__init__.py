@@ -344,7 +344,7 @@ class SchedulerCoordinator(DataUpdateCoordinator):
             # LOCAL PATCH (vendored 3.3.9): drop the stale entity too. async_add_entity skips ids
             # it already knows, so without this the renamed schedule's entity is never re-created.
             # Upstream: nielsfaber/scheduler-component PR #555 / issue #556 (open at 2026-11-22).
-            # Remove this line when a release containing that fix is vendored.
+            # Plan (Charles): once that fix is released, move to the marketplace version and delete this vendored copy.
             self.hass.data[const.DOMAIN]["schedules"].pop(schedule_id, None)
             async_dispatcher_send(self.hass, const.EVENT_ITEM_CREATED, entry)
         else:
