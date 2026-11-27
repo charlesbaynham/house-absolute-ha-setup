@@ -1,0 +1,24 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Whistle",
+        "description": "Turns detections from whistle nodes (MQTT) into one house-wide event.whistle, with the room it was heard in."
+      }
+    },
+    "abort": {"already_configured": "Already set up."}
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Whistle tuning",
+        "data": {
+          "collect_s": "Wait for other nodes (s)",
+          "match_s": "Same whistle if within (s)",
+          "confident_db": "Room confident above margin (dB)",
+          "max_age_s": "Drop detections older than (s)"
+        }
+      }
+    }
+  }
+}
