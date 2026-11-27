@@ -185,7 +185,7 @@
 - id: whistle_living_room_lights
   alias: Living room whistle lights
   description: 'Whistle ''turn on'' -> all living room lights on, full; ''turn off''
-    -> all off. Source: event.whistle (Whistle-detection).'
+    -> all off; ''cosy'' -> cosy scene. Source: event.whistle (Whistle-detection).'
   triggers:
   - trigger: state
     entity_id: event.whistle
@@ -227,5 +227,24 @@
           entity_id: input_select.living_room_cosy_state
         data:
           option: 'off'
+    - conditions:
+      - condition: state
+        entity_id: event.whistle
+        attribute: event_type
+        state: 5_tone_cosy
+      sequence:
+      - action: scene.turn_on
+        target:
+          entity_id: scene.living_room_cosy
+        data:
+          transition: 3
+      - action: light.turn_off
+        target:
+          area_id: kitchen
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.living_room_cosy_state
+        data:
+          option: cosy
   mode: queued
   max: 3
