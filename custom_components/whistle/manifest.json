@@ -1,0 +1,13 @@
+{
+  "domain": "whistle",
+  "name": "Whistle",
+  "codeowners": ["@charlesbaynham"],
+  "config_flow": true,
+  "dependencies": ["mqtt"],
+  "documentation": "https://github.com/charlesbaynham/Whistle-detection/blob/main/docs/ha-integration.md",
+  "integration_type": "hub",
+  "iot_class": "local_push",
+  "mqtt": ["whistle/+/info"],
+  "requirements": [],
+  "version": "0.1.0"
+}
