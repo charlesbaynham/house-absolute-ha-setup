@@ -234,10 +234,10 @@
         state: 5_tone_cosy
       sequence:
       - action: scene.turn_on
+        metadata: {}
         target:
-          entity_id: scene.living_room_cosy
-        data:
-          transition: 3
+          entity_id: scene.living_room_cosy_brighter
+        data: {}
       - action: light.turn_off
         target:
           area_id: kitchen
@@ -245,6 +245,6 @@
         target:
           entity_id: input_select.living_room_cosy_state
         data:
-          option: cosy
+          option: cosy_brighter
   mode: queued
   max: 3
