@@ -182,13 +182,13 @@
       is defined else ''unknown'' }}'
   mode: queued
   max: 25
-- id: whistle_master_bedroom_lights
-  alias: Master bedroom whistle lights
-  description: 'Whistle ''turn on'' -> cosy (lamp only); whistle ''turn off'' -> all
-    off. Source: whistle-echo (Whistle-detection).'
+- id: whistle_living_room_lights
+  alias: Living room whistle lights
+  description: 'Whistle ''turn on'' -> living room cosy; whistle ''turn off'' -> living
+    room lights off. Source: event.whistle (Whistle-detection).'
   triggers:
   - trigger: state
-    entity_id: event.whistle_echo_whistle
+    entity_id: event.whistle
     not_from:
     - unavailable
     not_to:
@@ -199,21 +199,33 @@
   - choose:
     - conditions:
       - condition: state
-        entity_id: event.whistle_echo_whistle
+        entity_id: event.whistle
         attribute: event_type
         state: 5_tone_turn_on
       sequence:
-      - action: script.turn_on
+      - action: scene.turn_on
         target:
-          entity_id: script.master_bedroom_cosy
+          entity_id: scene.living_room_cosy
+        data:
+          transition: 3
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.living_room_cosy_state
+        data:
+          option: cosy
     - conditions:
       - condition: state
-        entity_id: event.whistle_echo_whistle
+        entity_id: event.whistle
         attribute: event_type
         state: 5_tone_turn_off
       sequence:
-      - action: script.turn_on
+      - action: light.turn_off
         target:
-          entity_id: script.master_bedroom_off
+          area_id: living_room
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.living_room_cosy_state
+        data:
+          option: 'off'
   mode: queued
   max: 3
